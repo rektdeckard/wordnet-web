@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.js": "/wordnet-web/static/js/main.5cde4de9.chunk.js",
+    "main.js.map": "/wordnet-web/static/js/main.5cde4de9.chunk.js.map",
+    "runtime-main.js": "/wordnet-web/static/js/runtime-main.8e2b67da.js",
+    "runtime-main.js.map": "/wordnet-web/static/js/runtime-main.8e2b67da.js.map",
+    "static/css/2.ff8bd605.chunk.css": "/wordnet-web/static/css/2.ff8bd605.chunk.css",
+    "static/js/2.87040403.chunk.js": "/wordnet-web/static/js/2.87040403.chunk.js",
+    "static/js/2.87040403.chunk.js.map": "/wordnet-web/static/js/2.87040403.chunk.js.map",
+    "index.html": "/wordnet-web/index.html",
+    "precache-manifest.7df798987fd32296146c6a20bb1ddcf8.js": "/wordnet-web/precache-manifest.7df798987fd32296146c6a20bb1ddcf8.js",
+    "service-worker.js": "/wordnet-web/service-worker.js",
+    "static/css/2.ff8bd605.chunk.css.map": "/wordnet-web/static/css/2.ff8bd605.chunk.css.map",
+    "static/js/2.87040403.chunk.js.LICENSE": "/wordnet-web/static/js/2.87040403.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8e2b67da.js",
+    "static/css/2.ff8bd605.chunk.css",
+    "static/js/2.87040403.chunk.js",
+    "static/js/main.5cde4de9.chunk.js"
+  ]
+}
