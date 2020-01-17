@@ -10,7 +10,7 @@ import {
   Form,
   Row,
   Col,
-  Checkbox
+  Switch
 } from "antd";
 import "antd/dist/antd.css";
 
@@ -43,7 +43,7 @@ const Network = () => {
         <Breadcrumb.Item>Jan 15</Breadcrumb.Item>
       </Breadcrumb>
       <Layout style={{ padding: "24px 0", background: "#fff" }}>
-        <Sider width={300} style={{ background: "#fff" }}>
+        <Sider width={300} style={{ background: "#fff" }} breakpoint="lg" collapsedWidth={0}>
           <Menu
             mode="inline"
             selectable={false}
@@ -178,10 +178,10 @@ const Network = () => {
                 <Row>
                   <Col span={12}>Animate</Col>
                   <Col span={4}>
-                    <Checkbox
+                    <Switch
                       size="small"
                       checked={animate}
-                      onChange={e => setAnimate(e.target.checked)}
+                      onChange={setAnimate}
                     />
                   </Col>
                 </Row>
@@ -217,7 +217,7 @@ const Network = () => {
             </SubMenu>
           </Menu>
         </Sider>
-        <Content style={{ padding: "0 24px" }}>
+        <Content>
           <ResponsiveNetwork
             height={700}
             nodes={data.nodes}
@@ -240,7 +240,8 @@ const Network = () => {
             motionStiffness={motionStiffness}
             motionDamping={motionDamping}
             animate={animate}
-            isInteractive
+            // layers={['nodes', 'links']}
+            isInteractive={true}
           />
         </Content>
       </Layout>

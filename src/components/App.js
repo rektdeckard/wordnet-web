@@ -10,7 +10,10 @@ const { Header, Content, Footer } = Layout;
 const App = props => {
   return (
     <Layout>
-      <Header className="header">
+      <Header
+        className="header"
+        style={{ position: "fixed", zIndex: 1, width: "100%" }}
+      >
         <div className="logo" />
         <Menu
           theme="dark"
@@ -29,7 +32,7 @@ const App = props => {
           </Menu.Item>
         </Menu>
       </Header>
-      <Content style={{ padding: "0 50px" }}>
+      <Content style={{ padding: "0 50px", flexGrow: 1 }}>
         <Switch>
           <Route exact path="/" />
           <Route exact path="/explore" component={Network} />
