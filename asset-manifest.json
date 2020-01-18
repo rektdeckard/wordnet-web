@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.js": "/wordnet-web/static/js/main.24cded10.chunk.js",
-    "main.js.map": "/wordnet-web/static/js/main.24cded10.chunk.js.map",
+    "main.js": "/wordnet-web/static/js/main.222ba359.chunk.js",
+    "main.js.map": "/wordnet-web/static/js/main.222ba359.chunk.js.map",
     "runtime-main.js": "/wordnet-web/static/js/runtime-main.8e2b67da.js",
     "runtime-main.js.map": "/wordnet-web/static/js/runtime-main.8e2b67da.js.map",
     "static/css/2.ff8bd605.chunk.css": "/wordnet-web/static/css/2.ff8bd605.chunk.css",
-    "static/js/2.abbd8144.chunk.js": "/wordnet-web/static/js/2.abbd8144.chunk.js",
-    "static/js/2.abbd8144.chunk.js.map": "/wordnet-web/static/js/2.abbd8144.chunk.js.map",
+    "static/js/2.8d6904ce.chunk.js": "/wordnet-web/static/js/2.8d6904ce.chunk.js",
+    "static/js/2.8d6904ce.chunk.js.map": "/wordnet-web/static/js/2.8d6904ce.chunk.js.map",
     "index.html": "/wordnet-web/index.html",
-    "precache-manifest.b8c4966186c20691826116a0d6982094.js": "/wordnet-web/precache-manifest.b8c4966186c20691826116a0d6982094.js",
+    "precache-manifest.9753d8a407fd0e10cb906c7c6670b313.js": "/wordnet-web/precache-manifest.9753d8a407fd0e10cb906c7c6670b313.js",
     "service-worker.js": "/wordnet-web/service-worker.js",
     "static/css/2.ff8bd605.chunk.css.map": "/wordnet-web/static/css/2.ff8bd605.chunk.css.map",
-    "static/js/2.abbd8144.chunk.js.LICENSE": "/wordnet-web/static/js/2.abbd8144.chunk.js.LICENSE"
+    "static/js/2.8d6904ce.chunk.js.LICENSE": "/wordnet-web/static/js/2.8d6904ce.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.8e2b67da.js",
     "static/css/2.ff8bd605.chunk.css",
-    "static/js/2.abbd8144.chunk.js",
-    "static/js/main.24cded10.chunk.js"
+    "static/js/2.8d6904ce.chunk.js",
+    "static/js/main.222ba359.chunk.js"
   ]
 }
