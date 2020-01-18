@@ -12,6 +12,7 @@ import {
   Col,
   Switch
 } from "antd";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 import data from "../data/sample.json";
 
@@ -224,6 +225,9 @@ const Network = () => {
           </Menu>
         </Sider>
         <Content>
+        <TransformWrapper>
+            <TransformComponent>
+              <div style={{height: 700, width: 1168 }}>
           <ResponsiveNetwork
             height={700}
             nodes={data.nodes}
@@ -246,6 +250,9 @@ const Network = () => {
             motionDamping={motionDamping}
             animate={animate}
           />
+          </div>
+          </TransformComponent>
+          </TransformWrapper>
         </Content>
       </Layout>
     </>

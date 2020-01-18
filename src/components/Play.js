@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Layout, Breadcrumb, Input } from "antd";
 import { ResponsiveNetwork } from "@nivo/network";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const { Content } = Layout;
 
@@ -24,7 +25,7 @@ const Play = () => {
 
   const handleSubmit = e => {
     const tokens = [...new Set(e.target.value.split(" "))];
-    
+
     // Only add node if one does not already exist for this token
     const existingTokens = data.nodes.map(n => n.id);
     const newNodes = tokens
@@ -68,25 +69,34 @@ const Play = () => {
         <Breadcrumb.Item>Play</Breadcrumb.Item>
         <Breadcrumb.Item>Quick Round</Breadcrumb.Item>
       </Breadcrumb>
-      <Layout style={{ padding: "24px 0", background: "#fff" }}>
-        <Content style={{ height: 700 }}>
-          <ResponsiveNetwork
-            height={700}
-            nodes={data.nodes}
-            links={data.links}
-            repulsivity={60}
-            distanceMin={10}
-            distanceMax={999}
-            iterations={90}
-            nodeColor={n => n.color}
-            nodeBorderWidth={1}
-            nodeBorderColor={{ from: "color", modifiers: [["darker", 0.8]] }}
-            linkThickness={l => Math.ceil(4 / l.source.depth)}
-            motionStiffness={40}
-            motionDamping={6}
-            animate={true}
-            isInteractive={true}
-          />
+      <Layout style={{ padding: "0px 0px", background: "#fff" }}>
+        <Content >
+          <TransformWrapper>
+            <TransformComponent>
+              <div style={{height: 700, width: 1168 }}>
+                <ResponsiveNetwork
+                  // height={700}
+                  nodes={data.nodes}
+                  links={data.links}
+                  repulsivity={60}
+                  distanceMin={10}
+                  distanceMax={999}
+                  iterations={90}
+                  nodeColor={n => n.color}
+                  nodeBorderWidth={1}
+                  nodeBorderColor={{
+                    from: "color",
+                    modifiers: [["darker", 0.8]]
+                  }}
+                  linkThickness={l => Math.ceil(4 / l.source.depth)}
+                  motionStiffness={40}
+                  motionDamping={6}
+                  animate={true}
+                  isInteractive={true}
+                />
+               </div>
+              </TransformComponent>
+          </TransformWrapper>
           <Input
             placeholder={`Define ${currentNode.id}`}
             value={entry}
