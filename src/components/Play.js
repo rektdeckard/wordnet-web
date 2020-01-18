@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import { Layout, Breadcrumb, Input } from "antd";
 import { ResponsiveNetwork } from "@nivo/network";
-import { render } from "@testing-library/react";
 
 const { Content } = Layout;
 
 const Play = () => {
   const [entry, setEntry] = useState("");
+  const [currentNode, setCurrentNode] = useState({
+    id: "smart",
+    radius: 12,
+    depth: 1,
+    color: "rgb(244, 117, 96)"
+  });
   const [data, setData] = useState({
-    nodes: [
-      {
-        id: "smart",
-        radius: 8,
-        depth: 1,
-        color: "rgb(97, 205, 187)"
-      }
-    ],
+    nodes: [currentNode],
     links: []
   });
 
@@ -25,37 +23,43 @@ const Play = () => {
   };
 
   const handleSubmit = e => {
-    const { value } = e.target;
-    const tokens = e.target.value.split(" ");
-    if (data.nodes.map(n => n.id).includes(value)) {
-      setData({
-        nodes: data.nodes,
-        links: [
-          ...data.links,
-          {
-            source: data.nodes[data.nodes.length - 1].id,
-            target: value,
-            distance: 30
-          }
-        ]
-      });
-    } else {
-      setData({
-        nodes: [
-          ...data.nodes,
-          { id: value, radius: 8, depth: 1, color: "rgb(97, 205, 187)" }
-        ],
-        links: [
-          ...data.links,
-          {
-            source: data.nodes[data.nodes.length - 1].id,
-            target: value,
-            distance: 30
-          }
-        ]
-      });
-    }
+    const tokens = [...new Set(e.target.value.split(" "))];
+    
+    // Only add node if one does not already exist for this token
+    const existingTokens = data.nodes.map(n => n.id);
+    const newNodes = tokens
+      .filter(t => !existingTokens.includes(t))
+      .map(t => ({
+        id: t,
+        radius: 8,
+        depth: currentNode.depth + 1,
+        color: "rgb(97, 205, 187)"
+      }));
+    // .map(t => ({
+    //   id: t,
+    //   radius: 8,
+    //   depth: currentNode.depth + 1,
+    //   color: `hsl(${360 - (60 * currentNode.depth - 1)}, 40%, 60%)`
+    // }));
+
+    // Only add link if the current node does not already link to existing node for this token
+    const existingLinks = data.links
+      .filter(l => l.source === currentNode.id)
+      .map(l => l.target);
+    const newLinks = tokens
+      .filter(t => !existingLinks.includes(t))
+      .map(t => ({
+        source: currentNode.id,
+        target: t,
+        distance: 30
+      }));
+
+    setData({
+      nodes: [...data.nodes, ...newNodes],
+      links: [...data.links, ...newLinks]
+    });
     setEntry("");
+    setCurrentNode(data.nodes[Math.floor(Math.random() * data.nodes.length)]);
   };
 
   return (
@@ -70,26 +74,21 @@ const Play = () => {
             height={700}
             nodes={data.nodes}
             links={data.links}
-            repulsivity={20}
-            distanceMin={1}
+            repulsivity={60}
+            distanceMin={10}
             distanceMax={999}
             iterations={90}
-            nodeColor={function(t) {
-              return t.color;
-            }}
+            nodeColor={n => n.color}
             nodeBorderWidth={1}
             nodeBorderColor={{ from: "color", modifiers: [["darker", 0.8]] }}
-            linkThickness={function(t) {
-              return 2 * (2 - t.source.depth);
-            }}
+            linkThickness={l => Math.ceil(4 / l.source.depth)}
             motionStiffness={40}
             motionDamping={6}
             animate={true}
-            // layers={['nodes', 'links']}
             isInteractive={true}
           />
           <Input
-            placeholder={`Define ${data.nodes[data.nodes.length - 1].id}`}
+            placeholder={`Define ${currentNode.id}`}
             value={entry}
             allowClear
             onChange={handleChange}

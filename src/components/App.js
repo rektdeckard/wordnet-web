@@ -5,6 +5,7 @@ import "antd/dist/antd.css";
 
 import Network from "./Network";
 import Play from "./Play";
+import Learn from "./learn/Learn";
 
 const { Header, Content, Footer } = Layout;
 
@@ -37,7 +38,7 @@ const App = props => {
         <Switch>
           <Route exact path="/play" component={Play}/>
           <Route exact path="/explore" component={Network} />
-          <Route exact path="/learn" />
+          <Route exact path="/learn" component={Learn}/>
         </Switch>
       </Content>
       <Footer style={{ textAlign: "center" }}>

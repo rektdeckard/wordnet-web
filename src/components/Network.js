@@ -18,6 +18,8 @@ import data from "../data/sample.json";
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
+// const nivo = ['#e8c1a0', '#f47560', '#f1e15b', '#e8a838', '#61cdbb', '#97e3d5'];
+
 const Network = () => {
   const [repulsivity, setRepulsivity] = useState(20);
   const [distanceMin, setDistanceMin] = useState(1);
@@ -230,22 +232,19 @@ const Network = () => {
             distanceMin={distanceMin}
             distanceMax={distanceMax}
             iterations={iterations}
-            nodeColor={function(t) {
-              return t.color;
-            }}
+            theme={{ scheme: 'blues'}}
+            nodeColor={n => n.color}
+            // nodeColor={n => `hsl(${360 - (60 * n.depth - 1)}, 40%, 60%)`}
+            // nodeColor={n => nivo[n.depth]}
             nodeBorderWidth={borderWidth}
             nodeBorderColor={{ from: "color", modifiers: [["darker", 0.8]] }}
-            linkThickness={
-              linkThickness ??
-              function(t) {
-                return 2 * (2 - t.source.depth);
-              }
-            }
+            // nodeBorderColor={n => `hsl(${360 - (60 * n.depth - 1)}, 40%, 30%)`}
+            // nodeBorderColor={n => nivo[n.depth]}
+            linkColor={t => t.source.color}
+            linkThickness={linkThickness ?? (l => (2 * (2 - l.source.depth)))}
             motionStiffness={motionStiffness}
             motionDamping={motionDamping}
             animate={animate}
-            // layers={['nodes', 'links']}
-            isInteractive={true}
           />
         </Content>
       </Layout>
