@@ -12,7 +12,6 @@ import {
   Col,
   Switch
 } from "antd";
-import "antd/dist/antd.css";
 
 import data from "../data/sample.json";
 
@@ -22,7 +21,7 @@ const { Content, Sider } = Layout;
 const Network = () => {
   const [repulsivity, setRepulsivity] = useState(20);
   const [distanceMin, setDistanceMin] = useState(1);
-  const [distanceMax, setDistanceMax] = useState(9999);
+  const [distanceMax, setDistanceMax] = useState(999);
   const [iterations, setIterations] = useState(90);
   const [borderWidth, setBorderWidth] = useState(1);
   const [linkThickness, setLinkThickness] = useState();
@@ -43,7 +42,12 @@ const Network = () => {
         <Breadcrumb.Item>Jan 15</Breadcrumb.Item>
       </Breadcrumb>
       <Layout style={{ padding: "24px 0", background: "#fff" }}>
-        <Sider width={300} style={{ background: "#fff" }} breakpoint="lg" collapsedWidth={0}>
+        <Sider
+          style={{ background: "#fff" }}
+          width={300}
+          collapsedWidth={0}
+          breakpoint="lg"
+        >
           <Menu
             mode="inline"
             selectable={false}

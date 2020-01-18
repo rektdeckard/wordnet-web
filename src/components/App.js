@@ -4,6 +4,7 @@ import { Layout, Menu, Breadcrumb, Icon } from "antd";
 import "antd/dist/antd.css";
 
 import Network from "./Network";
+import Play from "./Play";
 
 const { Header, Content, Footer } = Layout;
 
@@ -32,10 +33,11 @@ const App = props => {
           </Menu.Item>
         </Menu>
       </Header>
-      <Content style={{ padding: "0 50px", flexGrow: 1 }}>
+      <Content style={{ padding: "64px 50px", flexGrow: 1 }}>
         <Switch>
-          <Route exact path="/" />
+          <Route exact path="/play" component={Play}/>
           <Route exact path="/explore" component={Network} />
+          <Route exact path="/learn" />
         </Switch>
       </Content>
       <Footer style={{ textAlign: "center" }}>
