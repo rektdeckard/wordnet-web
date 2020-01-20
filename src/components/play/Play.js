@@ -4,7 +4,7 @@ import { ResponsiveNetwork } from "@nivo/network";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { connect } from "react-redux";
 
-import { addElements, removeElement } from "../actions";
+import { addElements, removeElement } from "../../actions";
 
 const { Content } = Layout;
 const nivo = ['#e8c1a0', '#f47560', '#f1e15b', '#e8a838', '#61cdbb', '#97e3d5'];
@@ -51,7 +51,7 @@ const Play = ({ graph, settings, addElements, removeElement }) => {
         radius: 8,
         depth: currentNode.depth + 1,
         // color: "rgb(97, 205, 187)"
-        color: nivo[currentNode.depth - 1]
+        color: nivo[(currentNode.depth - 1) % nivo.length]
         //   color: `hsl(${360 - (60 * currentNode.depth - 1)}, 40%, 60%)`
       }));
 
@@ -83,7 +83,7 @@ const Play = ({ graph, settings, addElements, removeElement }) => {
         <Content>
           <TransformWrapper>
             <TransformComponent>
-              <div style={{ height: 700, width: 1168 }}>
+            <div style={{ height: (window.innerHeight - 282), width: (window.innerWidth - 100) }}>
                 <ResponsiveNetwork
                   // height={700}
                   nodes={graph.nodes}
