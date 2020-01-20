@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.js": "/wordnet-web/static/js/main.1b755089.chunk.js",
-    "main.js.map": "/wordnet-web/static/js/main.1b755089.chunk.js.map",
-    "runtime-main.js": "/wordnet-web/static/js/runtime-main.8e2b67da.js",
-    "runtime-main.js.map": "/wordnet-web/static/js/runtime-main.8e2b67da.js.map",
+    "main.js": "/wordnet-web/static/js/main.88417667.chunk.js",
+    "main.js.map": "/wordnet-web/static/js/main.88417667.chunk.js.map",
+    "runtime-main.js": "/wordnet-web/static/js/runtime-main.c660572a.js",
+    "runtime-main.js.map": "/wordnet-web/static/js/runtime-main.c660572a.js.map",
     "static/css/2.ff8bd605.chunk.css": "/wordnet-web/static/css/2.ff8bd605.chunk.css",
-    "static/js/2.4d06ed36.chunk.js": "/wordnet-web/static/js/2.4d06ed36.chunk.js",
-    "static/js/2.4d06ed36.chunk.js.map": "/wordnet-web/static/js/2.4d06ed36.chunk.js.map",
+    "static/js/2.cf203d65.chunk.js": "/wordnet-web/static/js/2.cf203d65.chunk.js",
+    "static/js/2.cf203d65.chunk.js.map": "/wordnet-web/static/js/2.cf203d65.chunk.js.map",
     "index.html": "/wordnet-web/index.html",
-    "precache-manifest.8679f7c95ea87e2aa49113cb620524da.js": "/wordnet-web/precache-manifest.8679f7c95ea87e2aa49113cb620524da.js",
+    "precache-manifest.9cd68e1cc62ccfec50939d34ab4f1dbb.js": "/wordnet-web/precache-manifest.9cd68e1cc62ccfec50939d34ab4f1dbb.js",
     "service-worker.js": "/wordnet-web/service-worker.js",
     "static/css/2.ff8bd605.chunk.css.map": "/wordnet-web/static/css/2.ff8bd605.chunk.css.map",
-    "static/js/2.4d06ed36.chunk.js.LICENSE": "/wordnet-web/static/js/2.4d06ed36.chunk.js.LICENSE"
+    "static/js/2.cf203d65.chunk.js.LICENSE": "/wordnet-web/static/js/2.cf203d65.chunk.js.LICENSE"
   },
   "entrypoints": [
-    "static/js/runtime-main.8e2b67da.js",
+    "static/js/runtime-main.c660572a.js",
     "static/css/2.ff8bd605.chunk.css",
-    "static/js/2.4d06ed36.chunk.js",
-    "static/js/main.1b755089.chunk.js"
+    "static/js/2.cf203d65.chunk.js",
+    "static/js/main.88417667.chunk.js"
   ]
 }
