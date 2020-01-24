@@ -2,7 +2,7 @@ import { combineReducers, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
 import settingsReducer from "./settingsReducer";
-import graphReducer from "./graphRecuder";
+import graphReducer from "./graphReducer";
 
 const rootReducer = combineReducers({
   settings: settingsReducer,
