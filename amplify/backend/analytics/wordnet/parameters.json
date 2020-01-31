@@ -1,0 +1,20 @@
+{
+    "appName": "wordnet",
+    "roleName": "pinpointLambdaRole8e3969e2",
+    "cloudWatchPolicyName": "cloudWatchPolicy8e3969e2",
+    "pinpointPolicyName": "pinpointPolicy8e3969e2",
+    "authPolicyName": "pinpoint_amplify_8e3969e2",
+    "unauthPolicyName": "pinpoint_amplify_8e3969e2",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "wordnet",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authwordnetwebdev61394928",
+            "Outputs.UserPoolId"
+        ]
+    }
+}
