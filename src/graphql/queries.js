@@ -5,7 +5,6 @@ export const getWordNet = /* GraphQL */ `
   query GetWordNet($id: ID!) {
     getWordNet(id: $id) {
       id
-      timestamp
       nodes {
         items {
           id
@@ -35,7 +34,6 @@ export const listWordNets = /* GraphQL */ `
     listWordNets(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        timestamp
         nodes {
           nextToken
         }
@@ -57,7 +55,6 @@ export const getNode = /* GraphQL */ `
       color
       network {
         id
-        timestamp
         nodes {
           nextToken
         }
@@ -97,7 +94,6 @@ export const listNodes = /* GraphQL */ `
         color
         network {
           id
-          timestamp
         }
         sources {
           nextToken
@@ -122,7 +118,6 @@ export const getEdge = /* GraphQL */ `
         color
         network {
           id
-          timestamp
         }
         sources {
           nextToken
@@ -139,7 +134,6 @@ export const getEdge = /* GraphQL */ `
         color
         network {
           id
-          timestamp
         }
         sources {
           nextToken
@@ -151,7 +145,6 @@ export const getEdge = /* GraphQL */ `
       distance
       network {
         id
-        timestamp
         nodes {
           nextToken
         }
@@ -188,7 +181,6 @@ export const listEdges = /* GraphQL */ `
         distance
         network {
           id
-          timestamp
         }
       }
       nextToken

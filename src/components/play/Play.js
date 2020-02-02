@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Layout, Breadcrumb, Input } from "antd";
+import { Layout, Input } from "antd";
 import { ResponsiveNetwork } from "@nivo/network";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { connect } from "react-redux";
 
 import { addElements, removeElement } from "../../actions";
-import Crumb from "../Crumb";
 
 const { Content } = Layout;
 const nivo = ["#e8c1a0", "#f47560", "#f1e15b", "#e8a838", "#61cdbb", "#97e3d5"];
@@ -75,52 +74,50 @@ const Play = ({ graph, settings, addElements, removeElement }) => {
   };
 
   return (
-    <Crumb>
-      <Layout style={{ padding: "0px 0px", background: "#fff" }}>
-        <Content>
-          <TransformWrapper>
-            <TransformComponent>
-              <div
-                style={{
-                  height: window.innerHeight - 282,
-                  width: window.innerWidth - 100
+    <Layout style={{ padding: "0px 0px", background: "#fff" }}>
+      <Content>
+        <TransformWrapper>
+          <TransformComponent>
+            <div
+              style={{
+                height: window.innerHeight - 282,
+                width: window.innerWidth - 100
+              }}
+            >
+              <ResponsiveNetwork
+                // height={700}
+                nodes={graph.nodes}
+                links={graph.links}
+                repulsivity={repulsivity}
+                distanceMin={distanceMin}
+                distanceMax={distanceMax}
+                iterations={iterations}
+                nodeColor={n => n.color}
+                nodeBorderWidth={borderWidth}
+                nodeBorderColor={{
+                  from: "color",
+                  modifiers: [["darker", 0.8]]
                 }}
-              >
-                <ResponsiveNetwork
-                  // height={700}
-                  nodes={graph.nodes}
-                  links={graph.links}
-                  repulsivity={repulsivity}
-                  distanceMin={distanceMin}
-                  distanceMax={distanceMax}
-                  iterations={iterations}
-                  nodeColor={n => n.color}
-                  nodeBorderWidth={borderWidth}
-                  nodeBorderColor={{
-                    from: "color",
-                    modifiers: [["darker", 0.8]]
-                  }}
-                  linkThickness={
-                    linkThickness ?? (l => Math.ceil(4 / l.source.depth))
-                  }
-                  motionStiffness={motionStiffness}
-                  motionDamping={motionDamping}
-                  animate={animate}
-                  isInteractive={true}
-                />
-              </div>
-            </TransformComponent>
-          </TransformWrapper>
-          <Input
-            placeholder={`Define ${currentNode.id}`}
-            value={entry}
-            allowClear
-            onChange={handleChange}
-            onPressEnter={handleSubmit}
-          />
-        </Content>
-      </Layout>
-    </Crumb>
+                linkThickness={
+                  linkThickness ?? (l => Math.ceil(4 / l.source.depth))
+                }
+                motionStiffness={motionStiffness}
+                motionDamping={motionDamping}
+                animate={animate}
+                isInteractive={true}
+              />
+            </div>
+          </TransformComponent>
+        </TransformWrapper>
+        <Input
+          placeholder={`Define ${currentNode.id}`}
+          value={entry}
+          allowClear
+          onChange={handleChange}
+          onPressEnter={handleSubmit}
+        />
+      </Content>
+    </Layout>
   );
 };
 

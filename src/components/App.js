@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { withRouter, Switch, Route, Link, Redirect } from "react-router-dom";
+import { withRouter, Switch, Route, Link } from "react-router-dom";
 import { Layout, Menu, Icon } from "antd";
 import "antd/dist/antd.css";
 import { Analytics, Auth } from "aws-amplify";
@@ -11,6 +11,7 @@ import Learn from "./learn/Learn";
 import Account from "./settings/Account";
 import Settings from "./settings/Settings";
 import Missing from "./Missing";
+import Home from "./Home";
 
 const { Header, Content, Footer } = Layout;
 
@@ -69,14 +70,19 @@ const App = props => {
           </Menu.SubMenu>
         </Menu>
       </Header>
-      <Content style={{ padding: "64px 50px", flexGrow: 1 }}>
+      <Content style={{ padding: "64px 50px", minHeight: "100vh" }}>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route render={Crumb} />
+        </Switch>
         <Switch>
           <Route path="/play" component={Play} />
           <Route path="/explore" component={Explore} />
           <Route path="/learn" component={Learn} />
           <Route path="/account" component={Account} />
           <Route path="/settings" component={Settings} />
-          <Route render={Missing} />
+          <Route exact path="/" component={null}/>
+          <Route render={() => <Missing style={{ marginTop: 52}}/>} />
         </Switch>
       </Content>
       <Footer style={{ textAlign: "center" }}>

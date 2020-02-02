@@ -5,7 +5,6 @@ export const onCreateWordNet = /* GraphQL */ `
   subscription OnCreateWordNet {
     onCreateWordNet {
       id
-      timestamp
       nodes {
         items {
           id
@@ -30,7 +29,6 @@ export const onUpdateWordNet = /* GraphQL */ `
   subscription OnUpdateWordNet {
     onUpdateWordNet {
       id
-      timestamp
       nodes {
         items {
           id
@@ -55,7 +53,6 @@ export const onDeleteWordNet = /* GraphQL */ `
   subscription OnDeleteWordNet {
     onDeleteWordNet {
       id
-      timestamp
       nodes {
         items {
           id
@@ -86,7 +83,6 @@ export const onCreateNode = /* GraphQL */ `
       color
       network {
         id
-        timestamp
         nodes {
           nextToken
         }
@@ -121,7 +117,6 @@ export const onUpdateNode = /* GraphQL */ `
       color
       network {
         id
-        timestamp
         nodes {
           nextToken
         }
@@ -156,7 +151,6 @@ export const onDeleteNode = /* GraphQL */ `
       color
       network {
         id
-        timestamp
         nodes {
           nextToken
         }
@@ -193,7 +187,6 @@ export const onCreateEdge = /* GraphQL */ `
         color
         network {
           id
-          timestamp
         }
         sources {
           nextToken
@@ -210,7 +203,6 @@ export const onCreateEdge = /* GraphQL */ `
         color
         network {
           id
-          timestamp
         }
         sources {
           nextToken
@@ -222,7 +214,6 @@ export const onCreateEdge = /* GraphQL */ `
       distance
       network {
         id
-        timestamp
         nodes {
           nextToken
         }
@@ -245,7 +236,6 @@ export const onUpdateEdge = /* GraphQL */ `
         color
         network {
           id
-          timestamp
         }
         sources {
           nextToken
@@ -262,7 +252,6 @@ export const onUpdateEdge = /* GraphQL */ `
         color
         network {
           id
-          timestamp
         }
         sources {
           nextToken
@@ -274,7 +263,6 @@ export const onUpdateEdge = /* GraphQL */ `
       distance
       network {
         id
-        timestamp
         nodes {
           nextToken
         }
@@ -297,7 +285,6 @@ export const onDeleteEdge = /* GraphQL */ `
         color
         network {
           id
-          timestamp
         }
         sources {
           nextToken
@@ -314,7 +301,6 @@ export const onDeleteEdge = /* GraphQL */ `
         color
         network {
           id
-          timestamp
         }
         sources {
           nextToken
@@ -326,7 +312,6 @@ export const onDeleteEdge = /* GraphQL */ `
       distance
       network {
         id
-        timestamp
         nodes {
           nextToken
         }

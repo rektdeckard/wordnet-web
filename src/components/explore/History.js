@@ -5,7 +5,7 @@ import { ResponsiveCalendar } from "@nivo/calendar";
 const { Content } = Layout;
 
 const History = () => {
-  const [data, setData] = useState([
+  const [data] = useState([
     // { day: "2019-01-03", value: 2 },
     // { day: "2019-01-05", value: 1 },
     // { day: "2019-01-06", value: 2 },
