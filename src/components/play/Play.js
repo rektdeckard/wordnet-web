@@ -5,9 +5,10 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { connect } from "react-redux";
 
 import { addElements, removeElement } from "../../actions";
+import Crumb from "../Crumb";
 
 const { Content } = Layout;
-const nivo = ['#e8c1a0', '#f47560', '#f1e15b', '#e8a838', '#61cdbb', '#97e3d5'];
+const nivo = ["#e8c1a0", "#f47560", "#f1e15b", "#e8a838", "#61cdbb", "#97e3d5"];
 
 const Play = ({ graph, settings, addElements, removeElement }) => {
   const {
@@ -23,12 +24,12 @@ const Play = ({ graph, settings, addElements, removeElement }) => {
   } = settings;
 
   const randomNode = () =>
-  graph.nodes[Math.floor(Math.random() * graph.nodes.length)] ?? {
-    id: "smart",
-    radius: 12,
-    depth: 1,
-    color: "rgb(244, 117, 96)"
-  };
+    graph.nodes[Math.floor(Math.random() * graph.nodes.length)] ?? {
+      id: "smart",
+      radius: 12,
+      depth: 1,
+      color: "rgb(244, 117, 96)"
+    };
 
   const [entry, setEntry] = useState("");
   const [currentNode, setCurrentNode] = useState(randomNode());
@@ -74,16 +75,17 @@ const Play = ({ graph, settings, addElements, removeElement }) => {
   };
 
   return (
-    <>
-      <Breadcrumb style={{ margin: "16px 0" }}>
-        <Breadcrumb.Item>Play</Breadcrumb.Item>
-        <Breadcrumb.Item>Quick Round</Breadcrumb.Item>
-      </Breadcrumb>
+    <Crumb>
       <Layout style={{ padding: "0px 0px", background: "#fff" }}>
         <Content>
           <TransformWrapper>
             <TransformComponent>
-            <div style={{ height: (window.innerHeight - 282), width: (window.innerWidth - 100) }}>
+              <div
+                style={{
+                  height: window.innerHeight - 282,
+                  width: window.innerWidth - 100
+                }}
+              >
                 <ResponsiveNetwork
                   // height={700}
                   nodes={graph.nodes}
@@ -118,7 +120,7 @@ const Play = ({ graph, settings, addElements, removeElement }) => {
           />
         </Content>
       </Layout>
-    </>
+    </Crumb>
   );
 };
 
