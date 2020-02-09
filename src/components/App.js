@@ -19,7 +19,7 @@ const App = props => {
   const {location} = props;
   // Add analytics tracker
   useEffect(() => {
-    Analytics.record("Amplify_CLI");
+    Analytics.record("page_load");
   }, []);
 
   // Get final path segment to show active menu item
