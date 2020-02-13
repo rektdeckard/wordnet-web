@@ -1,15 +1,18 @@
 {
   "name": "wordnet",
   "version": "0.1.0",
-  "homepage": "http://rektdeckard.github.io/wordnet-web",
   "private": true,
   "dependencies": {
+    "@aws-amplify/api": "^2.1.3",
+    "@aws-amplify/pubsub": "^2.1.3",
     "@nivo/calendar": "^0.61.1",
     "@nivo/network": "^0.61.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "antd": "^3.26.7",
+    "aws-amplify": "^2.2.2",
+    "aws-amplify-react": "^3.1.3",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -26,9 +29,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"

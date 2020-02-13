@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Breadcrumb, Input } from "antd";
+import { Layout, Input } from "antd";
 import { ResponsiveNetwork } from "@nivo/network";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { connect } from "react-redux";
@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { addElements, removeElement } from "../../actions";
 
 const { Content } = Layout;
-const nivo = ['#e8c1a0', '#f47560', '#f1e15b', '#e8a838', '#61cdbb', '#97e3d5'];
+const nivo = ["#e8c1a0", "#f47560", "#f1e15b", "#e8a838", "#61cdbb", "#97e3d5"];
 
 const Play = ({ graph, settings, addElements, removeElement }) => {
   const {
@@ -23,12 +23,12 @@ const Play = ({ graph, settings, addElements, removeElement }) => {
   } = settings;
 
   const randomNode = () =>
-  graph.nodes[Math.floor(Math.random() * graph.nodes.length)] ?? {
-    id: "smart",
-    radius: 12,
-    depth: 1,
-    color: "rgb(244, 117, 96)"
-  };
+    graph.nodes[Math.floor(Math.random() * graph.nodes.length)] ?? {
+      id: "smart",
+      radius: 12,
+      depth: 1,
+      color: "rgb(244, 117, 96)"
+    };
 
   const [entry, setEntry] = useState("");
   const [currentNode, setCurrentNode] = useState(randomNode());
@@ -74,51 +74,50 @@ const Play = ({ graph, settings, addElements, removeElement }) => {
   };
 
   return (
-    <>
-      <Breadcrumb style={{ margin: "16px 0" }}>
-        <Breadcrumb.Item>Play</Breadcrumb.Item>
-        <Breadcrumb.Item>Quick Round</Breadcrumb.Item>
-      </Breadcrumb>
-      <Layout style={{ padding: "0px 0px", background: "#fff" }}>
-        <Content>
-          <TransformWrapper>
-            <TransformComponent>
-            <div style={{ height: (window.innerHeight - 282), width: (window.innerWidth - 100) }}>
-                <ResponsiveNetwork
-                  // height={700}
-                  nodes={graph.nodes}
-                  links={graph.links}
-                  repulsivity={repulsivity}
-                  distanceMin={distanceMin}
-                  distanceMax={distanceMax}
-                  iterations={iterations}
-                  nodeColor={n => n.color}
-                  nodeBorderWidth={borderWidth}
-                  nodeBorderColor={{
-                    from: "color",
-                    modifiers: [["darker", 0.8]]
-                  }}
-                  linkThickness={
-                    linkThickness ?? (l => Math.ceil(4 / l.source.depth))
-                  }
-                  motionStiffness={motionStiffness}
-                  motionDamping={motionDamping}
-                  animate={animate}
-                  isInteractive={true}
-                />
-              </div>
-            </TransformComponent>
-          </TransformWrapper>
-          <Input
-            placeholder={`Define ${currentNode.id}`}
-            value={entry}
-            allowClear
-            onChange={handleChange}
-            onPressEnter={handleSubmit}
-          />
-        </Content>
-      </Layout>
-    </>
+    <Layout style={{ padding: "0px 0px", background: "#fff" }}>
+      <Content>
+        <TransformWrapper>
+          <TransformComponent>
+            <div
+              style={{
+                height: window.innerHeight - 282,
+                width: window.innerWidth - 100
+              }}
+            >
+              <ResponsiveNetwork
+                // height={700}
+                nodes={graph.nodes}
+                links={graph.links}
+                repulsivity={repulsivity}
+                distanceMin={distanceMin}
+                distanceMax={distanceMax}
+                iterations={iterations}
+                nodeColor={n => n.color}
+                nodeBorderWidth={borderWidth}
+                nodeBorderColor={{
+                  from: "color",
+                  modifiers: [["darker", 0.8]]
+                }}
+                linkThickness={
+                  linkThickness ?? (l => Math.ceil(4 / l.source.depth))
+                }
+                motionStiffness={motionStiffness}
+                motionDamping={motionDamping}
+                animate={animate}
+                isInteractive={true}
+              />
+            </div>
+          </TransformComponent>
+        </TransformWrapper>
+        <Input
+          placeholder={`Define ${currentNode.id}`}
+          value={entry}
+          allowClear
+          onChange={handleChange}
+          onPressEnter={handleSubmit}
+        />
+      </Content>
+    </Layout>
   );
 };
 
