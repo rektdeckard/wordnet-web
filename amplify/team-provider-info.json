@@ -1,0 +1,20 @@
+{
+    "deva": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-wordnet-web-dev-deva-174559-authRole",
+            "UnauthRoleArn": "arn:aws:iam::830320637348:role/amplify-wordnet-web-dev-deva-174559-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::830320637348:role/amplify-wordnet-web-dev-deva-174559-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-wordnet-web-dev-deva-174559-deployment",
+            "UnauthRoleName": "amplify-wordnet-web-dev-deva-174559-unauthRole",
+            "StackName": "amplify-wordnet-web-dev-deva-174559",
+            "StackId": "arn:aws:cloudformation:us-east-1:830320637348:stack/amplify-wordnet-web-dev-deva-174559/4c218500-3efb-11ea-b588-0aa9a390fc79",
+            "AmplifyAppId": "dqw21i2kor5ec"
+        },
+        "categories": {
+            "auth": {
+                "wordnetwebdev61394928": {}
+            }
+        }
+    }
+}

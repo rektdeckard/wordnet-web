@@ -1,0 +1,24 @@
+type WordNet @model {
+  id: ID!
+  nodes: [Node!]! @connection(name: "NetworkNodes")
+  edges: [Edge!]! @connection(name: "NetworkEdges")
+}
+
+type Node @model {
+  id: ID!
+  value: String!
+  depth: Int
+  radius: Int
+  color: String
+  network: WordNet! @connection(name: "NetworkNodes")
+  sources: [Edge!]! @connection(name: "EdgeSource")
+  targets: [Edge!]! @connection(name: "EdgeTarget")
+}
+
+type Edge @model {
+  id: ID!
+  source: Node! @connection(name: "EdgeSource")
+  target: Node! @connection(name: "EdgeTarget")
+  distance: Int!
+  network: WordNet! @connection(name: "NetworkEdges")
+}
