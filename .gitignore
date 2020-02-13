@@ -24,3 +24,7 @@ yarn-debug.log*
 yarn-error.log*
 yarn.lock
 package-lock.json
+
+# aws amplify
+amplify/
+src/aws-exports.js
