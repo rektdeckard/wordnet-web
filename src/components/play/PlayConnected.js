@@ -1,37 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
+import { Connect } from "aws-amplify-react";
+import * as queries from "../../graphql/queries";
+import * as subscriptions from "../../graphql/subscriptions";
+import * as mutations from "../../graphql/mutations";
 import { Layout, Input } from "antd";
 import { ResponsiveNetwork } from "@nivo/network";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
-import { addElements, removeElement } from "../../actions";
+import { addElements, removeElement, initializeSession } from "../../actions";
 
 const { Content } = Layout;
 const nivo = ["#e8c1a0", "#f47560", "#f1e15b", "#e8a838", "#61cdbb", "#97e3d5"];
 
-const Play = ({ graph, settings, addElements, removeElement }) => {
-  const {
-    repulsivity,
-    distanceMin,
-    distanceMax,
-    iterations,
-    borderWidth,
-    linkThickness,
-    animate,
-    motionStiffness,
-    motionDamping
-  } = settings;
+const PlayConnected = ({
+  graph,
+  settings,
+  addElements,
+  removeElement,
+  initializeSession
+}) => {
+  const { session, currentNode } = graph;
 
-  const randomNode = () =>
-    graph.nodes[Math.floor(Math.random() * graph.nodes.length)] ?? {
-      id: "smart",
-      radius: 12,
-      depth: 1,
-      color: "rgb(244, 117, 96)"
-    };
+  useEffect(() => {
+    if (!session) {
+      initializeSession();
+    }
+  }, []);
 
   const [entry, setEntry] = useState("");
-  const [currentNode, setCurrentNode] = useState(randomNode());
 
   const handleChange = e => {
     const { value } = e.target;
@@ -58,19 +56,18 @@ const Play = ({ graph, settings, addElements, removeElement }) => {
     // Create links from current node to each token's new or extant node
     // TODO: Update distance for extant links to represent stronger association?
     const existingLinks = graph.links
-      .filter(l => l.source === currentNode.id)
+      .filter(l => l.source === currentNode.value)
       .map(l => l.target);
     const newLinks = tokens
       .filter(t => !existingLinks.includes(t))
       .map(t => ({
-        source: currentNode.id,
+        source: currentNode.value,
         target: t,
         distance: 30
       }));
 
-    addElements(newNodes, newLinks);
+    addElements(session, currentNode, newNodes, newLinks);
     setEntry("");
-    setCurrentNode(randomNode());
   };
 
   return (
@@ -84,33 +81,54 @@ const Play = ({ graph, settings, addElements, removeElement }) => {
                 width: window.innerWidth - 100
               }}
             >
+              <Connect
+                query={graphqlOperation(queries.listWordNets)}
+                subscription={graphqlOperation(subscriptions.onCreateNode)}
+                onSubscriptionMsg={(prev, { onCreateNode }) => {
+                  console.log(onCreateNode);
+                  return prev;
+                }}
+              >
+                {({ data: { listWordNets }, loading, errors }) => {
+                  if (errors) {
+                    console.log("errors", errors);
+                    return <h3>Error</h3>;
+                  }
+                  if (loading) {
+                    console.log("loading", loading);
+                    return <h3>Loading</h3>;
+                  }
+                  console.log(listWordNets);
+                  return <h3>Loaded</h3>;
+                }}
+              </Connect>
               <ResponsiveNetwork
                 // height={700}
                 nodes={graph.nodes}
                 links={graph.links}
-                repulsivity={repulsivity}
-                distanceMin={distanceMin}
-                distanceMax={distanceMax}
-                iterations={iterations}
+                repulsivity={settings.repulsivity}
+                distanceMin={settings.distanceMin}
+                distanceMax={settings.distanceMax}
+                iterations={settings.iterations}
                 nodeColor={n => n.color}
-                nodeBorderWidth={borderWidth}
+                nodeBorderWidth={settings.borderWidth}
                 nodeBorderColor={{
                   from: "color",
                   modifiers: [["darker", 0.8]]
                 }}
                 linkThickness={
-                  linkThickness ?? (l => Math.ceil(4 / l.source.depth))
+                  settings.linkThickness ?? (l => Math.ceil(4 / l.source.depth))
                 }
-                motionStiffness={motionStiffness}
-                motionDamping={motionDamping}
-                animate={animate}
+                motionStiffness={settings.motionStiffness}
+                motionDamping={settings.motionDamping}
+                animate={settings.animate}
                 isInteractive={true}
               />
             </div>
           </TransformComponent>
         </TransformWrapper>
         <Input
-          placeholder={`Define ${currentNode.id}`}
+          placeholder={`Define ${currentNode?.value ?? "smart"}`}
           value={entry}
           allowClear
           onChange={handleChange}
@@ -125,4 +143,8 @@ const mapStateToProps = state => {
   return { settings: state.settings, graph: state.graph };
 };
 
-export default connect(mapStateToProps, { addElements, removeElement })(Play);
+export default connect(mapStateToProps, {
+  addElements,
+  removeElement,
+  initializeSession
+})(PlayConnected);

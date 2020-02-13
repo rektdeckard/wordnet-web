@@ -7,6 +7,7 @@ import { Analytics, Auth } from "aws-amplify";
 import Crumb from "./Crumb";
 import Explore from "./explore/Explore";
 import Play from "./play/Play";
+import PlayConnected from "./play/PlayConnected";
 import Learn from "./learn/Learn";
 import Account from "./settings/Account";
 import Settings from "./settings/Settings";
@@ -76,7 +77,7 @@ const App = props => {
           <Route render={Crumb} />
         </Switch>
         <Switch>
-          <Route path="/play" component={Play} />
+          <Route path="/play" component={PlayConnected} />
           <Route path="/explore" component={Explore} />
           <Route path="/learn" component={Learn} />
           <Route path="/account" component={Account} />
