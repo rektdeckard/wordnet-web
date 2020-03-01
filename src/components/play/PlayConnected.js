@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
-import Amplify, { API, graphqlOperation } from "aws-amplify";
 import { Connect } from "aws-amplify-react";
-import * as queries from "../../graphql/queries";
-import * as subscriptions from "../../graphql/subscriptions";
-import * as mutations from "../../graphql/mutations";
 import { Layout, Input } from "antd";
 import { ResponsiveNetwork } from "@nivo/network";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -22,26 +18,44 @@ const PlayConnected = ({
   initializeSession
 }) => {
   const { session, currentNode } = graph;
+  const nodes = useMemo(
+    () =>
+      graph.nodes?.map(({ value, depth, radius, color }) => ({
+        id: value,
+        depth,
+        radius,
+        color
+      })),
+    [graph]
+  );
+  const [entry, setEntry] = useState("");
 
   useEffect(() => {
     if (!session) {
       initializeSession();
     }
-  }, []);
-
-  const [entry, setEntry] = useState("");
+  }, [session, initializeSession]);
 
   const handleChange = e => {
     const { value } = e.target;
     setEntry(value);
   };
 
-  const handleSubmit = e => {
-    // Extract unique tokens from entry, splitting on spaces
-    const tokens = [...new Set(e.target.value.split(" "))];
+  const handleSubmit = () => {
+    if (!entry) return;
+
+    // Extract unique tokens from entry, removing special characters and splitting on spaces/hyphens
+    const tokens = [
+      ...new Set(
+        entry
+          .replace(/[.,\\/#!$%^&*;:{}=_`~()]/g, "")
+          .replace(/\s{2,}/g, " ")
+          .split(/[\s-]/)
+      )
+    ];
 
     // Create new node for each token that does not already have one
-    const existingTokens = graph.nodes.map(n => n.id);
+    const existingTokens = graph.nodes.map(n => n.value);
     const newNodes = tokens
       .filter(t => !existingTokens.includes(t))
       .map(t => ({
@@ -66,7 +80,7 @@ const PlayConnected = ({
         distance: 30
       }));
 
-    addElements(session, currentNode, newNodes, newLinks);
+    addElements(newNodes, newLinks);
     setEntry("");
   };
 
@@ -81,7 +95,8 @@ const PlayConnected = ({
                 width: window.innerWidth - 100
               }}
             >
-              <Connect
+              {/* TODO: Make ResponsiveNetwork as a subscriber to the data! */}
+              {/* <Connect
                 query={graphqlOperation(queries.listWordNets)}
                 subscription={graphqlOperation(subscriptions.onCreateNode)}
                 onSubscriptionMsg={(prev, { onCreateNode }) => {
@@ -90,7 +105,7 @@ const PlayConnected = ({
                 }}
               >
                 {({ data: { listWordNets }, loading, errors }) => {
-                  if (errors) {
+                  if (errors.length) {
                     console.log("errors", errors);
                     return <h3>Error</h3>;
                   }
@@ -101,10 +116,10 @@ const PlayConnected = ({
                   console.log(listWordNets);
                   return <h3>Loaded</h3>;
                 }}
-              </Connect>
+              </Connect> */}
               <ResponsiveNetwork
                 // height={700}
-                nodes={graph.nodes}
+                nodes={nodes}
                 links={graph.links}
                 repulsivity={settings.repulsivity}
                 distanceMin={settings.distanceMin}
