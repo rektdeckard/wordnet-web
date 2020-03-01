@@ -6,7 +6,7 @@ import {
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  nodes: [{ id: "smart", radius: 12, depth: 1, color: "rgb(244, 117, 96)" }],
+  nodes: [],
   links: [],
   session: null,
   currentNode: null
@@ -18,7 +18,8 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...INITIAL_STATE,
         session: action.payload.session,
-        currentNode: action.payload.currentNode
+        currentNode: action.payload.currentNode,
+        nodes: [action.payload.currentNode]
       };
     case SUBMIT_GRAPH_SESSION:
       return INITIAL_STATE;
