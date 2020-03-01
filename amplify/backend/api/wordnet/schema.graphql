@@ -6,9 +6,6 @@ type WordNet @model {
   modifiedAt: AWSDateTime
 }
 
-# TODO: Create a Response type that captures the complete response string,
-# response time
-
 type Node @model {
   id: ID!
   value: String!
