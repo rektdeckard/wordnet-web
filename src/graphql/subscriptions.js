@@ -12,6 +12,7 @@ export const onCreateWordNet = /* GraphQL */ `
           depth
           radius
           color
+          createdAt
         }
         nextToken
       }
@@ -19,9 +20,12 @@ export const onCreateWordNet = /* GraphQL */ `
         items {
           id
           distance
+          createdAt
         }
         nextToken
       }
+      createdAt
+      modifiedAt
     }
   }
 `;
@@ -36,6 +40,7 @@ export const onUpdateWordNet = /* GraphQL */ `
           depth
           radius
           color
+          createdAt
         }
         nextToken
       }
@@ -43,9 +48,12 @@ export const onUpdateWordNet = /* GraphQL */ `
         items {
           id
           distance
+          createdAt
         }
         nextToken
       }
+      createdAt
+      modifiedAt
     }
   }
 `;
@@ -60,6 +68,7 @@ export const onDeleteWordNet = /* GraphQL */ `
           depth
           radius
           color
+          createdAt
         }
         nextToken
       }
@@ -67,9 +76,12 @@ export const onDeleteWordNet = /* GraphQL */ `
         items {
           id
           distance
+          createdAt
         }
         nextToken
       }
+      createdAt
+      modifiedAt
     }
   }
 `;
@@ -89,11 +101,14 @@ export const onCreateNode = /* GraphQL */ `
         edges {
           nextToken
         }
+        createdAt
+        modifiedAt
       }
       sources {
         items {
           id
           distance
+          createdAt
         }
         nextToken
       }
@@ -101,9 +116,11 @@ export const onCreateNode = /* GraphQL */ `
         items {
           id
           distance
+          createdAt
         }
         nextToken
       }
+      createdAt
     }
   }
 `;
@@ -123,11 +140,14 @@ export const onUpdateNode = /* GraphQL */ `
         edges {
           nextToken
         }
+        createdAt
+        modifiedAt
       }
       sources {
         items {
           id
           distance
+          createdAt
         }
         nextToken
       }
@@ -135,9 +155,11 @@ export const onUpdateNode = /* GraphQL */ `
         items {
           id
           distance
+          createdAt
         }
         nextToken
       }
+      createdAt
     }
   }
 `;
@@ -157,11 +179,14 @@ export const onDeleteNode = /* GraphQL */ `
         edges {
           nextToken
         }
+        createdAt
+        modifiedAt
       }
       sources {
         items {
           id
           distance
+          createdAt
         }
         nextToken
       }
@@ -169,9 +194,11 @@ export const onDeleteNode = /* GraphQL */ `
         items {
           id
           distance
+          createdAt
         }
         nextToken
       }
+      createdAt
     }
   }
 `;
@@ -187,6 +214,8 @@ export const onCreateEdge = /* GraphQL */ `
         color
         network {
           id
+          createdAt
+          modifiedAt
         }
         sources {
           nextToken
@@ -194,6 +223,7 @@ export const onCreateEdge = /* GraphQL */ `
         targets {
           nextToken
         }
+        createdAt
       }
       target {
         id
@@ -203,6 +233,8 @@ export const onCreateEdge = /* GraphQL */ `
         color
         network {
           id
+          createdAt
+          modifiedAt
         }
         sources {
           nextToken
@@ -210,6 +242,7 @@ export const onCreateEdge = /* GraphQL */ `
         targets {
           nextToken
         }
+        createdAt
       }
       distance
       network {
@@ -220,7 +253,10 @@ export const onCreateEdge = /* GraphQL */ `
         edges {
           nextToken
         }
+        createdAt
+        modifiedAt
       }
+      createdAt
     }
   }
 `;
@@ -236,6 +272,8 @@ export const onUpdateEdge = /* GraphQL */ `
         color
         network {
           id
+          createdAt
+          modifiedAt
         }
         sources {
           nextToken
@@ -243,6 +281,7 @@ export const onUpdateEdge = /* GraphQL */ `
         targets {
           nextToken
         }
+        createdAt
       }
       target {
         id
@@ -252,6 +291,8 @@ export const onUpdateEdge = /* GraphQL */ `
         color
         network {
           id
+          createdAt
+          modifiedAt
         }
         sources {
           nextToken
@@ -259,6 +300,7 @@ export const onUpdateEdge = /* GraphQL */ `
         targets {
           nextToken
         }
+        createdAt
       }
       distance
       network {
@@ -269,7 +311,10 @@ export const onUpdateEdge = /* GraphQL */ `
         edges {
           nextToken
         }
+        createdAt
+        modifiedAt
       }
+      createdAt
     }
   }
 `;
@@ -285,6 +330,8 @@ export const onDeleteEdge = /* GraphQL */ `
         color
         network {
           id
+          createdAt
+          modifiedAt
         }
         sources {
           nextToken
@@ -292,6 +339,7 @@ export const onDeleteEdge = /* GraphQL */ `
         targets {
           nextToken
         }
+        createdAt
       }
       target {
         id
@@ -301,6 +349,8 @@ export const onDeleteEdge = /* GraphQL */ `
         color
         network {
           id
+          createdAt
+          modifiedAt
         }
         sources {
           nextToken
@@ -308,6 +358,7 @@ export const onDeleteEdge = /* GraphQL */ `
         targets {
           nextToken
         }
+        createdAt
       }
       distance
       network {
@@ -318,7 +369,10 @@ export const onDeleteEdge = /* GraphQL */ `
         edges {
           nextToken
         }
+        createdAt
+        modifiedAt
       }
+      createdAt
     }
   }
 `;

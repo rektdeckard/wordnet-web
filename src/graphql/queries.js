@@ -1,6 +1,65 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const nodesForWordNet = /* GraphQL */ `
+  query NodesForWordNet($id: ID!, $limit: Int, $nextToken: String) {
+    nodesForWordNet(id: $id, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        value
+        depth
+        radius
+        color
+        network {
+          id
+          createdAt
+          modifiedAt
+        }
+        sources {
+          nextToken
+        }
+        targets {
+          nextToken
+        }
+        createdAt
+      }
+      nextToken
+    }
+  }
+`;
+export const edgesForWordNet = /* GraphQL */ `
+  query EdgesForWordNet($id: ID!, $limit: Int, $nextToken: String) {
+    edgesForWordNet(id: $id, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        source {
+          id
+          value
+          depth
+          radius
+          color
+          createdAt
+        }
+        target {
+          id
+          value
+          depth
+          radius
+          color
+          createdAt
+        }
+        distance
+        network {
+          id
+          createdAt
+          modifiedAt
+        }
+        createdAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getWordNet = /* GraphQL */ `
   query GetWordNet($id: ID!) {
     getWordNet(id: $id) {
@@ -12,6 +71,7 @@ export const getWordNet = /* GraphQL */ `
           depth
           radius
           color
+          createdAt
         }
         nextToken
       }
@@ -19,9 +79,12 @@ export const getWordNet = /* GraphQL */ `
         items {
           id
           distance
+          createdAt
         }
         nextToken
       }
+      createdAt
+      modifiedAt
     }
   }
 `;
@@ -40,11 +103,31 @@ export const listWordNets = /* GraphQL */ `
         edges {
           nextToken
         }
+        createdAt
+        modifiedAt
       }
       nextToken
     }
   }
 `;
+
+export const listHistory = /* GraphQL */ `
+query ListWordNets(
+  $filter: ModelWordNetFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listWordNets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      createdAt
+      modifiedAt
+    }
+    nextToken
+  }
+}
+`;
+
 export const getNode = /* GraphQL */ `
   query GetNode($id: ID!) {
     getNode(id: $id) {
@@ -61,11 +144,14 @@ export const getNode = /* GraphQL */ `
         edges {
           nextToken
         }
+        createdAt
+        modifiedAt
       }
       sources {
         items {
           id
           distance
+          createdAt
         }
         nextToken
       }
@@ -73,9 +159,11 @@ export const getNode = /* GraphQL */ `
         items {
           id
           distance
+          createdAt
         }
         nextToken
       }
+      createdAt
     }
   }
 `;
@@ -94,6 +182,8 @@ export const listNodes = /* GraphQL */ `
         color
         network {
           id
+          createdAt
+          modifiedAt
         }
         sources {
           nextToken
@@ -101,6 +191,7 @@ export const listNodes = /* GraphQL */ `
         targets {
           nextToken
         }
+        createdAt
       }
       nextToken
     }
@@ -118,6 +209,8 @@ export const getEdge = /* GraphQL */ `
         color
         network {
           id
+          createdAt
+          modifiedAt
         }
         sources {
           nextToken
@@ -125,6 +218,7 @@ export const getEdge = /* GraphQL */ `
         targets {
           nextToken
         }
+        createdAt
       }
       target {
         id
@@ -134,6 +228,8 @@ export const getEdge = /* GraphQL */ `
         color
         network {
           id
+          createdAt
+          modifiedAt
         }
         sources {
           nextToken
@@ -141,6 +237,7 @@ export const getEdge = /* GraphQL */ `
         targets {
           nextToken
         }
+        createdAt
       }
       distance
       network {
@@ -151,7 +248,10 @@ export const getEdge = /* GraphQL */ `
         edges {
           nextToken
         }
+        createdAt
+        modifiedAt
       }
+      createdAt
     }
   }
 `;
@@ -170,6 +270,7 @@ export const listEdges = /* GraphQL */ `
           depth
           radius
           color
+          createdAt
         }
         target {
           id
@@ -177,11 +278,15 @@ export const listEdges = /* GraphQL */ `
           depth
           radius
           color
+          createdAt
         }
         distance
         network {
           id
+          createdAt
+          modifiedAt
         }
+        createdAt
       }
       nextToken
     }
