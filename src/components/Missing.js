@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter, Link } from "react-router-dom";
 import { Empty, Button } from "antd";
 
-const Missing = ({ match, style  }) => {
+const Missing = ({ match, style }) => {
   return (
     <Empty
       style={style}

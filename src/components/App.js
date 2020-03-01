@@ -83,6 +83,7 @@ const App = props => {
           <Route path="/account" component={Account} />
           <Route path="/settings" component={Settings} />
           <Route exact path="/" component={null}/>
+          {/* Can use path="*" to match also... perf? */}
           <Route render={() => <Missing style={{ marginTop: 52}}/>} />
         </Switch>
       </Content>
