@@ -33,27 +33,28 @@ const previousMonth = previousWeek.getMonth() + 1;
 const previousDate = previousWeek.getDate();
 const previousWeekday = previousWeek.getDay(); // 0 = Sunday
 
-const Explore = ({ history, fetchHistory }) => {
-  const currentWeekSessions = useMemo(() => history?.sessions?.filter(s => {
+const Explore = ({ history, sessionHistory, fetchHistory }) => {
+  const currentWeekSessions = useMemo(() => sessionHistory?.sessions?.filter(s => {
     const [year, month, date] = s.createdAt.split("T")[0].split("-");
     return (Number(year) === currentYear && Number(month) === currentMonth && Number(date) >= currentDate - currrentWeekday)
-  }), [history]);
+  }), [sessionHistory]);
 
-  const previousWeekSessions = useMemo(() => history?.sessions?.filter(s => {
+  const previousWeekSessions = useMemo(() => sessionHistory?.sessions?.filter(s => {
     const [year, month, date] = s.createdAt.split("T")[0].split("-");
     return (Number(year) === previousYear && Number(month) === previousMonth && Number(date) >= previousDate - previousWeekday && Number(date) < currentDate - currrentWeekday)
-  }), [history]);
+  }), [sessionHistory]);
 
   const weekOverWeek = (currentWeekSessions.length / previousWeekSessions.length * 100);
 
   useEffect(() => {
-    if (!history.sessionsByDay.length) fetchHistory();
-  }, [history, fetchHistory]);
+    if (!sessionHistory.sessionsByDay.length) fetchHistory();
+  }, [sessionHistory, fetchHistory]);
 
   const handleDayClicked = (day, event) => {
     event.preventDefault();
     console.log(day, event);
     // TODO: Redirect to log view
+    history.push(`/explore/history/${day.day}`)
   }
 
   const statisticCards = [
@@ -85,7 +86,7 @@ const Explore = ({ history, fetchHistory }) => {
     />,
     <Statistic
       title="Words logged"
-      value={history.words ?? 0}
+      value={sessionHistory.words ?? 0}
       precision={0}
       prefix={<Icon type="message" />}
     />
@@ -130,7 +131,7 @@ const Explore = ({ history, fetchHistory }) => {
                 <Link to="/explore/history">
                   <div style={{ height: 200 }}>
                     <ResponsiveCalendar
-                      data={history.sessionsByDay}
+                      data={sessionHistory.sessionsByDay}
                       from={new Date()}
                       to={
                         new Date(new Date().setMonth(new Date().getMonth() + 2))
@@ -207,7 +208,7 @@ const Explore = ({ history, fetchHistory }) => {
 };
 
 const mapStateToProps = state => {
-  return { history: state.history };
+  return { sessionHistory: state.history };
 };
 
 export default connect(mapStateToProps, { fetchHistory })(Explore);
