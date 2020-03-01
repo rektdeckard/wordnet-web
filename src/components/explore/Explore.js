@@ -16,6 +16,7 @@ import { ResponsiveCalendar } from "@nivo/calendar";
 import { fetchHistory } from "../../actions";
 import History from "./History";
 import Missing from "../Missing";
+import SessionLog from "./SessionLog";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -44,7 +45,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
     return (Number(year) === previousYear && Number(month) === previousMonth && Number(date) >= previousDate - previousWeekday && Number(date) < currentDate - currrentWeekday)
   }), [sessionHistory]);
 
-  const weekOverWeek = (currentWeekSessions.length / previousWeekSessions.length * 100);
+  const weekOverWeek = (currentWeekSessions.length / previousWeekSessions.length * 100) || 0;
 
   useEffect(() => {
     if (!sessionHistory.sessionsByDay.length) fetchHistory();
@@ -60,14 +61,15 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
   const statisticCards = [
     <Statistic
       title="Goal progress"
-      value={68}
-      precision={0}
+      // value={currentWeekSessions.length / 30 * 100}
+      value={42}
+      precision={1}
       formatter={value => (
         <Progress
           style={{ margin: 16 }}
           type="circle"
           width={100}
-          percent={value}
+          percent={Math.round(value)}
           // successPercent={20}
           format={percent => `${percent}%`}
         />
@@ -201,6 +203,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
           )}
         />
         <Route exact path="/explore/history" component={History} />
+        <Route path="/explore/history/:date" component={SessionLog} />
         <Route render={() => <Missing />} />
       </Switch>
     </Layout>
