@@ -1,14 +1,14 @@
 import { UPDATE_SETTING } from "../actions/types";
 
 const INITIAL_STATE = {
-  repulsivity: 30,
-  distanceMin: 1,
-  distanceMax: 999,
+  repulsivity: 60,
+  distanceMin: 10,
+  distanceMax: 500,
   iterations: 90,
-  borderWidth: 3,
-  linkThickness: 3,
+  borderWidth: 2,
+  linkThickness: 2,
   animate: true,
-  motionStiffness: 100,
+  motionStiffness: 40,
   motionDamping: 10
 };
 

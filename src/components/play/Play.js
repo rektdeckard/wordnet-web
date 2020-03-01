@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { Layout, Input } from "antd";
 import { ResponsiveNetwork } from "@nivo/network";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { connect } from "react-redux";
 
 import { addElements, removeElement } from "../../actions";
 

@@ -1,5 +1,6 @@
-import React from "react";
-import { withRouter, Switch, Route, Link } from "react-router-dom";
+import React, { useEffect, useMemo } from "react";
+import { Switch, Route, Link } from "react-router-dom";
+import { connect } from "react-redux";
 import {
   Layout,
   Typography,
@@ -12,12 +13,50 @@ import {
 } from "antd";
 import { ResponsiveCalendar } from "@nivo/calendar";
 
+import { fetchHistory } from "../../actions";
 import History from "./History";
 import Missing from "../Missing";
 
 const { Title, Paragraph, Text } = Typography;
 
-const Explore = () => {
+const ONE_WEEK = 1000*60*60*24*7;
+
+const now = new Date(Date.now() - ONE_WEEK); // 7 days ago
+const currentYear = now.getFullYear();
+const currentMonth = now.getMonth() + 1;
+const currentDate = now.getDate();
+const currrentWeekday = now.getDay(); // 0 = Sunday 
+
+const previousWeek = new Date(now.getTime() - ONE_WEEK); // 14 days ago
+const previousYear = previousWeek.getFullYear();
+const previousMonth = previousWeek.getMonth() + 1;
+const previousDate = previousWeek.getDate();
+const previousWeekday = previousWeek.getDay(); // 0 = Sunday
+
+const Explore = ({ history, sessionHistory, fetchHistory }) => {
+  const currentWeekSessions = useMemo(() => sessionHistory?.sessions?.filter(s => {
+    const [year, month, date] = s.createdAt.split("T")[0].split("-");
+    return (Number(year) === currentYear && Number(month) === currentMonth && Number(date) >= currentDate - currrentWeekday)
+  }), [sessionHistory]);
+
+  const previousWeekSessions = useMemo(() => sessionHistory?.sessions?.filter(s => {
+    const [year, month, date] = s.createdAt.split("T")[0].split("-");
+    return (Number(year) === previousYear && Number(month) === previousMonth && Number(date) >= previousDate - previousWeekday && Number(date) < currentDate - currrentWeekday)
+  }), [sessionHistory]);
+
+  const weekOverWeek = (currentWeekSessions.length / previousWeekSessions.length * 100);
+
+  useEffect(() => {
+    if (!sessionHistory.sessionsByDay.length) fetchHistory();
+  }, [sessionHistory, fetchHistory]);
+
+  const handleDayClicked = (day, event) => {
+    event.preventDefault();
+    console.log(day, event);
+    // TODO: Redirect to log view
+    history.push(`/explore/history/${day.day}`)
+  }
+
   const statisticCards = [
     <Statistic
       title="Goal progress"
@@ -37,8 +76,7 @@ const Explore = () => {
     />,
     <Statistic
       title="Activity this week"
-      value={11.28}
-      // value={-11.28}
+      value={weekOverWeek}
       precision={1}
       valueStyle={{ color: "#51bdab" }}
       // valueStyle={{ color: "#f47560" }}
@@ -48,7 +86,7 @@ const Explore = () => {
     />,
     <Statistic
       title="Words logged"
-      value={1023}
+      value={sessionHistory.words ?? 0}
       precision={0}
       prefix={<Icon type="message" />}
     />
@@ -93,28 +131,7 @@ const Explore = () => {
                 <Link to="/explore/history">
                   <div style={{ height: 200 }}>
                     <ResponsiveCalendar
-                      data={[
-                        { day: "2020-01-03", value: 2 },
-                        { day: "2020-01-06", value: 1 },
-                        { day: "2020-01-07", value: 3 },
-                        { day: "2020-01-08", value: 3 },
-                        { day: "2020-01-09", value: 1 },
-                        { day: "2020-01-10", value: 4 },
-                        { day: "2020-01-13", value: 1 },
-                        { day: "2020-01-14", value: 2 },
-                        { day: "2020-01-15", value: 1 },
-                        { day: "2020-01-17", value: 2 },
-                        { day: "2020-01-20", value: 2 },
-                        { day: "2020-01-21", value: 4 },
-                        { day: "2020-01-22", value: 1 },
-                        { day: "2020-01-23", value: 2 },
-                        { day: "2020-01-24", value: 1 },
-                        { day: "2020-01-27", value: 1 },
-                        { day: "2020-01-28", value: 2 },
-                        { day: "2020-01-29", value: 2 },
-                        { day: "2020-01-30", value: 3 },
-                        { day: "2020-02-01", value: 1 }
-                      ]}
+                      data={sessionHistory.sessionsByDay}
                       from={new Date()}
                       to={
                         new Date(new Date().setMonth(new Date().getMonth() + 2))
@@ -144,6 +161,7 @@ const Explore = () => {
                           itemDirection: "right-to-left"
                         }
                       ]}
+                      onClick={handleDayClicked}
                     />
                   </div>
                 </Link>
@@ -189,4 +207,8 @@ const Explore = () => {
   );
 };
 
-export default withRouter(Explore);
+const mapStateToProps = state => {
+  return { sessionHistory: state.history };
+};
+
+export default connect(mapStateToProps, { fetchHistory })(Explore);

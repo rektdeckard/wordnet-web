@@ -4,7 +4,7 @@ import { HashRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
-import { withAuthenticator } from 'aws-amplify-react';
+import { withAuthenticator, AmplifyTheme } from 'aws-amplify-react';
 
 import App from "./components/App";
 import store from "./reducers";
@@ -45,7 +45,11 @@ const signUpConfig = {
   ]
 };
 
-const AppWithAuthentication = withAuthenticator(App, { signUpConfig });
+const theme = {
+  ...AmplifyTheme
+}
+
+const AppWithAuthentication = withAuthenticator(App, { signUpConfig }, [], null, theme);
 
 ReactDOM.render(
   <Provider store={store}>
