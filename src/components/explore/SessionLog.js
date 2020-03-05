@@ -7,8 +7,15 @@ const { Title, Paragraph, Text } = Typography;
 
 const columns = [
   {
+    title: "Date",
+    dataIndex: "createDate",
+    sorter: (a, b) => a.createdAt > b.createdAt,
+    sortDirections: ["descend", "ascend"],
+    defaultSortOrder: "descend"
+  },
+  {
     title: "Time",
-    dataIndex: "createdAt",
+    dataIndex: "createTime",
     sorter: (a, b) => a.createdAt > b.createdAt,
     sortDirections: ["descend", "ascend"],
     defaultSortOrder: "descend"
@@ -24,6 +31,8 @@ const columns = [
 
 const SessionLog = () => {
   const { date } = useParams();
+  // const correctedDate = new Date(date).
+
   const [sessions, setSessions] = useState([]);
 
   useEffect(() => {
@@ -45,18 +54,24 @@ const SessionLog = () => {
           }
         }
       }`,
-          { filter: { createdAt: { beginsWith: date } } }
+          { filter: { createdAt: { contains: date } } }
         )
       );
       console.log(res.data);
 
-      const data = res.data.listWordNets.items.map(({ id, createdAt, nodes }) => ({
-        id,
-        createdAt,
-        words: nodes.items.length,
-        time: "00:00",
-        key: id
-      }));
+      const data = res.data.listWordNets.items.map(
+        ({ id, createdAt, nodes }) => {
+          const date = new Date(createdAt);
+          return {
+            id,
+            createdAt,
+            createDate: date.toDateString(),
+            createTime: date.toTimeString(),
+            words: nodes.items.length,
+            key: id
+          };
+        }
+      );
       setSessions(data);
     };
 
