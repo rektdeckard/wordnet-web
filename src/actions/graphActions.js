@@ -6,13 +6,14 @@ import {
   ADD_GRAPH_ELEMENTS,
   REMOVE_GRAPH_ELEMENT,
   INITIALIZE_GRAPH_SESSION,
-  SUBMIT_GRAPH_SESSION
+  SUBMIT_GRAPH_SESSION,
+  SET_CURRENT_NODE
 } from "./types";
 
-export const addElements = (
-  nodes = [],
-  links = []
-) => async (dispatch, getState) => {
+export const addElements = (nodes = [], links = []) => async (
+  dispatch,
+  getState
+) => {
   const { session, currentNode } = getState().graph;
   if (!session || !currentNode) throw new Error("No current session ID!");
 
@@ -43,12 +44,24 @@ export const addElements = (
     )
   );
 
-  const currentNodes = getState().graph.nodes;
-  const randomNode = currentNodes[Math.floor(Math.random() * currentNodes.length)] ?? currentNode;
-
   dispatch({
     type: ADD_GRAPH_ELEMENTS,
-    payload: { nodes: resultNodes.map(res => res.data.createNode), links, session, currentNode: randomNode }
+    payload: {
+      nodes: resultNodes.map(res => res.data.createNode),
+      links
+    }
+  });
+
+  dispatch(selectRandomNode());
+};
+
+export const selectRandomNode = () => (dispatch, getState) => {
+  const { nodes, currentNode } = getState().graph;
+  const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
+
+  dispatch({
+    type: SET_CURRENT_NODE,
+    payload: { currentNode: randomNode, previousNode: currentNode }
   });
 };
 
