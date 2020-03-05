@@ -1,13 +1,19 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
 import { Connect } from "aws-amplify-react";
-import { Layout, Input } from "antd";
+import { Layout, Row, Col, Input, Button, Typography } from "antd";
 import { ResponsiveNetwork } from "@nivo/network";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
-import { addElements, removeElement, initializeSession } from "../../actions";
+import {
+  addElements,
+  removeElement,
+  selectRandomNode,
+  initializeSession
+} from "../../actions";
 
 const { Content } = Layout;
+const { Title, Paragraph, Text } = Typography;
 const nivo = ["#e8c1a0", "#f47560", "#f1e15b", "#e8a838", "#61cdbb", "#97e3d5"];
 
 const PlayConnected = ({
@@ -15,6 +21,7 @@ const PlayConnected = ({
   settings,
   addElements,
   removeElement,
+  selectRandomNode,
   initializeSession
 }) => {
   const { session, currentNode } = graph;
@@ -85,8 +92,16 @@ const PlayConnected = ({
   };
 
   return (
-    <Layout style={{ padding: "0px 0px", background: "#fff" }}>
-      <Content>
+    <Layout>
+      <Title level={2}>Quick Play</Title>
+      <Paragraph>
+        <Text strong>Instructions: </Text>Give a definition or explanation for
+        the provided word below.
+      </Paragraph>
+      <Content style={{ padding: "0px 0px", background: "#fff" }}>
+        <Title level={3} style={{ textAlign: "center", paddingTop: 16 }}>
+          Define the word <Text code>{currentNode?.value ?? "loading..."}</Text>
+        </Title>
         <TransformWrapper>
           <TransformComponent>
             <div
@@ -142,13 +157,27 @@ const PlayConnected = ({
             </div>
           </TransformComponent>
         </TransformWrapper>
-        <Input
-          placeholder={`Define ${currentNode?.value ?? "smart"}`}
-          value={entry}
-          allowClear
-          onChange={handleChange}
-          onPressEnter={handleSubmit}
-        />
+        <Row style={{ padding: 16 }}>
+          <Col span={22}>
+            <Input
+              placeholder={`Define ${currentNode?.value ?? "smart"}`}
+              value={entry}
+              allowClear
+              onChange={handleChange}
+              onPressEnter={handleSubmit}
+            />
+          </Col>
+          <Col span={2}>
+            <Button
+              block
+              type="secondary"
+              onClick={selectRandomNode}
+              disabled={nodes.length <= 1}
+            >
+              Skip
+            </Button>
+          </Col>
+        </Row>
       </Content>
     </Layout>
   );
@@ -161,5 +190,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   addElements,
   removeElement,
+  selectRandomNode,
   initializeSession
 })(PlayConnected);
