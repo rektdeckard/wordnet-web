@@ -1,4 +1,4 @@
-type WordNet @model {
+type WordNet @model @auth(rules: [{allow: owner}]) {
   id: ID!
   nodes: [Node!]! @connection(name: "NetworkNodes")
   edges: [Edge!]! @connection(name: "NetworkEdges")
@@ -6,7 +6,7 @@ type WordNet @model {
   modifiedAt: AWSDateTime
 }
 
-type Node @model {
+type Node @model @auth(rules: [{allow: owner}]) {
   id: ID!
   value: String!
   depth: Int
@@ -18,7 +18,7 @@ type Node @model {
   createdAt: AWSDateTime
 }
 
-type Edge @model {
+type Edge @model @auth(rules: [{allow: owner}]) {
   id: ID!
   source: Node! @connection(name: "EdgeSource")  
   target: Node! @connection(name: "EdgeTarget")
@@ -27,20 +27,20 @@ type Edge @model {
   createdAt: AWSDateTime
 }
 
-type NodeConnection {
-  items: [Node!]!
-  nextToken: String
-}
+# type NodeConnection {
+#   items: [Node!]!
+#   nextToken: String
+# }
 
-type EdgeConnection {
-  items: [Edge!]!
-  nextToken: String
-}
+# type EdgeConnection {
+#   items: [Edge!]!
+#   nextToken: String
+# }
 
-type Query {
-  nodesForWordNet(id: ID!, limit: Int, nextToken: String): NodeConnection
-  edgesForWordNet(id: ID!, limit: Int, nextToken: String): EdgeConnection
-}
+# type Query {
+#   nodesForWordNet(id: ID!, limit: Int, nextToken: String): NodeConnection
+#   edgesForWordNet(id: ID!, limit: Int, nextToken: String): EdgeConnection
+# }
 
 # type Mutation {
 #   addEdges(id: ID!, edges:[EdgeIn])
