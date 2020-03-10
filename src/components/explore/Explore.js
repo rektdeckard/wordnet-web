@@ -48,7 +48,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
   const weekOverWeek = (currentWeekSessions.length / previousWeekSessions.length * 100) || 0;
 
   useEffect(() => {
-    if (!sessionHistory.sessionsByDay.length) fetchHistory();
+    fetchHistory();
   }, [sessionHistory, fetchHistory]);
 
   const handleDayClicked = (day, event) => {
