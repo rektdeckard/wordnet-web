@@ -3,12 +3,13 @@ import { API, graphqlOperation } from "aws-amplify";
 import * as queries from "../graphql/queries";
 import { FETCH_HISTORY } from "./types";
 
-export const fetchHistory = () => async dispatch => {
+export const fetchHistory = fromDate => async dispatch => {
   const sessionData = await API.graphql(
+    // TODO: figure out a better limit and way to filter, possibly via ElasticSearch
     graphqlOperation(queries.listHistory, {
       limit: 1000,
       filter: {
-        createdAt: { ge: `${new Date().getFullYear()}-01-01T00:00:00.000Z` }
+        createdAt: { ge: fromDate?.toISOString() ?? `${new Date().getFullYear()}-01-01T00:00:00.000Z` }
       }
     })
   );
