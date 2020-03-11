@@ -9,8 +9,8 @@ const { Content } = Layout;
 
 const History = ({ history, fetchHistory }) => {
   useEffect(() => {
-    if (!history.sessionsByDay.length) fetchHistory();
-  }, [history, fetchHistory]);
+    fetchHistory();
+  }, [fetchHistory]);
 
   return (
     <Content style={{ height: 700 }}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { Switch, Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -14,49 +14,28 @@ import {
 import { ResponsiveCalendar } from "@nivo/calendar";
 
 import { fetchHistory } from "../../actions";
+import { useWeekOverWeek } from '../../hooks/useStatistic';
 import History from "./History";
 import Missing from "../Missing";
 import SessionLog from "./SessionLog";
 
 const { Title, Paragraph, Text } = Typography;
 
-const ONE_WEEK = 1000*60*60*24*7;
-
-const now = new Date(Date.now() - ONE_WEEK); // 7 days ago
-const currentYear = now.getFullYear();
-const currentMonth = now.getMonth() + 1;
-const currentDate = now.getDate();
-const currrentWeekday = now.getDay(); // 0 = Sunday 
-
-const previousWeek = new Date(now.getTime() - ONE_WEEK); // 14 days ago
-const previousYear = previousWeek.getFullYear();
-const previousMonth = previousWeek.getMonth() + 1;
-const previousDate = previousWeek.getDate();
-const previousWeekday = previousWeek.getDay(); // 0 = Sunday
 
 const Explore = ({ history, sessionHistory, fetchHistory }) => {
-  const currentWeekSessions = useMemo(() => sessionHistory?.sessions?.filter(s => {
-    const [year, month, date] = s.createdAt.split("T")[0].split("-");
-    return (Number(year) === currentYear && Number(month) === currentMonth && Number(date) >= currentDate - currrentWeekday)
-  }), [sessionHistory]);
-
-  const previousWeekSessions = useMemo(() => sessionHistory?.sessions?.filter(s => {
-    const [year, month, date] = s.createdAt.split("T")[0].split("-");
-    return (Number(year) === previousYear && Number(month) === previousMonth && Number(date) >= previousDate - previousWeekday && Number(date) < currentDate - currrentWeekday)
-  }), [sessionHistory]);
-
-  const weekOverWeek = (currentWeekSessions.length / previousWeekSessions.length * 100) || 0;
+  const { sessions } = sessionHistory;
+  const weekOverWeek = useWeekOverWeek(sessions);
 
   useEffect(() => {
     fetchHistory();
-  }, [sessionHistory, fetchHistory]);
+  }, [fetchHistory]);
 
   const handleDayClicked = (day, event) => {
     event.preventDefault();
     console.log(day, event);
     // TODO: Redirect to log view
-    history.push(`/explore/history/${day.day}`)
-  }
+    history.push(`/explore/history/${day.day}`);
+  };
 
   const statisticCards = [
     <Statistic
@@ -78,11 +57,11 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
     />,
     <Statistic
       title="Activity this week"
-      value={weekOverWeek}
+      value={weekOverWeek || "No Data"}
       precision={1}
-      valueStyle={{ color: "#51bdab" }}
+      valueStyle={{ color: weekOverWeek > 0 ? "#51bdab" : "#f47560" }}
       // valueStyle={{ color: "#f47560" }}
-      prefix={<Icon type="arrow-up" />}
+      prefix={<Icon type={`arrow-${weekOverWeek > 0 ? "up" : "down"}`} />}
       // prefix={<Icon type="arrow-down" />}
       suffix="%"
     />,
