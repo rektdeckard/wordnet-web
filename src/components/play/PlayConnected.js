@@ -55,6 +55,7 @@ const PlayConnected = ({
     const tokens = [
       ...new Set(
         entry
+          .trim()
           .replace(/[.,\\/#!$%^&*;:{}=_`~()]/g, "")
           .replace(/\s{2,}/g, " ")
           .split(/[\s-]/)
