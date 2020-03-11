@@ -14,18 +14,16 @@ import {
 import { ResponsiveCalendar } from "@nivo/calendar";
 
 import { fetchHistory } from "../../actions";
-import { useWeekOverWeek } from '../../hooks/useStatistic';
+import { useWeekOverWeek } from "../../hooks/useStatistic";
 import History from "./History";
 import Missing from "../Missing";
 import SessionLog from "./SessionLog";
 
 const { Title, Paragraph, Text } = Typography;
 
-
 const Explore = ({ history, sessionHistory, fetchHistory }) => {
   const { sessions } = sessionHistory;
   const weekOverWeek = useWeekOverWeek(sessions);
-  console.log(weekOverWeek);
 
   useEffect(() => {
     fetchHistory();
@@ -58,7 +56,11 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
     />,
     <Statistic
       title="Activity this week"
-      value={!isFinite(weekOverWeek) || isNaN(weekOverWeek) ? "No Data" : weekOverWeek}
+      value={
+        !isFinite(weekOverWeek) || isNaN(weekOverWeek)
+          ? "No Data"
+          : weekOverWeek
+      }
       precision={1}
       valueStyle={{ color: weekOverWeek >= 0 ? "#51bdab" : "#f47560" }}
       prefix={<Icon type={`arrow-${weekOverWeek >= 0 ? "up" : "down"}`} />}
