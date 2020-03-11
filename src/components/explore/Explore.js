@@ -25,6 +25,7 @@ const { Title, Paragraph, Text } = Typography;
 const Explore = ({ history, sessionHistory, fetchHistory }) => {
   const { sessions } = sessionHistory;
   const weekOverWeek = useWeekOverWeek(sessions);
+  console.log(weekOverWeek);
 
   useEffect(() => {
     fetchHistory();
@@ -57,12 +58,10 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
     />,
     <Statistic
       title="Activity this week"
-      value={weekOverWeek || "No Data"}
+      value={!isFinite(weekOverWeek) || isNaN(weekOverWeek) ? "No Data" : weekOverWeek}
       precision={1}
-      valueStyle={{ color: weekOverWeek > 0 ? "#51bdab" : "#f47560" }}
-      // valueStyle={{ color: "#f47560" }}
-      prefix={<Icon type={`arrow-${weekOverWeek > 0 ? "up" : "down"}`} />}
-      // prefix={<Icon type="arrow-down" />}
+      valueStyle={{ color: weekOverWeek >= 0 ? "#51bdab" : "#f47560" }}
+      prefix={<Icon type={`arrow-${weekOverWeek >= 0 ? "up" : "down"}`} />}
       suffix="%"
     />,
     <Statistic
