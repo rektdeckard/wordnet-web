@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Amplify, { Storage, Auth } from "aws-amplify";
-import { S3Album, S3Image } from "aws-amplify-react";
+import { Storage, Auth } from "aws-amplify";
+// import { S3Album, S3Image } from "aws-amplify-react";
 import {
   Layout,
   Typography,
@@ -26,10 +26,16 @@ const Account = () => {
 
   const fetchImage = async () => {
     setLoading(true);
-    const images = await Storage.list("profile/", { level: "protected" });
-    if (images.length) {
-      const imageUrl = await Storage.get(images[0].key, { level: "protected" });
-      setImage(imageUrl);
+    try {
+      const images = await Storage.list("profile/", { level: "protected" });
+      if (images.length) {
+        const imageUrl = await Storage.get(images[0].key, {
+          level: "protected"
+        });
+        setImage(imageUrl);
+      }
+    } catch (e) {
+      console.log(e);
     }
     setLoading(false);
   };

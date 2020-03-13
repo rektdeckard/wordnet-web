@@ -1,93 +1,226 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateWordNet = /* GraphQL */ `
-  subscription OnCreateWordNet {
-    onCreateWordNet {
+export const onCreateWordNet = `subscription OnCreateWordNet($owner: String!) {
+  onCreateWordNet(owner: $owner) {
+    id
+    nodes {
+      items {
+        id
+        value
+        depth
+        radius
+        color
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    edges {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    modifiedAt
+    owner
+  }
+}
+`;
+export const onUpdateWordNet = `subscription OnUpdateWordNet($owner: String!) {
+  onUpdateWordNet(owner: $owner) {
+    id
+    nodes {
+      items {
+        id
+        value
+        depth
+        radius
+        color
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    edges {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    modifiedAt
+    owner
+  }
+}
+`;
+export const onDeleteWordNet = `subscription OnDeleteWordNet($owner: String!) {
+  onDeleteWordNet(owner: $owner) {
+    id
+    nodes {
+      items {
+        id
+        value
+        depth
+        radius
+        color
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    edges {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    modifiedAt
+    owner
+  }
+}
+`;
+export const onCreateNode = `subscription OnCreateNode($owner: String!) {
+  onCreateNode(owner: $owner) {
+    id
+    value
+    depth
+    radius
+    color
+    network {
       id
       nodes {
-        items {
-          id
-          value
-          depth
-          radius
-          color
-          createdAt
-        }
         nextToken
       }
       edges {
-        items {
-          id
-          distance
-          createdAt
-        }
         nextToken
       }
       createdAt
       modifiedAt
+      owner
     }
+    sources {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    targets {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    owner
   }
+}
 `;
-export const onUpdateWordNet = /* GraphQL */ `
-  subscription OnUpdateWordNet {
-    onUpdateWordNet {
+export const onUpdateNode = `subscription OnUpdateNode($owner: String!) {
+  onUpdateNode(owner: $owner) {
+    id
+    value
+    depth
+    radius
+    color
+    network {
       id
       nodes {
-        items {
-          id
-          value
-          depth
-          radius
-          color
-          createdAt
-        }
         nextToken
       }
       edges {
-        items {
-          id
-          distance
-          createdAt
-        }
         nextToken
       }
       createdAt
       modifiedAt
+      owner
     }
+    sources {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    targets {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    owner
   }
+}
 `;
-export const onDeleteWordNet = /* GraphQL */ `
-  subscription OnDeleteWordNet {
-    onDeleteWordNet {
+export const onDeleteNode = `subscription OnDeleteNode($owner: String!) {
+  onDeleteNode(owner: $owner) {
+    id
+    value
+    depth
+    radius
+    color
+    network {
       id
       nodes {
-        items {
-          id
-          value
-          depth
-          radius
-          color
-          createdAt
-        }
         nextToken
       }
       edges {
-        items {
-          id
-          distance
-          createdAt
-        }
         nextToken
       }
       createdAt
       modifiedAt
+      owner
     }
+    sources {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    targets {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    owner
   }
+}
 `;
-export const onCreateNode = /* GraphQL */ `
-  subscription OnCreateNode {
-    onCreateNode {
+export const onCreateEdge = `subscription OnCreateEdge($owner: String!) {
+  onCreateEdge(owner: $owner) {
+    id
+    source {
       id
       value
       depth
@@ -95,38 +228,20 @@ export const onCreateNode = /* GraphQL */ `
       color
       network {
         id
-        nodes {
-          nextToken
-        }
-        edges {
-          nextToken
-        }
         createdAt
         modifiedAt
+        owner
       }
       sources {
-        items {
-          id
-          distance
-          createdAt
-        }
         nextToken
       }
       targets {
-        items {
-          id
-          distance
-          createdAt
-        }
         nextToken
       }
       createdAt
+      owner
     }
-  }
-`;
-export const onUpdateNode = /* GraphQL */ `
-  subscription OnUpdateNode {
-    onUpdateNode {
+    target {
       id
       value
       depth
@@ -134,38 +249,41 @@ export const onUpdateNode = /* GraphQL */ `
       color
       network {
         id
-        nodes {
-          nextToken
-        }
-        edges {
-          nextToken
-        }
         createdAt
         modifiedAt
+        owner
       }
       sources {
-        items {
-          id
-          distance
-          createdAt
-        }
         nextToken
       }
       targets {
-        items {
-          id
-          distance
-          createdAt
-        }
         nextToken
       }
       createdAt
+      owner
     }
+    distance
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      owner
+    }
+    createdAt
+    owner
   }
+}
 `;
-export const onDeleteNode = /* GraphQL */ `
-  subscription OnDeleteNode {
-    onDeleteNode {
+export const onUpdateEdge = `subscription OnUpdateEdge($owner: String!) {
+  onUpdateEdge(owner: $owner) {
+    id
+    source {
       id
       value
       depth
@@ -173,206 +291,118 @@ export const onDeleteNode = /* GraphQL */ `
       color
       network {
         id
-        nodes {
-          nextToken
-        }
-        edges {
-          nextToken
-        }
         createdAt
         modifiedAt
+        owner
       }
       sources {
-        items {
-          id
-          distance
-          createdAt
-        }
         nextToken
       }
       targets {
-        items {
-          id
-          distance
-          createdAt
-        }
         nextToken
       }
       createdAt
+      owner
     }
-  }
-`;
-export const onCreateEdge = /* GraphQL */ `
-  subscription OnCreateEdge {
-    onCreateEdge {
+    target {
       id
-      source {
-        id
-        value
-        depth
-        radius
-        color
-        network {
-          id
-          createdAt
-          modifiedAt
-        }
-        sources {
-          nextToken
-        }
-        targets {
-          nextToken
-        }
-        createdAt
-      }
-      target {
-        id
-        value
-        depth
-        radius
-        color
-        network {
-          id
-          createdAt
-          modifiedAt
-        }
-        sources {
-          nextToken
-        }
-        targets {
-          nextToken
-        }
-        createdAt
-      }
-      distance
+      value
+      depth
+      radius
+      color
       network {
         id
-        nodes {
-          nextToken
-        }
-        edges {
-          nextToken
-        }
         createdAt
         modifiedAt
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
       }
       createdAt
+      owner
     }
-  }
-`;
-export const onUpdateEdge = /* GraphQL */ `
-  subscription OnUpdateEdge {
-    onUpdateEdge {
+    distance
+    network {
       id
-      source {
-        id
-        value
-        depth
-        radius
-        color
-        network {
-          id
-          createdAt
-          modifiedAt
-        }
-        sources {
-          nextToken
-        }
-        targets {
-          nextToken
-        }
-        createdAt
+      nodes {
+        nextToken
       }
-      target {
-        id
-        value
-        depth
-        radius
-        color
-        network {
-          id
-          createdAt
-          modifiedAt
-        }
-        sources {
-          nextToken
-        }
-        targets {
-          nextToken
-        }
-        createdAt
+      edges {
+        nextToken
       }
-      distance
+      createdAt
+      modifiedAt
+      owner
+    }
+    createdAt
+    owner
+  }
+}
+`;
+export const onDeleteEdge = `subscription OnDeleteEdge($owner: String!) {
+  onDeleteEdge(owner: $owner) {
+    id
+    source {
+      id
+      value
+      depth
+      radius
+      color
       network {
         id
-        nodes {
-          nextToken
-        }
-        edges {
-          nextToken
-        }
         createdAt
         modifiedAt
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
       }
       createdAt
+      owner
     }
-  }
-`;
-export const onDeleteEdge = /* GraphQL */ `
-  subscription OnDeleteEdge {
-    onDeleteEdge {
+    target {
       id
-      source {
-        id
-        value
-        depth
-        radius
-        color
-        network {
-          id
-          createdAt
-          modifiedAt
-        }
-        sources {
-          nextToken
-        }
-        targets {
-          nextToken
-        }
-        createdAt
-      }
-      target {
-        id
-        value
-        depth
-        radius
-        color
-        network {
-          id
-          createdAt
-          modifiedAt
-        }
-        sources {
-          nextToken
-        }
-        targets {
-          nextToken
-        }
-        createdAt
-      }
-      distance
+      value
+      depth
+      radius
+      color
       network {
         id
-        nodes {
-          nextToken
-        }
-        edges {
-          nextToken
-        }
         createdAt
         modifiedAt
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
       }
       createdAt
+      owner
     }
+    distance
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      owner
+    }
+    createdAt
+    owner
   }
+}
 `;

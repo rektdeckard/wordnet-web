@@ -2,7 +2,8 @@ import { FETCH_HISTORY } from "../actions/types";
 
 const INITIAL_STATE = {
   sessions: [],
-  sessionsByDay: []
+  sessionsByDay: [],
+  words: 0
 };
 
 export default (state = INITIAL_STATE, action) => {
