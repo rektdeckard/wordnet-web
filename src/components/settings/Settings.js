@@ -16,6 +16,7 @@ import {
   setMotionStiffness,
   setMotionDamping
 } from "../../actions";
+import GraphViewer from "../GraphViewer.js";
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
@@ -224,46 +225,12 @@ const Settings = props => {
 
   // TODO: Implement window-resize event hook to properly size the container div
   return (
-    <Layout style={{ padding: "24px 0", background: "#fff" }}>
+    <Layout style={{ background: "#fff" }}>
       {renderSider()}
       <Content>
-        <TransformWrapper doubleClick={{ mode: "reset" }}>
-          <TransformComponent>
-            <div
-              style={{
-                height: window.innerHeight - 300,
-                width: window.innerWidth - 400
-              }}
-            >
-              <ResponsiveNetwork
-                // height={2000}
-                // width={3000}
-                nodes={data.nodes}
-                links={data.links}
-                repulsivity={repulsivity}
-                distanceMin={distanceMin}
-                distanceMax={distanceMax}
-                iterations={iterations}
-                nodeColor={n => n.color}
-                // nodeColor={n => `hsl(${360 - (60 * n.depth - 1)}, 40%, 60%)`}
-                // nodeColor={n => nivo[n.depth]}
-                nodeBorderWidth={borderWidth}
-                nodeBorderColor={{
-                  from: "color",
-                  modifiers: [["darker", 0.8]]
-                }}
-                // nodeBorderColor={n => `hsl(${360 - (60 * n.depth - 1)}, 40%, 30%)`}
-                // nodeBorderColor={n => nivo[n.depth]}
-                linkColor={t => t.source.color}
-                // linkColor={n => `hsl(${360 - (2 * n.distance)}, 40%, 30%)`}
-                linkThickness={linkThickness ?? (l => 2 * (2 - l.source.depth))}
-                motionStiffness={motionStiffness}
-                motionDamping={motionDamping}
-                animate={animate}
-              />
-            </div>
-          </TransformComponent>
-        </TransformWrapper>
+      <GraphViewer
+          graph={{ nodes: data.nodes, links: data.links }}
+        />
       </Content>
     </Layout>
   );

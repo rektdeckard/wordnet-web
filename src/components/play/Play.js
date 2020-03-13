@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { connect } from "react-redux";
-import { Connect } from "aws-amplify-react";
-import { Layout, Row, Col, Input, Button, Typography } from "antd";
-import { ResponsiveNetwork } from "@nivo/network";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { Layout, Row, Col, Input, Button, Typography, Spin } from "antd";
 
 import {
   addElements,
@@ -11,31 +8,24 @@ import {
   selectRandomNode,
   initializeSession
 } from "../../actions";
+import { uniqueTokensFromEntry, useGraph } from "../../utils";
+import GraphViewer from "../GraphViewer";
 
 const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
 const nivo = ["#e8c1a0", "#f47560", "#f1e15b", "#e8a838", "#61cdbb", "#97e3d5"];
 
-const PlayConnected = ({
+const Play = ({
   graph,
-  settings,
   addElements,
   removeElement,
   selectRandomNode,
   initializeSession
 }) => {
-  const { session, currentNode } = graph;
-  const nodes = useMemo(
-    () =>
-      graph.nodes?.map(({ value, depth, radius, color }) => ({
-        id: value,
-        depth,
-        radius,
-        color
-      })),
-    [graph]
-  );
+  // const { session, currentNode } = graph;
+  const { nodes, session, currentNode } = useGraph(graph);
   const [entry, setEntry] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!session) {
@@ -48,19 +38,13 @@ const PlayConnected = ({
     setEntry(value);
   };
 
-  const handleSubmit = () => {
-    if (!entry) return;
+  const handleSubmit = async () => {
+    if (!entry || loading) return;
 
+    setLoading(true);
     // Extract unique tokens from entry, removing special characters and splitting on spaces/hyphens
-    const tokens = [
-      ...new Set(
-        entry
-          .trim()
-          .replace(/[.,\\/#!$%^&*;:{}=_`~()]/g, "")
-          .replace(/\s{2,}/g, " ")
-          .split(/[\s-]/)
-      )
-    ];
+    const tokens = uniqueTokensFromEntry(entry);
+    setEntry("");
 
     // Create new node for each token that does not already have one
     const existingTokens = graph.nodes.map(n => n.value);
@@ -88,8 +72,8 @@ const PlayConnected = ({
         distance: 30
       }));
 
-    addElements(newNodes, newLinks);
-    setEntry("");
+    await addElements(newNodes, newLinks);
+    setLoading(false);
   };
 
   return (
@@ -100,72 +84,33 @@ const PlayConnected = ({
         the provided word below.
       </Paragraph>
       <Content style={{ padding: "0px 0px", background: "#fff" }}>
-        <Title level={3} style={{ textAlign: "center", paddingTop: 16 }}>
-          Define the word <Text code>{currentNode?.value ?? "loading..."}</Text>
-        </Title>
-        <TransformWrapper>
-          <TransformComponent>
-            <div
-              style={{
-                height: window.innerHeight - 282,
-                width: window.innerWidth - 100
-              }}
-            >
-              {/* TODO: Make ResponsiveNetwork as a subscriber to the data! */}
-              {/* <Connect
-                query={graphqlOperation(queries.listWordNets)}
-                subscription={graphqlOperation(subscriptions.onCreateNode)}
-                onSubscriptionMsg={(prev, { onCreateNode }) => {
-                  console.log(onCreateNode);
-                  return prev;
-                }}
-              >
-                {({ data: { listWordNets }, loading, errors }) => {
-                  if (errors.length) {
-                    console.log("errors", errors);
-                    return <h3>Error</h3>;
-                  }
-                  if (loading) {
-                    console.log("loading", loading);
-                    return <h3>Loading</h3>;
-                  }
-                  console.log(listWordNets);
-                  return <h3>Loaded</h3>;
-                }}
-              </Connect> */}
-              <ResponsiveNetwork
-                // height={700}
-                nodes={nodes}
-                links={graph.links}
-                repulsivity={settings.repulsivity}
-                distanceMin={settings.distanceMin}
-                distanceMax={settings.distanceMax}
-                iterations={settings.iterations}
-                nodeColor={n => n.color}
-                nodeBorderWidth={settings.borderWidth}
-                nodeBorderColor={{
-                  from: "color",
-                  modifiers: [["darker", 0.8]]
-                }}
-                linkThickness={
-                  settings.linkThickness ?? (l => Math.ceil(4 / l.source.depth))
-                }
-                motionStiffness={settings.motionStiffness}
-                motionDamping={settings.motionDamping}
-                animate={settings.animate}
-                isInteractive={true}
-              />
-            </div>
-          </TransformComponent>
-        </TransformWrapper>
+        <GraphViewer
+          graph={{ nodes, links: graph.links }}
+          header={
+            <Title level={3} style={{ textAlign: "center", paddingTop: 16 }}>
+              {currentNode?.value && !loading ? (
+                <>
+                  Define the word <Text code>{currentNode.value}</Text>
+                </>
+              ) : (
+                <Spin />
+              )}
+            </Title>
+          }
+        />
         <Row style={{ padding: 16 }}>
           <Col span={22}>
             <Input
-              placeholder={`Define ${currentNode?.value ?? "smart"}`}
+              placeholder={
+                !loading
+                  ? `Define ${currentNode?.value ?? "smart"}`
+                  : "Loading..."
+              }
               value={entry}
               allowClear
               onChange={handleChange}
               onPressEnter={handleSubmit}
+              autoFocus={true}
             />
           </Col>
           <Col span={2}>
@@ -185,7 +130,7 @@ const PlayConnected = ({
 };
 
 const mapStateToProps = state => {
-  return { settings: state.settings, graph: state.graph };
+  return { graph: state.graph };
 };
 
 export default connect(mapStateToProps, {
@@ -193,4 +138,4 @@ export default connect(mapStateToProps, {
   removeElement,
   selectRandomNode,
   initializeSession
-})(PlayConnected);
+})(Play);
