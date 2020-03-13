@@ -9,16 +9,17 @@ const columns = [
   {
     title: "Date",
     dataIndex: "createDate",
-    sorter: (a, b) => a.createdAt > b.createdAt,
+    sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     sortDirections: ["descend", "ascend"],
     defaultSortOrder: "descend"
   },
   {
     title: "Time",
     dataIndex: "createTime",
-    sorter: (a, b) => a.createdAt > b.createdAt,
+    sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     sortDirections: ["descend", "ascend"],
-    defaultSortOrder: "descend"
+    defaultSortOrder: "descend",
+    render: (text, record) => <Link to={`/explore/sessions/${record.id}`}>{text}</Link>
   },
   {
     title: "Words",
@@ -31,9 +32,9 @@ const columns = [
 
 const SessionLog = () => {
   const { date } = useParams();
-  // const correctedDate = new Date(date).
-
   const [sessions, setSessions] = useState([]);
+  // TODO: use to generate composite WordNets from multiple sessions
+  const [selectedSessionKeys, setSelectedSessionKeys] = useState([]);
 
   useEffect(() => {
     const fetchSessions = async date => {
@@ -95,10 +96,10 @@ const SessionLog = () => {
                 "selectedRows: ",
                 selectedRows
               );
+              setSelectedSessionKeys(selectedRowKeys);
             },
             getCheckboxProps: record => ({
-              disabled: record.name === "Disabled User", // Column configuration not to be checked
-              name: record.name
+              disabled: record.words <= 0 // Column configuration not to be checked
             })
           }}
         />
