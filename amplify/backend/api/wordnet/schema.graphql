@@ -1,4 +1,8 @@
-type WordNet @model @auth(rules: [{allow: owner}]) {
+type WordNet
+  @model
+  @searchable
+  # @key(fields: ["id", "createdAt"], name: "wordNetsByCreatedAt")
+  @auth(rules: [{ allow: owner }]) {
   id: ID!
   nodes: [Node!]! @connection(name: "NetworkNodes")
   edges: [Edge!]! @connection(name: "NetworkEdges")
@@ -6,7 +10,7 @@ type WordNet @model @auth(rules: [{allow: owner}]) {
   modifiedAt: AWSDateTime
 }
 
-type Node @model @auth(rules: [{allow: owner}]) {
+type Node @model @searchable @auth(rules: [{ allow: owner }]) {
   id: ID!
   value: String!
   depth: Int
@@ -18,9 +22,9 @@ type Node @model @auth(rules: [{allow: owner}]) {
   createdAt: AWSDateTime
 }
 
-type Edge @model @auth(rules: [{allow: owner}]) {
+type Edge @model @searchable @auth(rules: [{ allow: owner }]) {
   id: ID!
-  source: Node! @connection(name: "EdgeSource")  
+  source: Node! @connection(name: "EdgeSource")
   target: Node! @connection(name: "EdgeTarget")
   distance: Int!
   network: WordNet! @connection(name: "NetworkEdges")
