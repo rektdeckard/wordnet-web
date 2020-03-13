@@ -1,6 +1,4 @@
 import { API, graphqlOperation } from "aws-amplify";
-import * as queries from "../graphql/queries";
-import * as subscriptions from "../graphql/subscriptions";
 import * as mutations from "../graphql/mutations";
 import {
   ADD_GRAPH_ELEMENTS,
@@ -17,7 +15,7 @@ export const addElements = (nodes = [], links = []) => async (
   const { session, currentNode } = getState().graph;
   if (!session || !currentNode) throw new Error("No current session ID!");
 
-  // FIXME: Create new mutation to add multiple nodes simultaneously
+  // TODO: Create new mutation to add multiple nodes simultaneously
   const resultNodes = await Promise.all(
     nodes.map(({ id, radius, depth, color }) =>
       API.graphql(
@@ -28,7 +26,7 @@ export const addElements = (nodes = [], links = []) => async (
     )
   );
 
-  // FIXME: Create new mutation to add multiple edges simultaneously
+  // TODO: Create new mutation to add multiple edges simultaneously
   const resultEdges = await Promise.all(
     resultNodes.map(({ data: { createNode: { id } } }) =>
       API.graphql(
