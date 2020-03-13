@@ -1,60 +1,57 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getWordNet = /* GraphQL */ `
-  query GetWordNet($id: ID!) {
-    getWordNet(id: $id) {
+export const getWordNet = `query GetWordNet($id: ID!) {
+  getWordNet(id: $id) {
+    id
+    nodes {
+      items {
+        id
+        value
+        depth
+        radius
+        color
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    edges {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    modifiedAt
+    owner
+  }
+}
+`;
+export const listWordNets = `query ListWordNets(
+  $filter: ModelWordNetFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listWordNets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
       id
       nodes {
-        items {
-          id
-          value
-          depth
-          radius
-          color
-          createdAt
-          owner
-        }
         nextToken
       }
       edges {
-        items {
-          id
-          distance
-          createdAt
-          owner
-        }
         nextToken
       }
       createdAt
       modifiedAt
       owner
     }
+    nextToken
   }
-`;
-
-export const listWordNets = /* GraphQL */ `
-  query ListWordNets(
-    $filter: ModelWordNetFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listWordNets(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        nodes {
-          nextToken
-        }
-        edges {
-          nextToken
-        }
-        createdAt
-        modifiedAt
-        owner
-      }
-      nextToken
-    }
-  }
+}
 `;
 
 export const listHistory = /* GraphQL */ `
@@ -74,9 +71,55 @@ export const listHistory = /* GraphQL */ `
   }
 `;
 
-export const getNode = /* GraphQL */ `
-  query GetNode($id: ID!) {
-    getNode(id: $id) {
+export const getNode = `query GetNode($id: ID!) {
+  getNode(id: $id) {
+    id
+    value
+    depth
+    radius
+    color
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      owner
+    }
+    sources {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    targets {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    owner
+  }
+}
+`;
+export const listNodes = `query ListNodes(
+  $filter: ModelNodeFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listNodes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
       id
       value
       depth
@@ -84,74 +127,93 @@ export const getNode = /* GraphQL */ `
       color
       network {
         id
-        nodes {
-          nextToken
-        }
-        edges {
-          nextToken
-        }
         createdAt
         modifiedAt
         owner
       }
       sources {
-        items {
-          id
-          distance
-          createdAt
-          owner
-        }
         nextToken
       }
       targets {
-        items {
-          id
-          distance
-          createdAt
-          owner
-        }
         nextToken
       }
       createdAt
       owner
     }
+    nextToken
   }
+}
 `;
-export const listNodes = /* GraphQL */ `
-  query ListNodes(
-    $filter: ModelNodeFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listNodes(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
+export const getEdge = `query GetEdge($id: ID!) {
+  getEdge(id: $id) {
+    id
+    source {
+      id
+      value
+      depth
+      radius
+      color
+      network {
         id
-        value
-        depth
-        radius
-        color
-        network {
-          id
-          createdAt
-          modifiedAt
-          owner
-        }
-        sources {
-          nextToken
-        }
-        targets {
-          nextToken
-        }
         createdAt
+        modifiedAt
         owner
       }
-      nextToken
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
+      }
+      createdAt
+      owner
     }
+    target {
+      id
+      value
+      depth
+      radius
+      color
+      network {
+        id
+        createdAt
+        modifiedAt
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
+      }
+      createdAt
+      owner
+    }
+    distance
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      owner
+    }
+    createdAt
+    owner
   }
+}
 `;
-export const getEdge = /* GraphQL */ `
-  query GetEdge($id: ID!) {
-    getEdge(id: $id) {
+export const listEdges = `query ListEdges(
+  $filter: ModelEdgeFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listEdges(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
       id
       source {
         id
@@ -159,18 +221,6 @@ export const getEdge = /* GraphQL */ `
         depth
         radius
         color
-        network {
-          id
-          createdAt
-          modifiedAt
-          owner
-        }
-        sources {
-          nextToken
-        }
-        targets {
-          nextToken
-        }
         createdAt
         owner
       }
@@ -180,30 +230,12 @@ export const getEdge = /* GraphQL */ `
         depth
         radius
         color
-        network {
-          id
-          createdAt
-          modifiedAt
-          owner
-        }
-        sources {
-          nextToken
-        }
-        targets {
-          nextToken
-        }
         createdAt
         owner
       }
       distance
       network {
         id
-        nodes {
-          nextToken
-        }
-        edges {
-          nextToken
-        }
         createdAt
         modifiedAt
         owner
@@ -211,46 +243,121 @@ export const getEdge = /* GraphQL */ `
       createdAt
       owner
     }
+    nextToken
   }
+}
 `;
-export const listEdges = /* GraphQL */ `
-  query ListEdges(
-    $filter: ModelEdgeFilterInput
-    $limit: Int
-    $nextToken: String
+export const searchWordNets = `query SearchWordNets(
+  $filter: SearchableWordNetFilterInput
+  $sort: SearchableWordNetSortInput
+  $limit: Int
+  $nextToken: String
+) {
+  searchWordNets(
+    filter: $filter
+    sort: $sort
+    limit: $limit
+    nextToken: $nextToken
   ) {
-    listEdges(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
+    items {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      owner
+    }
+    nextToken
+    total
+  }
+}
+`;
+export const searchNodes = `query SearchNodes(
+  $filter: SearchableNodeFilterInput
+  $sort: SearchableNodeSortInput
+  $limit: Int
+  $nextToken: String
+) {
+  searchNodes(
+    filter: $filter
+    sort: $sort
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      value
+      depth
+      radius
+      color
+      network {
         id
-        source {
-          id
-          value
-          depth
-          radius
-          color
-          createdAt
-          owner
-        }
-        target {
-          id
-          value
-          depth
-          radius
-          color
-          createdAt
-          owner
-        }
-        distance
-        network {
-          id
-          createdAt
-          modifiedAt
-          owner
-        }
+        createdAt
+        modifiedAt
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
+      }
+      createdAt
+      owner
+    }
+    nextToken
+    total
+  }
+}
+`;
+export const searchEdges = `query SearchEdges(
+  $filter: SearchableEdgeFilterInput
+  $sort: SearchableEdgeSortInput
+  $limit: Int
+  $nextToken: String
+) {
+  searchEdges(
+    filter: $filter
+    sort: $sort
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      source {
+        id
+        value
+        depth
+        radius
+        color
         createdAt
         owner
       }
-      nextToken
+      target {
+        id
+        value
+        depth
+        radius
+        color
+        createdAt
+        owner
+      }
+      distance
+      network {
+        id
+        createdAt
+        modifiedAt
+        owner
+      }
+      createdAt
+      owner
     }
+    nextToken
+    total
   }
+}
 `;
