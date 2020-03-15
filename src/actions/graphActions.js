@@ -7,17 +7,23 @@ import {
   SUBMIT_GRAPH_SESSION,
   SET_CURRENT_NODE
 } from "./types";
+import {
+  uniqueTokensFromEntry,
+  generateMissingNodes,
+  generateMissingLinks
+} from "../utils";
 
-export const addElements = (nodes = [], links = []) => async (
-  dispatch,
-  getState
-) => {
-  const { session, currentNode } = getState().graph;
+export const submitResponse = response => async (dispatch, getState) => {
+  const { nodes, links, session, currentNode } = getState().graph;
   if (!session || !currentNode) throw new Error("No current session ID!");
+
+  const tokens = uniqueTokensFromEntry(response);
+  const newNodes = generateMissingNodes(tokens, nodes, currentNode);
+  const newLinks = generateMissingLinks(tokens, links, currentNode);
 
   // TODO: Create new mutation to add multiple nodes simultaneously
   const resultNodes = await Promise.all(
-    nodes.map(({ id, radius, depth, color }) =>
+    newNodes.map(({ id, radius, depth, color }) =>
       API.graphql(
         graphqlOperation(mutations.createNode, {
           input: { value: id, radius, depth, color, nodeNetworkId: session }
@@ -46,7 +52,7 @@ export const addElements = (nodes = [], links = []) => async (
     type: ADD_GRAPH_ELEMENTS,
     payload: {
       nodes: resultNodes.map(res => res.data.createNode),
-      links
+      links: newLinks
     }
   });
 
