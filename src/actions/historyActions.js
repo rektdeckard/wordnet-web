@@ -6,16 +6,34 @@ import { FETCH_HISTORY } from "./types";
 export const fetchHistory = fromDate => async dispatch => {
   const sessionData = await API.graphql(
     // TODO: figure out a better limit and way to filter, possibly via ElasticSearch
-    graphqlOperation(queries.listHistory, {
-      limit: 1000,
-      filter: {
-        createdAt: {
-          ge:
-            fromDate?.toISOString() ??
-            `${new Date().getFullYear()}-01-01T00:00:00.000Z`
+    graphqlOperation(
+      /* GraphQL */ `
+        query ListWordNets(
+          $filter: ModelWordNetFilterInput
+          $limit: Int
+          $nextToken: String
+        ) {
+          listWordNets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+            items {
+              id
+              createdAt
+              modifiedAt
+            }
+            nextToken
+          }
+        }
+      `,
+      {
+        limit: 1000,
+        filter: {
+          createdAt: {
+            ge:
+              fromDate?.toISOString() ??
+              `${new Date().getFullYear()}-01-01T00:00:00.000Z`
+          }
         }
       }
-    })
+    )
   );
 
   const entries = sessionData.data.listWordNets.items
@@ -48,9 +66,11 @@ export const fetchHistory = fromDate => async dispatch => {
   // FIXME: Response Mapping Template only allows 1000 items in a list??
   const nodeCount = await API.graphql(
     graphqlOperation(
-      /* GraphQL */  `{
-        countNodes
-      }`,
+      /* GraphQL */ `
+        {
+          countNodes
+        }
+      `,
       {}
     )
   );
