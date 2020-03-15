@@ -14,7 +14,7 @@ import {
 import { ResponsiveCalendar } from "@nivo/calendar";
 
 import { fetchHistory } from "../../actions";
-import { useWeekOverWeek } from "../../hooks/useStatistic";
+import { useWeekOverWeek } from "../../utils";
 import History from "./History";
 import Missing from "../Missing";
 import SessionLog from "./SessionLog";
