@@ -20,7 +20,7 @@ export const useGraph = graph =>
 
 export const generateMissingNodes = (tokens, nodes, currentNode) => {
   // Create new node for each token that does not already have one
-  const existingTokens = nodes.map(n => n.id);
+  const existingTokens = nodes.map(n => n.value);
   return tokens
     .filter(t => !existingTokens.includes(t))
     .map(t => ({
@@ -37,6 +37,7 @@ export const generateMissingLinks = (tokens, links, currentNode) => {
   const existingLinks = links
     .filter(l => l.source === currentNode.value)
     .map(l => l.target);
+
   return tokens
     .filter(t => !existingLinks.includes(t))
     .map(t => ({

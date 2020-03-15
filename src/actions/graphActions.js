@@ -17,6 +17,13 @@ export const submitResponse = response => async (dispatch, getState) => {
   const { nodes, links, session, currentNode } = getState().graph;
   if (!session || !currentNode) throw new Error("No current session ID!");
 
+  const resultResponse = await API.graphql(
+    graphqlOperation(mutations.createResponse, {
+      input: { value: response, responseTime: 0, responseNetworkId: session }
+    })
+  );
+  console.log(resultResponse);
+
   const tokens = uniqueTokensFromEntry(response);
   const newNodes = generateMissingNodes(tokens, nodes, currentNode);
   const newLinks = generateMissingLinks(tokens, links, currentNode);
