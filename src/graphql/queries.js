@@ -25,6 +25,16 @@ export const getWordNet = `query GetWordNet($id: ID!) {
       }
       nextToken
     }
+    responses {
+      items {
+        id
+        value
+        responseTime
+        createdAt
+        owner
+      }
+      nextToken
+    }
     createdAt
     modifiedAt
     owner
@@ -45,6 +55,9 @@ export const listWordNets = `query ListWordNets(
       edges {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       modifiedAt
       owner
@@ -53,24 +66,6 @@ export const listWordNets = `query ListWordNets(
   }
 }
 `;
-
-export const listHistory = /* GraphQL */ `
-  query ListWordNets(
-    $filter: ModelWordNetFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listWordNets(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        createdAt
-        modifiedAt
-      }
-      nextToken
-    }
-  }
-`;
-
 export const getNode = `query GetNode($id: ID!) {
   getNode(id: $id) {
     id
@@ -84,6 +79,9 @@ export const getNode = `query GetNode($id: ID!) {
         nextToken
       }
       edges {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -198,6 +196,9 @@ export const getEdge = `query GetEdge($id: ID!) {
       edges {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       modifiedAt
       owner
@@ -247,6 +248,54 @@ export const listEdges = `query ListEdges(
   }
 }
 `;
+export const getResponse = `query GetResponse($id: ID!) {
+  getResponse(id: $id) {
+    id
+    value
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      owner
+    }
+    responseTime
+    createdAt
+    owner
+  }
+}
+`;
+export const listResponses = `query ListResponses(
+  $filter: ModelResponseFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listResponses(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      value
+      network {
+        id
+        createdAt
+        modifiedAt
+        owner
+      }
+      responseTime
+      createdAt
+      owner
+    }
+    nextToken
+  }
+}
+`;
 export const searchWordNets = `query SearchWordNets(
   $filter: SearchableWordNetFilterInput
   $sort: SearchableWordNetSortInput
@@ -265,6 +314,9 @@ export const searchWordNets = `query SearchWordNets(
         nextToken
       }
       edges {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -353,6 +405,36 @@ export const searchEdges = `query SearchEdges(
         modifiedAt
         owner
       }
+      createdAt
+      owner
+    }
+    nextToken
+    total
+  }
+}
+`;
+export const searchResponses = `query SearchResponses(
+  $filter: SearchableResponseFilterInput
+  $sort: SearchableResponseSortInput
+  $limit: Int
+  $nextToken: String
+) {
+  searchResponses(
+    filter: $filter
+    sort: $sort
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      value
+      network {
+        id
+        createdAt
+        modifiedAt
+        owner
+      }
+      responseTime
       createdAt
       owner
     }

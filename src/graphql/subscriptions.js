@@ -25,6 +25,16 @@ export const onCreateWordNet = `subscription OnCreateWordNet($owner: String!) {
       }
       nextToken
     }
+    responses {
+      items {
+        id
+        value
+        responseTime
+        createdAt
+        owner
+      }
+      nextToken
+    }
     createdAt
     modifiedAt
     owner
@@ -50,6 +60,16 @@ export const onUpdateWordNet = `subscription OnUpdateWordNet($owner: String!) {
       items {
         id
         distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    responses {
+      items {
+        id
+        value
+        responseTime
         createdAt
         owner
       }
@@ -85,6 +105,16 @@ export const onDeleteWordNet = `subscription OnDeleteWordNet($owner: String!) {
       }
       nextToken
     }
+    responses {
+      items {
+        id
+        value
+        responseTime
+        createdAt
+        owner
+      }
+      nextToken
+    }
     createdAt
     modifiedAt
     owner
@@ -104,6 +134,9 @@ export const onCreateNode = `subscription OnCreateNode($owner: String!) {
         nextToken
       }
       edges {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -148,6 +181,9 @@ export const onUpdateNode = `subscription OnUpdateNode($owner: String!) {
       edges {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       modifiedAt
       owner
@@ -188,6 +224,9 @@ export const onDeleteNode = `subscription OnDeleteNode($owner: String!) {
         nextToken
       }
       edges {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -271,6 +310,9 @@ export const onCreateEdge = `subscription OnCreateEdge($owner: String!) {
       edges {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       modifiedAt
       owner
@@ -332,6 +374,9 @@ export const onUpdateEdge = `subscription OnUpdateEdge($owner: String!) {
         nextToken
       }
       edges {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -397,10 +442,88 @@ export const onDeleteEdge = `subscription OnDeleteEdge($owner: String!) {
       edges {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       modifiedAt
       owner
     }
+    createdAt
+    owner
+  }
+}
+`;
+export const onCreateResponse = `subscription OnCreateResponse($owner: String!) {
+  onCreateResponse(owner: $owner) {
+    id
+    value
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      owner
+    }
+    responseTime
+    createdAt
+    owner
+  }
+}
+`;
+export const onUpdateResponse = `subscription OnUpdateResponse($owner: String!) {
+  onUpdateResponse(owner: $owner) {
+    id
+    value
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      owner
+    }
+    responseTime
+    createdAt
+    owner
+  }
+}
+`;
+export const onDeleteResponse = `subscription OnDeleteResponse($owner: String!) {
+  onDeleteResponse(owner: $owner) {
+    id
+    value
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      owner
+    }
+    responseTime
     createdAt
     owner
   }

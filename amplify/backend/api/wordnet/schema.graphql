@@ -39,23 +39,3 @@ type Response @model @searchable @auth(rules: [{ allow: owner }]) {
   responseTime: Int
   createdAt: AWSDateTime
 }
-
-
-# type NodeConnection {
-#   items: [Node!]!
-#   nextToken: String
-# }
-
-# type EdgeConnection {
-#   items: [Edge!]!
-#   nextToken: String
-# }
-
-# type Query {
-#   nodesForWordNet(id: ID!, limit: Int, nextToken: String): NodeConnection
-#   edgesForWordNet(id: ID!, limit: Int, nextToken: String): EdgeConnection
-# }
-
-# type Mutation {
-#   addEdges(id: ID!, edges:[EdgeIn])
-# }
