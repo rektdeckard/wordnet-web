@@ -6,6 +6,7 @@ type WordNet
   id: ID!
   nodes: [Node!]! @connection(name: "NetworkNodes")
   edges: [Edge!]! @connection(name: "NetworkEdges")
+  responses: [Response!]! @connection(name: "NetworkResponses")
   createdAt: AWSDateTime
   modifiedAt: AWSDateTime
 }
@@ -30,6 +31,15 @@ type Edge @model @searchable @auth(rules: [{ allow: owner }]) {
   network: WordNet! @connection(name: "NetworkEdges")
   createdAt: AWSDateTime
 }
+
+type Response @model @searchable @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  value: String!
+  network: WordNet! @connection(name: "NetworkResponses")
+  responseTime: Int
+  createdAt: AWSDateTime
+}
+
 
 # type NodeConnection {
 #   items: [Node!]!
