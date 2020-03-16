@@ -1,29 +1,36 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Layout, Row, Col, Input, Button, Typography, Spin } from "antd";
+import {
+  Layout,
+  Row,
+  Col,
+  Input,
+  Button,
+  Typography,
+  Spin,
+  message
+} from "antd";
 
 import {
-  addElements,
+  submitResponse,
   removeElement,
   selectRandomNode,
   initializeSession
 } from "../../actions";
-import { uniqueTokensFromEntry, useGraph } from "../../utils";
+import { useGraph } from "../../utils";
 import GraphViewer from "../GraphViewer";
 
 const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
-const nivo = ["#e8c1a0", "#f47560", "#f1e15b", "#e8a838", "#61cdbb", "#97e3d5"];
 
 const Play = ({
   graph,
-  addElements,
+  submitResponse,
   removeElement,
   selectRandomNode,
   initializeSession
 }) => {
-  // const { session, currentNode } = graph;
-  const { nodes, session, currentNode } = useGraph(graph);
+  const { nodes, links, session, currentNode } = useGraph(graph);
   const [entry, setEntry] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -42,37 +49,15 @@ const Play = ({
     if (!entry || loading) return;
 
     setLoading(true);
-    // Extract unique tokens from entry, removing special characters and splitting on spaces/hyphens
-    const tokens = uniqueTokensFromEntry(entry);
+    const response = entry;
     setEntry("");
 
-    // Create new node for each token that does not already have one
-    const existingTokens = graph.nodes.map(n => n.value);
-    const newNodes = tokens
-      .filter(t => !existingTokens.includes(t))
-      .map(t => ({
-        id: t,
-        radius: 8,
-        depth: currentNode.depth + 1,
-        // color: "rgb(97, 205, 187)"
-        color: nivo[(currentNode.depth - 1) % nivo.length]
-        //   color: `hsl(${360 - (60 * currentNode.depth - 1)}, 40%, 60%)`
-      }));
+    try {
+      await submitResponse(response);
+    } catch (e) {
+      message.error(e.errors?.[0]?.message.split("(")[0]);
+    }
 
-    // Create links from current node to each token's new or extant node
-    // TODO: Update distance for extant links to represent stronger association?
-    const existingLinks = graph.links
-      .filter(l => l.source === currentNode.value)
-      .map(l => l.target);
-    const newLinks = tokens
-      .filter(t => !existingLinks.includes(t))
-      .map(t => ({
-        source: currentNode.value,
-        target: t,
-        distance: 30
-      }));
-
-    await addElements(newNodes, newLinks);
     setLoading(false);
   };
 
@@ -80,12 +65,14 @@ const Play = ({
     <Layout>
       <Title level={2}>Quick Play</Title>
       <Paragraph>
-        <Text strong>Instructions: </Text>Give a definition or explanation for
-        the provided word below.
+        <Text strong>Instructions: </Text>Define or explain the provided word
+        below. You may choose to respond with synonyms, complete sentences, or
+        word associations. Try to remain consistent with the style of your
+        response!
       </Paragraph>
       <Content style={{ padding: "0px 0px", background: "#fff" }}>
         <GraphViewer
-          graph={{ nodes, links: graph.links }}
+          graph={{ nodes, links }}
           header={
             <Title level={3} style={{ textAlign: "center", paddingTop: 16 }}>
               {currentNode?.value && !loading ? (
@@ -103,7 +90,7 @@ const Play = ({
             <Input
               placeholder={
                 !loading
-                  ? `Define ${currentNode?.value ?? "smart"}`
+                  ? `Define "${currentNode?.value ?? "smart"}"`
                   : "Loading..."
               }
               value={entry}
@@ -134,7 +121,7 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-  addElements,
+  submitResponse,
   removeElement,
   selectRandomNode,
   initializeSession

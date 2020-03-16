@@ -28,6 +28,16 @@ export const createWordNet = `mutation CreateWordNet(
       }
       nextToken
     }
+    responses {
+      items {
+        id
+        value
+        responseTime
+        createdAt
+        owner
+      }
+      nextToken
+    }
     createdAt
     modifiedAt
     owner
@@ -56,6 +66,16 @@ export const updateWordNet = `mutation UpdateWordNet(
       items {
         id
         distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    responses {
+      items {
+        id
+        value
+        responseTime
         createdAt
         owner
       }
@@ -94,6 +114,16 @@ export const deleteWordNet = `mutation DeleteWordNet(
       }
       nextToken
     }
+    responses {
+      items {
+        id
+        value
+        responseTime
+        createdAt
+        owner
+      }
+      nextToken
+    }
     createdAt
     modifiedAt
     owner
@@ -116,6 +146,9 @@ export const createNode = `mutation CreateNode(
         nextToken
       }
       edges {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -163,6 +196,9 @@ export const updateNode = `mutation UpdateNode(
       edges {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       modifiedAt
       owner
@@ -206,6 +242,9 @@ export const deleteNode = `mutation DeleteNode(
         nextToken
       }
       edges {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -292,6 +331,9 @@ export const createEdge = `mutation CreateEdge(
       edges {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       modifiedAt
       owner
@@ -356,6 +398,9 @@ export const updateEdge = `mutation UpdateEdge(
         nextToken
       }
       edges {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -424,10 +469,97 @@ export const deleteEdge = `mutation DeleteEdge(
       edges {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       modifiedAt
       owner
     }
+    createdAt
+    owner
+  }
+}
+`;
+export const createResponse = `mutation CreateResponse(
+  $input: CreateResponseInput!
+  $condition: ModelResponseConditionInput
+) {
+  createResponse(input: $input, condition: $condition) {
+    id
+    value
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      owner
+    }
+    responseTime
+    createdAt
+    owner
+  }
+}
+`;
+export const updateResponse = `mutation UpdateResponse(
+  $input: UpdateResponseInput!
+  $condition: ModelResponseConditionInput
+) {
+  updateResponse(input: $input, condition: $condition) {
+    id
+    value
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      owner
+    }
+    responseTime
+    createdAt
+    owner
+  }
+}
+`;
+export const deleteResponse = `mutation DeleteResponse(
+  $input: DeleteResponseInput!
+  $condition: ModelResponseConditionInput
+) {
+  deleteResponse(input: $input, condition: $condition) {
+    id
+    value
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      owner
+    }
+    responseTime
     createdAt
     owner
   }

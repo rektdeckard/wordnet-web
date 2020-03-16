@@ -1,8 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { ResponsiveNetwork } from "@nivo/network";
-import { Layout, Menu, Icon, InputNumber, Row, Col, Switch } from "antd";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { Layout, Menu, InputNumber, Row, Col, Switch } from "antd";
+import {
+  DotChartOutlined,
+  EllipsisOutlined,
+  ForkOutlined,
+  DoubleRightOutlined
+} from "@ant-design/icons";
 
 import data from "../../data/sample3.json";
 import {
@@ -58,7 +62,7 @@ const Settings = props => {
           key="sim"
           title={
             <span>
-              <Icon type="dot-chart" />
+              <DotChartOutlined />
               Simulation
             </span>
           }
@@ -125,7 +129,7 @@ const Settings = props => {
           key="nodes"
           title={
             <span>
-              <Icon type="ellipsis" />
+              <EllipsisOutlined />
               Nodes
             </span>
           }
@@ -149,7 +153,7 @@ const Settings = props => {
           key="links"
           title={
             <span>
-              <Icon type="fork" />
+              <ForkOutlined />
               Links
             </span>
           }
@@ -173,7 +177,7 @@ const Settings = props => {
           key="motion"
           title={
             <span>
-              <Icon type="double-right" />
+              <DoubleRightOutlined />
               Motion
             </span>
           }
@@ -228,9 +232,7 @@ const Settings = props => {
     <Layout style={{ background: "#fff" }}>
       {renderSider()}
       <Content>
-      <GraphViewer
-          graph={{ nodes: data.nodes, links: data.links }}
-        />
+        <GraphViewer graph={{ nodes: data.nodes, links: data.links }} />
       </Content>
     </Layout>
   );

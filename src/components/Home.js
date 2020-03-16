@@ -1,6 +1,11 @@
 import React from "react";
 import { withRouter, Link } from "react-router-dom";
-import { Layout, Typography, List, Button, Icon } from "antd";
+import { Layout, Typography, List, Button } from "antd";
+import {
+  RocketTwoTone,
+  ThunderboltTwoTone,
+  TrophyTwoTone
+} from "@ant-design/icons";
 
 const { Content } = Layout;
 const { Text } = Typography;
@@ -9,21 +14,21 @@ const Home = () => {
   const destinationCards = [
     {
       title: "Quick Play",
-      icon: "rocket",
+      icon: <RocketTwoTone style={{ marginTop: 32, fontSize: 64 }} />,
       path: "/play",
       description:
         "Jump into a quick 5-minute game to get the creative juices flowing"
     },
     {
       title: "Insights",
-      icon: "thunderbolt",
+      icon: <ThunderboltTwoTone style={{ marginTop: 32, fontSize: 64 }} />,
       path: "/explore/insights",
       description:
         "Gain perspective on your personality and cognitive abilities through analysis of your data"
     },
     {
       title: "Goals",
-      icon: "trophy",
+      icon: <TrophyTwoTone style={{ marginTop: 32, fontSize: 64 }} />,
       path: "explore/goals",
       description:
         "Challenge yourself to login a few times a week, expand your vocabulary, or increase your speed"
@@ -51,15 +56,13 @@ const Home = () => {
                   justifyContent: "space-between"
                 }}
               >
-                <Icon
-                  type={item.icon}
-                  theme="twoTone"
-                  style={{ marginTop: 32, fontSize: 64 }}
-                />
+                {item.icon}
                 <Button type="primary" shape="round" style={{ margin: 16 }}>
                   <Link to={item.path}>{item.title}</Link>
                 </Button>
-                <Text style={{ fontSize: 12, marginLeft: 4, marginRight: 4 }}>
+                <Text
+                  style={{ fontSize: 14, padding: 32, textAlign: "center" }}
+                >
                   {item.description}
                 </Text>
               </div>

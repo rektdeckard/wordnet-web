@@ -1,21 +1,38 @@
 import { API, graphqlOperation } from "aws-amplify";
 
-import * as queries from "../graphql/queries";
-import { FETCH_HISTORY } from "./types";
+import { FETCH_HISTORY, FETCH_SESSION } from "./types";
 
 export const fetchHistory = fromDate => async dispatch => {
   const sessionData = await API.graphql(
     // TODO: figure out a better limit and way to filter, possibly via ElasticSearch
-    graphqlOperation(queries.listHistory, {
-      limit: 1000,
-      filter: {
-        createdAt: {
-          ge:
-            fromDate?.toISOString() ??
-            `${new Date().getFullYear()}-01-01T00:00:00.000Z`
+    graphqlOperation(
+      /* GraphQL */ `
+        query ListWordNets(
+          $filter: ModelWordNetFilterInput
+          $limit: Int
+          $nextToken: String
+        ) {
+          listWordNets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+            items {
+              id
+              createdAt
+              modifiedAt
+            }
+            nextToken
+          }
+        }
+      `,
+      {
+        limit: 1000,
+        filter: {
+          createdAt: {
+            ge:
+              fromDate?.toISOString() ??
+              `${new Date().getFullYear()}-01-01T00:00:00.000Z`
+          }
         }
       }
-    })
+    )
   );
 
   const entries = sessionData.data.listWordNets.items
@@ -48,11 +65,21 @@ export const fetchHistory = fromDate => async dispatch => {
   // FIXME: Response Mapping Template only allows 1000 items in a list??
   const nodeCount = await API.graphql(
     graphqlOperation(
-      /* GraphQL */  `{
-        countNodes
-      }`,
+      /* GraphQL */ `
+        {
+          countNodes
+        }
+      `,
       {}
     )
+  );
+
+  const responseCount = await API.graphql(
+    graphqlOperation(/* GraphQL */ `
+      {
+        countResponses
+      }
+    `)
   );
 
   dispatch({
@@ -60,7 +87,55 @@ export const fetchHistory = fromDate => async dispatch => {
     payload: {
       sessions: sessionData.data.listWordNets.items,
       sessionsByDay,
+      rounds: responseCount.data.countResponses,
       words: nodeCount.data.countNodes
     }
   });
+};
+
+export const fetchSession = id => async dispatch => {
+  const res = await API.graphql(
+    graphqlOperation(
+      /* GraphQL */ `
+        query getSession($id: ID!, $limit: Int) {
+          getWordNet(id: $id) {
+            nodes(limit: $limit) {
+              items {
+                id
+                value
+                depth
+                radius
+                color
+                createdAt
+                owner
+              }
+            }
+            edges(limit: $limit) {
+              items {
+                id
+                distance
+                createdAt
+                source {
+                  value
+                }
+                target {
+                  value
+                }
+                distance
+              }
+            }
+          }
+        }
+      `,
+      { id, limit: 1000 }
+    )
+  );
+
+  dispatch({
+    type: FETCH_SESSION,
+    payload: {
+      nodes: res.data.getWordNet.nodes.items,
+      edges: res.data.getWordNet.edges.items
+    }
+  })
 };

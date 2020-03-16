@@ -8,16 +8,22 @@ import {
   Progress,
   Statistic,
   Card,
-  List,
-  Icon
+  List
 } from "antd";
+import {
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+  MessageOutlined,
+  RightSquareOutlined
+} from "@ant-design/icons";
 import { ResponsiveCalendar } from "@nivo/calendar";
 
 import { fetchHistory } from "../../actions";
-import { useWeekOverWeek } from "../../hooks/useStatistic";
+import { useWeekOverWeek } from "../../utils";
 import History from "./History";
 import Missing from "../Missing";
 import SessionLog from "./SessionLog";
+import Session from "./Session";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -31,7 +37,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
 
   const handleDayClicked = (day, event) => {
     event.preventDefault();
-    console.log(day, event);
+    // console.log(day, event);
     // TODO: Redirect to log view
     history.push(`/explore/history/${day.day}`);
   };
@@ -63,14 +69,20 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
       }
       precision={1}
       valueStyle={{ color: weekOverWeek >= 0 ? "#51bdab" : "#f47560" }}
-      prefix={<Icon type={`arrow-${weekOverWeek >= 0 ? "up" : "down"}`} />}
+      prefix={weekOverWeek >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
       suffix="%"
     />,
     <Statistic
       title="Words logged"
       value={sessionHistory.words ?? 0}
       precision={0}
-      prefix={<Icon type="message" />}
+      prefix={<MessageOutlined />}
+    />,
+    <Statistic
+      title="Rounds played"
+      value={sessionHistory.rounds ?? 0}
+      precision={0}
+      prefix={<RightSquareOutlined />}
     />
   ];
 
@@ -92,9 +104,9 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
               <List
                 grid={{
                   gutter: 16,
-                  xs: 1,
-                  sm: 2,
-                  md: 3
+                  sm: 1,
+                  md: 2,
+                  lg: 4
                 }}
                 dataSource={statisticCards}
                 renderItem={item => (
@@ -184,6 +196,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
         />
         <Route exact path="/explore/history" component={History} />
         <Route path="/explore/history/:date" component={SessionLog} />
+        <Route path="/explore/sessions/:id" component={Session} />
         <Route render={() => <Missing />} />
       </Switch>
     </Layout>

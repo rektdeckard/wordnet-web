@@ -7,11 +7,12 @@ import {
   Card,
   Avatar,
   Upload,
-  Icon,
   message,
   List,
+  Row,
   Col
 } from "antd";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 
 const { Text, Paragraph, Title } = Typography;
 
@@ -68,7 +69,7 @@ const Account = () => {
 
   const uploadButton = (
     <div>
-      <Icon type={loading ? "loading" : "plus"} />
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
       {loading ? null : <div className="ant-upload-text">Upload</div>}
     </div>
   );
@@ -76,87 +77,89 @@ const Account = () => {
   return (
     <Layout>
       <Card title="User Details" bordered={false}>
-        <Col span={4} style={{ minWidth: 128 }}>
-          <Upload
-            name="image"
-            listType="picture-card"
-            className="avatar-uploader"
-            showUploadList={false}
-            customRequest={handleUpload}
-            beforeUpload={validateFile}
-          >
-            {image ? (
-              <Avatar
-                src={image}
-                shape="square"
-                style={{ width: "100%", height: "100%" }}
-              />
-            ) : (
-              uploadButton
-            )}
-          </Upload>
-        </Col>
-        <Col span={20}>
-          <List itemLayout="horizontal" size="small">
-            <List.Item>
-              <List.Item.Meta
-                title="Name"
-                description={
-                  <Paragraph
-                    editable={{
-                      onChange: value => onChangeAttribute("name", value)
-                    }}
-                  >
-                    {user.name}
-                  </Paragraph>
-                }
-              />
-            </List.Item>
-            <List.Item>
-              <List.Item.Meta
-                title="Phone"
-                description={
-                  <Paragraph
-                    editable={{
-                      onChange: value =>
-                        onChangeAttribute("phone_number", value)
-                    }}
-                  >
-                    {user.phone_number}
-                  </Paragraph>
-                }
-              />
-            </List.Item>
-            <List.Item>
-              <List.Item.Meta
-                title="Email"
-                description={
-                  <Paragraph
-                    editable={{
-                      onChange: value => onChangeAttribute("email", value)
-                    }}
-                  >
-                    {user.email}
-                  </Paragraph>
-                }
-              />
-            </List.Item>
-            <List.Item>
-              <List.Item.Meta
-                title="Address"
-                description={
-                  <Paragraph
-                    editable={{
-                      onChange: value => onChangeAttribute("address", value)
-                    }}
-                  >
-                    {user.address ?? "Not provided"}
-                  </Paragraph>
-                }
-              />
-            </List.Item>
-          </List>
-        </Col>
+        <Row>
+          <Col span={4} style={{ minWidth: 128 }}>
+            <Upload
+              name="image"
+              listType="picture-card"
+              className="avatar-uploader"
+              showUploadList={false}
+              customRequest={handleUpload}
+              beforeUpload={validateFile}
+            >
+              {image ? (
+                <Avatar
+                  src={image}
+                  shape="square"
+                  style={{ width: "100%", height: "100%" }}
+                />
+              ) : (
+                uploadButton
+              )}
+            </Upload>
+          </Col>
+          <Col span={20}>
+            <List itemLayout="horizontal" size="small">
+              <List.Item>
+                <List.Item.Meta
+                  title="Name"
+                  description={
+                    <Paragraph
+                      editable={{
+                        onChange: value => onChangeAttribute("name", value)
+                      }}
+                    >
+                      {user.name}
+                    </Paragraph>
+                  }
+                />
+              </List.Item>
+              <List.Item>
+                <List.Item.Meta
+                  title="Phone"
+                  description={
+                    <Paragraph
+                      editable={{
+                        onChange: value =>
+                          onChangeAttribute("phone_number", value)
+                      }}
+                    >
+                      {user.phone_number}
+                    </Paragraph>
+                  }
+                />
+              </List.Item>
+              <List.Item>
+                <List.Item.Meta
+                  title="Email"
+                  description={
+                    <Paragraph
+                      editable={{
+                        onChange: value => onChangeAttribute("email", value)
+                      }}
+                    >
+                      {user.email}
+                    </Paragraph>
+                  }
+                />
+              </List.Item>
+              <List.Item>
+                <List.Item.Meta
+                  title="Address"
+                  description={
+                    <Paragraph
+                      editable={{
+                        onChange: value => onChangeAttribute("address", value)
+                      }}
+                    >
+                      {user.address ?? "Not provided"}
+                    </Paragraph>
+                  }
+                />
+              </List.Item>
+            </List>
+          </Col>
+        </Row>
       </Card>
     </Layout>
   );

@@ -7,3 +7,4 @@ export const SET_CURRENT_NODE = "set_current_node";
 export const SUBMIT_GRAPH_SESSION = "submit_graph_session";
 
 export const FETCH_HISTORY = "fetch_history";
+export const FETCH_SESSION = "fetch_session";

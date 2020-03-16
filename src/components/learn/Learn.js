@@ -1,6 +1,12 @@
 import React from "react";
-import { Layout, List, Avatar } from "antd";
 import { Link } from "react-router-dom";
+import { Layout, List, Avatar } from "antd";
+import {
+  QuestionCircleOutlined,
+  SmileOutlined,
+  ExperimentOutlined,
+  DollarOutlined
+} from "@ant-design/icons";
 
 const { Content } = Layout;
 
@@ -8,7 +14,7 @@ const Learn = () => {
   const data = [
     {
       title: "What is a WordNet?",
-      icon: "question-circle",
+      icon: <QuestionCircleOutlined />,
       description: (
         <>
           <p>
@@ -44,12 +50,12 @@ const Learn = () => {
     },
     {
       title: "Benefits of WordNet",
-      icon: "smile",
+      icon: <SmileOutlined />,
       description: ""
     },
     {
       title: "Potential Applications",
-      icon: "experiment",
+      icon: <ExperimentOutlined />,
       description: (
         <ul>
           <li>Evaluating one's knowledge over time</li>
@@ -81,7 +87,7 @@ const Learn = () => {
     },
     {
       title: "Commercial Product",
-      icon: "dollar",
+      icon: <DollarOutlined />,
       description: ""
     }
   ];

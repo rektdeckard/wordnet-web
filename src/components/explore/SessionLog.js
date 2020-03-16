@@ -19,7 +19,9 @@ const columns = [
     sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     sortDirections: ["descend", "ascend"],
     defaultSortOrder: "descend",
-    render: (text, record) => <Link to={`/explore/sessions/${record.id}`}>{text}</Link>
+    render: (text, record) => (
+      <Link to={`/explore/sessions/${record.id}`}>{text}</Link>
+    )
   },
   {
     title: "Words",
@@ -40,25 +42,27 @@ const SessionLog = () => {
     const fetchSessions = async date => {
       const res = await API.graphql(
         graphqlOperation(
-          `query SessionsForDay(
-        $filter: ModelWordNetFilterInput
-      ) {
-        listWordNets(filter: $filter) {
-          items {
-            id
-            nodes {
-              items {
-                value
+          /* GraphQL */ `
+            query SessionsForDay(
+              $filter: ModelWordNetFilterInput
+              $limit: Int
+            ) {
+              listWordNets(filter: $filter, limit: $limit) {
+                items {
+                  id
+                  nodes(limit: $limit) {
+                    items {
+                      value
+                    }
+                  }
+                  createdAt
+                }
               }
             }
-            createdAt
-          }
-        }
-      }`,
-          { filter: { createdAt: { contains: date } } }
+          `,
+          { filter: { createdAt: { contains: date } }, limit: 1000 }
         )
       );
-      console.log(res.data);
 
       const data = res.data.listWordNets.items.map(
         ({ id, createdAt, nodes }) => {
