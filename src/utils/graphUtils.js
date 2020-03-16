@@ -10,9 +10,19 @@ export const useGraph = graph =>
         radius,
         color
       })) ?? [];
+
+    const links =
+      graph.edges?.map(edge => ({
+        source: edge.source.value,
+        target: edge.target.value,
+        distance: edge.distance
+      })) ??
+      graph.links ??
+      [];
+      
     return {
       nodes,
-      links: graph.links ?? [],
+      links,
       session: graph.session,
       currentNode: graph.currentNode
     };
