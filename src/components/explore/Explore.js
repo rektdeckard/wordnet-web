@@ -23,6 +23,7 @@ import { useWeekOverWeek } from "../../utils";
 import History from "./History";
 import Missing from "../Missing";
 import SessionLog from "./SessionLog";
+import Session from "./Session";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -36,7 +37,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
 
   const handleDayClicked = (day, event) => {
     event.preventDefault();
-    console.log(day, event);
+    // console.log(day, event);
     // TODO: Redirect to log view
     history.push(`/explore/history/${day.day}`);
   };
@@ -195,6 +196,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
         />
         <Route exact path="/explore/history" component={History} />
         <Route path="/explore/history/:date" component={SessionLog} />
+        <Route path="/explore/sessions/:id" component={Session} />
         <Route render={() => <Missing />} />
       </Switch>
     </Layout>
