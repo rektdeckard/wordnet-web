@@ -8,9 +8,14 @@ import {
   Progress,
   Statistic,
   Card,
-  List,
-  Icon
+  List
 } from "antd";
+import {
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+  MessageOutlined,
+  RightSquareOutlined
+} from "@ant-design/icons";
 import { ResponsiveCalendar } from "@nivo/calendar";
 
 import { fetchHistory } from "../../actions";
@@ -63,14 +68,20 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
       }
       precision={1}
       valueStyle={{ color: weekOverWeek >= 0 ? "#51bdab" : "#f47560" }}
-      prefix={<Icon type={`arrow-${weekOverWeek >= 0 ? "up" : "down"}`} />}
+      prefix={weekOverWeek >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
       suffix="%"
     />,
     <Statistic
       title="Words logged"
       value={sessionHistory.words ?? 0}
       precision={0}
-      prefix={<Icon type="message" />}
+      prefix={<MessageOutlined />}
+    />,
+    <Statistic
+      title="Rounds played"
+      value={sessionHistory.rounds ?? 0}
+      precision={0}
+      prefix={<RightSquareOutlined />}
     />
   ];
 
@@ -92,9 +103,9 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
               <List
                 grid={{
                   gutter: 16,
-                  xs: 1,
-                  sm: 2,
-                  md: 3
+                  sm: 1,
+                  md: 2,
+                  lg: 4
                 }}
                 dataSource={statisticCards}
                 renderItem={item => (
