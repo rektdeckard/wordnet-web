@@ -22,7 +22,6 @@ export const submitResponse = response => async (dispatch, getState) => {
       input: { value: response, responseTime: 0, responseNetworkId: session }
     })
   );
-  console.log(resultResponse);
 
   const tokens = uniqueTokensFromEntry(response);
   const newNodes = generateMissingNodes(tokens, nodes, currentNode);

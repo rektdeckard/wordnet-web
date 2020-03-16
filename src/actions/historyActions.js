@@ -1,7 +1,6 @@
 import { API, graphqlOperation } from "aws-amplify";
 
-import * as queries from "../graphql/queries";
-import { FETCH_HISTORY } from "./types";
+import { FETCH_HISTORY, FETCH_SESSION } from "./types";
 
 export const fetchHistory = fromDate => async dispatch => {
   const sessionData = await API.graphql(
@@ -92,4 +91,51 @@ export const fetchHistory = fromDate => async dispatch => {
       words: nodeCount.data.countNodes
     }
   });
+};
+
+export const fetchSession = id => async dispatch => {
+  const res = await API.graphql(
+    graphqlOperation(
+      /* GraphQL */ `
+        query getSession($id: ID!, $limit: Int) {
+          getWordNet(id: $id) {
+            nodes(limit: $limit) {
+              items {
+                id
+                value
+                depth
+                radius
+                color
+                createdAt
+                owner
+              }
+            }
+            edges(limit: $limit) {
+              items {
+                id
+                distance
+                createdAt
+                source {
+                  value
+                }
+                target {
+                  value
+                }
+                distance
+              }
+            }
+          }
+        }
+      `,
+      { id, limit: 1000 }
+    )
+  );
+
+  dispatch({
+    type: FETCH_SESSION,
+    payload: {
+      nodes: res.data.getWordNet.nodes.items,
+      edges: res.data.getWordNet.edges.items
+    }
+  })
 };
