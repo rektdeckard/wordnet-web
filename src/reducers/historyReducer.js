@@ -3,6 +3,7 @@ import { FETCH_HISTORY } from "../actions/types";
 const INITIAL_STATE = {
   sessions: [],
   sessionsByDay: [],
+  rounds: 0,
   words: 0
 };
 

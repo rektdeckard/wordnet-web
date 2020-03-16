@@ -75,11 +75,20 @@ export const fetchHistory = fromDate => async dispatch => {
     )
   );
 
+  const responseCount = await API.graphql(
+    graphqlOperation(/* GraphQL */ `
+      {
+        countResponses
+      }
+    `)
+  );
+
   dispatch({
     type: FETCH_HISTORY,
     payload: {
       sessions: sessionData.data.listWordNets.items,
       sessionsByDay,
+      rounds: responseCount.data.countResponses,
       words: nodeCount.data.countNodes
     }
   });
