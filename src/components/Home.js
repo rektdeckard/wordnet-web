@@ -60,7 +60,9 @@ const Home = () => {
                 <Button type="primary" shape="round" style={{ margin: 16 }}>
                   <Link to={item.path}>{item.title}</Link>
                 </Button>
-                <Text style={{ fontSize: 12, marginLeft: 4, marginRight: 4 }}>
+                <Text
+                  style={{ fontSize: 14, padding: 32, textAlign: "center" }}
+                >
                   {item.description}
                 </Text>
               </div>
