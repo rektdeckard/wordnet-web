@@ -19,7 +19,12 @@ export const submitResponse = response => async (dispatch, getState) => {
 
   const resultResponse = await API.graphql(
     graphqlOperation(mutations.createResponse, {
-      input: { value: response, responseTime: 0, responseNetworkId: session }
+      input: {
+        value: response,
+        responseTime: 0,
+        responseNetworkId: session,
+        responseSourceId: currentNode.id
+      }
     })
   );
 

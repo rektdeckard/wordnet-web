@@ -20,6 +20,7 @@ type Node @model @searchable @auth(rules: [{ allow: owner }]) {
   network: WordNet! @connection(name: "NetworkNodes")
   sources: [Edge!]! @connection(name: "EdgeSource")
   targets: [Edge!]! @connection(name: "EdgeTarget")
+  responses: [Response!]! @connection(name: "NodeResponses")
   createdAt: AWSDateTime
 }
 
@@ -34,6 +35,7 @@ type Edge @model @searchable @auth(rules: [{ allow: owner }]) {
 
 type Response @model @searchable @auth(rules: [{ allow: owner }]) {
   id: ID!
+  source: Node! @connection(name: "NodeResponses")
   value: String!
   network: WordNet! @connection(name: "NetworkResponses")
   responseTime: Int
