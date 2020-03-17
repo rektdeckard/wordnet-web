@@ -6,30 +6,37 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const defaultOptions = {
   defaultScale: 1,
-  doubleClick: { mode: "reset" },
+  doubleClick: { mode: "zoomOut" },
   options: { limitToWrapper: true },
-  pan: { velocity: false }
+  pan: { velocity: false },
+  wheel: { step: 20 },
+  positionY: -260,
+  defaultPositionY: -260,
+  options: {
+    minPositionY: -260,
+    limitToBounds: false
+  }
 };
 
-const GraphViewer = ({ graph, header, settings, transformOptions = {} }) => {
+const GraphViewer = ({
+  graph,
+  header,
+  settings,
+  wrapperOptions = {},
+  componentStyle
+}) => {
   const [ref, { width, height }] = useMeasure();
 
   return (
-    <TransformWrapper {...defaultOptions} {...transformOptions}>
+    <TransformWrapper {...defaultOptions} {...wrapperOptions}>
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
         <>
           {header}
           <TransformComponent>
-            <div
-              style={{
-                height: window.innerHeight - 364,
-                width: window.innerWidth - 116
-              }}
-              ref={ref}
-            >
+            <div style={componentStyle ?? { height: "50vh", width: window.innerWidth - 116 }} ref={ref}>
               <Network
-                height={height || window.innerHeight - 364}
-                width={width || window.innerWidth - 116}
+                height={1000}
+                width={width}
                 nodes={graph.nodes}
                 links={graph.links}
                 repulsivity={settings.repulsivity}
