@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { Layout, Tabs, Table } from "antd";
-import { ClockCircleOutlined } from "@ant-design/icons";
-import { formatDistance } from "date-fns"
+import { Layout, Tabs, Table, Input, Button } from "antd";
+import { ClockCircleOutlined, SearchOutlined } from "@ant-design/icons";
 
 import GraphViewer from "../GraphViewer";
 import { fetchSession } from "../../actions";
@@ -12,83 +11,166 @@ import { useGraph } from "../../utils";
 const { Content } = Layout;
 const { TabPane } = Tabs;
 
-const responseColumns = [
-  {
-    title: <ClockCircleOutlined />,
-    dataIndex: "createdAt",
-    sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-    sortDirections: ["descend", "ascend"],
-    defaultSortOrder: "ascend",
-    render: response => new Date(response).toLocaleString()
-  },
-  {
-    title: "Prompt Word",
-    dataIndex: ["source", "value"],
-    sorter: (a, b) => a.source.value.localeCompare(b.source.value),
-    sortDirections: ["descend", "ascend"],
-    defaultSortOrder: "ascend"
-  },
-  {
-    title: "Response",
-    dataIndex: "value",
-    width: "50%",
-    sorter: (a, b) => a.value.localeCompare(b.value),
-    sortDirections: ["descend", "ascend"],
-    defaultSortOrder: "ascend"
-  },
-  {
-    title: "Response Time",
-    dataIndex: "responseTime",
-    align: "right",
-    sorter: (a, b) => a.responseTime - b.responseTime,
-    sortDirections: ["descend", "ascend"],
-    defaultSortOrder: "descend",
-    render: response => `${response} ms`
-    // render: (text, record) => formatDistance(new Date(record.createdAt), new Date(new Date(record.createdAt) + record.responseTime))
-  }
-];
-
-const wordColumns = [
-  {
-    title: <ClockCircleOutlined />,
-    dataIndex: "createdAt",
-    sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-    sortDirections: ["descend", "ascend"],
-    defaultSortOrder: "ascend",
-    render: response => new Date(response).toLocaleString()
-  },
-  {
-    title: "Prompt Word",
-    dataIndex: "source",
-    sorter: (a, b) => a.source.localeCompare(b.source),
-    sortDirections: ["descend", "ascend"],
-    defaultSortOrder: "ascend"
-  },
-  {
-    title: "Target Word",
-    dataIndex: "target",
-    width: "50%",
-    sorter: (a, b) => a.target.localeCompare(b.target),
-    sortDirections: ["descend", "ascend"],
-    defaultSortOrder: "ascend"
-  },
-  {
-    title: "Distance",
-    dataIndex: "distance",
-    align: "right",
-    sorter: (a, b) => a.distance - b.distance,
-    sortDirections: ["descend", "ascend"],
-    defaultSortOrder: "ascend"
-  }
-];
-
 const Session = ({ graph, fetchSession }) => {
   const { id } = useParams();
+  const inputRef = useRef();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchColumn, setSearchColumn] = useState("");
   const { nodes, links, responses } = useGraph(graph);
 
   useEffect(() => {
     if (id) fetchSession(id);
   }, [id, fetchSession]);
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchTerm(selectedKeys[0]);
+    setSearchColumn(dataIndex);
+  };
+
+  const handleReset = clearFilters => {
+    clearFilters();
+    setSearchTerm("");
+  };
+
+  const searchableColumn = dataIndex => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters
+    }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={inputRef}
+          placeholder={`Search ${dataIndex} words`}
+          value={selectedKeys[0]}
+          onChange={e =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
+        />
+        <Button
+          type="primary"
+          onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          icon={<SearchOutlined />}
+          size="small"
+          style={{ width: 90, marginRight: 8 }}
+        >
+          Search
+        </Button>
+        <Button
+          onClick={() => handleReset(clearFilters)}
+          size="small"
+          style={{ width: 90 }}
+        >
+          Reset
+        </Button>
+      </div>
+    ),
+    filterIcon: filtered => (
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes(value.toLowerCase()),
+    onFilterDropdownVisibleChange: visible => {
+      if (visible) {
+        setTimeout(() => inputRef.current.select());
+      }
+    }
+    // render: text =>
+    //   searchColumn === dataIndex ? (
+    //     <Highlighter
+    //       highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+    //       searchWords={[searchTerm]}
+    //       autoEscape
+    //       textToHighlight={text.toString()}
+    //     />
+    //   ) : (
+    //     text
+    //   ),
+  });
+
+  const responseColumns = useMemo(() => ([
+    {
+      title: <ClockCircleOutlined />,
+      dataIndex: "createdAt",
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+      sortDirections: ["descend", "ascend"],
+      defaultSortOrder: "ascend",
+      render: response => new Date(response).toLocaleString()
+    },
+    {
+      title: "Prompt Word",
+      dataIndex: "source",
+      sorter: (a, b) => a.source.localeCompare(b.source),
+      sortDirections: ["descend", "ascend"],
+      defaultSortOrder: "ascend",
+      ...searchableColumn("source")
+    },
+    {
+      title: "Response",
+      dataIndex: "response",
+      width: "50%",
+      sorter: (a, b) => a.value.localeCompare(b.value),
+      sortDirections: ["descend", "ascend"],
+      defaultSortOrder: "ascend",
+      ...searchableColumn("response")
+    },
+    {
+      title: "Response Time",
+      dataIndex: "responseTime",
+      align: "right",
+      sorter: (a, b) => a.responseTime - b.responseTime,
+      sortDirections: ["descend", "ascend"],
+      defaultSortOrder: "descend",
+      render: response => `${response} ms`
+      // render: (text, record) => formatDistance(new Date(record.createdAt), new Date(new Date(record.createdAt) + record.responseTime))
+    }
+  ]), [searchableColumn]);
+
+  const wordColumns = useMemo(
+    () => [
+      {
+        title: <ClockCircleOutlined />,
+        dataIndex: "createdAt",
+        sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+        sortDirections: ["descend", "ascend"],
+        defaultSortOrder: "ascend",
+        render: response => new Date(response).toLocaleString()
+      },
+      {
+        title: "Prompt Word",
+        dataIndex: "source",
+        sorter: (a, b) => a.source.localeCompare(b.source),
+        sortDirections: ["descend", "ascend"],
+        defaultSortOrder: "ascend",
+        ...searchableColumn("source")
+      },
+      {
+        title: "Target Word",
+        dataIndex: "target",
+        width: "50%",
+        sorter: (a, b) => a.target.localeCompare(b.target),
+        sortDirections: ["descend", "ascend"],
+        defaultSortOrder: "ascend",
+        ...searchableColumn("target")
+      },
+      {
+        title: "Distance",
+        dataIndex: "distance",
+        align: "right",
+        sorter: (a, b) => a.distance - b.distance,
+        sortDirections: ["descend", "ascend"],
+        defaultSortOrder: "ascend"
+      }
+    ],
+    [searchableColumn]
+  );
 
   return (
     <>
@@ -102,12 +184,22 @@ const Session = ({ graph, fetchSession }) => {
           />
         </Content>
       </Layout>
-      <Tabs defaultActiveKey="1" size="small" animated={false} style={{ marginTop: 8 }}>
+      <Tabs
+        defaultActiveKey="1"
+        size="small"
+        animated={false}
+        style={{ marginTop: 8 }}
+      >
         <TabPane tab="Responses" key="1">
-        <Table
+          <Table
             // style={{ marginTop: 16 }}
             columns={responseColumns}
-            dataSource={responses.map(response => ({ ...response, key: response.id }))}
+            dataSource={responses.map(response => ({
+              ...response,
+              source: response.source.value,
+              response: response.value,
+              key: response.id
+            }))}
             size="small"
             scroll={{ y: "26vh" }}
             pagination={false}
