@@ -13,9 +13,11 @@ export const useGraph = graph =>
 
     const links =
       graph.edges?.map(edge => ({
+        id: edge.id,
         source: edge.source.value,
         target: edge.target.value,
-        distance: edge.distance
+        distance: edge.distance,
+        createdAt: edge.createdAt
       })) ??
       graph.links ??
       [];
@@ -23,6 +25,7 @@ export const useGraph = graph =>
     return {
       nodes,
       links,
+      responses: graph.responses ?? [],
       session: graph.session,
       currentNode: graph.currentNode
     };
