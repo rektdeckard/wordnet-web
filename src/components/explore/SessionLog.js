@@ -11,7 +11,8 @@ const columns = [
     dataIndex: "createDate",
     sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     sortDirections: ["descend", "ascend"],
-    defaultSortOrder: "descend"
+    defaultSortOrder: "descend",
+    width: "25%"
   },
   {
     title: "Time",
@@ -21,14 +22,16 @@ const columns = [
     defaultSortOrder: "descend",
     render: (text, record) => (
       <Link to={`/explore/sessions/${record.id}`}>{text}</Link>
-    )
+    ),
+    width: "50%"
   },
   {
     title: "Words",
     dataIndex: "words",
     sorter: (a, b) => a.words - b.words,
     sortDirections: ["descend", "ascend"],
-    defaultSortOrder: "descend"
+    defaultSortOrder: "descend",
+    width: "25%"
   }
 ];
 
@@ -92,6 +95,8 @@ const SessionLog = () => {
         <Table
           columns={columns}
           dataSource={sessions}
+          pagination={false}
+          // scroll={{ y: 720 }}
           rowSelection={{
             type: "checkbox",
             onChange: (selectedRowKeys, selectedRows) => {
