@@ -7,14 +7,12 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 const defaultOptions = {
   defaultScale: 1,
   doubleClick: { mode: "zoomOut" },
-  options: { limitToWrapper: true },
   pan: { velocity: false },
   wheel: { step: 20 },
-  positionY: -260,
   defaultPositionY: -260,
   options: {
     minPositionY: -260,
-    limitToBounds: false
+    limitToBounds: false,
   }
 };
 
@@ -25,7 +23,7 @@ const GraphViewer = ({
   wrapperOptions = {},
   componentStyle
 }) => {
-  const [ref, { width, height }] = useMeasure();
+  const [ref, { width }] = useMeasure();
 
   return (
     <TransformWrapper {...defaultOptions} {...wrapperOptions}>
