@@ -232,7 +232,7 @@ const Settings = props => {
     <Layout style={{ background: "#fff" }}>
       {renderSider()}
       <Content>
-        <GraphViewer graph={{ nodes: data.nodes, links: data.links }} />
+        <GraphViewer graph={{ nodes: data.nodes, links: data.links }} componentStyle={{ height: "80vh", width: window.innerWidth - 116 }} />
       </Content>
     </Layout>
   );
