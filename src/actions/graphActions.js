@@ -21,7 +21,7 @@ export const submitResponse = response => async (dispatch, getState) => {
     graphqlOperation(mutations.createResponse, {
       input: {
         value: response,
-        responseTime: 0,
+        responseTime: new Date() - new Date(currentNode.lastVisited),
         responseNetworkId: session,
         responseSourceId: currentNode.id
       }
@@ -76,7 +76,7 @@ export const selectRandomNode = () => (dispatch, getState) => {
 
   dispatch({
     type: SET_CURRENT_NODE,
-    payload: { currentNode: randomNode, previousNode: currentNode }
+    payload: { currentNode: { ...randomNode, lastVisited: new Date()}, previousNode: currentNode }
   });
 };
 
@@ -111,7 +111,7 @@ export const initializeSession = () => async dispatch => {
     type: INITIALIZE_GRAPH_SESSION,
     payload: {
       session: nodeNetworkId,
-      currentNode: createNode
+      currentNode: { ...createNode, lastVisited: new Date()}
     }
   });
 };
