@@ -10,7 +10,8 @@ import {
 import {
   uniqueTokensFromEntry,
   generateMissingNodes,
-  generateMissingLinks
+  generateMissingLinks,
+  generateStartingNode
 } from "../utils";
 
 export const submitResponse = response => async (dispatch, getState) => {
@@ -76,7 +77,10 @@ export const selectRandomNode = () => (dispatch, getState) => {
 
   dispatch({
     type: SET_CURRENT_NODE,
-    payload: { currentNode: { ...randomNode, lastVisited: new Date()}, previousNode: currentNode }
+    payload: {
+      currentNode: { ...randomNode, lastVisited: new Date() },
+      previousNode: currentNode
+    }
   });
 };
 
@@ -95,13 +99,7 @@ export const initializeSession = () => async dispatch => {
   );
   const nodeNetworkId = createWordNet.id;
 
-  const input = {
-    value: "smart",
-    radius: 12,
-    depth: 1,
-    color: "rgb(244, 117, 96)",
-    nodeNetworkId
-  };
+  const input = generateStartingNode(nodeNetworkId);
 
   const {
     data: { createNode }
@@ -111,7 +109,7 @@ export const initializeSession = () => async dispatch => {
     type: INITIALIZE_GRAPH_SESSION,
     payload: {
       session: nodeNetworkId,
-      currentNode: { ...createNode, lastVisited: new Date()}
+      currentNode: { ...createNode, lastVisited: new Date() }
     }
   });
 };

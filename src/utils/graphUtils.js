@@ -31,6 +31,18 @@ export const useGraph = graph =>
     };
   }, [graph]);
 
+const startWords = ["smart", "love", "dream", "hobby", "artist", "mood"];
+export const generateStartingNode = nodeNetworkId => {
+  const value = startWords[Math.floor(Math.random() * startWords.length)];
+  return {
+    value,
+    radius: 12,
+    depth: 1,
+    color: "rgb(244, 117, 96)",
+    nodeNetworkId
+  }
+}
+
 export const generateMissingNodes = (tokens, nodes, currentNode) => {
   // Create new node for each token that does not already have one
   const existingTokens = nodes.map(n => n.value);
