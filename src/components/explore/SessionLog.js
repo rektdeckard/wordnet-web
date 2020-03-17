@@ -7,21 +7,22 @@ const { Title, Paragraph, Text } = Typography;
 
 const columns = [
   {
-    title: "Date",
+    title: "Session Date",
     dataIndex: "createDate",
     sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     sortDirections: ["descend", "ascend"],
     defaultSortOrder: "descend",
+    render: (text, record) => <Link to={`/explore/sessions/${record.createdAt.split("T")[0]}`}>{text}</Link>,
     width: "25%"
   },
   {
-    title: "Time",
+    title: "Session Time",
     dataIndex: "createTime",
     sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     sortDirections: ["descend", "ascend"],
     defaultSortOrder: "descend",
     render: (text, record) => (
-      <Link to={`/explore/sessions/${record.id}`}>{text}</Link>
+      <Link to={`/explore/sessions/id/${record.id}`}>{text}</Link>
     ),
     width: "50%"
   },
@@ -63,12 +64,12 @@ const SessionLog = () => {
               }
             }
           `,
-          { filter: { createdAt: { contains: date } }, limit: 1000 }
+          { filter: date ? { createdAt: { contains: date } } : null, limit: 1000 }
         )
       );
 
-      const data = res.data.listWordNets.items.map(
-        ({ id, createdAt, nodes }) => {
+      const data = res.data.listWordNets.items
+        .map(({ id, createdAt, nodes }) => {
           const date = new Date(createdAt);
           return {
             id,
@@ -78,20 +79,20 @@ const SessionLog = () => {
             words: nodes.items.length,
             key: id
           };
-        }
-      );
+        })
+        .filter(session => session.words > 1);
       setSessions(data);
     };
 
-    if (date) {
+    // if (date) {
       fetchSessions(date);
-    }
+    // }
   }, [date]);
 
   return (
     <Layout>
       <Typography>
-        <Title level={2}>{date}</Title>
+        <Title level={2}>{date ?? "All Sessions"}</Title>
         <Table
           columns={columns}
           dataSource={sessions}
@@ -107,9 +108,9 @@ const SessionLog = () => {
               );
               setSelectedSessionKeys(selectedRowKeys);
             },
-            getCheckboxProps: record => ({
-              disabled: record.words <= 0 // Column configuration not to be checked
-            })
+            // getCheckboxProps: record => ({
+            //   disabled: record.words <= 0 // Column configuration not to be checked
+            // })
           }}
         />
       </Typography>

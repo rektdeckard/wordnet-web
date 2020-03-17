@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Layout,
@@ -17,6 +17,7 @@ import {
   RightSquareOutlined
 } from "@ant-design/icons";
 import { ResponsiveCalendar } from "@nivo/calendar";
+import { startOfYear } from 'date-fns';
 
 import { fetchHistory } from "../../actions";
 import { useWeekOverWeek } from "../../utils";
@@ -39,7 +40,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
     event.preventDefault();
     // console.log(day, event);
     // TODO: Redirect to log view
-    history.push(`/explore/history/${day.day}`);
+    history.push(`/explore/sessions/${day.day}`);
   };
 
   const statisticCards = [
@@ -122,14 +123,12 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
                 see your <Link to="/explore/history">complete history</Link>.
               </Paragraph>
               <Card hoverable>
-                <Link to="/explore/history">
+                <Link to="/explore/sessions">
                   <div style={{ height: 200 }}>
                     <ResponsiveCalendar
                       data={sessionHistory.sessionsByDay}
-                      from={new Date()}
-                      to={
-                        new Date(new Date().setMonth(new Date().getMonth() + 2))
-                      }
+                      from={startOfYear(new Date())}
+                      to={new Date()}
                       emptyColor="#eeeeee"
                       colors={[
                         "#61cdbb",
@@ -194,9 +193,11 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
             </Typography>
           )}
         />
-        <Route exact path="/explore/history" component={History} />
-        <Route path="/explore/history/:date" component={SessionLog} />
-        <Route path="/explore/sessions/:id" component={Session} />
+        {/* <Route exact path="/explore/history" component={History} /> */}
+        <Redirect exact path="/explore/sessions/id" to="/explore/sessions" />
+        <Route path="/explore/sessions/id/:id" component={Session} />
+        <Route path="/explore/sessions/:date" component={SessionLog} />
+        <Route path="/explore/sessions" component={SessionLog} />
         <Route render={() => <Missing />} />
       </Switch>
     </Layout>
