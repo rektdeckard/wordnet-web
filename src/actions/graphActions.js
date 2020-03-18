@@ -10,10 +10,10 @@ import {
 import {
   uniqueTokensFromEntry,
   generateMissingNodes,
-  generateMissingLinks,
   generateStartingNode,
-  mapGraph,
-  mapEdges
+  findNodesToLink,
+  mapEdges,
+  generateMissingLinks
 } from "../utils";
 
 export const submitResponse = response => async (dispatch, getState) => {
@@ -33,22 +33,23 @@ export const submitResponse = response => async (dispatch, getState) => {
 
   const tokens = uniqueTokensFromEntry(response);
   const newNodes = generateMissingNodes(tokens, nodes, currentNode);
-  const newLinks = generateMissingLinks(tokens, links, currentNode);
-
   // TODO: Create new mutation to add multiple nodes simultaneously
   const resultNodes = await Promise.all(
-    newNodes.map(({ id, radius, depth, color }) =>
+    newNodes.map(node =>
       API.graphql(
         graphqlOperation(mutations.createNode, {
-          input: { value: id, radius, depth, color, nodeNetworkId: session }
+          input: { ...node, nodeNetworkId: session }
         })
       )
     )
   );
 
+  const newResultNodesToLink = resultNodes.map(n => n.data.createNode);
+  const existingNodesToLink = findNodesToLink(tokens, nodes);
+
   // TODO: Create new mutation to add multiple edges simultaneously
   const resultEdges = await Promise.all(
-    resultNodes.map(({ data: { createNode: { id } } }) =>
+    [...newResultNodesToLink, ...existingNodesToLink].map(({ id }) =>
       API.graphql(
         graphqlOperation(mutations.createEdge, {
           input: {
@@ -60,6 +61,20 @@ export const submitResponse = response => async (dispatch, getState) => {
         })
       )
     )
+  );
+
+  const newLinks = resultEdges.map(
+    ({
+      data: {
+        createEdge: { id, source, target, distance, createdAt }
+      }
+    }) => ({
+      id: id,
+      source: source.value,
+      target: target.value,
+      distance,
+      createdAt
+    })
   );
 
   dispatch({
