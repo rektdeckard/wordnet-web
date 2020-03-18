@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
-import { Layout, Typography, Divider, Table } from "antd";
+import { Layout, Typography, Table } from "antd";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -38,12 +38,14 @@ const columns = [
 
 const SessionLog = () => {
   const { date } = useParams();
+  const [loading, setLoading] = useState(false);
   const [sessions, setSessions] = useState([]);
   // TODO: use to generate composite WordNets from multiple sessions
   const [selectedSessionKeys, setSelectedSessionKeys] = useState([]);
 
   useEffect(() => {
     const fetchSessions = async date => {
+      setLoading(true);
       const res = await API.graphql(
         graphqlOperation(
           /* GraphQL */ `
@@ -82,6 +84,7 @@ const SessionLog = () => {
         })
         .filter(session => session.words > 1);
       setSessions(data);
+      setLoading(false);
     };
 
     // if (date) {
@@ -97,6 +100,7 @@ const SessionLog = () => {
           columns={columns}
           dataSource={sessions}
           pagination={false}
+          loading={loading}
           // scroll={{ y: 720 }}
           rowSelection={{
             type: "checkbox",
