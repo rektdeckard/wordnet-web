@@ -19,9 +19,7 @@ export default (state = INITIAL_STATE, action) => {
     case INITIALIZE_GRAPH_SESSION:
       return {
         ...INITIAL_STATE,
-        session: action.payload.session,
-        currentNode: action.payload.currentNode,
-        nodes: [action.payload.currentNode]
+        ...action.payload
       };
     case SUBMIT_GRAPH_SESSION:
       return INITIAL_STATE;
@@ -44,8 +42,8 @@ export default (state = INITIAL_STATE, action) => {
     case SET_CURRENT_NODE:
       return {
         ...state,
-        currentNode: action.payload.currentNode,
-        previousNode: action.payload.previousNode
+        currentNode: action.payload,
+        previousNode: state.currentNode
       }
     default:
       return state;

@@ -1,35 +1,39 @@
 import { useMemo } from "react";
 const nivo = ["#e8c1a0", "#f47560", "#f1e15b", "#e8a838", "#61cdbb", "#97e3d5"];
 
-export const useGraph = graph =>
-  useMemo(() => {
-    const nodes =
-      graph.nodes?.map(({ value, depth, radius, color }) => ({
-        id: value,
-        depth,
-        radius,
-        color
-      })) ?? [];
+export const mapNodes = graph =>
+  graph?.nodes?.map(({ value, depth, radius, color }) => ({
+    id: value,
+    depth,
+    radius,
+    color
+  })) ?? [];
 
-    const links =
-      graph.edges?.map(edge => ({
-        id: edge.id,
-        source: edge.source.value,
-        target: edge.target.value,
-        distance: edge.distance,
-        createdAt: edge.createdAt
-      })) ??
-      graph.links ??
-      [];
-      
-    return {
-      nodes,
-      links,
-      responses: graph.responses ?? [],
-      session: graph.session,
-      currentNode: graph.currentNode
-    };
-  }, [graph]);
+export const mapEdges = graph =>
+  graph?.edges?.map(edge => ({
+    id: edge.id,
+    source: edge.source.value,
+    target: edge.target.value,
+    distance: edge.distance,
+    createdAt: edge.createdAt
+  })) ??
+  graph?.links ??
+  [];
+
+export const mapGraph = graph => {
+  const nodes = mapNodes(graph);
+  const links = mapEdges(graph);
+
+  return {
+    nodes,
+    links,
+    responses: graph.responses ?? [],
+    session: graph.session,
+    currentNode: graph.currentNode
+  };
+};
+
+export const useGraph = graph => useMemo(() => mapGraph(graph), [graph]);
 
 const startWords = ["smart", "love", "dream", "hobby", "artist", "mood"];
 export const generateStartingNode = nodeNetworkId => {
@@ -40,8 +44,8 @@ export const generateStartingNode = nodeNetworkId => {
     depth: 1,
     color: "rgb(244, 117, 96)",
     nodeNetworkId
-  }
-}
+  };
+};
 
 export const generateMissingNodes = (tokens, nodes, currentNode) => {
   // Create new node for each token that does not already have one

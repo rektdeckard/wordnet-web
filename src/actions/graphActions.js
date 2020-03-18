@@ -11,7 +11,9 @@ import {
   uniqueTokensFromEntry,
   generateMissingNodes,
   generateMissingLinks,
-  generateStartingNode
+  generateStartingNode,
+  mapGraph,
+  mapEdges
 } from "../utils";
 
 export const submitResponse = response => async (dispatch, getState) => {
@@ -72,15 +74,12 @@ export const submitResponse = response => async (dispatch, getState) => {
 };
 
 export const selectRandomNode = () => (dispatch, getState) => {
-  const { nodes, currentNode } = getState().graph;
+  const { nodes } = getState().graph;
   const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
 
   dispatch({
     type: SET_CURRENT_NODE,
-    payload: {
-      currentNode: { ...randomNode, lastVisited: new Date() },
-      previousNode: currentNode
-    }
+    payload: { ...randomNode, lastVisited: new Date() }
   });
 };
 
@@ -97,21 +96,89 @@ export const initializeSession = () => async dispatch => {
   } = await API.graphql(
     graphqlOperation(mutations.createWordNet, { input: {} })
   );
-  const nodeNetworkId = createWordNet.id;
 
+  const nodeNetworkId = createWordNet.id;
   const input = generateStartingNode(nodeNetworkId);
 
   const {
     data: { createNode }
   } = await API.graphql(graphqlOperation(mutations.createNode, { input }));
 
+  const currentNode = { ...createNode, lastVisited: new Date() };
   dispatch({
     type: INITIALIZE_GRAPH_SESSION,
     payload: {
       session: nodeNetworkId,
-      currentNode: { ...createNode, lastVisited: new Date() }
+      nodes: [currentNode],
+      currentNode
     }
   });
+};
+
+export const resumeLastSession = () => async dispatch => {
+  const {
+    data: {
+      searchWordNets: { items }
+    }
+  } = await API.graphql(
+    graphqlOperation(
+      /* GraphQL */ `
+        {
+          searchWordNets(limit: 1, sort: { field: createdAt }) {
+            items {
+              id
+              nodes(limit: 1000) {
+                items {
+                  id
+                  value
+                  depth
+                  radius
+                  color
+                  createdAt
+                  owner
+                }
+              }
+              edges(limit: 1000) {
+                items {
+                  id
+                  distance
+                  source {
+                    value
+                  }
+                  target {
+                    value
+                  }
+                  createdAt
+                  owner
+                }
+              }
+              createdAt
+            }
+          }
+        }
+      `,
+      {}
+    )
+  );
+
+  if (!items.length) return false;
+
+  dispatch({
+    type: INITIALIZE_GRAPH_SESSION,
+    payload: {
+      nodes: items[0].nodes.items,
+      links: mapEdges({ edges: items[0].edges.items }),
+      session: items[0].id,
+      currentNode: {
+        ...items[0].nodes.items[
+          Math.floor(Math.random() * items[0].nodes.items.length)
+        ],
+        lastVisited: new Date()
+      }
+    }
+  });
+
+  return true;
 };
 
 export const submitSession = () => {
