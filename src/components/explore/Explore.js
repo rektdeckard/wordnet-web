@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -21,7 +21,6 @@ import { startOfYear } from 'date-fns';
 
 import { fetchHistory } from "../../actions";
 import { useWeekOverWeek } from "../../utils";
-import History from "./History";
 import Missing from "../Missing";
 import SessionLog from "./SessionLog";
 import Session from "./Session";
@@ -30,16 +29,21 @@ const { Title, Paragraph, Text } = Typography;
 
 const Explore = ({ history, sessionHistory, fetchHistory }) => {
   const { sessions } = sessionHistory;
+  const [loading, setLoading] = useState(false);
   const weekOverWeek = useWeekOverWeek(sessions);
 
   useEffect(() => {
-    fetchHistory();
+    const load = async () => {
+      setLoading(true);
+      await fetchHistory();
+      setLoading(false);
+    }
+
+    load();
   }, [fetchHistory]);
 
   const handleDayClicked = (day, event) => {
     event.preventDefault();
-    // console.log(day, event);
-    // TODO: Redirect to log view
     history.push(`/explore/sessions/${day.day}`);
   };
 
@@ -55,7 +59,6 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
           type="circle"
           width={100}
           percent={Math.round(value)}
-          // successPercent={20}
           format={percent => `${percent}%`}
         />
       )}
@@ -98,9 +101,9 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
               <Title level={2}>Your Stats</Title>
               <Paragraph>
                 Challenge yourself by setting{" "}
-                <Link to="/explore/goals">goals</Link> and staying on target.
+                <Link to="/explore/goals" disabled>goals</Link> and staying on target.
                 Gain perspective on your personality and cognitive abilities by
-                checking your <Link to="/explore/insights">insights</Link>.
+                checking your <Link to="/explore/insights" disabled>insights</Link>.
               </Paragraph>
               <List
                 grid={{
@@ -112,7 +115,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
                 dataSource={statisticCards}
                 renderItem={item => (
                   <List.Item>
-                    <Card hoverable>{item}</Card>
+                    <Card hoverable loading={loading}>{item}</Card>
                   </List.Item>
                 )}
               />
@@ -120,9 +123,9 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
               <Title level={2}>Recent Activity</Title>
               <Paragraph>
                 Click on a calendar entry to view your activity for that day, or
-                see your <Link to="/explore/history">complete history</Link>.
+                see your <Link to="/explore/sessions">complete history</Link>.
               </Paragraph>
-              <Card hoverable>
+              <Card hoverable loading={loading}>
                 <Link to="/explore/sessions">
                   <div style={{ height: 200 }}>
                     <ResponsiveCalendar
