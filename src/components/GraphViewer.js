@@ -12,7 +12,7 @@ const defaultOptions = {
   defaultPositionY: -260,
   options: {
     minPositionY: -260,
-    limitToBounds: false,
+    limitToBounds: false
   }
 };
 
@@ -31,7 +31,15 @@ const GraphViewer = ({
         <>
           {header}
           <TransformComponent>
-            <div style={componentStyle ?? { height: "50vh", width: window.innerWidth - 116 }} ref={ref}>
+            <div
+              style={
+                componentStyle ?? {
+                  height: "50vh",
+                  width: window.innerWidth - 116
+                }
+              }
+              ref={ref}
+            >
               <Network
                 height={1000}
                 width={width}
