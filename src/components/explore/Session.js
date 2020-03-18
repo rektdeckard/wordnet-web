@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-  useState
-} from "react";
+import React, { useEffect, useRef, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { Layout, Tabs, Table, Input, Button } from "antd";
@@ -21,12 +15,18 @@ const { TabPane } = Tabs;
 const Session = ({ graph, fetchSession }) => {
   const { id } = useParams();
   const inputRef = useRef();
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchColumn, setSearchColumn] = useState("");
   const { nodes, links, responses } = useGraph(graph);
 
   useEffect(() => {
-    if (id) fetchSession(id);
+    const load = async () => {
+      setLoading(true);
+      await fetchSession(id);
+      setLoading(false);
+    };
+    if (id) load();
   }, [id, fetchSession]);
 
   const searchableColumn = useMemo(
@@ -194,10 +194,8 @@ const Session = ({ graph, fetchSession }) => {
       <Layout style={{ background: "#fff" }}>
         <Content>
           <GraphViewer
-            graph={{ nodes, links }}
-            // header={}
-            // settings={}
-            // transforOptions={}
+            graph={loading ? { nodes: [], links: [] } : { nodes, links }}
+            loading={loading}
           />
         </Content>
       </Layout>
@@ -220,6 +218,7 @@ const Session = ({ graph, fetchSession }) => {
             size="small"
             scroll={{ y: "26vh" }}
             pagination={false}
+            loading={loading}
           />
         </TabPane>
         <TabPane tab="Words" key="2">
@@ -230,6 +229,7 @@ const Session = ({ graph, fetchSession }) => {
             size="small"
             scroll={{ y: "26vh" }}
             pagination={false}
+            loading={loading}
           />
         </TabPane>
       </Tabs>
