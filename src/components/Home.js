@@ -23,6 +23,7 @@ const Home = () => {
       title: "Insights",
       icon: <ThunderboltTwoTone style={{ marginTop: 32, fontSize: 64 }} />,
       path: "/explore/insights",
+      disabled: true,
       description:
         "Gain perspective on your personality and cognitive abilities through analysis of your data"
     },
@@ -30,6 +31,7 @@ const Home = () => {
       title: "Goals",
       icon: <TrophyTwoTone style={{ marginTop: 32, fontSize: 64 }} />,
       path: "explore/goals",
+      disabled: true,
       description:
         "Challenge yourself to login a few times a week, expand your vocabulary, or increase your speed"
     }
@@ -57,7 +59,7 @@ const Home = () => {
                 }}
               >
                 {item.icon}
-                <Button type="primary" shape="round" style={{ margin: 16 }}>
+                <Button type="primary" shape="round" style={{ margin: 16 }} disabled={item.disabled ?? false}>
                   <Link to={item.path}>{item.title}</Link>
                 </Button>
                 <Text
