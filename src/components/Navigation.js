@@ -11,7 +11,7 @@ const mainMenuItems = [
 ];
 const settingsMenuItems = [
   { key: "account", value: "Account", to: "/account" },
-  { key: "settings", value: "Settings", to: "/settings" },
+  { key: "settings", value: "Preferences", to: "/settings" },
   { key: "signout", value: "Sign Out", to: "/", onClick: () => Auth.signOut() }
 ];
 
@@ -36,11 +36,12 @@ const Navigation = ({ location }) => {
       <Menu.SubMenu
         selectedKeys={[location.pathname.split("/").pop()]}
         style={{ float: "right" }}
-        title={
-          <span>
-            <SettingFilled style={{ fontSize: 16 }} />
-          </span>
-        }
+        // title={
+        //   <span>
+        //     <SettingFilled style={{ fontSize: 16 }} />
+        //   </span>
+        // }
+        title="Settings"
       >
         {settingsMenuItems.map(({ key, value, to, ...restProps }) => (
           <Menu.Item key={key}>

@@ -6,44 +6,71 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const defaultOptions = {
   defaultScale: 1,
-  doubleClick: { mode: "reset" },
-  options: { limitToWrapper: true },
-  pan: { velocity: false }
+  doubleClick: { mode: "zoomOut" },
+  pan: { velocity: false },
+  wheel: { step: 20 },
+  defaultPositionY: -260,
+  options: {
+    minPositionY: -260,
+    limitToBounds: false
+  }
 };
 
-const GraphViewer = ({ graph, header, settings, transformOptions = {} }) => {
-  const [ref, { width, height }] = useMeasure();
-
+const GraphViewer = ({
+  graph,
+  header,
+  hovered = {},
+  settings,
+  wrapperOptions = {},
+  componentStyle
+}) => {
+  const [ref, { width }] = useMeasure();
   return (
-    <TransformWrapper {...defaultOptions} {...transformOptions}>
+    <TransformWrapper {...defaultOptions} {...wrapperOptions}>
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
         <>
           {header}
           <TransformComponent>
             <div
-              style={{
-                height: window.innerHeight - 364,
-                width: window.innerWidth - 116
-              }}
+              style={
+                componentStyle ?? {
+                  height: "50vh",
+                  width: window.innerWidth - 116
+                }
+              }
               ref={ref}
             >
               <Network
-                height={height || window.innerHeight - 364}
-                width={width || window.innerWidth - 116}
+                height={1000}
+                width={width}
                 nodes={graph.nodes}
                 links={graph.links}
                 repulsivity={settings.repulsivity}
                 distanceMin={settings.distanceMin}
                 distanceMax={settings.distanceMax}
                 iterations={settings.iterations}
-                nodeColor={n => n.color}
+                nodeColor={n => (n.id === hovered.source || hovered.targets?.includes(n.id)) ? "black" : n.color}
                 nodeBorderWidth={settings.borderWidth}
+                // nodeBorderColor={
+                //   hovered.showConnections
+                //     ? n => (hovered.targets?.includes(n.id) ? "black" : "green")
+                //     : {
+                //         from: "color",
+                //         modifiers: [["darker", 0.8]]
+                //       }
+                // }
                 nodeBorderColor={{
                   from: "color",
                   modifiers: [["darker", 0.8]]
                 }}
-                linkThickness={
-                  settings.linkThickness ?? (l => Math.ceil(4 / l.source.depth))
+                linkColor={l =>
+                  (l.source.id === hovered.source && hovered.targets?.includes(l.target.id))
+                    ? "black"
+                    : l.source.color
+                }
+                linkThickness={settings.linkThickness}
+                linkThickness={l =>
+                  l.source.id === hovered ? 5 : settings.linkThickness
                 }
                 motionStiffness={settings.motionStiffness}
                 motionDamping={settings.motionDamping}

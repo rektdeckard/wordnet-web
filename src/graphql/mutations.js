@@ -173,6 +173,16 @@ export const createNode = `mutation CreateNode(
       }
       nextToken
     }
+    responses {
+      items {
+        id
+        value
+        responseTime
+        createdAt
+        owner
+      }
+      nextToken
+    }
     createdAt
     owner
   }
@@ -216,6 +226,16 @@ export const updateNode = `mutation UpdateNode(
       items {
         id
         distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    responses {
+      items {
+        id
+        value
+        responseTime
         createdAt
         owner
       }
@@ -269,6 +289,16 @@ export const deleteNode = `mutation DeleteNode(
       }
       nextToken
     }
+    responses {
+      items {
+        id
+        value
+        responseTime
+        createdAt
+        owner
+      }
+      nextToken
+    }
     createdAt
     owner
   }
@@ -298,6 +328,9 @@ export const createEdge = `mutation CreateEdge(
       targets {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       owner
     }
@@ -317,6 +350,9 @@ export const createEdge = `mutation CreateEdge(
         nextToken
       }
       targets {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -367,6 +403,9 @@ export const updateEdge = `mutation UpdateEdge(
       targets {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       owner
     }
@@ -386,6 +425,9 @@ export const updateEdge = `mutation UpdateEdge(
         nextToken
       }
       targets {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -436,6 +478,9 @@ export const deleteEdge = `mutation DeleteEdge(
       targets {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       owner
     }
@@ -455,6 +500,9 @@ export const deleteEdge = `mutation DeleteEdge(
         nextToken
       }
       targets {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -487,6 +535,30 @@ export const createResponse = `mutation CreateResponse(
 ) {
   createResponse(input: $input, condition: $condition) {
     id
+    source {
+      id
+      value
+      depth
+      radius
+      color
+      network {
+        id
+        createdAt
+        modifiedAt
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      owner
+    }
     value
     network {
       id
@@ -515,6 +587,30 @@ export const updateResponse = `mutation UpdateResponse(
 ) {
   updateResponse(input: $input, condition: $condition) {
     id
+    source {
+      id
+      value
+      depth
+      radius
+      color
+      network {
+        id
+        createdAt
+        modifiedAt
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      owner
+    }
     value
     network {
       id
@@ -543,6 +639,30 @@ export const deleteResponse = `mutation DeleteResponse(
 ) {
   deleteResponse(input: $input, condition: $condition) {
     id
+    source {
+      id
+      value
+      depth
+      radius
+      color
+      network {
+        id
+        createdAt
+        modifiedAt
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      owner
+    }
     value
     network {
       id

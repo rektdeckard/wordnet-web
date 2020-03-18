@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Layout,
@@ -8,14 +9,19 @@ import {
   Button,
   Typography,
   Spin,
+  Result,
   message
 } from "antd";
+
+import { DeploymentUnitOutlined } from "@ant-design/icons";
 
 import {
   submitResponse,
   removeElement,
   selectRandomNode,
-  initializeSession
+  initializeSession,
+  resumeLastSession,
+  submitSession
 } from "../../actions";
 import { useGraph } from "../../utils";
 import GraphViewer from "../GraphViewer";
@@ -28,17 +34,33 @@ const Play = ({
   submitResponse,
   removeElement,
   selectRandomNode,
-  initializeSession
+  initializeSession,
+  resumeLastSession,
+  submitSession,
+  history
 }) => {
   const { nodes, links, session, currentNode } = useGraph(graph);
   const [entry, setEntry] = useState("");
   const [loading, setLoading] = useState(false);
+  const [resuming, setResuming] = useState(false);
 
-  useEffect(() => {
-    if (!session) {
-      initializeSession();
+  const handleInitialize = async () => {
+    setLoading(true);
+    await initializeSession();
+    setLoading(false);
+  };
+
+  const handleResume = async () => {
+    setResuming(true);
+    try {
+      const success = await resumeLastSession();
+      if (success) message.success("Session loaded");
+      else message.error("No previous session found");
+    } catch (e) {
+      message.error("Problem fetching data");
     }
-  }, [session, initializeSession]);
+    setResuming(false);
+  };
 
   const handleChange = e => {
     const { value } = e.target;
@@ -60,6 +82,43 @@ const Play = ({
 
     setLoading(false);
   };
+
+  if (!session || !graph)
+    return (
+      <Result
+        // status="info"
+        icon={<DeploymentUnitOutlined />}
+        title="Begin a session"
+        subTitle="Yould you like to start one?"
+        extra={[
+          <Button
+            type="primary"
+            key="new"
+            onClick={handleInitialize}
+            loading={loading}
+            disabled={resuming}
+          >
+            New Session
+          </Button>,
+          <Button
+            type="primary"
+            key="resume"
+            onClick={handleResume}
+            loading={resuming}
+            disabled={loading}
+          >
+            Resume Previous
+          </Button>,
+          <Button
+            key="cancel"
+            onClick={history.goBack}
+            disabled={loading || resuming}
+          >
+            Cancel
+          </Button>
+        ]}
+      />
+    );
 
   return (
     <Layout>
@@ -84,9 +143,10 @@ const Play = ({
               )}
             </Title>
           }
+          // hovered={{ node: currentNode.value }}
         />
         <Row style={{ padding: 16 }}>
-          <Col span={22}>
+          <Col span={20}>
             <Input
               placeholder={
                 !loading
@@ -110,6 +170,16 @@ const Play = ({
               Skip
             </Button>
           </Col>
+          <Col span={2}>
+            <Button
+              block
+              type="secondary"
+              onClick={submitSession}
+              disabled={nodes.length <= 1}
+            >
+              Finish
+            </Button>
+          </Col>
         </Row>
       </Content>
     </Layout>
@@ -120,9 +190,13 @@ const mapStateToProps = state => {
   return { graph: state.graph };
 };
 
-export default connect(mapStateToProps, {
-  submitResponse,
-  removeElement,
-  selectRandomNode,
-  initializeSession
-})(Play);
+export default withRouter(
+  connect(mapStateToProps, {
+    submitResponse,
+    removeElement,
+    selectRandomNode,
+    initializeSession,
+    resumeLastSession,
+    submitSession
+  })(Play)
+);

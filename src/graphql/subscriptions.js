@@ -161,6 +161,16 @@ export const onCreateNode = `subscription OnCreateNode($owner: String!) {
       }
       nextToken
     }
+    responses {
+      items {
+        id
+        value
+        responseTime
+        createdAt
+        owner
+      }
+      nextToken
+    }
     createdAt
     owner
   }
@@ -201,6 +211,16 @@ export const onUpdateNode = `subscription OnUpdateNode($owner: String!) {
       items {
         id
         distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    responses {
+      items {
+        id
+        value
+        responseTime
         createdAt
         owner
       }
@@ -251,6 +271,16 @@ export const onDeleteNode = `subscription OnDeleteNode($owner: String!) {
       }
       nextToken
     }
+    responses {
+      items {
+        id
+        value
+        responseTime
+        createdAt
+        owner
+      }
+      nextToken
+    }
     createdAt
     owner
   }
@@ -277,6 +307,9 @@ export const onCreateEdge = `subscription OnCreateEdge($owner: String!) {
       targets {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       owner
     }
@@ -296,6 +329,9 @@ export const onCreateEdge = `subscription OnCreateEdge($owner: String!) {
         nextToken
       }
       targets {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -343,6 +379,9 @@ export const onUpdateEdge = `subscription OnUpdateEdge($owner: String!) {
       targets {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       owner
     }
@@ -362,6 +401,9 @@ export const onUpdateEdge = `subscription OnUpdateEdge($owner: String!) {
         nextToken
       }
       targets {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -409,6 +451,9 @@ export const onDeleteEdge = `subscription OnDeleteEdge($owner: String!) {
       targets {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       owner
     }
@@ -428,6 +473,9 @@ export const onDeleteEdge = `subscription OnDeleteEdge($owner: String!) {
         nextToken
       }
       targets {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -457,6 +505,30 @@ export const onDeleteEdge = `subscription OnDeleteEdge($owner: String!) {
 export const onCreateResponse = `subscription OnCreateResponse($owner: String!) {
   onCreateResponse(owner: $owner) {
     id
+    source {
+      id
+      value
+      depth
+      radius
+      color
+      network {
+        id
+        createdAt
+        modifiedAt
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      owner
+    }
     value
     network {
       id
@@ -482,6 +554,30 @@ export const onCreateResponse = `subscription OnCreateResponse($owner: String!) 
 export const onUpdateResponse = `subscription OnUpdateResponse($owner: String!) {
   onUpdateResponse(owner: $owner) {
     id
+    source {
+      id
+      value
+      depth
+      radius
+      color
+      network {
+        id
+        createdAt
+        modifiedAt
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      owner
+    }
     value
     network {
       id
@@ -507,6 +603,30 @@ export const onUpdateResponse = `subscription OnUpdateResponse($owner: String!) 
 export const onDeleteResponse = `subscription OnDeleteResponse($owner: String!) {
   onDeleteResponse(owner: $owner) {
     id
+    source {
+      id
+      value
+      depth
+      radius
+      color
+      network {
+        id
+        createdAt
+        modifiedAt
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      owner
+    }
     value
     network {
       id

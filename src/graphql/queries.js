@@ -106,6 +106,16 @@ export const getNode = `query GetNode($id: ID!) {
       }
       nextToken
     }
+    responses {
+      items {
+        id
+        value
+        responseTime
+        createdAt
+        owner
+      }
+      nextToken
+    }
     createdAt
     owner
   }
@@ -133,6 +143,9 @@ export const listNodes = `query ListNodes(
         nextToken
       }
       targets {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -163,6 +176,9 @@ export const getEdge = `query GetEdge($id: ID!) {
       targets {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       owner
     }
@@ -182,6 +198,9 @@ export const getEdge = `query GetEdge($id: ID!) {
         nextToken
       }
       targets {
+        nextToken
+      }
+      responses {
         nextToken
       }
       createdAt
@@ -251,6 +270,30 @@ export const listEdges = `query ListEdges(
 export const getResponse = `query GetResponse($id: ID!) {
   getResponse(id: $id) {
     id
+    source {
+      id
+      value
+      depth
+      radius
+      color
+      network {
+        id
+        createdAt
+        modifiedAt
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      owner
+    }
     value
     network {
       id
@@ -281,6 +324,15 @@ export const listResponses = `query ListResponses(
   listResponses(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      source {
+        id
+        value
+        depth
+        radius
+        color
+        createdAt
+        owner
+      }
       value
       network {
         id
@@ -358,6 +410,9 @@ export const searchNodes = `query SearchNodes(
       targets {
         nextToken
       }
+      responses {
+        nextToken
+      }
       createdAt
       owner
     }
@@ -427,6 +482,15 @@ export const searchResponses = `query SearchResponses(
   ) {
     items {
       id
+      source {
+        id
+        value
+        depth
+        radius
+        color
+        createdAt
+        owner
+      }
       value
       network {
         id

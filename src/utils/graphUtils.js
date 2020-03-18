@@ -1,32 +1,51 @@
 import { useMemo } from "react";
-const nivo = ["#e8c1a0", "#f47560", "#f1e15b", "#e8a838", "#61cdbb", "#97e3d5"];
+import { STARTING_WORDS, GRAPH_COLORS } from "../data/constants";
 
-export const useGraph = graph =>
-  useMemo(() => {
-    const nodes =
-      graph.nodes?.map(({ value, depth, radius, color }) => ({
-        id: value,
-        depth,
-        radius,
-        color
-      })) ?? [];
+export const mapNodes = graph =>
+  graph?.nodes?.map(({ value, depth, radius, color }) => ({
+    id: value,
+    depth,
+    radius,
+    color
+  })) ?? [];
 
-    const links =
-      graph.edges?.map(edge => ({
-        source: edge.source.value,
-        target: edge.target.value,
-        distance: edge.distance
-      })) ??
-      graph.links ??
-      [];
-      
-    return {
-      nodes,
-      links,
-      session: graph.session,
-      currentNode: graph.currentNode
-    };
-  }, [graph]);
+export const mapEdges = graph =>
+  graph?.edges?.map(edge => ({
+    id: edge.id,
+    source: edge.source.value,
+    target: edge.target.value,
+    distance: edge.distance,
+    createdAt: edge.createdAt
+  })) ??
+  graph?.links ??
+  [];
+
+export const mapGraph = graph => {
+  const nodes = mapNodes(graph);
+  const links = mapEdges(graph);
+
+  return {
+    nodes,
+    links,
+    responses: graph.responses ?? [],
+    session: graph.session,
+    currentNode: graph.currentNode
+  };
+};
+
+export const useGraph = graph => useMemo(() => mapGraph(graph), [graph]);
+
+export const generateStartingNode = nodeNetworkId => {
+  const value =
+    STARTING_WORDS[Math.floor(Math.random() * STARTING_WORDS.length)];
+  return {
+    value,
+    radius: 12,
+    depth: 1,
+    color: "rgb(244, 117, 96)",
+    nodeNetworkId
+  };
+};
 
 export const generateMissingNodes = (tokens, nodes, currentNode) => {
   // Create new node for each token that does not already have one
@@ -34,10 +53,10 @@ export const generateMissingNodes = (tokens, nodes, currentNode) => {
   return tokens
     .filter(t => !existingTokens.includes(t))
     .map(t => ({
-      id: t,
+      value: t,
       radius: 8,
       depth: currentNode.depth + 1,
-      color: nivo[(currentNode.depth - 1) % nivo.length]
+      color: GRAPH_COLORS[(currentNode.depth - 1) % GRAPH_COLORS.length]
     }));
 };
 
@@ -56,3 +75,6 @@ export const generateMissingLinks = (tokens, links, currentNode) => {
       distance: 30
     }));
 };
+
+export const findNodesToLink = (tokens, nodes) =>
+  nodes.filter(n => tokens.includes(n.value));

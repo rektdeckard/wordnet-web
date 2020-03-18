@@ -124,6 +124,17 @@ export const fetchSession = id => async dispatch => {
                 distance
               }
             }
+            responses(limit: $limit) {
+              items {
+                id
+                source {
+                  value
+                }
+                value
+                responseTime
+                createdAt
+              }
+            }
           }
         }
       `,
@@ -135,7 +146,8 @@ export const fetchSession = id => async dispatch => {
     type: FETCH_SESSION,
     payload: {
       nodes: res.data.getWordNet.nodes.items,
-      edges: res.data.getWordNet.edges.items
+      edges: res.data.getWordNet.edges.items,
+      responses: res.data.getWordNet.responses.items
     }
-  })
+  });
 };
