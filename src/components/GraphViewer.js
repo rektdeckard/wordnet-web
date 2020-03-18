@@ -19,12 +19,12 @@ const defaultOptions = {
 const GraphViewer = ({
   graph,
   header,
+  hovered = {},
   settings,
   wrapperOptions = {},
   componentStyle
 }) => {
   const [ref, { width }] = useMeasure();
-
   return (
     <TransformWrapper {...defaultOptions} {...wrapperOptions}>
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
@@ -49,15 +49,18 @@ const GraphViewer = ({
                 distanceMin={settings.distanceMin}
                 distanceMax={settings.distanceMax}
                 iterations={settings.iterations}
-                nodeColor={n => n.color}
+                // nodeColor={n => n.color}
+                nodeColor={n => (n.id === hovered.node ? "black" : n.color)}
                 nodeBorderWidth={settings.borderWidth}
                 nodeBorderColor={{
                   from: "color",
                   modifiers: [["darker", 0.8]]
                 }}
-                linkThickness={
-                  settings.linkThickness ?? (l => Math.ceil(4 / l.source.depth))
-                }
+                linkColor={l => l.source.id === hovered.node && hovered.showLinks ? "black" : l.source.color}
+                linkThickness={settings.linkThickness}
+                // linkThickness={l =>
+                //   l.source.id === hovered ? 5 : settings.linkThickness
+                // }
                 motionStiffness={settings.motionStiffness}
                 motionDamping={settings.motionDamping}
                 animate={settings.animate}

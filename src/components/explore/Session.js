@@ -18,6 +18,7 @@ const Session = ({ graph, fetchSession }) => {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchColumn, setSearchColumn] = useState("");
+  const [hovered, setHovered] = useState({});
   const { nodes, links, responses } = useGraph(graph);
 
   useEffect(() => {
@@ -196,6 +197,7 @@ const Session = ({ graph, fetchSession }) => {
           <GraphViewer
             graph={loading ? { nodes: [], links: [] } : { nodes, links }}
             loading={loading}
+            hovered={hovered}
           />
         </Content>
       </Layout>
@@ -219,6 +221,15 @@ const Session = ({ graph, fetchSession }) => {
             scroll={{ y: "26vh" }}
             pagination={false}
             loading={loading}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: () => {}, // click row
+                onDoubleClick: () => {}, // double click row
+                onContextMenu: () => {}, // right button click row
+                onMouseEnter: () => {setHovered({ node: record.source, showLinks: true })}, // mouse enter row
+                onMouseLeave: () => {setHovered({})} // mouse leave row
+              };
+            }}
           />
         </TabPane>
         <TabPane tab="Words" key="2">
@@ -230,6 +241,15 @@ const Session = ({ graph, fetchSession }) => {
             scroll={{ y: "26vh" }}
             pagination={false}
             loading={loading}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: () => {}, // click row
+                onDoubleClick: () => {}, // double click row
+                onContextMenu: () => {}, // right button click row
+                onMouseEnter: () => {setHovered({ node: record.source, showLinks: false })}, // mouse enter row
+                onMouseLeave: () => {setHovered({})} // mouse leave row
+              };
+            }}
           />
         </TabPane>
       </Tabs>

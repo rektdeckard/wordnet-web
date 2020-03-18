@@ -143,6 +143,7 @@ const Play = ({
               )}
             </Title>
           }
+          // hovered={{ node: currentNode.value }}
         />
         <Row style={{ padding: 16 }}>
           <Col span={20}>
