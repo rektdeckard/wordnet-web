@@ -51,7 +51,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
     <Statistic
       title="Goal progress"
       // value={currentWeekSessions.length / 30 * 100}
-      value={42}
+      value={12}
       precision={1}
       formatter={value => (
         <Progress
@@ -198,7 +198,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
         />
         {/* <Route exact path="/explore/history" component={History} /> */}
         <Redirect exact path="/explore/sessions/id" to="/explore/sessions" />
-        <Route path="/explore/sessions/id/:id" component={Session} />
+        <Route path="/explore/sessions/:date/:id" component={Session} />
         <Route path="/explore/sessions/:date" component={SessionLog} />
         <Route path="/explore/sessions" component={SessionLog} />
         <Route render={() => <Missing />} />
