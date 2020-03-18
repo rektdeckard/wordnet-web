@@ -7,7 +7,7 @@ import Highlighter from "react-highlight-words";
 
 import GraphViewer from "../GraphViewer";
 import { fetchSession } from "../../actions";
-import { useGraph } from "../../utils";
+import { useGraph, uniqueTokensFromEntry } from "../../utils";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -226,8 +226,16 @@ const Session = ({ graph, fetchSession }) => {
                 onClick: () => {}, // click row
                 onDoubleClick: () => {}, // double click row
                 onContextMenu: () => {}, // right button click row
-                onMouseEnter: () => {setHovered({ node: record.source, showLinks: true })}, // mouse enter row
-                onMouseLeave: () => {setHovered({})} // mouse leave row
+                onMouseEnter: () => {
+                  setHovered({
+                    source: record.source,
+                    targets: uniqueTokensFromEntry(record.response),
+                    showConnections: true
+                  });
+                }, // mouse enter row
+                onMouseLeave: () => {
+                  setHovered({});
+                } // mouse leave row
               };
             }}
           />
@@ -246,8 +254,16 @@ const Session = ({ graph, fetchSession }) => {
                 onClick: () => {}, // click row
                 onDoubleClick: () => {}, // double click row
                 onContextMenu: () => {}, // right button click row
-                onMouseEnter: () => {setHovered({ node: record.source, showLinks: false })}, // mouse enter row
-                onMouseLeave: () => {setHovered({})} // mouse leave row
+                onMouseEnter: () => {
+                  setHovered({
+                    source: record.source,
+                    targets: [record.target],
+                    showConnections: false
+                  });
+                }, // mouse enter row
+                onMouseLeave: () => {
+                  setHovered({});
+                } // mouse leave row
               };
             }}
           />

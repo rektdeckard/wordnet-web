@@ -49,18 +49,29 @@ const GraphViewer = ({
                 distanceMin={settings.distanceMin}
                 distanceMax={settings.distanceMax}
                 iterations={settings.iterations}
-                // nodeColor={n => n.color}
-                nodeColor={n => (n.id === hovered.node ? "black" : n.color)}
+                nodeColor={n => (n.id === hovered.source || hovered.targets?.includes(n.id)) ? "black" : n.color}
                 nodeBorderWidth={settings.borderWidth}
+                // nodeBorderColor={
+                //   hovered.showConnections
+                //     ? n => (hovered.targets?.includes(n.id) ? "black" : "green")
+                //     : {
+                //         from: "color",
+                //         modifiers: [["darker", 0.8]]
+                //       }
+                // }
                 nodeBorderColor={{
                   from: "color",
                   modifiers: [["darker", 0.8]]
                 }}
-                linkColor={l => l.source.id === hovered.node && hovered.showLinks ? "black" : l.source.color}
+                linkColor={l =>
+                  (l.source.id === hovered.source && hovered.targets?.includes(l.target.id))
+                    ? "black"
+                    : l.source.color
+                }
                 linkThickness={settings.linkThickness}
-                // linkThickness={l =>
-                //   l.source.id === hovered ? 5 : settings.linkThickness
-                // }
+                linkThickness={l =>
+                  l.source.id === hovered ? 5 : settings.linkThickness
+                }
                 motionStiffness={settings.motionStiffness}
                 motionDamping={settings.motionDamping}
                 animate={settings.animate}
