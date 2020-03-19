@@ -1,4 +1,5 @@
 import { API, graphqlOperation } from "aws-amplify";
+import { getUnixTime } from "date-fns";
 import * as mutations from "../graphql/mutations";
 import {
   ADD_GRAPH_ELEMENTS,
@@ -12,12 +13,11 @@ import {
   generateMissingNodes,
   generateStartingNode,
   findNodesToLink,
-  mapEdges,
-  generateMissingLinks
+  mapEdges
 } from "../utils";
 
 export const submitResponse = response => async (dispatch, getState) => {
-  const { nodes, links, session, currentNode } = getState().graph;
+  const { nodes, session, currentNode } = getState().graph;
   if (!session || !currentNode) throw new Error("No current session ID!");
 
   const resultResponse = await API.graphql(
@@ -98,18 +98,42 @@ export const selectRandomNode = () => (dispatch, getState) => {
   });
 };
 
-export const removeElement = token => {
-  return {
-    type: REMOVE_GRAPH_ELEMENT,
-    payload: token
-  };
+const deleteWordNet = id => async dispatch => {
+  const response = await API.graphql(
+    graphqlOperation(mutations.deleteWordNet, { input: { id } })
+  );
+  if (response.data.deleteWordNet) {
+    // TODO: delete it's child data too!
+
+    return true;
+  }
+  return false;
+};
+
+const deleteNode = id => async dispatch => {
+  const response = await API.graphql(
+    graphqlOperation(mutations.deleteNode, { input: { id } })
+  );
+  if (response.data.deleteNode) {
+    // TODO: delete nodes that link to/from and responses from!!
+
+    dispatch({
+      type: REMOVE_GRAPH_ELEMENT,
+      payload: id
+    });
+
+    return true;
+  }
+  return false;
 };
 
 export const initializeSession = () => async dispatch => {
   const {
     data: { createWordNet }
   } = await API.graphql(
-    graphqlOperation(mutations.createWordNet, { input: {} })
+    graphqlOperation(mutations.createWordNet, {
+      input: { timestamp: getUnixTime(new Date()) }
+    })
   );
 
   const nodeNetworkId = createWordNet.id;
@@ -196,6 +220,14 @@ export const resumeLastSession = () => async dispatch => {
   return true;
 };
 
-export const submitSession = () => {
-  return { type: SUBMIT_GRAPH_SESSION };
+export const submitSession = () => (dispatch, getState) => {
+  const { nodes, session, currentNode } = getState().graph;
+
+  // Do not dave sessions that don't have any words added!
+  if (nodes.length <= 1) {
+    dispatch(deleteNode(currentNode.id));
+    // dispatch(deleteWordNet(session));
+  }
+
+  dispatch({ type: SUBMIT_GRAPH_SESSION });
 };
