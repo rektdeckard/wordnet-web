@@ -37,6 +37,7 @@ export const onCreateWordNet = `subscription OnCreateWordNet($owner: String!) {
     }
     createdAt
     modifiedAt
+    timestamp
     owner
   }
 }
@@ -77,6 +78,7 @@ export const onUpdateWordNet = `subscription OnUpdateWordNet($owner: String!) {
     }
     createdAt
     modifiedAt
+    timestamp
     owner
   }
 }
@@ -117,6 +119,7 @@ export const onDeleteWordNet = `subscription OnDeleteWordNet($owner: String!) {
     }
     createdAt
     modifiedAt
+    timestamp
     owner
   }
 }
@@ -141,6 +144,7 @@ export const onCreateNode = `subscription OnCreateNode($owner: String!) {
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     sources {
@@ -196,6 +200,7 @@ export const onUpdateNode = `subscription OnUpdateNode($owner: String!) {
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     sources {
@@ -251,6 +256,7 @@ export const onDeleteNode = `subscription OnDeleteNode($owner: String!) {
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     sources {
@@ -299,6 +305,7 @@ export const onCreateEdge = `subscription OnCreateEdge($owner: String!) {
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -323,6 +330,7 @@ export const onCreateEdge = `subscription OnCreateEdge($owner: String!) {
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -351,6 +359,7 @@ export const onCreateEdge = `subscription OnCreateEdge($owner: String!) {
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     createdAt
@@ -371,6 +380,7 @@ export const onUpdateEdge = `subscription OnUpdateEdge($owner: String!) {
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -395,6 +405,7 @@ export const onUpdateEdge = `subscription OnUpdateEdge($owner: String!) {
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -423,6 +434,7 @@ export const onUpdateEdge = `subscription OnUpdateEdge($owner: String!) {
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     createdAt
@@ -443,6 +455,7 @@ export const onDeleteEdge = `subscription OnDeleteEdge($owner: String!) {
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -467,6 +480,7 @@ export const onDeleteEdge = `subscription OnDeleteEdge($owner: String!) {
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -495,6 +509,7 @@ export const onDeleteEdge = `subscription OnDeleteEdge($owner: String!) {
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     createdAt
@@ -515,6 +530,7 @@ export const onCreateResponse = `subscription OnCreateResponse($owner: String!) 
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -543,6 +559,7 @@ export const onCreateResponse = `subscription OnCreateResponse($owner: String!) 
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     responseTime
@@ -564,6 +581,7 @@ export const onUpdateResponse = `subscription OnUpdateResponse($owner: String!) 
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -592,6 +610,7 @@ export const onUpdateResponse = `subscription OnUpdateResponse($owner: String!) 
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     responseTime
@@ -613,6 +632,7 @@ export const onDeleteResponse = `subscription OnDeleteResponse($owner: String!) 
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -641,6 +661,7 @@ export const onDeleteResponse = `subscription OnDeleteResponse($owner: String!) 
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     responseTime
