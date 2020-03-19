@@ -1,96 +1,122 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
-import { Layout, Typography, Table } from "antd";
+import { Layout, Typography, Table, message } from "antd";
+import { parse, getUnixTime, format } from "date-fns";
 
 const { Title, Paragraph, Text } = Typography;
 
-
-
 const SessionLog = () => {
   const { date } = useParams();
+  const [startTimestamp, endTimestamp] = useMemo(() => {
+    const time = getUnixTime(parse(date, "yyyy-MM-dd", new Date()));
+    return [time, time + 86400];
+  }, [date]);
   const [loading, setLoading] = useState(false);
   const [sessions, setSessions] = useState([]);
   // TODO: use to generate composite WordNets from multiple sessions
   const [selectedSessionKeys, setSelectedSessionKeys] = useState([]);
 
-  const columns = useMemo(() => ([
-    {
-      title: "Session Date",
-      dataIndex: "createDate",
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-      sortDirections: ["descend", "ascend"],
-      defaultSortOrder: "descend",
-      render: (text, record) => <Link to={`/explore/sessions/${record.createdAt.split("T")[0]}`}>{text}</Link>,
-      width: "25%"
-    },
-    {
-      title: "Session Time",
-      dataIndex: "createTime",
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-      sortDirections: ["descend", "ascend"],
-      defaultSortOrder: "descend",
-      render: (text, record) => (
-        <Link to={`/explore/sessions/${date}/${record.id}`}>{text}</Link>
-      ),
-      width: "50%"
-    },
-    {
-      title: "Words",
-      dataIndex: "words",
-      sorter: (a, b) => a.words - b.words,
-      sortDirections: ["descend", "ascend"],
-      defaultSortOrder: "descend",
-      width: "25%"
-    }
-  ]), [date]);
+  const columns = useMemo(
+    () => [
+      {
+        title: "Session Date",
+        dataIndex: "date",
+        sorter: (a, b) => a.date - b.date,
+        sortDirections: ["descend", "ascend"],
+        defaultSortOrder: "descend",
+        render: (text, record) => (
+          <Link to={`/explore/sessions/${format(record.date, "yyyy-MM-dd")}`}>
+            {text.toDateString()}
+          </Link>
+        ),
+        width: "25%"
+      },
+      {
+        title: "Session Time",
+        dataIndex: "date",
+        sorter: (a, b) => a.date - b.date,
+        sortDirections: ["descend", "ascend"],
+        defaultSortOrder: "descend",
+        render: (text, record) => (
+          <Link to={`/explore/sessions/${format(record.date, "yyyy-MM-dd")}/${record.id}`}>
+            {text.toTimeString()}
+          </Link>
+        ),
+        width: "50%"
+      },
+      {
+        title: "Words",
+        dataIndex: "words",
+        sorter: (a, b) => a.words - b.words,
+        sortDirections: ["descend", "ascend"],
+        defaultSortOrder: "descend",
+        width: "25%"
+      }
+    ],
+    [date]
+  );
 
   useEffect(() => {
     const fetchSessions = async date => {
       setLoading(true);
-      const res = await API.graphql(
-        graphqlOperation(
-          /* GraphQL */ `
-            query SessionsForDay(
-              $filter: ModelWordNetFilterInput
-              $limit: Int
-            ) {
-              listWordNets(filter: $filter, limit: $limit) {
-                items {
-                  id
-                  nodes(limit: $limit) {
-                    items {
-                      value
+      try {
+        const res = await API.graphql(
+          graphqlOperation(
+            /* GraphQL */ `
+              query SessionsForDay(
+                $filter: ModelWordNetFilterInput
+                $limit: Int
+              ) {
+                listWordNets(filter: $filter, limit: $limit) {
+                  items {
+                    id
+                    nodes(limit: $limit) {
+                      items {
+                        value
+                      }
                     }
+                    createdAt
+                    timestamp
                   }
-                  createdAt
                 }
               }
+            `,
+            {
+              filter: date
+                ? {
+                    and: [
+                      { timestamp: { ge: startTimestamp } },
+                      { timestamp: { le: endTimestamp } }
+                    ]
+                  }
+                : null,
+              limit: 1000
             }
-          `,
-          { filter: date ? { createdAt: { contains: date } } : null, limit: 1000 }
-        )
-      );
+          )
+        );
 
-      const data = res.data.listWordNets.items
-        .map(({ id, createdAt, nodes }) => {
-          const date = new Date(createdAt);
-          return {
-            id,
-            createdAt,
-            createDate: date.toDateString(),
-            createTime: date.toTimeString(),
-            words: nodes.items.length,
-            key: id
-          };
-        })
+        const data = res.data.listWordNets.items.map(
+          ({ id, createdAt, nodes }) => {
+            const date = new Date(createdAt);
+            return {
+              id,
+              date: new Date(createdAt),
+              words: nodes.items.length,
+              key: id
+            };
+          }
+        )
         .filter(session => session.words > 1);
-      setSessions(data);
+        setSessions(data);
+      } catch (e) {
+        message.error("Error fetching records");
+      }
       setLoading(false);
     };
 
     // if (date) {
-      fetchSessions(date);
+    fetchSessions(date);
     // }
   }, [date]);
 
@@ -113,7 +139,7 @@ const SessionLog = () => {
                 selectedRows
               );
               setSelectedSessionKeys(selectedRowKeys);
-            },
+            }
             // getCheckboxProps: record => ({
             //   disabled: record.words <= 0 // Column configuration not to be checked
             // })
