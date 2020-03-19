@@ -40,9 +40,9 @@ export const generateStartingNode = nodeNetworkId => {
     STARTING_WORDS[Math.floor(Math.random() * STARTING_WORDS.length)];
   return {
     value,
-    radius: 12,
+    radius: 8,
     depth: 1,
-    color: "rgb(244, 117, 96)",
+    color: GRAPH_COLORS[GRAPH_COLORS.length - 1],
     nodeNetworkId
   };
 };

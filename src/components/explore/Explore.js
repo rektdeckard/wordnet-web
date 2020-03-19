@@ -24,6 +24,7 @@ import { useWeekOverWeek } from "../../utils";
 import Missing from "../Missing";
 import SessionLog from "./SessionLog";
 import Session from "./Session";
+import { HEAT_MAP_COLORS } from "../../data/constants";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -101,9 +102,9 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
               <Title level={2}>Your Stats</Title>
               <Paragraph>
                 Challenge yourself by setting{" "}
-                <Link to="/explore/goals" disabled>goals</Link> and staying on target.
+                <Link to="/explore/goals">goals</Link> and staying on target.
                 Gain perspective on your personality and cognitive abilities by
-                checking your <Link to="/explore/insights" disabled>insights</Link>.
+                checking your <Link to="/explore/insights">insights</Link>.
               </Paragraph>
               <List
                 grid={{
@@ -133,13 +134,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
                       from={startOfYear(new Date())}
                       to={new Date()}
                       emptyColor="#eeeeee"
-                      colors={[
-                        "#61cdbb",
-                        "#97e3d5",
-                        "#e8c1a0",
-                        "#ff9980",
-                        "#f47560"
-                      ]}
+                      colors={HEAT_MAP_COLORS}
                       margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
                       yearSpacing={40}
                       monthBorderColor="#ffffff"
