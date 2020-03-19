@@ -6,6 +6,43 @@ import { parse, getUnixTime, format } from "date-fns";
 
 const { Title, Paragraph, Text } = Typography;
 
+const columns = [
+  {
+    title: "Session Date",
+    dataIndex: "date",
+    sorter: (a, b) => a.date - b.date,
+    sortDirections: ["descend", "ascend"],
+    defaultSortOrder: "descend",
+    render: (text, record) => (
+      <Link to={`/explore/sessions/${format(record.date, "yyyy-MM-dd")}`}>
+        {text.toDateString()}
+      </Link>
+    ),
+    width: "25%"
+  },
+  {
+    title: "Session Time",
+    dataIndex: "date",
+    sorter: (a, b) => a.date - b.date,
+    sortDirections: ["descend", "ascend"],
+    defaultSortOrder: "descend",
+    render: (text, record) => (
+      <Link to={`/explore/sessions/${format(record.date, "yyyy-MM-dd")}/${record.id}`}>
+        {text.toTimeString()}
+      </Link>
+    ),
+    width: "50%"
+  },
+  {
+    title: "Words",
+    dataIndex: "words",
+    sorter: (a, b) => a.words - b.words,
+    sortDirections: ["descend", "ascend"],
+    defaultSortOrder: "descend",
+    width: "25%"
+  }
+];
+
 const SessionLog = () => {
   const { date } = useParams();
   const [startTimestamp, endTimestamp] = useMemo(() => {
@@ -17,48 +54,8 @@ const SessionLog = () => {
   // TODO: use to generate composite WordNets from multiple sessions
   const [selectedSessionKeys, setSelectedSessionKeys] = useState([]);
 
-  const columns = useMemo(
-    () => [
-      {
-        title: "Session Date",
-        dataIndex: "date",
-        sorter: (a, b) => a.date - b.date,
-        sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "descend",
-        render: (text, record) => (
-          <Link to={`/explore/sessions/${format(record.date, "yyyy-MM-dd")}`}>
-            {text.toDateString()}
-          </Link>
-        ),
-        width: "25%"
-      },
-      {
-        title: "Session Time",
-        dataIndex: "date",
-        sorter: (a, b) => a.date - b.date,
-        sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "descend",
-        render: (text, record) => (
-          <Link to={`/explore/sessions/${format(record.date, "yyyy-MM-dd")}/${record.id}`}>
-            {text.toTimeString()}
-          </Link>
-        ),
-        width: "50%"
-      },
-      {
-        title: "Words",
-        dataIndex: "words",
-        sorter: (a, b) => a.words - b.words,
-        sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "descend",
-        width: "25%"
-      }
-    ],
-    [date]
-  );
-
   useEffect(() => {
-    const fetchSessions = async date => {
+    const fetchSessions = async () => {
       setLoading(true);
       try {
         const res = await API.graphql(
@@ -115,10 +112,8 @@ const SessionLog = () => {
       setLoading(false);
     };
 
-    // if (date) {
-    fetchSessions(date);
-    // }
-  }, [date]);
+    fetchSessions();
+  }, [date, startTimestamp, endTimestamp]);
 
   return (
     <Layout>
