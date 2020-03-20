@@ -23,7 +23,7 @@ export const submitResponse = response => async (dispatch, getState) => {
   const resultResponse = await API.graphql(
     graphqlOperation(mutations.createResponse, {
       input: {
-        value: response,
+        value: response.trim(),
         responseTime: new Date() - new Date(currentNode.lastVisited),
         responseNetworkId: session,
         responseSourceId: currentNode.id
@@ -98,35 +98,6 @@ export const selectRandomNode = () => (dispatch, getState) => {
   });
 };
 
-const deleteWordNet = id => async dispatch => {
-  const response = await API.graphql(
-    graphqlOperation(mutations.deleteWordNet, { input: { id } })
-  );
-  if (response.data.deleteWordNet) {
-    // TODO: delete it's child data too!
-
-    return true;
-  }
-  return false;
-};
-
-const deleteNode = id => async dispatch => {
-  const response = await API.graphql(
-    graphqlOperation(mutations.deleteNode, { input: { id } })
-  );
-  if (response.data.deleteNode) {
-    // TODO: delete nodes that link to/from and responses from!!
-
-    dispatch({
-      type: REMOVE_GRAPH_ELEMENT,
-      payload: id
-    });
-
-    return true;
-  }
-  return false;
-};
-
 export const initializeSession = () => async dispatch => {
   const {
     data: { createWordNet }
@@ -154,16 +125,13 @@ export const initializeSession = () => async dispatch => {
   });
 };
 
+// FIXME: 'limit' does not work when the last row in table was by another user!!
 export const resumeLastSession = () => async dispatch => {
-  const {
-    data: {
-      searchWordNets: { items }
-    }
-  } = await API.graphql(
+  const response = await API.graphql(
     graphqlOperation(
       /* GraphQL */ `
         {
-          searchWordNets(limit: 1, sort: { field: createdAt }) {
+          searchWordNets(limit: 1, sort: { field: timestamp }) {
             items {
               id
               nodes(limit: 1000) {
@@ -200,6 +168,12 @@ export const resumeLastSession = () => async dispatch => {
     )
   );
 
+  const {
+    data: {
+      searchWordNets: { items }
+    }
+  } = response;
+
   if (!items.length) return false;
 
   dispatch({
@@ -225,9 +199,58 @@ export const submitSession = () => (dispatch, getState) => {
 
   // Do not dave sessions that don't have any words added!
   if (nodes.length <= 1) {
-    dispatch(deleteNode(currentNode.id));
-    // dispatch(deleteWordNet(session));
+    if (currentNode?.id) {
+      dispatch(deleteNode(currentNode.id));
+    }
+    dispatch(deleteWordNet(session));
   }
 
   dispatch({ type: SUBMIT_GRAPH_SESSION });
+};
+
+const deleteWordNet = id => async () => {
+  const response = await API.graphql(
+    graphqlOperation(
+      /* GraphQL */ `
+        mutation DeleteWordNet($input: DeleteWordNetInput!) {
+          deleteWordNet(input: $input) {
+            id
+          }
+        }
+      `,
+      { input: { id } }
+    )
+  );
+  if (response.data.deleteWordNet) {
+    // TODO: delete it's child data too!
+
+    return true;
+  }
+  return false;
+};
+
+const deleteNode = id => async dispatch => {
+  const response = await API.graphql(
+    graphqlOperation(
+      /* GraphQL */ `
+        mutation DeleteNode($input: DeleteNodeInput!) {
+          deleteNode(input: $input) {
+            id
+          }
+        }
+      `,
+      { input: { id } }
+    )
+  );
+  if (response.data.deleteNode) {
+    // TODO: delete nodes that link to/from and responses from!!
+
+    dispatch({
+      type: REMOVE_GRAPH_ELEMENT,
+      payload: id
+    });
+
+    return true;
+  }
+  return false;
 };
