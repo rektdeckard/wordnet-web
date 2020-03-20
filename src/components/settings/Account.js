@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Storage, Auth } from "aws-amplify";
-// import { S3Album, S3Image } from "aws-amplify-react";
+import { withAuthenticator } from "aws-amplify-react";
 import {
   Layout,
   Typography,
@@ -16,8 +16,8 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 
 const { Text, Paragraph, Title } = Typography;
 
-const Account = () => {
-  const user = Auth.user.attributes;
+const Account = (props) => {
+  const user = props.authData.attributes;
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -64,7 +64,7 @@ const Account = () => {
     } catch (e) {
       message.error(e.message);
     }
-    // TODO: Refresh Auth!!
+    props.onStateChange();
   };
 
   const uploadButton = (
@@ -177,4 +177,4 @@ function validateFile(file) {
   return true;
 }
 
-export default Account;
+export default withAuthenticator(Account);
