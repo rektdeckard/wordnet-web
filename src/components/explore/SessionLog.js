@@ -37,7 +37,7 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
   // TODO: use to generate composite WordNets from multiple sessions
   const [selectedSessionKeys, setSelectedSessionKeys] = useState([]);
 
-  const handleDateClear = (e) => {
+  const handleDateClear = e => {
     e.preventDefault();
     setStartDate(null);
     setEndDate(null);
@@ -62,7 +62,14 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         width: "25%",
         filterDropdown: () => (
           <div style={{ padding: 8 }}>
-            <RangePicker value={[ startDate && moment(startDate), endDate && moment(endDate)]} onChange={handleDateSelect} allowClear={true} />
+            <RangePicker
+              value={[
+                startDate && moment(startDate),
+                endDate && moment(endDate)
+              ]}
+              onChange={handleDateSelect}
+              allowClear={true}
+            />
           </div>
         ),
         filterIcon: () => (
@@ -165,42 +172,40 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
           style={{ margin: 16 }}
         >{`${startDate}${endDate ? " to " + endDate : null}`}</Tag>
       );
-      }
+    }
     return <Tag style={{ margin: 16 }}>All</Tag>;
   };
 
   return (
     <Layout>
-      <Typography>
-        <Title level={2}>Sessions</Title>
-        <Paragraph type="secondary">Viewing: {renderFilterTags()}</Paragraph>
-        <Table
-          id="session-log"
-          columns={columns}
-          dataSource={sessions}
-          pagination={false}
-          loading={loading}
-          rowSelection={{
-            type: "checkbox",
-            onChange: (selectedRowKeys, selectedRows) => {
-              console.log(
-                `selectedRowKeys: ${selectedRowKeys}`,
-                "selectedRows: ",
-                selectedRows
-              );
-              setSelectedSessionKeys(selectedRowKeys);
-            }
-            // getCheckboxProps: record => ({
-            //   disabled: record.words <= 0 // Column configuration not to be checked
-            // })
-          }}
-          onRow={(record, _index) => {
-            return {
-              onClick: () => history.push(`/explore/sessions/${record.id}`)
-            };
-          }}
-        />
-      </Typography>
+      <Title level={2}>Sessions</Title>
+      <Paragraph type="secondary">Viewing: {renderFilterTags()}</Paragraph>
+      <Table
+        id="session-log"
+        columns={columns}
+        dataSource={sessions}
+        pagination={false}
+        loading={loading}
+        rowSelection={{
+          type: "checkbox",
+          onChange: (selectedRowKeys, selectedRows) => {
+            console.log(
+              `selectedRowKeys: ${selectedRowKeys}`,
+              "selectedRows: ",
+              selectedRows
+            );
+            setSelectedSessionKeys(selectedRowKeys);
+          }
+          // getCheckboxProps: record => ({
+          //   disabled: record.words <= 0 // Column configuration not to be checked
+          // })
+        }}
+        onRow={(record, _index) => {
+          return {
+            onClick: () => history.push(`/explore/sessions/${record.id}`)
+          };
+        }}
+      />
     </Layout>
   );
 };
