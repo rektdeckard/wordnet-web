@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -12,12 +12,11 @@ import {
   Result,
   message
 } from "antd";
-
 import { DeploymentUnitOutlined } from "@ant-design/icons";
+import { getTime, addMinutes } from "date-fns";
 
 import {
   submitResponse,
-  removeElement,
   selectRandomNode,
   initializeSession,
   resumeLastSession,
@@ -25,6 +24,7 @@ import {
 } from "../../actions";
 import { useGraph } from "../../utils";
 import GraphViewer from "../GraphViewer";
+import TimedProgress from "./TimedProgress";
 
 const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -32,7 +32,6 @@ const { Title, Paragraph, Text } = Typography;
 const Play = ({
   graph,
   submitResponse,
-  removeElement,
   selectRandomNode,
   initializeSession,
   resumeLastSession,
@@ -43,6 +42,22 @@ const Play = ({
   const [entry, setEntry] = useState("");
   const [loading, setLoading] = useState(false);
   const [resuming, setResuming] = useState(false);
+  const [timerOptions, setTimerOptions] = useState({
+    expiryTimestamp: 1999999999999
+  });
+
+  useEffect(() => {
+    if (session) {
+      setTimerOptions({
+        expiryTimestamp: getTime(addMinutes(new Date(), 5)),
+        onExpire: () => {
+          message.success("Five minutes is up!");
+          // await handleFinish();
+        }
+      });
+    }
+    return () => setTimerOptions({ expiryTimestamp: 1999999999999 });
+  }, [session]);
 
   const handleInitialize = async () => {
     setLoading(true);
@@ -83,6 +98,16 @@ const Play = ({
     setLoading(false);
   };
 
+  const handleFinish = async () => {
+    setLoading(true);
+    try {
+      await submitSession();
+    } catch (e) {
+      message.error("Problem submitting session");
+    }
+    setLoading(false);
+  };
+
   if (!session || !graph)
     return (
       <Result
@@ -101,7 +126,7 @@ const Play = ({
             New Session
           </Button>,
           <Button
-            type="primary"
+            // type="primary"
             key="resume"
             onClick={handleResume}
             loading={resuming}
@@ -129,6 +154,7 @@ const Play = ({
         word associations. Try to remain consistent with the style of your
         response!
       </Paragraph>
+      <TimedProgress timerOptions={timerOptions} />
       <Content style={{ padding: "0px 0px", background: "#fff" }}>
         <GraphViewer
           graph={{ nodes, links }}
@@ -136,7 +162,7 @@ const Play = ({
             <Title level={3} style={{ textAlign: "center", paddingTop: 16 }}>
               {currentNode?.value && !loading ? (
                 <>
-                  Define the word <Text code>{currentNode.value}</Text>
+                  What does the word <Text code>{currentNode.value}</Text> mean?
                 </>
               ) : (
                 <Spin />
@@ -145,13 +171,11 @@ const Play = ({
           }
           // hovered={{ node: currentNode.value }}
         />
-        <Row style={{ padding: 16 }}>
-          <Col span={20}>
+        <Row style={{ padding: 16 }} gutter={8}>
+          <Col flex="auto">
             <Input
               placeholder={
-                !loading
-                  ? `Define "${currentNode?.value ?? "smart"}"`
-                  : "Loading..."
+                !loading ? `Define "${currentNode?.value ?? ""}"` : "Loading..."
               }
               value={entry}
               allowClear
@@ -160,7 +184,17 @@ const Play = ({
               autoFocus={true}
             />
           </Col>
-          <Col span={2}>
+          <Col flex="100px">
+            <Button
+              block
+              type="primary"
+              onClick={handleSubmit}
+              disabled={!entry}
+            >
+              Submit
+            </Button>
+          </Col>
+          <Col flex="100px">
             <Button
               block
               type="secondary"
@@ -170,18 +204,20 @@ const Play = ({
               Skip
             </Button>
           </Col>
-          <Col span={2}>
+          <Col flex="100px">
             <Button
               block
               type="secondary"
-              onClick={submitSession}
-              disabled={nodes.length <= 1}
+              onClick={() => console.log("editing")}
             >
-              Finish
+              Undo
             </Button>
           </Col>
         </Row>
       </Content>
+      <Button block onClick={handleFinish} style={{ marginTop: 4 }}>
+        Done Playing
+      </Button>
     </Layout>
   );
 };
@@ -193,7 +229,6 @@ const mapStateToProps = state => {
 export default withRouter(
   connect(mapStateToProps, {
     submitResponse,
-    removeElement,
     selectRandomNode,
     initializeSession,
     resumeLastSession,
