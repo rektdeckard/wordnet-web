@@ -31,6 +31,7 @@ const { Title, Paragraph, Text } = Typography;
 const Explore = ({ history, sessionHistory, fetchHistory }) => {
   const { sessions } = sessionHistory;
   const [loading, setLoading] = useState(false);
+  const [initialDate, setInitialDate] = useState();
   const weekOverWeek = useWeekOverWeek(sessions);
 
   useEffect(() => {
@@ -43,9 +44,9 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
     load();
   }, [fetchHistory]);
 
-  const handleDayClicked = (day, event) => {
-    event.preventDefault();
-    history.push(`/explore/sessions/${day.day}`);
+  const handleDayClicked = entry => {
+    setInitialDate(entry.day);
+    history.push(`/explore/sessions`);
   };
 
   const statisticCards = [
@@ -191,11 +192,10 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
             </Typography>
           )}
         />
-        {/* <Route exact path="/explore/history" component={History} /> */}
-        <Redirect exact path="/explore/sessions/id" to="/explore/sessions" />
-        <Route path="/explore/sessions/:date/:id" component={Session} />
-        <Route path="/explore/sessions/:date" component={SessionLog} />
-        <Route path="/explore/sessions" component={SessionLog} />
+        <Route path="/explore/sessions/:id" component={Session} />
+        <Route path="/explore/sessions">
+          <SessionLog initialDate={initialDate} setInitialDate={setInitialDate}/>
+        </Route>
         <Route render={() => <Missing />} />
       </Switch>
     </Layout>
