@@ -10,8 +10,8 @@ import {
 } from "./types";
 import {
   uniqueTokensFromEntry,
-  generateMissingNodes,
-  generateStartingNode,
+  createMissingNodes,
+  createStartingNode,
   findNodesToLink,
   mapEdges
 } from "../utils";
@@ -32,7 +32,7 @@ export const submitResponse = response => async (dispatch, getState) => {
   );
 
   const tokens = uniqueTokensFromEntry(response);
-  const newNodes = generateMissingNodes(tokens, nodes, currentNode);
+  const newNodes = createMissingNodes(tokens, nodes, currentNode);
   // TODO: Create new mutation to add multiple nodes simultaneously
   const resultNodes = await Promise.all(
     newNodes.map(node =>
@@ -91,7 +91,6 @@ export const submitResponse = response => async (dispatch, getState) => {
 export const selectRandomNode = () => (dispatch, getState) => {
   const { nodes } = getState().graph;
   const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
-
   dispatch({
     type: SET_CURRENT_NODE,
     payload: { ...randomNode, lastVisited: new Date() }
@@ -108,7 +107,7 @@ export const initializeSession = () => async dispatch => {
   );
 
   const nodeNetworkId = createWordNet.id;
-  const input = generateStartingNode(nodeNetworkId);
+  const input = createStartingNode(nodeNetworkId);
 
   const {
     data: { createNode }
