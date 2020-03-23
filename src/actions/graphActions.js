@@ -1,4 +1,5 @@
 import { API, graphqlOperation } from "aws-amplify";
+import { getUnixTime } from "date-fns";
 import * as mutations from "../graphql/mutations";
 import {
   ADD_GRAPH_ELEMENTS,
@@ -9,21 +10,20 @@ import {
 } from "./types";
 import {
   uniqueTokensFromEntry,
-  generateMissingNodes,
-  generateStartingNode,
+  createMissingNodes,
+  createStartingNode,
   findNodesToLink,
-  mapEdges,
-  generateMissingLinks
+  mapEdges
 } from "../utils";
 
 export const submitResponse = response => async (dispatch, getState) => {
-  const { nodes, links, session, currentNode } = getState().graph;
+  const { nodes, session, currentNode } = getState().graph;
   if (!session || !currentNode) throw new Error("No current session ID!");
 
   const resultResponse = await API.graphql(
     graphqlOperation(mutations.createResponse, {
       input: {
-        value: response,
+        value: response.trim(),
         responseTime: new Date() - new Date(currentNode.lastVisited),
         responseNetworkId: session,
         responseSourceId: currentNode.id
@@ -32,7 +32,7 @@ export const submitResponse = response => async (dispatch, getState) => {
   );
 
   const tokens = uniqueTokensFromEntry(response);
-  const newNodes = generateMissingNodes(tokens, nodes, currentNode);
+  const newNodes = createMissingNodes(tokens, nodes, currentNode);
   // TODO: Create new mutation to add multiple nodes simultaneously
   const resultNodes = await Promise.all(
     newNodes.map(node =>
@@ -91,29 +91,23 @@ export const submitResponse = response => async (dispatch, getState) => {
 export const selectRandomNode = () => (dispatch, getState) => {
   const { nodes } = getState().graph;
   const randomNode = nodes[Math.floor(Math.random() * nodes.length)];
-
   dispatch({
     type: SET_CURRENT_NODE,
     payload: { ...randomNode, lastVisited: new Date() }
   });
 };
 
-export const removeElement = token => {
-  return {
-    type: REMOVE_GRAPH_ELEMENT,
-    payload: token
-  };
-};
-
 export const initializeSession = () => async dispatch => {
   const {
     data: { createWordNet }
   } = await API.graphql(
-    graphqlOperation(mutations.createWordNet, { input: {} })
+    graphqlOperation(mutations.createWordNet, {
+      input: { timestamp: getUnixTime(new Date()) }
+    })
   );
 
   const nodeNetworkId = createWordNet.id;
-  const input = generateStartingNode(nodeNetworkId);
+  const input = createStartingNode(nodeNetworkId);
 
   const {
     data: { createNode }
@@ -130,16 +124,13 @@ export const initializeSession = () => async dispatch => {
   });
 };
 
+// FIXME: 'limit' does not work when the last row in table was by another user!!
 export const resumeLastSession = () => async dispatch => {
-  const {
-    data: {
-      searchWordNets: { items }
-    }
-  } = await API.graphql(
+  const response = await API.graphql(
     graphqlOperation(
       /* GraphQL */ `
         {
-          searchWordNets(limit: 1, sort: { field: createdAt }) {
+          searchWordNets(limit: 1, sort: { field: timestamp }) {
             items {
               id
               nodes(limit: 1000) {
@@ -176,6 +167,12 @@ export const resumeLastSession = () => async dispatch => {
     )
   );
 
+  const {
+    data: {
+      searchWordNets: { items }
+    }
+  } = response;
+
   if (!items.length) return false;
 
   dispatch({
@@ -196,6 +193,63 @@ export const resumeLastSession = () => async dispatch => {
   return true;
 };
 
-export const submitSession = () => {
-  return { type: SUBMIT_GRAPH_SESSION };
+export const submitSession = () => (dispatch, getState) => {
+  const { nodes, session, currentNode } = getState().graph;
+
+  // Do not dave sessions that don't have any words added!
+  if (nodes.length <= 1) {
+    if (currentNode?.id) {
+      dispatch(deleteNode(currentNode.id));
+    }
+    dispatch(deleteWordNet(session));
+  }
+
+  dispatch({ type: SUBMIT_GRAPH_SESSION });
+};
+
+const deleteWordNet = id => async () => {
+  const response = await API.graphql(
+    graphqlOperation(
+      /* GraphQL */ `
+        mutation DeleteWordNet($input: DeleteWordNetInput!) {
+          deleteWordNet(input: $input) {
+            id
+          }
+        }
+      `,
+      { input: { id } }
+    )
+  );
+  if (response.data.deleteWordNet) {
+    // TODO: delete it's child data too!
+
+    return true;
+  }
+  return false;
+};
+
+const deleteNode = id => async dispatch => {
+  const response = await API.graphql(
+    graphqlOperation(
+      /* GraphQL */ `
+        mutation DeleteNode($input: DeleteNodeInput!) {
+          deleteNode(input: $input) {
+            id
+          }
+        }
+      `,
+      { input: { id } }
+    )
+  );
+  if (response.data.deleteNode) {
+    // TODO: delete nodes that link to/from and responses from!!
+
+    dispatch({
+      type: REMOVE_GRAPH_ELEMENT,
+      payload: id
+    });
+
+    return true;
+  }
+  return false;
 };

@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Menu } from "antd";
-import { SettingFilled } from "@ant-design/icons";
 
 const mainMenuItems = [
   { key: "play", value: "Play", to: "/play" },

@@ -35,7 +35,8 @@ const GraphViewer = ({
               style={
                 componentStyle ?? {
                   height: "50vh",
-                  width: window.innerWidth - 116
+                  width: window.innerWidth - 116,
+                  cursor: "move",
                 }
               }
               ref={ref}
@@ -68,7 +69,7 @@ const GraphViewer = ({
                     ? "black"
                     : l.source.color
                 }
-                linkThickness={settings.linkThickness}
+                // linkThickness={settings.linkThickness}
                 linkThickness={l =>
                   l.source.id === hovered ? 5 : settings.linkThickness
                 }

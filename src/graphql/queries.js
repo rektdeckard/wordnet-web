@@ -37,6 +37,7 @@ export const getWordNet = `query GetWordNet($id: ID!) {
     }
     createdAt
     modifiedAt
+    timestamp
     owner
   }
 }
@@ -60,6 +61,7 @@ export const listWordNets = `query ListWordNets(
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     nextToken
@@ -86,6 +88,7 @@ export const getNode = `query GetNode($id: ID!) {
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     sources {
@@ -137,6 +140,7 @@ export const listNodes = `query ListNodes(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -168,6 +172,7 @@ export const getEdge = `query GetEdge($id: ID!) {
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -192,6 +197,7 @@ export const getEdge = `query GetEdge($id: ID!) {
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -220,6 +226,7 @@ export const getEdge = `query GetEdge($id: ID!) {
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     createdAt
@@ -258,6 +265,7 @@ export const listEdges = `query ListEdges(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       createdAt
@@ -280,6 +288,7 @@ export const getResponse = `query GetResponse($id: ID!) {
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -308,6 +317,7 @@ export const getResponse = `query GetResponse($id: ID!) {
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     responseTime
@@ -338,6 +348,7 @@ export const listResponses = `query ListResponses(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       responseTime
@@ -373,6 +384,7 @@ export const searchWordNets = `query SearchWordNets(
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     nextToken
@@ -402,6 +414,7 @@ export const searchNodes = `query SearchNodes(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -458,6 +471,7 @@ export const searchEdges = `query SearchEdges(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       createdAt
@@ -496,6 +510,7 @@ export const searchResponses = `query SearchResponses(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       responseTime

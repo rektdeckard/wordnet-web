@@ -1,0 +1,3 @@
+#session-log td:not(:first-child) {
+  cursor: pointer;
+}

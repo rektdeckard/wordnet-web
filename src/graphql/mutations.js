@@ -40,6 +40,7 @@ export const createWordNet = `mutation CreateWordNet(
     }
     createdAt
     modifiedAt
+    timestamp
     owner
   }
 }
@@ -83,6 +84,7 @@ export const updateWordNet = `mutation UpdateWordNet(
     }
     createdAt
     modifiedAt
+    timestamp
     owner
   }
 }
@@ -126,6 +128,7 @@ export const deleteWordNet = `mutation DeleteWordNet(
     }
     createdAt
     modifiedAt
+    timestamp
     owner
   }
 }
@@ -153,6 +156,7 @@ export const createNode = `mutation CreateNode(
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     sources {
@@ -211,6 +215,7 @@ export const updateNode = `mutation UpdateNode(
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     sources {
@@ -269,6 +274,7 @@ export const deleteNode = `mutation DeleteNode(
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     sources {
@@ -320,6 +326,7 @@ export const createEdge = `mutation CreateEdge(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -344,6 +351,7 @@ export const createEdge = `mutation CreateEdge(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -372,6 +380,7 @@ export const createEdge = `mutation CreateEdge(
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     createdAt
@@ -395,6 +404,7 @@ export const updateEdge = `mutation UpdateEdge(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -419,6 +429,7 @@ export const updateEdge = `mutation UpdateEdge(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -447,6 +458,7 @@ export const updateEdge = `mutation UpdateEdge(
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     createdAt
@@ -470,6 +482,7 @@ export const deleteEdge = `mutation DeleteEdge(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -494,6 +507,7 @@ export const deleteEdge = `mutation DeleteEdge(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -522,6 +536,7 @@ export const deleteEdge = `mutation DeleteEdge(
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     createdAt
@@ -545,6 +560,7 @@ export const createResponse = `mutation CreateResponse(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -573,6 +589,7 @@ export const createResponse = `mutation CreateResponse(
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     responseTime
@@ -597,6 +614,7 @@ export const updateResponse = `mutation UpdateResponse(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -625,6 +643,7 @@ export const updateResponse = `mutation UpdateResponse(
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     responseTime
@@ -649,6 +668,7 @@ export const deleteResponse = `mutation DeleteResponse(
         id
         createdAt
         modifiedAt
+        timestamp
         owner
       }
       sources {
@@ -677,6 +697,7 @@ export const deleteResponse = `mutation DeleteResponse(
       }
       createdAt
       modifiedAt
+      timestamp
       owner
     }
     responseTime

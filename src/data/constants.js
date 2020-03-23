@@ -95,13 +95,30 @@ export const STARTING_WORDS = [
   "possible"
 ];
 
-// const STARTING_WORDS = ["smart", "love", "dream", "hobby", "artist", "mood"];
+// NIVO
+// export const GRAPH_COLORS = [
+//   "#e8c1a0",
+//   "#f47560",
+//   "#f1e15b",
+//   "#e8a838",
+//   "#61cdbb",
+//   "#97e3d5"
+// ];
 
+// MUTED
 export const GRAPH_COLORS = [
-  "#e8c1a0",
-  "#f47560",
-  "#f1e15b",
-  "#e8a838",
-  "#61cdbb",
-  "#97e3d5"
+  "#DCC48E",
+  "#EAEFD3",
+  "#B3C0A4",
+  "#77789B",
+  "#4A5477",
+  "#DBA88E",
+];
+
+export const HEAT_MAP_COLORS = [
+  "#7D97A3",
+  "#B3C0A4",
+  "#EFE8BA",
+  "#DCC48E",
+  "#D1A787",
 ];

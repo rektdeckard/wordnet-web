@@ -35,19 +35,19 @@ export const mapGraph = graph => {
 
 export const useGraph = graph => useMemo(() => mapGraph(graph), [graph]);
 
-export const generateStartingNode = nodeNetworkId => {
+export const createStartingNode = nodeNetworkId => {
   const value =
     STARTING_WORDS[Math.floor(Math.random() * STARTING_WORDS.length)];
   return {
     value,
-    radius: 12,
+    radius: 8,
     depth: 1,
-    color: "rgb(244, 117, 96)",
+    color: GRAPH_COLORS[GRAPH_COLORS.length - 1],
     nodeNetworkId
   };
 };
 
-export const generateMissingNodes = (tokens, nodes, currentNode) => {
+export const createMissingNodes = (tokens, nodes, currentNode) => {
   // Create new node for each token that does not already have one
   const existingTokens = nodes.map(n => n.value);
   return tokens
@@ -60,7 +60,7 @@ export const generateMissingNodes = (tokens, nodes, currentNode) => {
     }));
 };
 
-export const generateMissingLinks = (tokens, links, currentNode) => {
+export const createMissingLinks = (tokens, links, currentNode) => {
   // Create links from current node to each token's new or extant node
   // TODO: Update distance for extant links to represent stronger association?
   const existingLinks = links

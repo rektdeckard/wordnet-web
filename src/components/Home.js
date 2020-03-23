@@ -23,7 +23,7 @@ const Home = () => {
       title: "Insights",
       icon: <ThunderboltTwoTone style={{ marginTop: 32, fontSize: 64 }} />,
       path: "/explore/insights",
-      disabled: true,
+      // disabled: true,
       description:
         "Gain perspective on your personality and cognitive abilities through analysis of your data"
     },
@@ -31,7 +31,7 @@ const Home = () => {
       title: "Goals",
       icon: <TrophyTwoTone style={{ marginTop: 32, fontSize: 64 }} />,
       path: "explore/goals",
-      disabled: true,
+      // disabled: true,
       description:
         "Challenge yourself to login a few times a week, expand your vocabulary, or increase your speed"
     }
