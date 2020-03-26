@@ -112,6 +112,11 @@ export const fetchSession = id => async dispatch => {
                     id
                   }
                 }
+                targets(limit: $limit) {
+                  items {
+                    id
+                  }
+                }
                 createdAt
                 owner
               }
@@ -161,6 +166,7 @@ export const fetchSession = id => async dispatch => {
   });
 };
 
+// TODO: use nextToken to exhaustively fetch beyone 1000 entries
 export const fetchAllSessions = async () => {
   const response = await API.graphql(
     graphqlOperation(
@@ -177,6 +183,11 @@ export const fetchAllSessions = async () => {
                   radius
                   color
                   sources(limit: $limit) {
+                    items {
+                      id
+                    }
+                  }
+                  targets(limit: $limit) {
                     items {
                       id
                     }
@@ -221,9 +232,9 @@ export const fetchAllSessions = async () => {
   );
 
   const reducer = ({ nodes, edges, responses }, curr) => ({
-    nodes: [...nodes, ...curr?.nodes?.items],
-    edges: [...edges, ...curr?.edges?.items],
-    responses: [...responses, ...curr?.responses?.items]
+    nodes: [...nodes, ...curr.nodes.items],
+    edges: [...edges, ...curr.edges.items],
+    responses: [...responses, ...curr.responses.items]
   });
 
   const allResponses = response.data.listWordNets.items.reduce(reducer, {
