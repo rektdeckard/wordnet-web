@@ -138,7 +138,7 @@ const Session = ({ graph, fetchSession }) => {
         sorter: (a, b) => a.target.localeCompare(b.target),
         sortDirections: ["descend", "ascend"],
         defaultSortOrder: "ascend",
-        ...searchableColumn("response")
+        ...searchableColumn("target")
       },
       {
         title: "Response Time",
