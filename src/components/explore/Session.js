@@ -174,12 +174,11 @@ const Session = ({ graph, fetchSession }) => {
       },
       {
         title: "Degree",
-        dataIndex: "sources",
+        dataIndex: "degree",
         align: "right",
-        sorter: (a, b) => a.sources.length - b.sources.length,
+        sorter: (a, b) => a.degree - b.degree,
         sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "descend",
-        render: sources => sources.length
+        defaultSortOrder: "descend"
       },
       {
         title: "Depth",

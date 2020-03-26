@@ -7,7 +7,7 @@ export const mapNodes = graph =>
     depth: node.depth,
     radius: node.radius,
     color: node.color,
-    sources: node.sources?.items,
+    degree: (node.sources.items.length ?? 0) + (node.targets.items.length ?? 0),
     createdAt: node.createdAt,
     owner: node.owner
   })) ?? [];
@@ -96,3 +96,57 @@ export const createMissingLinks = (tokens, links, currentNode) => {
 
 export const findNodesToLink = (tokens, nodes) =>
   nodes.filter(n => tokens.includes(n.value));
+
+/*
+ * Reduces nodes with the same value by the same owner into a single node, whose
+ * degree is the sum of the input node degrees and frequency is the count
+ */
+// FIXME: does this make sense? aren't we double-counting any identical edges?
+export const condenseNodes = nodes => {
+  const nodeMap = nodes.reduce((acc, { id, degree, owner }) => {
+    if (acc[`${id}-${owner}`]) {
+      const existingNode = acc[`${id}-${owner}`];
+      return {
+        ...acc,
+        [`${id}-${owner}`]: {
+          id,
+          degree: existingNode.degree + degree,
+          owner,
+          frequency: existingNode.frequency + 1
+        }
+      };
+    }
+
+    return { ...acc, [`${id}-${owner}`]: { id, degree, owner, frequency: 1 } };
+  }, {});
+
+  return Object.values(nodeMap);
+};
+
+/*
+ * Reduces edges with the same source and target and by the same owner into
+ * a single edge, whose frequency is the count of the input edges
+ */
+export const condenseEdges = edges => {
+  const edgeMap = edges.reduce((acc, { source, target, owner }) => {
+    if (acc[`${source}-${target}-${owner}`]) {
+      const existingNode = acc[`${source}-${target}-${owner}`];
+      return {
+        ...acc,
+        [`${source}-${target}-${owner}`]: {
+          source,
+          target,
+          owner,
+          frequency: existingNode.frequency + 1
+        }
+      };
+    }
+
+    return {
+      ...acc,
+      [`${source}-${target}-${owner}`]: { source, target, owner, frequency: 1 }
+    };
+  }, {});
+
+  return Object.values(edgeMap);
+};
