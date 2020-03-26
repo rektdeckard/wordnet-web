@@ -2,11 +2,14 @@ import { useMemo } from "react";
 import { STARTING_WORDS, GRAPH_COLORS } from "../data/constants";
 
 export const mapNodes = graph =>
-  graph?.nodes?.map(({ value, depth, radius, color }) => ({
-    id: value,
-    depth,
-    radius,
-    color
+  graph?.nodes?.map(node => ({
+    id: node.value,
+    depth: node.depth,
+    radius: node.radius,
+    color: node.color,
+    sources: node.sources?.items,
+    createdAt: node.createdAt,
+    owner: node.owner
   })) ?? [];
 
 export const mapEdges = graph =>
@@ -15,21 +18,36 @@ export const mapEdges = graph =>
     source: edge.source.value,
     target: edge.target.value,
     distance: edge.distance,
-    createdAt: edge.createdAt
+    createdAt: edge.createdAt,
+    owner: edge.owner
   })) ??
   graph?.links ??
   [];
 
+export const mapResponses = graph =>
+  graph?.responses?.map(
+    response =>
+      ({
+        source: response.source.value,
+        target: response.value,
+        responseTime: response.responseTime,
+        createdAt: response.createdAt,
+        owner: response.owner
+      } ?? [])
+  ) ?? [];
+
 export const mapGraph = graph => {
   const nodes = mapNodes(graph);
   const links = mapEdges(graph);
+  const responses = mapResponses(graph);
 
   return {
     nodes,
     links,
-    responses: graph.responses ?? [],
-    session: graph.session,
-    currentNode: graph.currentNode
+    responses,
+    createdAt: graph?.createdAt,
+    session: graph?.session,
+    currentNode: graph?.currentNode
   };
 };
 
