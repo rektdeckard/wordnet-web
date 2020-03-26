@@ -104,7 +104,7 @@ const Play = ({ session, initializeSession, resumeLastSession, history }) => {
         ]
       }
     ];
-  }, [loading, resuming, initializeSession, resumeLastSession]);
+  }, [loading, resuming, initializeSession, resumeLastSession, history]);
 
   return (
     <Switch>
