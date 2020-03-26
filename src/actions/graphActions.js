@@ -86,6 +86,7 @@ export const submitResponse = response => async (dispatch, getState) => {
   });
 
   dispatch(selectRandomNode());
+  return true;
 };
 
 export const selectRandomNode = () => (dispatch, getState) => {
@@ -122,6 +123,7 @@ export const initializeSession = () => async dispatch => {
       currentNode
     }
   });
+  return true;
 };
 
 // FIXME: 'limit' does not work when the last row in table was by another user!!
@@ -205,6 +207,7 @@ export const submitSession = () => (dispatch, getState) => {
   }
 
   dispatch({ type: SUBMIT_GRAPH_SESSION });
+  return true;
 };
 
 const deleteWordNet = id => async () => {

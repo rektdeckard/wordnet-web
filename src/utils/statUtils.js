@@ -20,3 +20,12 @@ export const useWeekOverWeek = sessions =>
 
     return (currentWeekSessions.length / previousWeekSessions.length - 1) * 100;
   }, [sessions]);
+
+export const useDensity = graph => useMemo(() => {
+  const e = graph?.edges?.length;
+  const v = graph?.nodes?.length;
+
+  const density = e && v ? e/(v * (v - 1)) : null;
+
+  return { density };
+}, [graph]);
