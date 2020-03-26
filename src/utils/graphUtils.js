@@ -7,7 +7,7 @@ export const mapNodes = graph =>
     depth: node.depth,
     radius: node.radius,
     color: node.color,
-    degree: (node.sources.items.length ?? 0) + (node.targets.items.length ?? 0),
+    degree: (node.sources?.items?.length ?? 0) + (node.targets?.items?.length ?? 0),
     createdAt: node.createdAt,
     owner: node.owner
   })) ?? [];
