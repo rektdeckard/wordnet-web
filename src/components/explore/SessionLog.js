@@ -10,10 +10,12 @@ import {
   Table,
   Tag,
   message,
+  Descriptions,
   Button
 } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
 import "./SessionLog.css";
+import Download from "./Download";
 
 const { Title, Paragraph, Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -84,7 +86,7 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         sorter: (a, b) => a.date - b.date,
         sortDirections: ["descend", "ascend"],
         defaultSortOrder: "descend",
-        render: (text, _record) => text.toTimeString(),
+        render: (text, _record) => text.toLocaleTimeString(),
         width: "50%"
       },
       {
@@ -179,7 +181,17 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
   return (
     <Layout>
       <Title level={2}>Sessions</Title>
-      <Paragraph type="secondary">Viewing: {renderFilterTags()}</Paragraph>
+      <Descriptions size="small">
+        <Descriptions.Item label="Filtering">
+          {renderFilterTags()}
+        </Descriptions.Item>
+        <Descriptions.Item label="Download Data">
+          <Download all element={<Button size="small">.xlsx</Button>} />
+          <Button size="small" disabled>.csv</Button>
+        </Descriptions.Item>
+      </Descriptions>
+      {/* <Paragraph type="secondary">Viewing: {renderFilterTags()}</Paragraph> */}
+      {/* <Paragraph type="secondary">Download Data: {<Download all element={<Button size="small">XLSX</Button>} />}</Paragraph> */}
       <Table
         id="session-log"
         columns={columns}

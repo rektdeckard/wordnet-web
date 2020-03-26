@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, Link, Redirect } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Layout,
@@ -24,6 +24,7 @@ import { useWeekOverWeek } from "../../utils";
 import Missing from "../Missing";
 import SessionLog from "./SessionLog";
 import Session from "./Session";
+import Download from "./Download";
 import { HEAT_MAP_COLORS } from "../../data/constants";
 
 const { Title, Paragraph, Text } = Typography;
@@ -196,6 +197,7 @@ const Explore = ({ history, sessionHistory, fetchHistory }) => {
       <Route path="/explore/sessions">
         <SessionLog initialDate={initialDate} setInitialDate={setInitialDate} />
       </Route>
+      <Route path="/explore/download" component={Download} />
       <Route render={Missing} />
     </Switch>
   );
