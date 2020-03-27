@@ -14,11 +14,7 @@ import {
 } from "antd";
 import { getTime, addMinutes } from "date-fns";
 
-import {
-  submitResponse,
-  selectRandomNode,
-  submitSession
-} from "../../actions";
+import { submitResponse, selectRandomNode, submitSession } from "../../actions";
 import { useGraph } from "../../utils";
 import GraphViewer from "../GraphViewer";
 import TimedProgress from "./TimedProgress";
