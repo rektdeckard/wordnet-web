@@ -76,7 +76,7 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         ),
         filterIcon: () => (
           <CalendarOutlined
-            style={{ color: startDate || endDate ? "#1890ff" : undefined }}
+            style={startDate || endDate ? { color: "#1890ff" } : null}
           />
         )
       },
@@ -186,8 +186,17 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
           {renderFilterTags()}
         </Descriptions.Item>
         <Descriptions.Item label="Download Data">
-          <Download all element={<Button size="small">.xlsx</Button>} />
-          <Button size="small" disabled>.csv</Button>
+          <Download
+            all
+            render={({ loading, onClick }) => (
+              <Button size="small" loading={loading} onClick={onClick}>
+                .xlsx
+              </Button>
+            )}
+          />
+          <Button size="small" disabled>
+            .csv
+          </Button>
         </Descriptions.Item>
       </Descriptions>
       {/* <Paragraph type="secondary">Viewing: {renderFilterTags()}</Paragraph> */}

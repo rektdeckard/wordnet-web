@@ -186,7 +186,7 @@ const Session = ({ graph, fetchSession }) => {
         align: "right",
         sorter: (a, b) => a.depth - b.depth,
         sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "descend",
+        defaultSortOrder: "descend"
       }
     ],
     [searchableColumn]
@@ -283,17 +283,20 @@ const Session = ({ graph, fetchSession }) => {
                 label="Density"
                 children={density?.toFixed(4) ?? "Unknown"}
               />
-              <Descriptions.Item
-                label="Diameter"
-                children={"Unknown"}
-              />
-              <Descriptions.Item
-                label="Other"
-                children={"Unknown"}
-              />
+              <Descriptions.Item label="Diameter" children={"Unknown"} />
+              <Descriptions.Item label="Other" children={"Unknown"} />
               <Descriptions.Item label="Download Data" span={3}>
-                <Download graph={{ nodes, links, responses, createdAt }} element={<Button size="small">.xlsx</Button>} />
-                <Button size="small" disabled>.csv</Button>
+                <Download
+                  graph={{ nodes, links, responses, createdAt }}
+                  render={({ loading, onClick }) => (
+                    <Button size="small" loading={loading} onClick={onClick}>
+                      .xlsx
+                    </Button>
+                  )}
+                />
+                <Button size="small" disabled>
+                  .csv
+                </Button>
               </Descriptions.Item>
             </Descriptions>
           )}
