@@ -44,7 +44,7 @@ const App = () => {
           <Route path="/settings" component={Settings} />
           <Route exact path="/" component={null} />
           {/* Can use path="*" to match also... perf? */}
-          <Route render={() => <Missing style={{ marginTop: 52 }} />} />
+          <Route render={Missing} />
         </Switch>
       </Content>
       <Footer style={{ textAlign: "center" }}>

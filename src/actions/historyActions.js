@@ -99,6 +99,7 @@ export const fetchSession = id => async dispatch => {
       /* GraphQL */ `
         query getSession($id: ID!, $limit: Int) {
           getWordNet(id: $id) {
+            createdAt
             nodes(limit: $limit) {
               items {
                 id
@@ -106,6 +107,16 @@ export const fetchSession = id => async dispatch => {
                 depth
                 radius
                 color
+                sources(limit: $limit) {
+                  items {
+                    id
+                  }
+                }
+                targets(limit: $limit) {
+                  items {
+                    id
+                  }
+                }
                 createdAt
                 owner
               }
@@ -122,6 +133,7 @@ export const fetchSession = id => async dispatch => {
                   value
                 }
                 distance
+                owner
               }
             }
             responses(limit: $limit) {
@@ -133,6 +145,7 @@ export const fetchSession = id => async dispatch => {
                 value
                 responseTime
                 createdAt
+                owner
               }
             }
           }
@@ -145,9 +158,90 @@ export const fetchSession = id => async dispatch => {
   dispatch({
     type: FETCH_SESSION,
     payload: {
-      nodes: res.data.getWordNet.nodes.items,
-      edges: res.data.getWordNet.edges.items,
-      responses: res.data.getWordNet.responses.items
+      nodes: res.data.getWordNet?.nodes?.items,
+      edges: res.data.getWordNet?.edges?.items,
+      responses: res.data.getWordNet?.responses?.items,
+      createdAt: res.data.getWordNet?.createdAt
     }
   });
 };
+
+// TODO: use nextToken to exhaustively fetch beyone 1000 entries
+export const fetchAllSessions = async () => {
+  const response = await API.graphql(
+    graphqlOperation(
+      /* GraphQL */ `
+        query fetchAllHistory($limit: Int!) {
+          listWordNets(limit: $limit) {
+            items {
+              createdAt
+              nodes(limit: $limit) {
+                items {
+                  id
+                  value
+                  depth
+                  radius
+                  color
+                  sources(limit: $limit) {
+                    items {
+                      id
+                    }
+                  }
+                  targets(limit: $limit) {
+                    items {
+                      id
+                    }
+                  }
+                  createdAt
+                  owner
+                }
+              }
+              edges(limit: $limit) {
+                items {
+                  id
+                  distance
+                  createdAt
+                  source {
+                    value
+                  }
+                  target {
+                    value
+                  }
+                  distance
+                  owner
+                }
+              }
+              responses(limit: $limit) {
+                items {
+                  id
+                  source {
+                    value
+                  }
+                  value
+                  responseTime
+                  createdAt
+                  owner
+                }
+              }
+            }
+          }
+        }
+      `,
+      { limit: 1000 }
+    )
+  );
+
+  const reducer = ({ nodes, edges, responses }, curr) => ({
+    nodes: [...nodes, ...curr.nodes.items],
+    edges: [...edges, ...curr.edges.items],
+    responses: [...responses, ...curr.responses.items]
+  });
+
+  const allResponses = response.data.listWordNets.items.reduce(reducer, {
+    nodes: [],
+    edges: [],
+    responses: []
+  });
+
+  return allResponses;
+}; 

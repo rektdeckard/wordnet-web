@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Layout, Tabs, Table, Input, Button } from "antd";
+import { Layout, Tabs, Descriptions, Table, Input, Button, Spin } from "antd";
 import { ClockCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 
 import GraphViewer from "../GraphViewer";
+import Download from "./Download";
 import { fetchSession } from "../../actions";
-import { useGraph, uniqueTokensFromEntry } from "../../utils";
+import { useGraph, uniqueTokensFromEntry, useDensity } from "../../utils";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -19,7 +20,9 @@ const Session = ({ graph, fetchSession }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchColumn, setSearchColumn] = useState("");
   const [hovered, setHovered] = useState({});
-  const { nodes, links, responses } = useGraph(graph);
+
+  const { nodes, links, responses, createdAt } = useGraph(graph);
+  const { density } = useDensity(graph);
 
   useEffect(() => {
     const load = async () => {
@@ -130,12 +133,12 @@ const Session = ({ graph, fetchSession }) => {
       },
       {
         title: "Response",
-        dataIndex: "response",
+        dataIndex: "target",
         width: "50%",
-        sorter: (a, b) => a.value.localeCompare(b.value),
+        sorter: (a, b) => a.target.localeCompare(b.target),
         sortDirections: ["descend", "ascend"],
         defaultSortOrder: "ascend",
-        ...searchableColumn("response")
+        ...searchableColumn("target")
       },
       {
         title: "Response Time",
@@ -145,13 +148,51 @@ const Session = ({ graph, fetchSession }) => {
         sortDirections: ["descend", "ascend"],
         defaultSortOrder: "descend",
         render: response => `${response} ms`
-        // render: (text, record) => formatDistance(new Date(record.createdAt), new Date(new Date(record.createdAt) + record.responseTime))
       }
     ],
     [searchableColumn]
   );
 
-  const wordColumns = useMemo(
+  const nodeColumns = useMemo(
+    () => [
+      {
+        title: <ClockCircleOutlined />,
+        dataIndex: "createdAt",
+        sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+        sortDirections: ["descend", "ascend"],
+        defaultSortOrder: "ascend",
+        render: createdAt => new Date(createdAt).toLocaleString()
+      },
+      {
+        title: "Word",
+        dataIndex: "id",
+        width: "50%",
+        sorter: (a, b) => a.id.localeCompare(b.id),
+        sortDirections: ["descend", "ascend"],
+        defaultSortOrder: "ascend",
+        ...searchableColumn("id")
+      },
+      {
+        title: "Degree",
+        dataIndex: "degree",
+        align: "right",
+        sorter: (a, b) => a.degree - b.degree,
+        sortDirections: ["descend", "ascend"],
+        defaultSortOrder: "descend"
+      },
+      {
+        title: "Depth",
+        dataIndex: "depth",
+        align: "right",
+        sorter: (a, b) => a.depth - b.depth,
+        sortDirections: ["descend", "ascend"],
+        defaultSortOrder: "descend"
+      }
+    ],
+    [searchableColumn]
+  );
+
+  const edgeColumns = useMemo(
     () => [
       {
         title: <ClockCircleOutlined />,
@@ -202,20 +243,71 @@ const Session = ({ graph, fetchSession }) => {
         </Content>
       </Layout>
       <Tabs
-        defaultActiveKey="1"
+        defaultActiveKey="overview"
         size="small"
         animated={false}
         style={{ marginTop: 8 }}
       >
-        <TabPane tab="Responses" key="1">
+        <TabPane tab="Overview" key="overview">
+          {loading ? (
+            <div
+              style={{
+                background: "#FAFAFA",
+                padding: 64,
+                textAlign: "center"
+              }}
+            >
+              <Spin />
+            </div>
+          ) : (
+            <Descriptions
+              title="Session Info"
+              size="small"
+              style={{ background: "#FAFAFA", padding: 16 }}
+            >
+              <Descriptions.Item label="Session ID" span={3}>
+                {id}
+              </Descriptions.Item>
+              <Descriptions.Item
+                label="Session Date"
+                span={3}
+                children={new Date(graph?.createdAt).toLocaleString()}
+              />
+              <Descriptions.Item label="Nodes" children={nodes.length} />
+              <Descriptions.Item label="Edges" children={links.length} />
+              <Descriptions.Item
+                label="Responses"
+                children={responses.length}
+              />
+              <Descriptions.Item
+                label="Density"
+                children={density?.toFixed(4) ?? "Unknown"}
+              />
+              <Descriptions.Item label="Diameter" children={"Unknown"} />
+              <Descriptions.Item label="Other" children={"Unknown"} />
+              <Descriptions.Item label="Download Data" span={3}>
+                <Download
+                  graph={{ nodes, links, responses, createdAt }}
+                  render={({ loading, onClick }) => (
+                    <Button size="small" loading={loading} onClick={onClick}>
+                      .xlsx
+                    </Button>
+                  )}
+                />
+                <Button size="small" disabled>
+                  .csv
+                </Button>
+              </Descriptions.Item>
+            </Descriptions>
+          )}
+        </TabPane>
+        <TabPane tab="Responses" key="responses">
           <Table
             // style={{ marginTop: 16 }}
             columns={responseColumns}
             dataSource={responses.map(response => ({
               ...response,
-              source: response.source.value,
-              response: response.value,
-              key: response.id
+              key: response.createdAt
             }))}
             size="small"
             scroll={{ y: "26vh" }}
@@ -229,7 +321,7 @@ const Session = ({ graph, fetchSession }) => {
                 onMouseEnter: () => {
                   setHovered({
                     source: record.source,
-                    targets: uniqueTokensFromEntry(record.response),
+                    targets: uniqueTokensFromEntry(record.target ?? ""),
                     showConnections: true
                   });
                 }, // mouse enter row
@@ -240,10 +332,40 @@ const Session = ({ graph, fetchSession }) => {
             }}
           />
         </TabPane>
-        <TabPane tab="Words" key="2">
+        <TabPane tab="Nodes" key="nodes">
           <Table
             // style={{ marginTop: 16 }}
-            columns={wordColumns}
+            columns={nodeColumns}
+            dataSource={nodes.map(node => ({
+              ...node,
+              key: node.id
+            }))}
+            size="small"
+            scroll={{ y: "26vh" }}
+            pagination={false}
+            loading={loading}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: () => {}, // click row
+                onDoubleClick: () => {}, // double click row
+                onContextMenu: () => {}, // right button click row
+                onMouseEnter: () => {
+                  setHovered({
+                    source: record.id,
+                    showConnections: true
+                  });
+                }, // mouse enter row
+                onMouseLeave: () => {
+                  setHovered({});
+                } // mouse leave row
+              };
+            }}
+          />
+        </TabPane>
+        <TabPane tab="Edges" key="edges">
+          <Table
+            // style={{ marginTop: 16 }}
+            columns={edgeColumns}
             dataSource={links.map(link => ({ ...link, key: link.id }))}
             size="small"
             scroll={{ y: "26vh" }}

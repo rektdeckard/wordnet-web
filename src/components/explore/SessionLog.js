@@ -10,10 +10,12 @@ import {
   Table,
   Tag,
   message,
+  Descriptions,
   Button
 } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
 import "./SessionLog.css";
+import Download from "./Download";
 
 const { Title, Paragraph, Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -37,7 +39,7 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
   // TODO: use to generate composite WordNets from multiple sessions
   const [selectedSessionKeys, setSelectedSessionKeys] = useState([]);
 
-  const handleDateClear = (e) => {
+  const handleDateClear = e => {
     e.preventDefault();
     setStartDate(null);
     setEndDate(null);
@@ -62,12 +64,19 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         width: "25%",
         filterDropdown: () => (
           <div style={{ padding: 8 }}>
-            <RangePicker value={[ startDate && moment(startDate), endDate && moment(endDate)]} onChange={handleDateSelect} allowClear={true} />
+            <RangePicker
+              value={[
+                startDate && moment(startDate),
+                endDate && moment(endDate)
+              ]}
+              onChange={handleDateSelect}
+              allowClear={true}
+            />
           </div>
         ),
         filterIcon: () => (
           <CalendarOutlined
-            style={{ color: startDate || endDate ? "#1890ff" : undefined }}
+            style={startDate || endDate ? { color: "#1890ff" } : null}
           />
         )
       },
@@ -77,7 +86,7 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         sorter: (a, b) => a.date - b.date,
         sortDirections: ["descend", "ascend"],
         defaultSortOrder: "descend",
-        render: (text, _record) => text.toTimeString(),
+        render: (text, _record) => text.toLocaleTimeString(),
         width: "50%"
       },
       {
@@ -165,42 +174,59 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
           style={{ margin: 16 }}
         >{`${startDate}${endDate ? " to " + endDate : null}`}</Tag>
       );
-      }
+    }
     return <Tag style={{ margin: 16 }}>All</Tag>;
   };
 
   return (
     <Layout>
-      <Typography>
-        <Title level={2}>Sessions</Title>
-        <Paragraph type="secondary">Viewing: {renderFilterTags()}</Paragraph>
-        <Table
-          id="session-log"
-          columns={columns}
-          dataSource={sessions}
-          pagination={false}
-          loading={loading}
-          rowSelection={{
-            type: "checkbox",
-            onChange: (selectedRowKeys, selectedRows) => {
-              console.log(
-                `selectedRowKeys: ${selectedRowKeys}`,
-                "selectedRows: ",
-                selectedRows
-              );
-              setSelectedSessionKeys(selectedRowKeys);
-            }
-            // getCheckboxProps: record => ({
-            //   disabled: record.words <= 0 // Column configuration not to be checked
-            // })
-          }}
-          onRow={(record, _index) => {
-            return {
-              onClick: () => history.push(`/explore/sessions/${record.id}`)
-            };
-          }}
-        />
-      </Typography>
+      <Title level={2}>Sessions</Title>
+      <Descriptions size="small">
+        <Descriptions.Item label="Filtering">
+          {renderFilterTags()}
+        </Descriptions.Item>
+        <Descriptions.Item label="Download Data">
+          <Download
+            all
+            render={({ loading, onClick }) => (
+              <Button size="small" loading={loading} onClick={onClick}>
+                .xlsx
+              </Button>
+            )}
+          />
+          <Button size="small" disabled>
+            .csv
+          </Button>
+        </Descriptions.Item>
+      </Descriptions>
+      {/* <Paragraph type="secondary">Viewing: {renderFilterTags()}</Paragraph> */}
+      {/* <Paragraph type="secondary">Download Data: {<Download all element={<Button size="small">XLSX</Button>} />}</Paragraph> */}
+      <Table
+        id="session-log"
+        columns={columns}
+        dataSource={sessions}
+        pagination={false}
+        loading={loading}
+        rowSelection={{
+          type: "checkbox",
+          onChange: (selectedRowKeys, selectedRows) => {
+            console.log(
+              `selectedRowKeys: ${selectedRowKeys}`,
+              "selectedRows: ",
+              selectedRows
+            );
+            setSelectedSessionKeys(selectedRowKeys);
+          }
+          // getCheckboxProps: record => ({
+          //   disabled: record.words <= 0 // Column configuration not to be checked
+          // })
+        }}
+        onRow={(record, _index) => {
+          return {
+            onClick: () => history.push(`/explore/sessions/${record.id}`)
+          };
+        }}
+      />
     </Layout>
   );
 };

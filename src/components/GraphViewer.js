@@ -5,13 +5,13 @@ import { Network } from "@nivo/network";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const defaultOptions = {
-  defaultScale: 1,
-  doubleClick: { mode: "zoomOut" },
+  defaultScale: 0.5,
+  doubleClick: { mode: "reset" },
   pan: { velocity: false },
   wheel: { step: 20 },
-  defaultPositionY: -260,
   options: {
-    minPositionY: -260,
+    minScale: 0.1,
+    maxScale: 4,
     limitToBounds: false
   }
 };
@@ -24,7 +24,8 @@ const GraphViewer = ({
   wrapperOptions = {},
   componentStyle
 }) => {
-  const [ref, { width }] = useMeasure();
+  const [ref, { height, width }] = useMeasure();
+
   return (
     <TransformWrapper {...defaultOptions} {...wrapperOptions}>
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
@@ -36,21 +37,28 @@ const GraphViewer = ({
                 componentStyle ?? {
                   height: "50vh",
                   width: window.innerWidth - 116,
-                  cursor: "move",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "move"
                 }
               }
               ref={ref}
             >
               <Network
-                height={1000}
-                width={width}
+                height={height * 2}
+                width={width * 2}
                 nodes={graph.nodes}
                 links={graph.links}
                 repulsivity={settings.repulsivity}
                 distanceMin={settings.distanceMin}
                 distanceMax={settings.distanceMax}
                 iterations={settings.iterations}
-                nodeColor={n => (n.id === hovered.source || hovered.targets?.includes(n.id)) ? "black" : n.color}
+                nodeColor={n =>
+                  n.id === hovered.source || hovered.targets?.includes(n.id)
+                    ? "black"
+                    : n.color
+                }
                 nodeBorderWidth={settings.borderWidth}
                 // nodeBorderColor={
                 //   hovered.showConnections
@@ -65,7 +73,8 @@ const GraphViewer = ({
                   modifiers: [["darker", 0.8]]
                 }}
                 linkColor={l =>
-                  (l.source.id === hovered.source && hovered.targets?.includes(l.target.id))
+                  l.source.id === hovered.source &&
+                  hovered.targets?.includes(l.target.id)
                     ? "black"
                     : l.source.color
                 }

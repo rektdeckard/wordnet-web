@@ -35,11 +35,6 @@ const Navigation = ({ location }) => {
       <Menu.SubMenu
         selectedKeys={[location.pathname.split("/").pop()]}
         style={{ float: "right" }}
-        // title={
-        //   <span>
-        //     <SettingFilled style={{ fontSize: 16 }} />
-        //   </span>
-        // }
         title="Settings"
       >
         {settingsMenuItems.map(({ key, value, to, ...restProps }) => (
