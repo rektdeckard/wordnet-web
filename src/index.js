@@ -2,12 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { HashRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import Amplify from 'aws-amplify';
-import awsconfig from './aws-exports';
-import { withAuthenticator, AmplifyTheme } from 'aws-amplify-react';
+import Amplify from "aws-amplify";
+import awsconfig from "./aws-exports";
+import { withAuthenticator, AmplifyTheme } from "aws-amplify-react";
 
 import App from "./components/App";
 import store from "./reducers";
+import ScrollToTop from "./components/ScrollToTop";
 
 Amplify.configure(awsconfig);
 
@@ -15,46 +16,54 @@ const signUpConfig = {
   header: "Create a new WordNet account",
   signUpFields: [
     {
-      label: 'Name',
-      key: 'name',
+      label: "Name",
+      key: "name",
       required: true,
       displayOrder: 1,
-      type: 'string'
+      type: "string"
     },
     {
-      label: 'Email',
-      key: 'email',
+      label: "Email",
+      key: "email",
       required: true,
       displayOrder: 2,
-      type: 'string'
+      type: "string"
     },
     {
-      label: 'Password',
-      key: 'password',
+      label: "Password",
+      key: "password",
       required: true,
       displayOrder: 3,
-      type: 'password'
+      type: "password"
     },
     {
-      label: 'Phone Number',
-      key: 'phone_number',
+      label: "Phone Number",
+      key: "phone_number",
       required: true,
       displayOrder: 4,
-      type: 'string'
+      type: "string"
     }
   ]
 };
 
 const theme = {
   ...AmplifyTheme
-}
+};
 
-const AppWithAuthentication = withAuthenticator(App, { signUpConfig }, [], null, theme);
+const AppWithAuthentication = withAuthenticator(
+  App,
+  { signUpConfig },
+  [],
+  null,
+  theme
+);
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <AppWithAuthentication />
+      <ScrollToTop>
+        <AppWithAuthentication />
+      </ScrollToTop>
     </Router>
   </Provider>,
   document.getElementById("root")
