@@ -61,7 +61,7 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         sortDirections: ["descend", "ascend"],
         defaultSortOrder: "descend",
         render: (text, _record) => text.toDateString(),
-        width: "25%",
+        // width: "25%",
         filterDropdown: () => (
           <div style={{ padding: 8 }}>
             <RangePicker
@@ -83,19 +83,32 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
       {
         title: "Session Time",
         dataIndex: "date",
+        // sorter: (a, b) => (a.date.getHours() * 60 + a.date.getMinutes()) - (b.date.getHours() * 60 - b.date.getMinutes()),
         sorter: (a, b) => a.date - b.date,
         sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "descend",
         render: (text, _record) => text.toLocaleTimeString(),
-        width: "50%"
+        // width: "50%"
+      },
+      {
+        title: "Starting Word",
+        dataIndex: "startingWord",
+        sorter: (a, b) => a.startingWord.localeCompare(b.startingWord),
+        sortDirections: ["ascend", "descend"],
+        width: "40%"
+      },
+      {
+        title: "Responses",
+        dataIndex: "responses",
+        sorter: (a, b) => a.responses - b.responses,
+        sortDirections: ["descend", "ascend"],
+        align: "right"
       },
       {
         title: "Words",
         dataIndex: "words",
         sorter: (a, b) => a.words - b.words,
         sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "descend",
-        width: "25%"
+        align: "right"
       }
     ];
   }, [startDate, endDate, setInitialDate]);
@@ -117,6 +130,12 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
                     nodes(limit: $limit) {
                       items {
                         value
+                        depth
+                      }
+                    }
+                    responses(limit: $limit) {
+                      items {
+                        id
                       }
                     }
                     createdAt
@@ -145,16 +164,17 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         );
 
         const data = res.data.listWordNets.items.map(
-          ({ id, createdAt, nodes }) => {
+          ({ id, createdAt, nodes, responses }) => {
             return {
               id,
               date: new Date(createdAt),
               words: nodes.items.length,
+              startingWord: nodes.items.filter(n => n.depth === 1)[0].value,
+              responses: responses.items.length,
               key: id
             };
           }
         );
-        // .filter(session => session.words > 1);
         setSessions(data);
       } catch (e) {
         message.error("Error fetching records");
