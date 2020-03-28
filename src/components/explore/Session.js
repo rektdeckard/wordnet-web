@@ -119,7 +119,7 @@ const Session = ({ graph, fetchSession }) => {
         title: <ClockCircleOutlined />,
         dataIndex: "createdAt",
         sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-        sortDirections: ["descend", "ascend"],
+        sortDirections: ["ascend", "descend"],
         defaultSortOrder: "ascend",
         render: response => new Date(response).toLocaleString()
       },
@@ -127,8 +127,7 @@ const Session = ({ graph, fetchSession }) => {
         title: "Prompt Word",
         dataIndex: "source",
         sorter: (a, b) => a.source.localeCompare(b.source),
-        sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "ascend",
+        sortDirections: ["ascend", "descend"],
         ...searchableColumn("source")
       },
       {
@@ -136,8 +135,7 @@ const Session = ({ graph, fetchSession }) => {
         dataIndex: "target",
         width: "50%",
         sorter: (a, b) => a.target.localeCompare(b.target),
-        sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "ascend",
+        sortDirections: ["ascend", "descend"],
         ...searchableColumn("target")
       },
       {
@@ -146,7 +144,6 @@ const Session = ({ graph, fetchSession }) => {
         align: "right",
         sorter: (a, b) => a.responseTime - b.responseTime,
         sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "descend",
         render: response => `${response} ms`
       }
     ],
@@ -159,7 +156,7 @@ const Session = ({ graph, fetchSession }) => {
         title: <ClockCircleOutlined />,
         dataIndex: "createdAt",
         sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-        sortDirections: ["descend", "ascend"],
+        sortDirections: ["ascend", "descend"],
         defaultSortOrder: "ascend",
         render: createdAt => new Date(createdAt).toLocaleString()
       },
@@ -168,8 +165,7 @@ const Session = ({ graph, fetchSession }) => {
         dataIndex: "id",
         width: "50%",
         sorter: (a, b) => a.id.localeCompare(b.id),
-        sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "ascend",
+        sortDirections: ["ascend", "descend"],
         ...searchableColumn("id")
       },
       {
@@ -178,7 +174,6 @@ const Session = ({ graph, fetchSession }) => {
         align: "right",
         sorter: (a, b) => a.degree - b.degree,
         sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "descend"
       },
       {
         title: "Depth",
@@ -186,7 +181,6 @@ const Session = ({ graph, fetchSession }) => {
         align: "right",
         sorter: (a, b) => a.depth - b.depth,
         sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "descend"
       }
     ],
     [searchableColumn]
@@ -198,7 +192,7 @@ const Session = ({ graph, fetchSession }) => {
         title: <ClockCircleOutlined />,
         dataIndex: "createdAt",
         sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-        sortDirections: ["descend", "ascend"],
+        sortDirections: ["ascend", "descend"],
         defaultSortOrder: "ascend",
         render: response => new Date(response).toLocaleString()
       },
@@ -206,8 +200,7 @@ const Session = ({ graph, fetchSession }) => {
         title: "Prompt Word",
         dataIndex: "source",
         sorter: (a, b) => a.source.localeCompare(b.source),
-        sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "ascend",
+        sortDirections: ["ascend", "descend"],
         ...searchableColumn("source")
       },
       {
@@ -215,8 +208,7 @@ const Session = ({ graph, fetchSession }) => {
         dataIndex: "target",
         width: "50%",
         sorter: (a, b) => a.target.localeCompare(b.target),
-        sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "ascend",
+        sortDirections: ["ascend", "descend"],
         ...searchableColumn("target")
       },
       {
@@ -225,7 +217,6 @@ const Session = ({ graph, fetchSession }) => {
         align: "right",
         sorter: (a, b) => a.distance - b.distance,
         sortDirections: ["descend", "ascend"],
-        defaultSortOrder: "ascend"
       }
     ],
     [searchableColumn]
@@ -272,6 +263,11 @@ const Session = ({ graph, fetchSession }) => {
                 label="Session Date"
                 span={3}
                 children={new Date(graph?.createdAt).toLocaleString()}
+              />
+              <Descriptions.Item
+                label="Starting Word"
+                span={3}
+                children={nodes.filter(n => n.depth === 1)?.[0]?.id}
               />
               <Descriptions.Item label="Nodes" children={nodes.length} />
               <Descriptions.Item label="Edges" children={links.length} />
