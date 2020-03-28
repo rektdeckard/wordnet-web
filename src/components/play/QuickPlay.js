@@ -12,7 +12,6 @@ import {
   message,
   Progress
 } from "antd";
-import { getTime, addMinutes } from "date-fns";
 
 import { submitResponse, selectRandomNode, submitSession } from "../../actions";
 import { useGraph } from "../../utils";
@@ -32,20 +31,9 @@ const QuickPlay = ({
   const { nodes, links, session, currentNode } = useGraph(graph);
   const [entry, setEntry] = useState("");
   const [loading, setLoading] = useState(false);
-  const [timerOptions, setTimerOptions] = useState(null);
 
-  useEffect(() => {
-    if (session) {
-      setTimerOptions({
-        expiryTimestamp: getTime(addMinutes(new Date(), 5)),
-        onExpire: () => {
-          message.success("Five minutes is up!");
-          // await handleFinish();
-        }
-      });
-    }
-    return () => setTimerOptions({ expiryTimestamp: null });
-  }, [session]);
+  // TODO: should we use a dialog to ask to continue or add time?
+  const handleExpire = () => message.success("Five minutes is up!");
 
   const handleChange = e => {
     const { value } = e.target;
@@ -97,7 +85,7 @@ const QuickPlay = ({
         word associations. Try to remain consistent with the style of your
         response!
       </Paragraph>
-      <TimedProgress timerOptions={timerOptions} />
+      <TimedProgress time={{ minutes: 5 }} onExpire={handleExpire} />
       {/* <Progress percent={nodes.length * 2} /> */}
       <Content style={{ padding: "0px 0px", background: "#fff" }}>
         <GraphViewer
