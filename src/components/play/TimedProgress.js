@@ -1,16 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useMemo } from "react";
 import { Progress } from "antd";
 import { useTimer } from "react-timer-hook";
+import { getTime, add } from "date-fns";
 
-const TimedProgress = ({ timerOptions  }) => {
-  const { seconds, minutes, start, pause, restart } = useTimer(timerOptions);
+const TimedProgress = ({ time = { hours: 0, minutes: 5, seconds: 0 }, onExpire }) => {
+  const { hours: totalHours, minutes: totalMinutes, seconds: totalSeconds } = time;
+  const { currentTimestamp, expiryTimestamp } = useMemo(() => {
+    return {
+      currentTimestamp: getTime(new Date()),
+      expiryTimestamp: getTime(
+        add(new Date(), {
+          hours: totalHours ?? 0,
+          minutes: totalMinutes ?? 0,
+          seconds: totalSeconds ?? 0
+        })
+      )
+    };
+  }, [totalHours, totalMinutes, totalSeconds]);
 
-  useEffect(() => {
-    if (timerOptions) restart(timerOptions.expiryTimestamp);
-    return pause;
-  }, [timerOptions]);
+  const { seconds, minutes, hours, start, pause, restart } = useTimer({
+    expiryTimestamp,
+    onExpire
+  });
 
-  return <Progress percent={100 - (minutes * 60 + seconds) / 3} showInfo={false} />;
+  const calculatePercent = () =>
+    100 -
+    ((hours ?? 0) * 3600 +
+      ((minutes ?? 0) * 60 + (seconds ?? 0)) /
+        ((totalHours ?? 0) * 3600 +
+          (totalMinutes ?? 0) * 60 +
+          (totalSeconds ?? 0))) *
+      100;
+
+  return <Progress percent={calculatePercent()} showInfo={false} />;
 };
 
 export default TimedProgress;
