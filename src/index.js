@@ -61,9 +61,8 @@ const AppWithAuthentication = withAuthenticator(
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <ScrollToTop>
-        <AppWithAuthentication />
-      </ScrollToTop>
+      <ScrollToTop />
+      <AppWithAuthentication />
     </Router>
   </Provider>,
   document.getElementById("root")
