@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Layout,
@@ -32,9 +32,7 @@ const QuickPlay = ({
   const { nodes, links, session, currentNode } = useGraph(graph);
   const [entry, setEntry] = useState("");
   const [loading, setLoading] = useState(false);
-  const [timerOptions, setTimerOptions] = useState({
-    expiryTimestamp: 1999999999999
-  });
+  const [timerOptions, setTimerOptions] = useState(null);
 
   useEffect(() => {
     if (session) {
@@ -46,7 +44,7 @@ const QuickPlay = ({
         }
       });
     }
-    return () => setTimerOptions({ expiryTimestamp: 1999999999999 });
+    return () => setTimerOptions({ expiryTimestamp: null });
   }, [session]);
 
   const handleChange = e => {
@@ -77,17 +75,17 @@ const QuickPlay = ({
     try {
       const success = await submitSession();
       if (success) {
-        setLoading(false);
         message.success("Session saved");
         history.push(hasPlayed ? `/explore/sessions/${session}` : "/play");
       } else message.error("Session could not be saved");
     } catch (e) {
+      setLoading(false);
       message.error("Problem submitting session");
     }
   };
 
   if (!session || !graph) {
-    history.push("/play");
+    return <Redirect to="/play" />;
   }
 
   return (
