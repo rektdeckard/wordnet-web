@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Excel from "react-data-export";
 
 import { fetchAllSessions } from "../../actions";
@@ -28,9 +28,9 @@ const Download = ({ graph, render, all }) => {
     }
   };
 
-  const { nodes, links, responses, createdAt } = all
-    ? mapGraph(allRecords)
-    : graph;
+  const { nodes, links, responses, createdAt } = useMemo(() => {
+    return all ? mapGraph(allRecords) : graph;
+  }, [all, graph, allRecords]);
 
   const renderExcel = () => {
     if (!loading && loaded)
