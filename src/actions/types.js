@@ -8,3 +8,4 @@ export const SUBMIT_GRAPH_SESSION = "submit_graph_session";
 
 export const FETCH_HISTORY = "fetch_history";
 export const FETCH_SESSION = "fetch_session";
+export const SET_INITIAL_DATE = "set_initial_date";

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
+import { connect } from 'react-redux';
 import { API, graphqlOperation } from "aws-amplify";
 import { parse, getUnixTime } from "date-fns";
 import moment from "moment";
@@ -14,8 +15,10 @@ import {
   Button
 } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
-import "./SessionLog.css";
+
+import { setInitialDate } from "../../actions";
 import Download from "./Download";
+import "./SessionLog.css";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -86,7 +89,7 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         // sorter: (a, b) => (a.date.getHours() * 60 + a.date.getMinutes()) - (b.date.getHours() * 60 - b.date.getMinutes()),
         sorter: (a, b) => a.date - b.date,
         sortDirections: ["descend", "ascend"],
-        render: (text, _record) => text.toLocaleTimeString(),
+        render: (text, _record) => text.toLocaleTimeString()
         // width: "50%"
       },
       {
@@ -251,4 +254,10 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
   );
 };
 
-export default SessionLog;
+const mapStateToProps = state => {
+  return {
+    initialDate: state.history.initialDate
+  };
+};
+
+export default connect(mapStateToProps, { setInitialDate })(SessionLog);

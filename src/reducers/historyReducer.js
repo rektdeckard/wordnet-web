@@ -1,9 +1,14 @@
-import { FETCH_HISTORY, FETCH_SESSION } from "../actions/types";
+import {
+  FETCH_HISTORY,
+  FETCH_SESSION,
+  SET_INITIAL_DATE
+} from "../actions/types";
 
 const INITIAL_STATE = {
   currentSession: {},
   sessions: [],
   sessionsByDay: [],
+  initialDate: null,
   rounds: 0,
   words: 0
 };
@@ -19,6 +24,11 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentSession: action.payload
+      };
+    case SET_INITIAL_DATE:
+      return {
+        ...state,
+        initialDate: action.payload
       };
     default:
       return state;

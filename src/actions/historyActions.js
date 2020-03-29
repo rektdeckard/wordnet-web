@@ -1,6 +1,6 @@
 import { API, graphqlOperation } from "aws-amplify";
 
-import { FETCH_HISTORY, FETCH_SESSION } from "./types";
+import { FETCH_HISTORY, FETCH_SESSION, SET_INITIAL_DATE } from "./types";
 
 export const fetchHistory = fromDate => async dispatch => {
   const sessionData = await API.graphql(
@@ -91,6 +91,13 @@ export const fetchHistory = fromDate => async dispatch => {
       words: nodeCount.data.countNodes
     }
   });
+};
+
+export const setInitialDate = day => {
+  return {
+    type: SET_INITIAL_DATE,
+    payload: day
+  };
 };
 
 export const fetchSession = id => async dispatch => {
@@ -244,4 +251,4 @@ export const fetchAllSessions = async () => {
   });
 
   return allResponses;
-}; 
+};
