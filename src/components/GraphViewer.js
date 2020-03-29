@@ -31,64 +31,65 @@ const GraphViewer = ({
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
         <>
           {header}
-          <TransformComponent>
-            <div
-              style={
-                componentStyle ?? {
-                  height: "50vh",
-                  width: window.innerWidth - 116,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "move"
+          <div style={{ cursor: "move" }}>
+            <TransformComponent>
+              <div
+                style={
+                  componentStyle ?? {
+                    height: "50vh",
+                    width: window.innerWidth - 116,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }
                 }
-              }
-              ref={ref}
-            >
-              <Network
-                height={height * 2}
-                width={width * 2}
-                nodes={graph.nodes}
-                links={graph.links}
-                repulsivity={settings.repulsivity}
-                distanceMin={settings.distanceMin}
-                distanceMax={settings.distanceMax}
-                iterations={settings.iterations}
-                nodeColor={n =>
-                  n.id === hovered.source || hovered.targets?.includes(n.id)
-                    ? "black"
-                    : n.color
-                }
-                nodeBorderWidth={settings.borderWidth}
-                // nodeBorderColor={
-                //   hovered.showConnections
-                //     ? n => (hovered.targets?.includes(n.id) ? "black" : "green")
-                //     : {
-                //         from: "color",
-                //         modifiers: [["darker", 0.8]]
-                //       }
-                // }
-                nodeBorderColor={{
-                  from: "color",
-                  modifiers: [["darker", 0.8]]
-                }}
-                linkColor={l =>
-                  l.source.id === hovered.source &&
-                  hovered.targets?.includes(l.target.id)
-                    ? "black"
-                    : l.source.color
-                }
-                // linkThickness={settings.linkThickness}
-                linkThickness={l =>
-                  l.source.id === hovered ? 5 : settings.linkThickness
-                }
-                motionStiffness={settings.motionStiffness}
-                motionDamping={settings.motionDamping}
-                animate={settings.animate}
-                isInteractive={true}
-              />
-            </div>
-          </TransformComponent>
+                ref={ref}
+              >
+                <Network
+                  height={height * 2}
+                  width={width * 2}
+                  nodes={graph.nodes}
+                  links={graph.links}
+                  repulsivity={settings.repulsivity}
+                  distanceMin={settings.distanceMin}
+                  distanceMax={settings.distanceMax}
+                  iterations={settings.iterations}
+                  nodeColor={n =>
+                    n.id === hovered.source || hovered.targets?.includes(n.id)
+                      ? "black"
+                      : n.color
+                  }
+                  nodeBorderWidth={settings.borderWidth}
+                  // nodeBorderColor={
+                  //   hovered.showConnections
+                  //     ? n => (hovered.targets?.includes(n.id) ? "black" : "green")
+                  //     : {
+                  //         from: "color",
+                  //         modifiers: [["darker", 0.8]]
+                  //       }
+                  // }
+                  nodeBorderColor={{
+                    from: "color",
+                    modifiers: [["darker", 0.8]]
+                  }}
+                  linkColor={l =>
+                    l.source.id === hovered.source &&
+                    hovered.targets?.includes(l.target.id)
+                      ? "black"
+                      : l.source.color
+                  }
+                  // linkThickness={settings.linkThickness}
+                  linkThickness={l =>
+                    l.source.id === hovered ? 5 : settings.linkThickness
+                  }
+                  motionStiffness={settings.motionStiffness}
+                  motionDamping={settings.motionDamping}
+                  animate={settings.animate}
+                  isInteractive={true}
+                />
+              </div>
+            </TransformComponent>
+          </div>
         </>
       )}
     </TransformWrapper>
