@@ -7,7 +7,7 @@ const TimedProgress = ({ time = { hours: 0, minutes: 5, seconds: 0 }, onExpire }
   const { hours: totalHours, minutes: totalMinutes, seconds: totalSeconds } = time;
   const { currentTimestamp, expiryTimestamp } = useMemo(() => {
     return {
-      currentTimestamp: getTime(new Date()),
+      currentTimestamp: Date.now(),
       expiryTimestamp: getTime(
         add(new Date(), {
           hours: totalHours ?? 0,

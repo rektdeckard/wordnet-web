@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -9,8 +9,7 @@ import {
   Button,
   Typography,
   Spin,
-  message,
-  Progress
+  message
 } from "antd";
 
 import { submitResponse, selectRandomNode, submitSession } from "../../actions";

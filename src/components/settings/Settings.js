@@ -25,8 +25,6 @@ import GraphViewer from "../GraphViewer.js";
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
-// const nivo = ['#e8c1a0', '#f47560', '#f1e15b', '#e8a838', '#61cdbb', '#97e3d5'];
-
 const Settings = props => {
   const {
     repulsivity,

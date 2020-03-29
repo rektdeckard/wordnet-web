@@ -17,7 +17,7 @@ import { CalendarOutlined } from "@ant-design/icons";
 import "./SessionLog.css";
 import Download from "./Download";
 
-const { Title, Paragraph, Text } = Typography;
+const { Title } = Typography;
 const { RangePicker } = DatePicker;
 
 const SessionLog = ({ initialDate, setInitialDate }) => {

@@ -14,9 +14,9 @@ import {
 } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 
-const { Text, Paragraph, Title } = Typography;
+const { Paragraph } = Typography;
 
-const Account = (props) => {
+const Account = props => {
   const user = props.authData.attributes;
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);

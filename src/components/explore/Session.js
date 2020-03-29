@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useMemo, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { Layout, Tabs, Descriptions, Table, Input, Button, Spin } from "antd";
 import { ClockCircleOutlined, SearchOutlined } from "@ant-design/icons";

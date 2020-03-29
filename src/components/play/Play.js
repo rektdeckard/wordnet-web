@@ -19,7 +19,7 @@ import Missing from "../Missing";
 import { initializeSession, resumeLastSession } from "../../actions";
 
 const { Meta } = Card;
-const { Title, Paragraph, Text } = Typography;
+const { Title } = Typography;
 
 const Play = ({ session, initializeSession, resumeLastSession, history }) => {
   const [loading, setLoading] = useState(false);
