@@ -29,8 +29,9 @@ const GraphViewer = ({
   return (
     <TransformWrapper {...defaultOptions} {...wrapperOptions}>
       {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-        <>
+          <>
           {header}
+        <div style={{ cursor: "move" }}>
           <TransformComponent>
             <div
               style={
@@ -39,8 +40,7 @@ const GraphViewer = ({
                   width: window.innerWidth - 116,
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "move"
+                  justifyContent: "center"
                 }
               }
               ref={ref}
@@ -89,7 +89,8 @@ const GraphViewer = ({
               />
             </div>
           </TransformComponent>
-        </>
+        </div>
+      </>
       )}
     </TransformWrapper>
   );
