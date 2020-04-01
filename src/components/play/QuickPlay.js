@@ -42,6 +42,11 @@ const QuickPlay = ({
   const handleSubmit = async () => {
     if (!entry || loading) return;
 
+    if (entry.trim().toLowerCase() === currentNode.value.toLowerCase()) {
+      message.warn("Can't define a word with itself!");
+      return;
+    }
+
     setLoading(true);
     const response = entry;
     setEntry("");
