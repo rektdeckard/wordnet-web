@@ -72,11 +72,27 @@ const GraphViewer = ({
                     from: "color",
                     modifiers: [["darker", 0.8]]
                   }}
-                  linkColor={l =>
-                    l.source.id === hovered.source &&
-                    hovered.targets?.includes(l.target.id)
-                      ? "black"
-                      : l.source.color
+                  linkColor={
+                    l => {
+                      if (hovered.isPath) {
+                        if (
+                          hovered.targets?.includes(l.source.id) &&
+                          hovered.targets?.includes(l.target.id)
+                        ) {
+                          return "black";
+                        } else return l.source.color;
+                      } else if (
+                        l.source.id === hovered.source &&
+                        hovered.targets?.includes(l.target.id)
+                      ) {
+                        return "black";
+                      }
+                      return l.source.color;
+                    }
+                    //  (hovered.isPath && (hovered.targets?.includes(l.source.id) || hovered.targets?.includes(l.target.id))) || (!hovered.isPath && l.source.id === hovered.source &&
+                    //   hovered.targets?.includes(l.target.id))
+                    //     ? "red"
+                    //     : l.source.color
                   }
                   // linkThickness={settings.linkThickness}
                   linkThickness={l =>
