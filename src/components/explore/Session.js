@@ -19,10 +19,9 @@ import GraphViewer from "../GraphViewer";
 import Download from "./Download";
 import { fetchSession } from "../../actions";
 import {
-  useGraph,
   uniqueTokensFromEntry,
   useDensity,
-  useTraversible
+  useTraversableGraph
 } from "../../utils";
 
 const { Content } = Layout;
@@ -38,9 +37,15 @@ const Session = ({ graph, fetchSession }) => {
   const [source, setSource] = useState();
   const [target, setTarget] = useState();
 
-  const { nodes, links, responses, createdAt } = useGraph(graph);
+  const {
+    nodes,
+    links,
+    responses,
+    createdAt,
+    bfs,
+    shortestPath
+  } = useTraversableGraph(graph);
   const { density } = useDensity(graph);
-  const { shortestPath } = useTraversible(graph.nodes);
   const path = useMemo(() => shortestPath(source, target) ?? [], [
     source,
     target
@@ -63,7 +68,7 @@ const Session = ({ graph, fetchSession }) => {
       showConnections: false,
       isPath: true
     });
-  }
+  };
 
   const handleTargetChanged = value => {
     setTarget(value);
@@ -150,7 +155,7 @@ const Session = ({ graph, fetchSession }) => {
         render: text =>
           searchColumn === dataIndex ? (
             <Highlighter
-              highlightStyle={{ backgroundColor: "#97E3D5", padding: 0 }}
+              highlightStyle={{ backgroundColor: "#FCFE15", padding: 0 }}
               searchWords={[searchTerm]}
               autoEscape
               textToHighlight={text.toString()}
@@ -219,7 +224,7 @@ const Session = ({ graph, fetchSession }) => {
         ...searchableColumn("id")
       },
       {
-        title: "Degree",
+        title: "Degree Centrality",
         dataIndex: "degree",
         align: "right",
         sorter: (a, b) => a.degree - b.degree,
@@ -351,29 +356,31 @@ const Session = ({ graph, fetchSession }) => {
           <Table
             // style={{ marginTop: 16 }}
             columns={responseColumns}
-            dataSource={responses.map(response => ({
-              ...response,
-              key: response.createdAt
-            }))}
+            dataSource={responses}
+            rowKey={response => response.createdAt}
             size="small"
-            scroll={{ y: "26vh" }}
+            scroll={{ y: "25vh" }}
             pagination={false}
             loading={loading}
-            onRow={(record, rowIndex) => {
+            rowSelection={{
+              selectedRowKeys: [hovered.key],
+              columnWidth: 0,
+              renderCell: () => null
+            }}
+            onRow={record => {
               return {
-                onClick: () => {}, // click row
-                onDoubleClick: () => {}, // double click row
-                onContextMenu: () => {}, // right button click row
-                onMouseEnter: () => {
+                onClick: () => {
                   setHovered({
                     source: record.source,
                     targets: uniqueTokensFromEntry(record.target ?? ""),
-                    showConnections: true
+                    showConnections: true,
+                    key: record.createdAt
                   });
-                }, // mouse enter row
-                onMouseLeave: () => {
-                  setHovered({});
-                } // mouse leave row
+                } // click row
+                // onDoubleClick: () => {}, // double click row
+                // onContextMenu: () => {}, // right button click row
+                // onMouseEnter: () => {}, // mouse enter row
+                // onMouseLeave: () => {} // mouse leave row
               };
             }}
           />
@@ -382,28 +389,30 @@ const Session = ({ graph, fetchSession }) => {
           <Table
             // style={{ marginTop: 16 }}
             columns={nodeColumns}
-            dataSource={nodes.map(node => ({
-              ...node,
-              key: node.id
-            }))}
+            dataSource={nodes}
+            rowKey={node => node.id}
             size="small"
-            scroll={{ y: "26vh" }}
+            scroll={{ y: "25vh" }}
             pagination={false}
             loading={loading}
-            onRow={(record, rowIndex) => {
+            rowSelection={{
+              selectedRowKeys: [hovered.key],
+              columnWidth: 0,
+              renderCell: () => null
+            }}
+            onRow={record => {
               return {
-                onClick: () => {}, // click row
-                onDoubleClick: () => {}, // double click row
-                onContextMenu: () => {}, // right button click row
-                onMouseEnter: () => {
+                onClick: () => {
                   setHovered({
                     source: record.id,
-                    showConnections: true
+                    showConnections: true,
+                    key: record.id
                   });
-                }, // mouse enter row
-                onMouseLeave: () => {
-                  setHovered({});
-                } // mouse leave row
+                }, // click row
+                // onDoubleClick: () => {}, // double click row
+                // onContextMenu: () => {}, // right button click row
+                // onMouseEnter: () => {}, // mouse enter row
+                // onMouseLeave: () => {} // mouse leave row
               };
             }}
           />
@@ -412,33 +421,38 @@ const Session = ({ graph, fetchSession }) => {
           <Table
             // style={{ marginTop: 16 }}
             columns={edgeColumns}
-            dataSource={links.map(link => ({ ...link, key: link.id }))}
+            dataSource={links}
+            rowKey={link => link.id}
             size="small"
-            scroll={{ y: "26vh" }}
+            scroll={{ y: "25vh" }}
             pagination={false}
             loading={loading}
-            onRow={(record, rowIndex) => {
+            rowSelection={{
+              selectedRowKeys: [hovered.key],
+              columnWidth: 0,
+              renderCell: () => null
+            }}
+            onRow={record => {
               return {
-                onClick: () => {}, // click row
-                onDoubleClick: () => {}, // double click row
-                onContextMenu: () => {}, // right button click row
-                onMouseEnter: () => {
+                onClick: () => {
                   setHovered({
                     source: record.source,
                     targets: [record.target],
-                    showConnections: false
+                    showConnections: false,
+                    key: record.id
                   });
-                }, // mouse enter row
-                onMouseLeave: () => {
-                  setHovered({});
-                } // mouse leave row
+                }, // click row
+                // onDoubleClick: () => {}, // double click row
+                // onContextMenu: () => {}, // right button click row
+                // onMouseEnter: () => {}, // mouse enter row
+                // onMouseLeave: () => {} // mouse leave row
               };
             }}
           />
         </TabPane>
         <TabPane tab="Relationships" key="relationships">
           <div style={{ background: "#FAFAFA", padding: 16 }}>
-            <Descriptions title="Geodesic Distance" >
+            <Descriptions title="Geodesic Distance">
               <Descriptions.Item
                 label="Source Node"
                 span={1}
@@ -473,7 +487,11 @@ const Session = ({ graph, fetchSession }) => {
                   </Select>
                 }
               />
-              <Descriptions.Item label="Path" span={3} children={renderPath()} />
+              <Descriptions.Item
+                label="Path"
+                span={3}
+                children={renderPath()}
+              />
               <Descriptions.Item
                 label="Distance"
                 children={path.length ? path.length - 1 : 0}
