@@ -224,7 +224,7 @@ const Session = ({ graph, fetchSession }) => {
         ...searchableColumn("id")
       },
       {
-        title: "Degree Centrality",
+        title: "Degree",
         dataIndex: "degree",
         align: "right",
         sorter: (a, b) => a.degree - b.degree,
@@ -365,7 +365,7 @@ const Session = ({ graph, fetchSession }) => {
             rowSelection={{
               selectedRowKeys: [hovered.key],
               columnWidth: 0,
-              renderCell: () => null
+              renderCell: null
             }}
             onRow={record => {
               return {
@@ -376,18 +376,13 @@ const Session = ({ graph, fetchSession }) => {
                     showConnections: true,
                     key: record.createdAt
                   });
-                } // click row
-                // onDoubleClick: () => {}, // double click row
-                // onContextMenu: () => {}, // right button click row
-                // onMouseEnter: () => {}, // mouse enter row
-                // onMouseLeave: () => {} // mouse leave row
+                }
               };
             }}
           />
         </TabPane>
         <TabPane tab="Nodes" key="nodes">
           <Table
-            // style={{ marginTop: 16 }}
             columns={nodeColumns}
             dataSource={nodes}
             rowKey={node => node.id}
@@ -398,7 +393,7 @@ const Session = ({ graph, fetchSession }) => {
             rowSelection={{
               selectedRowKeys: [hovered.key],
               columnWidth: 0,
-              renderCell: () => null
+              renderCell: null
             }}
             onRow={record => {
               return {
@@ -408,18 +403,13 @@ const Session = ({ graph, fetchSession }) => {
                     showConnections: true,
                     key: record.id
                   });
-                }, // click row
-                // onDoubleClick: () => {}, // double click row
-                // onContextMenu: () => {}, // right button click row
-                // onMouseEnter: () => {}, // mouse enter row
-                // onMouseLeave: () => {} // mouse leave row
+                }
               };
             }}
           />
         </TabPane>
         <TabPane tab="Edges" key="edges">
           <Table
-            // style={{ marginTop: 16 }}
             columns={edgeColumns}
             dataSource={links}
             rowKey={link => link.id}
@@ -430,7 +420,7 @@ const Session = ({ graph, fetchSession }) => {
             rowSelection={{
               selectedRowKeys: [hovered.key],
               columnWidth: 0,
-              renderCell: () => null
+              renderCell: null
             }}
             onRow={record => {
               return {
@@ -441,11 +431,7 @@ const Session = ({ graph, fetchSession }) => {
                     showConnections: false,
                     key: record.id
                   });
-                }, // click row
-                // onDoubleClick: () => {}, // double click row
-                // onContextMenu: () => {}, // right button click row
-                // onMouseEnter: () => {}, // mouse enter row
-                // onMouseLeave: () => {} // mouse leave row
+                }
               };
             }}
           />
