@@ -1,14 +1,28 @@
 import React, { useEffect, useRef, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { Layout, Tabs, Descriptions, Table, Input, Button, Spin } from "antd";
+import {
+  Layout,
+  Tabs,
+  Descriptions,
+  Table,
+  Input,
+  Button,
+  Spin,
+  Select,
+  Tag
+} from "antd";
 import { ClockCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 
 import GraphViewer from "../GraphViewer";
 import Download from "./Download";
 import { fetchSession } from "../../actions";
-import { useGraph, uniqueTokensFromEntry, useDensity } from "../../utils";
+import {
+  uniqueTokensFromEntry,
+  useDensity,
+  useTraversableGraph
+} from "../../utils";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -20,9 +34,22 @@ const Session = ({ graph, fetchSession }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchColumn, setSearchColumn] = useState("");
   const [hovered, setHovered] = useState({});
+  const [source, setSource] = useState();
+  const [target, setTarget] = useState();
 
-  const { nodes, links, responses, createdAt } = useGraph(graph);
+  const {
+    nodes,
+    links,
+    responses,
+    createdAt,
+    bfs,
+    shortestPath
+  } = useTraversableGraph(graph);
   const { density } = useDensity(graph);
+  const path = useMemo(() => shortestPath(source, target) ?? [], [
+    source,
+    target
+  ]);
 
   useEffect(() => {
     const load = async () => {
@@ -32,6 +59,34 @@ const Session = ({ graph, fetchSession }) => {
     };
     if (id) load();
   }, [id, fetchSession]);
+
+  const handleSourceChanged = value => {
+    setSource(value);
+    setHovered({
+      source: value,
+      targets: shortestPath(value, target),
+      showConnections: false,
+      isPath: true
+    });
+  };
+
+  const handleTargetChanged = value => {
+    setTarget(value);
+    setHovered({
+      source: value,
+      targets: shortestPath(source, value),
+      showConnections: false,
+      isPath: true
+    });
+  };
+
+  const renderPath = () => {
+    return path?.length ? (
+      path.map(c => <Tag key={c}>{c}</Tag>)
+    ) : (
+      <Tag>No Path</Tag>
+    );
+  };
 
   const searchableColumn = useMemo(
     () => dataIndex => {
@@ -100,7 +155,7 @@ const Session = ({ graph, fetchSession }) => {
         render: text =>
           searchColumn === dataIndex ? (
             <Highlighter
-              highlightStyle={{ backgroundColor: "#97E3D5", padding: 0 }}
+              highlightStyle={{ backgroundColor: "#FCFE15", padding: 0 }}
               searchWords={[searchTerm]}
               autoEscape
               textToHighlight={text.toString()}
@@ -173,14 +228,14 @@ const Session = ({ graph, fetchSession }) => {
         dataIndex: "degree",
         align: "right",
         sorter: (a, b) => a.degree - b.degree,
-        sortDirections: ["descend", "ascend"],
+        sortDirections: ["descend", "ascend"]
       },
       {
         title: "Depth",
         dataIndex: "depth",
         align: "right",
         sorter: (a, b) => a.depth - b.depth,
-        sortDirections: ["descend", "ascend"],
+        sortDirections: ["descend", "ascend"]
       }
     ],
     [searchableColumn]
@@ -216,7 +271,7 @@ const Session = ({ graph, fetchSession }) => {
         dataIndex: "distance",
         align: "right",
         sorter: (a, b) => a.distance - b.distance,
-        sortDirections: ["descend", "ascend"],
+        sortDirections: ["descend", "ascend"]
       }
     ],
     [searchableColumn]
@@ -267,7 +322,7 @@ const Session = ({ graph, fetchSession }) => {
               <Descriptions.Item
                 label="Starting Word"
                 span={3}
-                children={nodes.filter(n => n.depth === 1)?.[0]?.id}
+                children={<Tag>{nodes.find(n => n.depth === 1)?.id}</Tag>}
               />
               <Descriptions.Item label="Nodes" children={nodes.length} />
               <Descriptions.Item label="Edges" children={links.length} />
@@ -301,90 +356,146 @@ const Session = ({ graph, fetchSession }) => {
           <Table
             // style={{ marginTop: 16 }}
             columns={responseColumns}
-            dataSource={responses.map(response => ({
-              ...response,
-              key: response.createdAt
-            }))}
+            dataSource={responses}
+            rowKey={response => response.createdAt}
             size="small"
-            scroll={{ y: "26vh" }}
+            scroll={{ y: "25vh" }}
             pagination={false}
             loading={loading}
-            onRow={(record, rowIndex) => {
+            rowSelection={{
+              selectedRowKeys: [hovered.key],
+              columnWidth: 0,
+              renderCell: null
+            }}
+            onRow={record => {
               return {
-                onClick: () => {}, // click row
-                onDoubleClick: () => {}, // double click row
-                onContextMenu: () => {}, // right button click row
-                onMouseEnter: () => {
-                  setHovered({
-                    source: record.source,
-                    targets: uniqueTokensFromEntry(record.target ?? ""),
-                    showConnections: true
-                  });
-                }, // mouse enter row
-                onMouseLeave: () => {
-                  setHovered({});
-                } // mouse leave row
+                onClick: () => {
+                  if (hovered.key === record.createdAt) {
+                    setHovered({});
+                  } else {
+                    setHovered({
+                      source: record.source,
+                      targets: uniqueTokensFromEntry(record.target ?? ""),
+                      showConnections: true,
+                      key: record.createdAt
+                    });
+                  }
+                }
               };
             }}
           />
         </TabPane>
         <TabPane tab="Nodes" key="nodes">
           <Table
-            // style={{ marginTop: 16 }}
             columns={nodeColumns}
-            dataSource={nodes.map(node => ({
-              ...node,
-              key: node.id
-            }))}
+            dataSource={nodes}
+            rowKey={node => node.id}
             size="small"
-            scroll={{ y: "26vh" }}
+            scroll={{ y: "25vh" }}
             pagination={false}
             loading={loading}
-            onRow={(record, rowIndex) => {
+            rowSelection={{
+              selectedRowKeys: [hovered.key],
+              columnWidth: 0,
+              renderCell: null
+            }}
+            onRow={record => {
               return {
-                onClick: () => {}, // click row
-                onDoubleClick: () => {}, // double click row
-                onContextMenu: () => {}, // right button click row
-                onMouseEnter: () => {
-                  setHovered({
-                    source: record.id,
-                    showConnections: true
-                  });
-                }, // mouse enter row
-                onMouseLeave: () => {
-                  setHovered({});
-                } // mouse leave row
+                onClick: () => {
+                  if (hovered.key === record.id) {
+                    setHovered({});
+                  } else {
+                    setHovered({
+                      source: record.id,
+                      showConnections: true,
+                      key: record.id
+                    });
+                  }
+                }
               };
             }}
           />
         </TabPane>
         <TabPane tab="Edges" key="edges">
           <Table
-            // style={{ marginTop: 16 }}
             columns={edgeColumns}
-            dataSource={links.map(link => ({ ...link, key: link.id }))}
+            dataSource={links}
+            rowKey={link => link.id}
             size="small"
-            scroll={{ y: "26vh" }}
+            scroll={{ y: "25vh" }}
             pagination={false}
             loading={loading}
-            onRow={(record, rowIndex) => {
+            rowSelection={{
+              selectedRowKeys: [hovered.key],
+              columnWidth: 0,
+              renderCell: null
+            }}
+            onRow={record => {
               return {
-                onClick: () => {}, // click row
-                onDoubleClick: () => {}, // double click row
-                onContextMenu: () => {}, // right button click row
-                onMouseEnter: () => {
-                  setHovered({
-                    source: record.source,
-                    targets: [record.target],
-                    showConnections: false
-                  });
-                }, // mouse enter row
-                onMouseLeave: () => {
-                  setHovered({});
-                } // mouse leave row
+                onClick: () => {
+                  if (hovered.key === record.id) {
+                    setHovered({});
+                  } else {
+                    setHovered({
+                      source: record.source,
+                      targets: [record.target],
+                      showConnections: false,
+                      key: record.id
+                    });
+                  }
+                }
               };
             }}
           />
+        </TabPane>
+        <TabPane tab="Relationships" key="relationships">
+          <div style={{ background: "#FAFAFA", padding: 16 }}>
+            <Descriptions title="Geodesic Distance">
+              <Descriptions.Item
+                label="Source Node"
+                span={1}
+                children={
+                  <Select
+                    style={{ width: 200 }}
+                    showSearch
+                    placeholder="Source Node"
+                    value={source}
+                    onChange={handleSourceChanged}
+                  >
+                    {nodes.map(n => (
+                      <Select.Option key={n.id}>{n.id}</Select.Option>
+                    ))}
+                  </Select>
+                }
+              />
+              <Descriptions.Item
+                label="Target Node"
+                span={2}
+                children={
+                  <Select
+                    style={{ width: 200 }}
+                    showSearch
+                    placeholder="Target Node"
+                    value={target}
+                    onChange={handleTargetChanged}
+                  >
+                    {nodes.map(n => (
+                      <Select.Option key={n.id}>{n.id}</Select.Option>
+                    ))}
+                  </Select>
+                }
+              />
+              <Descriptions.Item
+                label="Path"
+                span={3}
+                children={renderPath()}
+              />
+              <Descriptions.Item
+                label="Distance"
+                children={path.length ? path.length - 1 : 0}
+              />
+            </Descriptions>
+          </div>
         </TabPane>
       </Tabs>
     </>

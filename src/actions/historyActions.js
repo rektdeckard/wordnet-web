@@ -117,6 +117,9 @@ export const fetchSession = id => async dispatch => {
                 sources(limit: $limit) {
                   items {
                     id
+                    target {
+                      value
+                    }
                   }
                 }
                 targets(limit: $limit) {
