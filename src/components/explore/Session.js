@@ -370,12 +370,16 @@ const Session = ({ graph, fetchSession }) => {
             onRow={record => {
               return {
                 onClick: () => {
-                  setHovered({
-                    source: record.source,
-                    targets: uniqueTokensFromEntry(record.target ?? ""),
-                    showConnections: true,
-                    key: record.createdAt
-                  });
+                  if (hovered.key === record.createdAt) {
+                    setHovered({});
+                  } else {
+                    setHovered({
+                      source: record.source,
+                      targets: uniqueTokensFromEntry(record.target ?? ""),
+                      showConnections: true,
+                      key: record.createdAt
+                    });
+                  }
                 }
               };
             }}
@@ -398,11 +402,15 @@ const Session = ({ graph, fetchSession }) => {
             onRow={record => {
               return {
                 onClick: () => {
-                  setHovered({
-                    source: record.id,
-                    showConnections: true,
-                    key: record.id
-                  });
+                  if (hovered.key === record.id) {
+                    setHovered({});
+                  } else {
+                    setHovered({
+                      source: record.id,
+                      showConnections: true,
+                      key: record.id
+                    });
+                  }
                 }
               };
             }}
@@ -425,12 +433,16 @@ const Session = ({ graph, fetchSession }) => {
             onRow={record => {
               return {
                 onClick: () => {
-                  setHovered({
-                    source: record.source,
-                    targets: [record.target],
-                    showConnections: false,
-                    key: record.id
-                  });
+                  if (hovered.key === record.id) {
+                    setHovered({});
+                  } else {
+                    setHovered({
+                      source: record.source,
+                      targets: [record.target],
+                      showConnections: false,
+                      key: record.id
+                    });
+                  }
                 }
               };
             }}

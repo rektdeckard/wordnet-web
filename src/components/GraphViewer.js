@@ -56,7 +56,7 @@ const GraphViewer = ({
                   iterations={settings.iterations}
                   nodeColor={n =>
                     n.id === hovered.source || hovered.targets?.includes(n.id)
-                      ? "#1890FF"
+                      ? "black"
                       : n.color
                   }
                   nodeBorderWidth={settings.borderWidth}
@@ -79,13 +79,13 @@ const GraphViewer = ({
                           hovered.targets?.includes(l.source.id) &&
                           hovered.targets?.includes(l.target.id)
                         ) {
-                          return "#1890FF";
+                          return "black";
                         } else return l.source.color;
                       } else if (
                         l.source.id === hovered.source &&
                         hovered.targets?.includes(l.target.id)
                       ) {
-                        return "#1890FF";
+                        return "black";
                       }
                       return l.source.color;
                     }
