@@ -23,6 +23,7 @@ import {
   useDensity,
   useTraversableGraph
 } from "../../utils";
+import { COLORS } from "../../data/constants";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -140,7 +141,7 @@ const Session = ({ graph, fetchSession }) => {
           </div>
         ),
         filterIcon: filtered => (
-          <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+          <SearchOutlined style={{ color: filtered ? COLORS.ACTIVE : undefined }} />
         ),
         onFilter: (value, record) =>
           record[dataIndex]
@@ -155,7 +156,7 @@ const Session = ({ graph, fetchSession }) => {
         render: text =>
           searchColumn === dataIndex ? (
             <Highlighter
-              highlightStyle={{ backgroundColor: "#FCFE15", padding: 0 }}
+              highlightStyle={{ backgroundColor: COLORS.HIGHLIGHT, padding: 0 }}
               searchWords={[searchTerm]}
               autoEscape
               textToHighlight={text.toString()}
@@ -279,7 +280,7 @@ const Session = ({ graph, fetchSession }) => {
 
   return (
     <>
-      <Layout style={{ background: "#fff" }}>
+      <Layout style={{ background: COLORS.CARD_BACKGROUND }}>
         <Content>
           <GraphViewer
             graph={loading ? { nodes: [], links: [] } : { nodes, links }}
@@ -298,7 +299,7 @@ const Session = ({ graph, fetchSession }) => {
           {loading ? (
             <div
               style={{
-                background: "#FAFAFA",
+                background: COLORS.PANEL_BACKGROUND,
                 padding: 64,
                 textAlign: "center"
               }}
@@ -309,7 +310,7 @@ const Session = ({ graph, fetchSession }) => {
             <Descriptions
               title="Session Info"
               size="small"
-              style={{ background: "#FAFAFA", padding: 16 }}
+              style={{ background: COLORS.PANEL_BACKGROUND, padding: 16 }}
             >
               <Descriptions.Item label="Session ID" span={3}>
                 {id}
@@ -449,7 +450,7 @@ const Session = ({ graph, fetchSession }) => {
           />
         </TabPane>
         <TabPane tab="Relationships" key="relationships">
-          <div style={{ background: "#FAFAFA", padding: 16 }}>
+          <div style={{ background: COLORS.PANEL_BACKGROUND, padding: 16 }}>
             <Descriptions title="Geodesic Distance">
               <Descriptions.Item
                 label="Source Node"

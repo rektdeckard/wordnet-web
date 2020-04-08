@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { API, graphqlOperation } from "aws-amplify";
 import { parse, getUnixTime } from "date-fns";
 import moment from "moment";
@@ -12,13 +12,14 @@ import {
   Tag,
   message,
   Descriptions,
-  Button
+  Button,
 } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
 
 import { setInitialDate } from "../../actions";
 import Download from "./Download";
 import "./SessionLog.css";
+import { COLORS } from "../../data/constants";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -42,7 +43,7 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
   // TODO: use to generate composite WordNets from multiple sessions
   const [selectedSessionKeys, setSelectedSessionKeys] = useState([]);
 
-  const handleDateClear = e => {
+  const handleDateClear = (e) => {
     e.preventDefault();
     setStartDate(null);
     setEndDate(null);
@@ -70,7 +71,7 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
             <RangePicker
               value={[
                 startDate && moment(startDate),
-                endDate && moment(endDate)
+                endDate && moment(endDate),
               ]}
               onChange={handleDateSelect}
               allowClear={true}
@@ -79,9 +80,9 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         ),
         filterIcon: () => (
           <CalendarOutlined
-            style={startDate || endDate ? { color: "#1890ff" } : null}
+            style={startDate || endDate ? { color: COLORS.ACTIVE } : null}
           />
-        )
+        ),
       },
       {
         title: "Session Time",
@@ -89,7 +90,7 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         // sorter: (a, b) => (a.date.getHours() * 60 + a.date.getMinutes()) - (b.date.getHours() * 60 - b.date.getMinutes()),
         sorter: (a, b) => a.date - b.date,
         sortDirections: ["descend", "ascend"],
-        render: (text, _record) => text.toLocaleTimeString()
+        render: (text, _record) => text.toLocaleTimeString(),
         // width: "50%"
       },
       {
@@ -97,22 +98,22 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         dataIndex: "startingWord",
         sorter: (a, b) => a.startingWord.localeCompare(b.startingWord),
         sortDirections: ["ascend", "descend"],
-        width: "40%"
+        width: "40%",
       },
       {
         title: "Responses",
         dataIndex: "responses",
         sorter: (a, b) => a.responses - b.responses,
         sortDirections: ["descend", "ascend"],
-        align: "right"
+        align: "right",
       },
       {
         title: "Words",
         dataIndex: "words",
         sorter: (a, b) => a.words - b.words,
         sortDirections: ["descend", "ascend"],
-        align: "right"
-      }
+        align: "right",
+      },
     ];
   }, [startDate, endDate, setInitialDate]);
 
@@ -157,11 +158,11 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
                           : null,
                         endTimestamp
                           ? { timestamp: { le: endTimestamp } }
-                          : null
-                      ]
+                          : null,
+                      ],
                     }
                   : null,
-              limit: 1000
+              limit: 1000,
             }
           )
         );
@@ -172,9 +173,9 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
               id,
               date: new Date(createdAt),
               words: nodes.items.length,
-              startingWord: nodes.items.filter(n => n.depth === 1)[0].value,
+              startingWord: nodes.items.filter((n) => n.depth === 1)[0].value,
               responses: responses.items.length,
-              key: id
+              key: id,
             };
           }
         );
@@ -239,14 +240,14 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
               selectedRows
             );
             setSelectedSessionKeys(selectedRowKeys);
-          }
+          },
           // getCheckboxProps: record => ({
           //   disabled: record.words <= 0 // Column configuration not to be checked
           // })
         }}
         onRow={(record, _index) => {
           return {
-            onClick: () => history.push(`/explore/sessions/${record.id}`)
+            onClick: () => history.push(`/explore/sessions/${record.id}`),
           };
         }}
       />
@@ -254,9 +255,9 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    initialDate: state.history.initialDate
+    initialDate: state.history.initialDate,
   };
 };
 

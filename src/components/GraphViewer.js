@@ -4,6 +4,8 @@ import { useMeasure } from "react-use";
 import { Network } from "@nivo/network";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
+import { COLORS } from '../data/constants';
+
 const defaultOptions = {
   defaultScale: 0.5,
   doubleClick: { mode: "reset" },
@@ -12,8 +14,8 @@ const defaultOptions = {
   options: {
     minScale: 0.1,
     maxScale: 4,
-    limitToBounds: false
-  }
+    limitToBounds: false,
+  },
 };
 
 const GraphViewer = ({
@@ -112,7 +114,7 @@ const GraphViewer = ({
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { settings: state.settings };
 };
 

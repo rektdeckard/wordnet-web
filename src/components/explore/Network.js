@@ -16,11 +16,10 @@ import {
   setMotionStiffness,
   setMotionDamping
 } from "../../actions";
+import { COLORS } from "../../data/constants";
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
-
-// const nivo = ['#e8c1a0', '#f47560', '#f1e15b', '#e8a838', '#61cdbb', '#97e3d5'];
 
 const Network = props => {
   const {
@@ -42,7 +41,7 @@ const Network = props => {
 
   const renderSider = () => (
     <Sider
-      style={{ background: "#fff" }}
+      style={{ background: COLORS.CARD_BACKGROUND }}
       width={300}
       collapsedWidth={0}
       breakpoint="lg"

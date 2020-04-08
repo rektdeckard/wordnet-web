@@ -92,7 +92,7 @@ export const STARTING_WORDS = [
   "familiar",
   "suspicious",
   "lucky",
-  "possible"
+  "possible",
 ];
 
 // NIVO
@@ -122,3 +122,15 @@ export const HEAT_MAP_COLORS = [
   "#DCC48E",
   "#D1A787",
 ];
+
+export const COLORS = {
+  POSITIVE: "#51bdab",
+  NEGATIVE: "#f47560",
+  ACTIVE: "#1890ff",
+  EMPTY: "#eeeeee",
+  HIGHLIGHT: "#fcfe15",
+  HOVERED: "#000000",
+  BORDER: "#ffffff",
+  CARD_BACKGROUND: "#ffffff",
+  PANEL_BACKGROUND: "#fafafa",
+};

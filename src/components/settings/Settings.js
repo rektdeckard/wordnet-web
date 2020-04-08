@@ -21,6 +21,7 @@ import {
   setMotionDamping
 } from "../../actions";
 import GraphViewer from "../GraphViewer.js";
+import { COLORS } from "../../data/constants";
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
@@ -45,7 +46,7 @@ const Settings = props => {
 
   const renderSider = () => (
     <Sider
-      style={{ background: "#fff" }}
+      style={{ background: COLORS.CARD_BACKGROUND }}
       width={300}
       collapsedWidth={0}
       breakpoint="lg"
@@ -227,7 +228,7 @@ const Settings = props => {
 
   // TODO: Implement window-resize event hook to properly size the container div
   return (
-    <Layout style={{ background: "#fff" }}>
+    <Layout style={{ background: COLORS.CARD_BACKGROUND }}>
       {renderSider()}
       <Content>
         <GraphViewer graph={{ nodes: data.nodes, links: data.links }} componentStyle={{ height: "80vh", width: window.innerWidth - 116 }} />

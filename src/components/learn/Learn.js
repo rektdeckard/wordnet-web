@@ -7,6 +7,7 @@ import {
   ExperimentOutlined,
   DollarOutlined
 } from "@ant-design/icons";
+import { COLORS } from "../../data/constants";
 
 const { Content } = Layout;
 
@@ -93,7 +94,7 @@ const Learn = () => {
   ];
 
   return (
-    <Layout style={{ padding: "24px 24px", background: "#fff" }}>
+    <Layout style={{ padding: "24px 24px", background: COLORS.CARD_BACKGROUND }}>
       <Content>
         <List
           itemLayout="horizontal"

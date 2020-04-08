@@ -16,6 +16,7 @@ import { submitResponse, selectRandomNode, submitSession } from "../../actions";
 import { useGraph } from "../../utils";
 import GraphViewer from "../GraphViewer";
 import TimedProgress from "./TimedProgress";
+import { COLORS } from "../../data/constants";
 
 const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -91,7 +92,7 @@ const QuickPlay = ({
       </Paragraph>
       <TimedProgress time={{ minutes: 5 }} onExpire={handleExpire} />
       {/* <Progress percent={nodes.length * 2} /> */}
-      <Content style={{ padding: "0px 0px", background: "#fff" }}>
+      <Content style={{ padding: "0px 0px", background: COLORS.CARD_BACKGROUND }}>
         <GraphViewer
           graph={{ nodes, links }}
           header={
