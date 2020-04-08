@@ -24,9 +24,44 @@ const GraphViewer = ({
   hovered = {},
   settings,
   wrapperOptions = {},
-  componentStyle
+  componentStyle,
 }) => {
   const [ref, { height, width }] = useMeasure();
+
+  const computeNodeColor = (node) =>
+    node.id === hovered.source || hovered.targets?.includes(node.id)
+      ? COLORS.HOVERED
+      : node.color;
+
+  const computeLinkColor = (link) => {
+    if (hovered.isPath) {
+      const index = hovered.targets?.indexOf(link.source.id);
+      if (index >= 0 && hovered.targets[index + 1] === link.target.id) {
+        return COLORS.HOVERED;
+      } else return link.source.color;
+    } else if (
+      link.source.id === hovered.source &&
+      hovered.targets?.includes(link.target.id)
+    ) {
+      return COLORS.HOVERED;
+    }
+    return link.source.color;
+  };
+
+  const computeLinkThickness = (link) => {
+    if (hovered.isPath) {
+      const index = hovered.targets?.indexOf(link.source.id);
+      if (index >= 0 && hovered.targets[index + 1] === link.target.id) {
+        return settings.linkThickness * 2;
+      } else return settings.linkThickness;
+    } else if (
+      link.source.id === hovered.source &&
+      hovered.targets?.includes(link.target.id)
+    ) {
+      return settings.linkThickness * 2;
+    }
+    return settings.linkThickness;
+  };
 
   return (
     <TransformWrapper {...defaultOptions} {...wrapperOptions}>
@@ -42,68 +77,54 @@ const GraphViewer = ({
                     width: window.innerWidth - 116,
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center"
+                    justifyContent: "center",
+                    overflow: "visible",
                   }
                 }
                 ref={ref}
               >
                 <Network
-                  height={height * 2}
-                  width={width * 2}
+                  height={height * 4}
+                  width={width * 4}
                   nodes={graph.nodes}
                   links={graph.links}
                   repulsivity={settings.repulsivity}
                   distanceMin={settings.distanceMin}
                   distanceMax={settings.distanceMax}
                   iterations={settings.iterations}
-                  nodeColor={n =>
-                    n.id === hovered.source || hovered.targets?.includes(n.id)
-                      ? "black"
-                      : n.color
-                  }
+                  nodeColor={computeNodeColor}
                   nodeBorderWidth={settings.borderWidth}
-                  // nodeBorderColor={
-                  //   hovered.showConnections
-                  //     ? n => (hovered.targets?.includes(n.id) ? "black" : "green")
-                  //     : {
-                  //         from: "color",
-                  //         modifiers: [["darker", 0.8]]
-                  //       }
-                  // }
                   nodeBorderColor={{
                     from: "color",
-                    modifiers: [["darker", 0.8]]
+                    modifiers: [["darker", 0.8]],
                   }}
-                  linkColor={
-                    l => {
-                      if (hovered.isPath) {
-                        if (
-                          hovered.targets?.includes(l.source.id) &&
-                          hovered.targets?.includes(l.target.id)
-                        ) {
-                          return "black";
-                        } else return l.source.color;
-                      } else if (
-                        l.source.id === hovered.source &&
-                        hovered.targets?.includes(l.target.id)
-                      ) {
-                        return "black";
-                      }
-                      return l.source.color;
-                    }
-                    //  (hovered.isPath && (hovered.targets?.includes(l.source.id) || hovered.targets?.includes(l.target.id))) || (!hovered.isPath && l.source.id === hovered.source &&
-                    //   hovered.targets?.includes(l.target.id))
-                    //     ? "red"
-                    //     : l.source.color
-                  }
+                  linkColor={computeLinkColor}
                   // linkThickness={settings.linkThickness}
-                  linkThickness={l =>
-                    l.source.id === hovered ? 5 : settings.linkThickness
+                  linkThickness={
+                    hovered.source
+                      ? computeLinkThickness
+                      : settings.linkThickness
                   }
                   motionStiffness={settings.motionStiffness}
                   motionDamping={settings.motionDamping}
                   animate={settings.animate}
                   isInteractive={true}
+                  // layers={[
+                  //   "links",
+                  //   "nodes",
+                  //   ({ nodes }) => {
+                  //     console.log(nodes);
+                  //     return nodes?.filter(node => hovered.source === node.id || hovered.targets?.includes(node.id)).map(node => (
+                  //       <svg>
+                  //         <text
+                  //           x={node.x}
+                  //           y={node.y}
+                  //           fill="red"
+                  //           fontSize={18}
+                  //         >{node.id}</text>
+                  //       </svg>
+                  //     )) }
+                  // ]}
                 />
               </div>
             </TransformComponent>
