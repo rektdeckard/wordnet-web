@@ -10,7 +10,7 @@ import {
   Button,
   Spin,
   Select,
-  Tag
+  Tag,
 } from "antd";
 import { ClockCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
@@ -21,7 +21,7 @@ import { fetchSession } from "../../actions";
 import {
   uniqueTokensFromEntry,
   useDensity,
-  useTraversableGraph
+  useTraversableGraph,
 } from "../../utils";
 import { COLORS } from "../../data/constants";
 
@@ -44,12 +44,13 @@ const Session = ({ graph, fetchSession }) => {
     responses,
     createdAt,
     bfs,
-    shortestPath
+    shortestPath,
   } = useTraversableGraph(graph);
   const { density } = useDensity(graph);
   const path = useMemo(() => shortestPath(source, target) ?? [], [
     source,
-    target
+    target,
+    shortestPath,
   ]);
 
   useEffect(() => {
@@ -61,43 +62,43 @@ const Session = ({ graph, fetchSession }) => {
     if (id) load();
   }, [id, fetchSession]);
 
-  const handleSourceChanged = value => {
+  const handleSourceChanged = (value) => {
     setSource(value);
     setHovered({
       source: value,
       targets: shortestPath(value, target),
       showConnections: false,
-      isPath: true
+      isPath: true,
     });
   };
 
-  const handleTargetChanged = value => {
+  const handleTargetChanged = (value) => {
     setTarget(value);
     setHovered({
       source: value,
       targets: shortestPath(source, value),
       showConnections: false,
-      isPath: true
+      isPath: true,
     });
   };
 
   const renderPath = () => {
     return path?.length ? (
-      path.map(c => <Tag key={c}>{c}</Tag>)
+      path.map((c) => <Tag key={c}>{c}</Tag>)
     ) : (
       <Tag>No Path</Tag>
     );
   };
 
   const searchableColumn = useMemo(
-    () => dataIndex => {
+    () => (dataIndex) => {
       const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchTerm(selectedKeys[0]);
         setSearchColumn(dataIndex);
       };
 
-      const handleReset = clearFilters => {
+      const handleReset = (clearFilters) => {
         clearFilters();
         setSearchTerm("");
       };
@@ -107,14 +108,14 @@ const Session = ({ graph, fetchSession }) => {
           setSelectedKeys,
           selectedKeys,
           confirm,
-          clearFilters
+          clearFilters,
         }) => (
           <div style={{ padding: 8 }}>
             <Input
               ref={inputRef}
               placeholder={`Search ${dataIndex} words`}
               value={selectedKeys[0]}
-              onChange={e =>
+              onChange={(e) =>
                 setSelectedKeys(e.target.value ? [e.target.value] : [])
               }
               onPressEnter={() =>
@@ -140,20 +141,22 @@ const Session = ({ graph, fetchSession }) => {
             </Button>
           </div>
         ),
-        filterIcon: filtered => (
-          <SearchOutlined style={{ color: filtered ? COLORS.ACTIVE : undefined }} />
+        filterIcon: (filtered) => (
+          <SearchOutlined
+            style={{ color: filtered ? COLORS.ACTIVE : undefined }}
+          />
         ),
         onFilter: (value, record) =>
           record[dataIndex]
             .toString()
             .toLowerCase()
             .includes(value.toLowerCase()),
-        onFilterDropdownVisibleChange: visible => {
+        onFilterDropdownVisibleChange: (visible) => {
           if (visible) {
             setTimeout(() => inputRef.current.select());
           }
         },
-        render: text =>
+        render: (text) =>
           searchColumn === dataIndex ? (
             <Highlighter
               highlightStyle={{ backgroundColor: COLORS.HIGHLIGHT, padding: 0 }}
@@ -163,7 +166,7 @@ const Session = ({ graph, fetchSession }) => {
             />
           ) : (
             text
-          )
+          ),
       };
     },
     [searchColumn, searchTerm]
@@ -177,14 +180,14 @@ const Session = ({ graph, fetchSession }) => {
         sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
         sortDirections: ["ascend", "descend"],
         defaultSortOrder: "ascend",
-        render: response => new Date(response).toLocaleString()
+        render: (response) => new Date(response).toLocaleString(),
       },
       {
         title: "Prompt Word",
         dataIndex: "source",
         sorter: (a, b) => a.source.localeCompare(b.source),
         sortDirections: ["ascend", "descend"],
-        ...searchableColumn("source")
+        ...searchableColumn("source"),
       },
       {
         title: "Response",
@@ -192,7 +195,7 @@ const Session = ({ graph, fetchSession }) => {
         width: "50%",
         sorter: (a, b) => a.target.localeCompare(b.target),
         sortDirections: ["ascend", "descend"],
-        ...searchableColumn("target")
+        ...searchableColumn("target"),
       },
       {
         title: "Response Time",
@@ -200,8 +203,8 @@ const Session = ({ graph, fetchSession }) => {
         align: "right",
         sorter: (a, b) => a.responseTime - b.responseTime,
         sortDirections: ["descend", "ascend"],
-        render: response => `${response} ms`
-      }
+        render: (response) => `${response} ms`,
+      },
     ],
     [searchableColumn]
   );
@@ -214,7 +217,7 @@ const Session = ({ graph, fetchSession }) => {
         sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
         sortDirections: ["ascend", "descend"],
         defaultSortOrder: "ascend",
-        render: createdAt => new Date(createdAt).toLocaleString()
+        render: (createdAt) => new Date(createdAt).toLocaleString(),
       },
       {
         title: "Word",
@@ -222,22 +225,22 @@ const Session = ({ graph, fetchSession }) => {
         width: "50%",
         sorter: (a, b) => a.id.localeCompare(b.id),
         sortDirections: ["ascend", "descend"],
-        ...searchableColumn("id")
+        ...searchableColumn("id"),
       },
       {
         title: "Degree",
         dataIndex: "degree",
         align: "right",
         sorter: (a, b) => a.degree - b.degree,
-        sortDirections: ["descend", "ascend"]
+        sortDirections: ["descend", "ascend"],
       },
       {
         title: "Depth",
         dataIndex: "depth",
         align: "right",
         sorter: (a, b) => a.depth - b.depth,
-        sortDirections: ["descend", "ascend"]
-      }
+        sortDirections: ["descend", "ascend"],
+      },
     ],
     [searchableColumn]
   );
@@ -250,14 +253,14 @@ const Session = ({ graph, fetchSession }) => {
         sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
         sortDirections: ["ascend", "descend"],
         defaultSortOrder: "ascend",
-        render: response => new Date(response).toLocaleString()
+        render: (response) => new Date(response).toLocaleString(),
       },
       {
         title: "Prompt Word",
         dataIndex: "source",
         sorter: (a, b) => a.source.localeCompare(b.source),
         sortDirections: ["ascend", "descend"],
-        ...searchableColumn("source")
+        ...searchableColumn("source"),
       },
       {
         title: "Target Word",
@@ -265,15 +268,15 @@ const Session = ({ graph, fetchSession }) => {
         width: "50%",
         sorter: (a, b) => a.target.localeCompare(b.target),
         sortDirections: ["ascend", "descend"],
-        ...searchableColumn("target")
+        ...searchableColumn("target"),
       },
       {
         title: "Distance",
         dataIndex: "distance",
         align: "right",
         sorter: (a, b) => a.distance - b.distance,
-        sortDirections: ["descend", "ascend"]
-      }
+        sortDirections: ["descend", "ascend"],
+      },
     ],
     [searchableColumn]
   );
@@ -301,7 +304,7 @@ const Session = ({ graph, fetchSession }) => {
               style={{
                 background: COLORS.PANEL_BACKGROUND,
                 padding: 64,
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
               <Spin />
@@ -323,7 +326,7 @@ const Session = ({ graph, fetchSession }) => {
               <Descriptions.Item
                 label="Starting Word"
                 span={3}
-                children={<Tag>{nodes.find(n => n.depth === 1)?.id}</Tag>}
+                children={<Tag>{nodes.find((n) => n.depth === 1)?.id}</Tag>}
               />
               <Descriptions.Item label="Nodes" children={nodes.length} />
               <Descriptions.Item label="Edges" children={links.length} />
@@ -358,7 +361,7 @@ const Session = ({ graph, fetchSession }) => {
             // style={{ marginTop: 16 }}
             columns={responseColumns}
             dataSource={responses}
-            rowKey={response => response.createdAt}
+            rowKey={(response) => response.createdAt}
             size="small"
             scroll={{ y: "25vh" }}
             pagination={false}
@@ -366,9 +369,9 @@ const Session = ({ graph, fetchSession }) => {
             rowSelection={{
               selectedRowKeys: [hovered.key],
               columnWidth: 0,
-              renderCell: null
+              renderCell: null,
             }}
-            onRow={record => {
+            onRow={(record) => {
               return {
                 onClick: () => {
                   if (hovered.key === record.createdAt) {
@@ -378,10 +381,10 @@ const Session = ({ graph, fetchSession }) => {
                       source: record.source,
                       targets: uniqueTokensFromEntry(record.target ?? ""),
                       showConnections: true,
-                      key: record.createdAt
+                      key: record.createdAt,
                     });
                   }
-                }
+                },
               };
             }}
           />
@@ -390,7 +393,7 @@ const Session = ({ graph, fetchSession }) => {
           <Table
             columns={nodeColumns}
             dataSource={nodes}
-            rowKey={node => node.id}
+            rowKey={(node) => node.id}
             size="small"
             scroll={{ y: "25vh" }}
             pagination={false}
@@ -398,9 +401,9 @@ const Session = ({ graph, fetchSession }) => {
             rowSelection={{
               selectedRowKeys: [hovered.key],
               columnWidth: 0,
-              renderCell: null
+              renderCell: null,
             }}
-            onRow={record => {
+            onRow={(record) => {
               return {
                 onClick: () => {
                   if (hovered.key === record.id) {
@@ -409,10 +412,10 @@ const Session = ({ graph, fetchSession }) => {
                     setHovered({
                       source: record.id,
                       showConnections: true,
-                      key: record.id
+                      key: record.id,
                     });
                   }
-                }
+                },
               };
             }}
           />
@@ -421,7 +424,7 @@ const Session = ({ graph, fetchSession }) => {
           <Table
             columns={edgeColumns}
             dataSource={links}
-            rowKey={link => link.id}
+            rowKey={(link) => link.id}
             size="small"
             scroll={{ y: "25vh" }}
             pagination={false}
@@ -429,9 +432,9 @@ const Session = ({ graph, fetchSession }) => {
             rowSelection={{
               selectedRowKeys: [hovered.key],
               columnWidth: 0,
-              renderCell: null
+              renderCell: null,
             }}
-            onRow={record => {
+            onRow={(record) => {
               return {
                 onClick: () => {
                   if (hovered.key === record.id) {
@@ -441,10 +444,10 @@ const Session = ({ graph, fetchSession }) => {
                       source: record.source,
                       targets: [record.target],
                       showConnections: false,
-                      key: record.id
+                      key: record.id,
                     });
                   }
-                }
+                },
               };
             }}
           />
@@ -463,7 +466,7 @@ const Session = ({ graph, fetchSession }) => {
                     value={source}
                     onChange={handleSourceChanged}
                   >
-                    {nodes.map(n => (
+                    {nodes.map((n) => (
                       <Select.Option key={n.id}>{n.id}</Select.Option>
                     ))}
                   </Select>
@@ -480,7 +483,7 @@ const Session = ({ graph, fetchSession }) => {
                     value={target}
                     onChange={handleTargetChanged}
                   >
-                    {nodes.map(n => (
+                    {nodes.map((n) => (
                       <Select.Option key={n.id}>{n.id}</Select.Option>
                     ))}
                   </Select>
@@ -503,7 +506,7 @@ const Session = ({ graph, fetchSession }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { graph: state.history.currentSession };
 };
 
