@@ -71,21 +71,25 @@ export const useTraversableGraph = (graph) =>
       let queue = [{ vertex: source, count: 0 }];
       let visited = { [source]: true };
       let tail = 0;
+      let maxDistance = 0;
 
       while (tail < queue.length) {
         let u = queue[tail].vertex;
         let count = queue[tail++].count; // pop vertex off queue
 
-        console.log("distance from " + source + " to " + u + ": " + count);
+        // console.log("distance from " + source + " to " + u + ": " + count);
         if (nodeMap[u]) {
           nodeMap[u].forEach((v) => {
             if (!visited[v]) {
               visited[v] = true;
               queue.push({ vertex: v, count: count + 1 });
+              maxDistance = Math.max(count + 1, maxDistance);
             }
           });
         }
       }
+
+      return maxDistance;
     }
 
     function shortestPath(source, target) {
