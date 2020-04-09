@@ -5,7 +5,7 @@ import { Empty, Button } from "antd";
 const Missing = ({ match, style }) => {
   return (
     <Empty
-      style={{ marginTop: 52, ...style}}
+      style={{ marginTop: 52, ...style }}
       description={<span>Whoops. That doesn't exist.</span>}
     >
       <Button type="primary" shape="round">

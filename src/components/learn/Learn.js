@@ -5,7 +5,7 @@ import {
   QuestionCircleOutlined,
   SmileOutlined,
   ExperimentOutlined,
-  DollarOutlined
+  DollarOutlined,
 } from "@ant-design/icons";
 import { COLORS } from "../../data/constants";
 
@@ -47,12 +47,12 @@ const Learn = () => {
             statistical property of WordNet topology.
           </p>
         </>
-      )
+      ),
     },
     {
       title: "Benefits of WordNet",
       icon: <SmileOutlined />,
-      description: ""
+      description: "",
     },
     {
       title: "Potential Applications",
@@ -84,29 +84,31 @@ const Learn = () => {
             collective intelligence
           </li>
         </ul>
-      )
+      ),
     },
     {
       title: "Commercial Product",
       icon: <DollarOutlined />,
-      description: ""
-    }
+      description: "",
+    },
   ];
 
   return (
-    <Layout style={{ padding: "24px 24px", background: COLORS.CARD_BACKGROUND }}>
+    <Layout
+      style={{ padding: "24px 24px", background: COLORS.CARD_BACKGROUND }}
+    >
       <Content>
         <List
           itemLayout="horizontal"
           dataSource={data}
-          renderItem={item => (
+          renderItem={(item) => (
             <List.Item>
               <List.Item.Meta
                 avatar={
                   <Avatar
                     style={{
                       color: "#1890FFDD",
-                      backgroundColor: "#1890FF22"
+                      backgroundColor: "#1890FF22",
                     }}
                     icon={item.icon}
                   />

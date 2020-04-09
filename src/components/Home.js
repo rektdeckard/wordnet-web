@@ -4,7 +4,7 @@ import { Layout, Typography, List, Button } from "antd";
 import {
   RocketTwoTone,
   ThunderboltTwoTone,
-  TrophyTwoTone
+  TrophyTwoTone,
 } from "@ant-design/icons";
 
 const { Content } = Layout;
@@ -17,7 +17,7 @@ const Home = () => {
       icon: <RocketTwoTone style={{ marginTop: 32, fontSize: 64 }} />,
       path: "/play",
       description:
-        "Jump into a quick 5-minute game to get the creative juices flowing"
+        "Jump into a quick 5-minute game to get the creative juices flowing",
     },
     {
       title: "Insights",
@@ -25,7 +25,7 @@ const Home = () => {
       path: "/explore/insights",
       // disabled: true,
       description:
-        "Gain perspective on your personality and cognitive abilities through analysis of your data"
+        "Gain perspective on your personality and cognitive abilities through analysis of your data",
     },
     {
       title: "Goals",
@@ -33,8 +33,8 @@ const Home = () => {
       path: "explore/goals",
       // disabled: true,
       description:
-        "Challenge yourself to login a few times a week, expand your vocabulary, or increase your speed"
-    }
+        "Challenge yourself to login a few times a week, expand your vocabulary, or increase your speed",
+    },
   ];
 
   return (
@@ -45,21 +45,26 @@ const Home = () => {
             gutter: 16,
             xs: 1,
             sm: 2,
-            md: 3
+            md: 3,
           }}
           dataSource={destinationCards}
-          renderItem={item => (
+          renderItem={(item) => (
             <List.Item>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  justifyContent: "space-between"
+                  justifyContent: "space-between",
                 }}
               >
                 {item.icon}
-                <Button type="primary" shape="round" style={{ margin: 16 }} disabled={item.disabled ?? false}>
+                <Button
+                  type="primary"
+                  shape="round"
+                  style={{ margin: 16 }}
+                  disabled={item.disabled ?? false}
+                >
                   <Link to={item.path}>{item.title}</Link>
                 </Button>
                 <Text

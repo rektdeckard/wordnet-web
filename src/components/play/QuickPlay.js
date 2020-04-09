@@ -9,7 +9,7 @@ import {
   Button,
   Typography,
   Spin,
-  message
+  message,
 } from "antd";
 
 import { submitResponse, selectRandomNode, submitSession } from "../../actions";
@@ -26,7 +26,7 @@ const QuickPlay = ({
   submitResponse,
   selectRandomNode,
   submitSession,
-  history
+  history,
 }) => {
   const { nodes, links, session, currentNode } = useGraph(graph);
   const [entry, setEntry] = useState("");
@@ -35,7 +35,7 @@ const QuickPlay = ({
   // TODO: should we use a dialog to ask to continue or add time?
   const handleExpire = () => message.success("Five minutes is up!");
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { value } = e.target;
     setEntry(value);
   };
@@ -92,7 +92,9 @@ const QuickPlay = ({
       </Paragraph>
       <TimedProgress time={{ minutes: 5 }} onExpire={handleExpire} />
       {/* <Progress percent={nodes.length * 2} /> */}
-      <Content style={{ padding: "0px 0px", background: COLORS.CARD_BACKGROUND }}>
+      <Content
+        style={{ padding: "0px 0px", background: COLORS.CARD_BACKGROUND }}
+      >
         <GraphViewer
           graph={{ nodes, links }}
           header={
@@ -158,7 +160,7 @@ const QuickPlay = ({
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { graph: state.graph };
 };
 
@@ -166,6 +168,6 @@ export default withRouter(
   connect(mapStateToProps, {
     submitResponse,
     selectRandomNode,
-    submitSession
+    submitSession,
   })(QuickPlay)
 );

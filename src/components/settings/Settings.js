@@ -5,7 +5,7 @@ import {
   DotChartOutlined,
   EllipsisOutlined,
   ForkOutlined,
-  DoubleRightOutlined
+  DoubleRightOutlined,
 } from "@ant-design/icons";
 
 import data from "../../data/sample3.json";
@@ -18,7 +18,7 @@ import {
   setLinkThickness,
   setAnimate,
   setMotionStiffness,
-  setMotionDamping
+  setMotionDamping,
 } from "../../actions";
 import GraphViewer from "../GraphViewer.js";
 import { COLORS } from "../../data/constants";
@@ -26,7 +26,7 @@ import { COLORS } from "../../data/constants";
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
-const Settings = props => {
+const Settings = (props) => {
   const {
     repulsivity,
     distanceMin,
@@ -36,10 +36,10 @@ const Settings = props => {
     linkThickness,
     animate,
     motionStiffness,
-    motionDamping
+    motionDamping,
   } = props.settings;
 
-  const handleChangeDistance = value => {
+  const handleChangeDistance = (value) => {
     setDistanceMin(value[0]);
     setDistanceMax(value[1]);
   };
@@ -231,13 +231,16 @@ const Settings = props => {
     <Layout style={{ background: COLORS.CARD_BACKGROUND }}>
       {renderSider()}
       <Content>
-        <GraphViewer graph={{ nodes: data.nodes, links: data.links }} componentStyle={{ height: "80vh", width: window.innerWidth - 116 }} />
+        <GraphViewer
+          graph={{ nodes: data.nodes, links: data.links }}
+          componentStyle={{ height: "80vh", width: window.innerWidth - 116 }}
+        />
       </Content>
     </Layout>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { settings: state.settings };
 };
 
@@ -250,5 +253,5 @@ export default connect(mapStateToProps, {
   setLinkThickness,
   setAnimate,
   setMotionStiffness,
-  setMotionDamping
+  setMotionDamping,
 })(Settings);

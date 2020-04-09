@@ -10,13 +10,13 @@ import {
   message,
   List,
   Row,
-  Col
+  Col,
 } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 
 const { Paragraph } = Typography;
 
-const Account = props => {
+const Account = (props) => {
   const user = props.authData.attributes;
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -31,7 +31,7 @@ const Account = props => {
       const images = await Storage.list("profile/", { level: "protected" });
       if (images.length) {
         const imageUrl = await Storage.get(images[0].key, {
-          level: "protected"
+          level: "protected",
         });
         setImage(imageUrl);
       }
@@ -45,7 +45,7 @@ const Account = props => {
     if (file) {
       const response = await Storage.put(`profile/${file.name}`, file, {
         contentType: "image/*",
-        level: "protected"
+        level: "protected",
       });
       console.log(response);
       fetchImage();
@@ -57,7 +57,7 @@ const Account = props => {
 
     try {
       const response = await Auth.updateUserAttributes(Auth.user, {
-        [attribute]: value
+        [attribute]: value,
       });
       if (response === "SUCCESS") message.success(`Updated ${attribute}`);
       else message.warn(`Could not update ${attribute}`);
@@ -106,7 +106,7 @@ const Account = props => {
                   description={
                     <Paragraph
                       editable={{
-                        onChange: value => onChangeAttribute("name", value)
+                        onChange: (value) => onChangeAttribute("name", value),
                       }}
                     >
                       {user.name}
@@ -120,8 +120,8 @@ const Account = props => {
                   description={
                     <Paragraph
                       editable={{
-                        onChange: value =>
-                          onChangeAttribute("phone_number", value)
+                        onChange: (value) =>
+                          onChangeAttribute("phone_number", value),
                       }}
                     >
                       {user.phone_number}
@@ -135,7 +135,7 @@ const Account = props => {
                   description={
                     <Paragraph
                       editable={{
-                        onChange: value => onChangeAttribute("email", value)
+                        onChange: (value) => onChangeAttribute("email", value),
                       }}
                     >
                       {user.email}
@@ -149,7 +149,8 @@ const Account = props => {
                   description={
                     <Paragraph
                       editable={{
-                        onChange: value => onChangeAttribute("address", value)
+                        onChange: (value) =>
+                          onChangeAttribute("address", value),
                       }}
                     >
                       {user.address ?? "Not provided"}

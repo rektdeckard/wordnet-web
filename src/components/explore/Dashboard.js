@@ -8,13 +8,13 @@ import {
   Progress,
   Statistic,
   Card,
-  List
+  List,
 } from "antd";
 import {
   ArrowUpOutlined,
   ArrowDownOutlined,
   MessageOutlined,
-  RightSquareOutlined
+  RightSquareOutlined,
 } from "@ant-design/icons";
 import { ResponsiveCalendar } from "@nivo/calendar";
 import { startOfYear } from "date-fns";
@@ -29,7 +29,7 @@ const Dashboard = ({
   history,
   sessionHistory,
   fetchHistory,
-  setInitialDate
+  setInitialDate,
 }) => {
   const { sessions } = sessionHistory;
   const [loading, setLoading] = useState(false);
@@ -45,7 +45,7 @@ const Dashboard = ({
     load();
   }, [fetchHistory]);
 
-  const handleDayClicked = entry => {
+  const handleDayClicked = (entry) => {
     setInitialDate(entry.day);
     history.push(`/explore/sessions`);
   };
@@ -56,13 +56,13 @@ const Dashboard = ({
       value={(sessionHistory.rounds ?? 0) / 10}
       // value={12}
       precision={1}
-      formatter={value => (
+      formatter={(value) => (
         <Progress
           style={{ margin: 16 }}
           type="circle"
           width={100}
           percent={value.toFixed(1)}
-          format={percent => `${percent}%`}
+          format={(percent) => `${percent}%`}
         />
       )}
       suffix="toward 1000 rounds!"
@@ -75,7 +75,9 @@ const Dashboard = ({
           : weekOverWeek
       }
       precision={1}
-      valueStyle={{ color: weekOverWeek >= 0 ? COLORS.POSITIVE : COLORS.NEGATIVE }}
+      valueStyle={{
+        color: weekOverWeek >= 0 ? COLORS.POSITIVE : COLORS.NEGATIVE,
+      }}
       prefix={weekOverWeek >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
       suffix="%"
     />,
@@ -90,7 +92,7 @@ const Dashboard = ({
       value={sessionHistory.rounds ?? 0}
       precision={0}
       prefix={<RightSquareOutlined />}
-    />
+    />,
   ];
 
   return (
@@ -106,10 +108,10 @@ const Dashboard = ({
           gutter: 16,
           sm: 1,
           md: 2,
-          lg: 4
+          lg: 4,
         }}
         dataSource={statisticCards}
-        renderItem={item => (
+        renderItem={(item) => (
           <List.Item>
             <Card hoverable loading={loading}>
               {item}
@@ -146,8 +148,8 @@ const Dashboard = ({
                   itemWidth: 42,
                   itemHeight: 36,
                   itemsSpacing: 14,
-                  itemDirection: "right-to-left"
-                }
+                  itemDirection: "right-to-left",
+                },
               ]}
               onClick={handleDayClicked}
             />
@@ -185,7 +187,7 @@ const Dashboard = ({
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { sessionHistory: state.history };
 };
 

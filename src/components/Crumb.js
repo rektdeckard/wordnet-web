@@ -7,7 +7,9 @@ const Crumb = ({ location, match, children }) => {
     const segments = location.pathname.split("/").slice(1);
     return segments.map((s, i) => {
       const path = "/" + segments.slice(0, i + 1).join("/");
-      const segment = s.replace(/^(.)/, c => c.toUpperCase()).replace(/_/g, " ");
+      const segment = s
+        .replace(/^(.)/, (c) => c.toUpperCase())
+        .replace(/_/g, " ");
       return (
         <Breadcrumb.Item key={i}>
           {i === segments.length - 1 ? (

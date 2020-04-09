@@ -6,12 +6,12 @@ import { Menu } from "antd";
 const mainMenuItems = [
   { key: "play", value: "Play", to: "/play" },
   { key: "explore", value: "Explore", to: "/explore" },
-  { key: "learn", value: "Learn", to: "/learn" }
+  { key: "learn", value: "Learn", to: "/learn" },
 ];
 const settingsMenuItems = [
   { key: "account", value: "Account", to: "/account" },
   { key: "settings", value: "Preferences", to: "/settings" },
-  { key: "signout", value: "Sign Out", to: "/", onClick: () => Auth.signOut() }
+  { key: "signout", value: "Sign Out", to: "/", onClick: () => Auth.signOut() },
 ];
 
 const Navigation = ({ location }) => {

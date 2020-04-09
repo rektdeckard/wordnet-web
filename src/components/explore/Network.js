@@ -14,14 +14,14 @@ import {
   setLinkThickness,
   setAnimate,
   setMotionStiffness,
-  setMotionDamping
+  setMotionDamping,
 } from "../../actions";
 import { COLORS } from "../../data/constants";
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
-const Network = props => {
+const Network = (props) => {
   const {
     repulsivity,
     distanceMin,
@@ -31,10 +31,10 @@ const Network = props => {
     linkThickness,
     animate,
     motionStiffness,
-    motionDamping
+    motionDamping,
   } = props.settings;
 
-  const handleChangeDistance = value => {
+  const handleChangeDistance = (value) => {
     setDistanceMin(value[0]);
     setDistanceMax(value[1]);
   };
@@ -228,7 +228,12 @@ const Network = props => {
       <Content>
         <TransformWrapper doubleClick={{ mode: "reset" }}>
           <TransformComponent>
-            <div style={{ height: (window.innerHeight - 300), width: (window.innerWidth - 400) }}>
+            <div
+              style={{
+                height: window.innerHeight - 300,
+                width: window.innerWidth - 400,
+              }}
+            >
               <ResponsiveNetwork
                 // height={2000}
                 // width={3000}
@@ -238,19 +243,21 @@ const Network = props => {
                 distanceMin={distanceMin}
                 distanceMax={distanceMax}
                 iterations={iterations}
-                nodeColor={n => n.color}
+                nodeColor={(n) => n.color}
                 // nodeColor={n => `hsl(${360 - (60 * n.depth - 1)}, 40%, 60%)`}
                 // nodeColor={n => nivo[n.depth]}
                 nodeBorderWidth={borderWidth}
                 nodeBorderColor={{
                   from: "color",
-                  modifiers: [["darker", 0.8]]
+                  modifiers: [["darker", 0.8]],
                 }}
                 // nodeBorderColor={n => `hsl(${360 - (60 * n.depth - 1)}, 40%, 30%)`}
                 // nodeBorderColor={n => nivo[n.depth]}
-                linkColor={t => t.source.color}
+                linkColor={(t) => t.source.color}
                 // linkColor={n => `hsl(${360 - (2 * n.distance)}, 40%, 30%)`}
-                linkThickness={linkThickness ?? (l => 2 * (2 - l.source.depth))}
+                linkThickness={
+                  linkThickness ?? ((l) => 2 * (2 - l.source.depth))
+                }
                 motionStiffness={motionStiffness}
                 motionDamping={motionDamping}
                 animate={animate}
@@ -263,7 +270,7 @@ const Network = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { settings: state.settings };
 };
 
@@ -276,5 +283,5 @@ export default connect(mapStateToProps, {
   setLinkThickness,
   setAnimate,
   setMotionStiffness,
-  setMotionDamping
+  setMotionDamping,
 })(Network);

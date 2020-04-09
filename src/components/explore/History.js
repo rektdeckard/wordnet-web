@@ -36,15 +36,15 @@ const History = ({ history, fetchHistory }) => {
             itemWidth: 42,
             itemHeight: 36,
             itemsSpacing: 14,
-            itemDirection: "right-to-left"
-          }
+            itemDirection: "right-to-left",
+          },
         ]}
       />
     </Content>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { history: state.history };
 };
 

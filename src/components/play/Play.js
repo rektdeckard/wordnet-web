@@ -10,7 +10,7 @@ import {
   List,
   Row,
   Col,
-  message
+  message,
 } from "antd";
 import { FieldTimeOutlined, DeploymentUnitOutlined } from "@ant-design/icons";
 
@@ -27,7 +27,7 @@ const Play = ({ session, initializeSession, resumeLastSession, history }) => {
   const [resuming, setResuming] = useState(false);
 
   const gameCards = useMemo(() => {
-    const handleInitialize = async gameType => {
+    const handleInitialize = async (gameType) => {
       setLoading(gameType);
       try {
         const success = await initializeSession();
@@ -42,7 +42,7 @@ const Play = ({ session, initializeSession, resumeLastSession, history }) => {
       }
     };
 
-    const handleResume = async gameType => {
+    const handleResume = async (gameType) => {
       setResuming(gameType);
       try {
         const success = await resumeLastSession();
@@ -71,14 +71,14 @@ const Play = ({ session, initializeSession, resumeLastSession, history }) => {
           {
             name: "New Session",
             onClickAction: () => handleInitialize("quickplay"),
-            onLoadAction: loading === "quickplay"
+            onLoadAction: loading === "quickplay",
           },
           {
             name: "Resume Previous",
             onClickAction: () => handleResume("quickplay"),
-            onLoadAction: resuming === "quickplay"
-          }
-        ]
+            onLoadAction: resuming === "quickplay",
+          },
+        ],
       },
       {
         title: "Endurance",
@@ -94,16 +94,16 @@ const Play = ({ session, initializeSession, resumeLastSession, history }) => {
             name: "New Session",
             disabled: true,
             onClickAction: () => handleInitialize("endurance"),
-            onLoadAction: loading === "endurance"
+            onLoadAction: loading === "endurance",
           },
           {
             name: "Resume Previous",
             disabled: true,
             onClickAction: () => handleResume("endurance"),
-            onLoadAction: resuming === "endurance"
-          }
-        ]
-      }
+            onLoadAction: resuming === "endurance",
+          },
+        ],
+      },
     ];
   }, [loading, resuming, initializeSession, resumeLastSession, history]);
 
@@ -116,7 +116,7 @@ const Play = ({ session, initializeSession, resumeLastSession, history }) => {
             grid={{
               gutter: 16,
               sm: 1,
-              md: 2
+              md: 2,
             }}
             dataSource={gameCards}
             renderItem={({ title, description, cover, actions }) => (
@@ -131,7 +131,7 @@ const Play = ({ session, initializeSession, resumeLastSession, history }) => {
                         type,
                         disabled,
                         onClickAction,
-                        onLoadAction
+                        onLoadAction,
                       }) => (
                         <Col flex="auto" key={name}>
                           <Button
@@ -159,11 +159,11 @@ const Play = ({ session, initializeSession, resumeLastSession, history }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { session: state.graph.session };
 };
 
 export default connect(mapStateToProps, {
   initializeSession,
-  resumeLastSession
+  resumeLastSession,
 })(Play);
