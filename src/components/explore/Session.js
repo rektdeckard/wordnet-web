@@ -20,8 +20,9 @@ import Download from "./Download";
 import { fetchSession } from "../../actions";
 import {
   uniqueTokensFromEntry,
-  useDensity,
   useTraversableGraph,
+  useDensity,
+  useDiameter,
 } from "../../utils";
 import { COLORS } from "../../data/constants";
 
@@ -46,7 +47,9 @@ const Session = ({ graph, fetchSession }) => {
     bfs,
     shortestPath,
   } = useTraversableGraph(graph);
-  const { density } = useDensity(graph);
+  const density = useDensity(graph);
+  const diameter = useDiameter(graph, bfs);
+
   const path = useMemo(() => shortestPath(source, target) ?? [], [
     source,
     target,
@@ -338,7 +341,7 @@ const Session = ({ graph, fetchSession }) => {
                 label="Density"
                 children={density?.toFixed(4) ?? "Unknown"}
               />
-              <Descriptions.Item label="Diameter" children={"Unknown"} />
+              <Descriptions.Item label="Diameter" children={diameter} />
               <Descriptions.Item label="Other" children={"Unknown"} />
               <Descriptions.Item label="Download Data" span={3}>
                 <Download
@@ -375,8 +378,10 @@ const Session = ({ graph, fetchSession }) => {
               return {
                 onClick: () => {
                   if (hovered.key === record.createdAt) {
+                    // setSource(null);
                     setHovered({});
                   } else {
+                    // setSource(record.source);
                     setHovered({
                       source: record.source,
                       targets: uniqueTokensFromEntry(record.target ?? ""),
@@ -407,8 +412,10 @@ const Session = ({ graph, fetchSession }) => {
               return {
                 onClick: () => {
                   if (hovered.key === record.id) {
+                    // setSource(null);
                     setHovered({});
                   } else {
+                    // setSource(record.id);
                     setHovered({
                       source: record.id,
                       showConnections: true,
@@ -438,8 +445,12 @@ const Session = ({ graph, fetchSession }) => {
               return {
                 onClick: () => {
                   if (hovered.key === record.id) {
+                    // setSource(null);
+                    // setTarget(null);
                     setHovered({});
                   } else {
+                    // setSource(record.source);
+                    // setTarget(record.target);
                     setHovered({
                       source: record.source,
                       targets: [record.target],

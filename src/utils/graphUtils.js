@@ -137,6 +137,21 @@ export const useTraversableGraph = (graph) =>
     return { ...mapGraph(graph), bfs, shortestPath };
   }, [graph]);
 
+export const useDensity = (graph) =>
+  useMemo(() => {
+    const e = graph?.edges?.length;
+    const v = graph?.nodes?.length;
+    const density = e && v ? e / (v * (v - 1)) : null;
+
+    return density;
+  }, [graph]);
+
+export const useDiameter = (graph = {}, bfs) =>
+  useMemo(() => {
+    const distances = graph?.nodes?.map((n) => bfs(n.value)) ?? [0];
+    return Math.max(...distances);
+  }, [graph, bfs]);
+
 export const createStartingNode = (nodeNetworkId) => {
   const value =
     STARTING_WORDS[Math.floor(Math.random() * STARTING_WORDS.length)];
