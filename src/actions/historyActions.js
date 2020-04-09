@@ -1,8 +1,9 @@
 import { API, graphqlOperation } from "aws-amplify";
 
 import { FETCH_HISTORY, FETCH_SESSION, SET_INITIAL_DATE } from "./types";
+import { countNodes, countResponses } from "../graphql/queries";
 
-export const fetchHistory = fromDate => async dispatch => {
+export const fetchHistory = (fromDate) => async (dispatch) => {
   const sessionData = await API.graphql(
     // TODO: figure out a better limit and way to filter, possibly via ElasticSearch
     graphqlOperation(
@@ -28,15 +29,15 @@ export const fetchHistory = fromDate => async dispatch => {
           createdAt: {
             ge:
               fromDate?.toISOString() ??
-              `${new Date().getFullYear()}-01-01T00:00:00.000Z`
-          }
-        }
+              `${new Date().getFullYear()}-01-01T00:00:00.000Z`,
+          },
+        },
       }
     )
   );
 
   const entries = sessionData.data.listWordNets.items
-    .map(entry => {
+    .map((entry) => {
       const createdAt = new Date(entry.createdAt);
       const year = createdAt.getFullYear();
       const month = ("0" + (createdAt.getMonth() + 1)).slice(-2);
@@ -45,7 +46,7 @@ export const fetchHistory = fromDate => async dispatch => {
       return {
         id: entry.id,
         // day: entry.createdAt.split   ("T")[0]
-        day: `${year}-${month}-${day}`
+        day: `${year}-${month}-${day}`,
       };
     })
     .reduce((acc, curr) => {
@@ -57,30 +58,15 @@ export const fetchHistory = fromDate => async dispatch => {
       return acc;
     }, {});
 
-  const sessionsByDay = Object.keys(entries).map(day => ({
+  const sessionsByDay = Object.keys(entries).map((day) => ({
     day,
-    value: entries[day]
+    value: entries[day],
   }));
 
   // FIXME: Response Mapping Template only allows 1000 items in a list??
-  const nodeCount = await API.graphql(
-    graphqlOperation(
-      /* GraphQL */ `
-        {
-          countNodes
-        }
-      `,
-      {}
-    )
-  );
+  const nodeCount = await API.graphql(graphqlOperation(countNodes));
 
-  const responseCount = await API.graphql(
-    graphqlOperation(/* GraphQL */ `
-      {
-        countResponses
-      }
-    `)
-  );
+  const responseCount = await API.graphql(graphqlOperation(countResponses));
 
   dispatch({
     type: FETCH_HISTORY,
@@ -88,19 +74,19 @@ export const fetchHistory = fromDate => async dispatch => {
       sessions: sessionData.data.listWordNets.items,
       sessionsByDay,
       rounds: responseCount.data.countResponses,
-      words: nodeCount.data.countNodes
-    }
+      words: nodeCount.data.countNodes,
+    },
   });
 };
 
-export const setInitialDate = day => {
+export const setInitialDate = (day) => {
   return {
     type: SET_INITIAL_DATE,
-    payload: day
+    payload: day,
   };
 };
 
-export const fetchSession = id => async dispatch => {
+export const fetchSession = (id) => async (dispatch) => {
   const res = await API.graphql(
     graphqlOperation(
       /* GraphQL */ `
@@ -171,8 +157,8 @@ export const fetchSession = id => async dispatch => {
       nodes: res.data.getWordNet?.nodes?.items,
       edges: res.data.getWordNet?.edges?.items,
       responses: res.data.getWordNet?.responses?.items,
-      createdAt: res.data.getWordNet?.createdAt
-    }
+      createdAt: res.data.getWordNet?.createdAt,
+    },
   });
 };
 
@@ -244,13 +230,13 @@ export const fetchAllSessions = async () => {
   const reducer = ({ nodes, edges, responses }, curr) => ({
     nodes: [...nodes, ...curr.nodes.items],
     edges: [...edges, ...curr.edges.items],
-    responses: [...responses, ...curr.responses.items]
+    responses: [...responses, ...curr.responses.items],
   });
 
   const allResponses = response.data.listWordNets.items.reduce(reducer, {
     nodes: [],
     edges: [],
-    responses: []
+    responses: [],
   });
 
   return allResponses;
