@@ -4,7 +4,7 @@ import { useMeasure } from "react-use";
 import { Network } from "@nivo/network";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
-import { COLORS } from '../data/constants';
+import { COLORS } from "../data/constants";
 
 const defaultOptions = {
   defaultScale: 0.5,
@@ -35,8 +35,9 @@ const GraphViewer = ({
 
   const computeLinkColor = (link) => {
     if (hovered.isPath) {
-      const index = hovered.targets?.indexOf(link.source.id);
-      if (index >= 0 && hovered.targets[index + 1] === link.target.id) {
+      const sourceIndex = hovered.targets?.includes(link.source.id);
+      const targetIndex = hovered.targets?.includes(link.target.id);
+      if (sourceIndex && targetIndex) {
         return COLORS.HOVERED;
       } else return link.source.color;
     } else if (
@@ -50,8 +51,9 @@ const GraphViewer = ({
 
   const computeLinkThickness = (link) => {
     if (hovered.isPath) {
-      const index = hovered.targets?.indexOf(link.source.id);
-      if (index >= 0 && hovered.targets[index + 1] === link.target.id) {
+      const sourceIndex = hovered.targets?.includes(link.source.id);
+      const targetIndex = hovered.targets?.includes(link.target.id);
+      if (sourceIndex && targetIndex) {
         return settings.linkThickness * 2;
       } else return settings.linkThickness;
     } else if (

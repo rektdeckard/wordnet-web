@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { STARTING_WORDS, GRAPH_COLORS } from "../data/constants";
 
-export const mapNodes = graph =>
-  graph?.nodes?.map(node => ({
+export const mapNodes = (graph) =>
+  graph?.nodes?.map((node) => ({
     id: node.value,
     depth: node.depth,
     radius: node.radius,
@@ -10,34 +10,34 @@ export const mapNodes = graph =>
     degree:
       (node.sources?.items?.length ?? 0) + (node.targets?.items?.length ?? 0),
     createdAt: node.createdAt,
-    owner: node.owner
+    owner: node.owner,
   })) ?? [];
 
-export const mapEdges = graph =>
-  graph?.edges?.map(edge => ({
+export const mapEdges = (graph) =>
+  graph?.edges?.map((edge) => ({
     id: edge.id,
     source: edge.source.value,
     target: edge.target.value,
     distance: edge.distance,
     createdAt: edge.createdAt,
-    owner: edge.owner
+    owner: edge.owner,
   })) ??
   graph?.links ??
   [];
 
-export const mapResponses = graph =>
+export const mapResponses = (graph) =>
   graph?.responses?.map(
-    response =>
+    (response) =>
       ({
         source: response.source.value,
         target: response.value,
         responseTime: response.responseTime,
         createdAt: response.createdAt,
-        owner: response.owner
+        owner: response.owner,
       } ?? [])
   ) ?? [];
 
-export const mapGraph = graph => {
+export const mapGraph = (graph) => {
   const nodes = mapNodes(graph);
   const links = mapEdges(graph);
   const responses = mapResponses(graph);
@@ -48,19 +48,22 @@ export const mapGraph = graph => {
     responses,
     createdAt: graph?.createdAt,
     session: graph?.session,
-    currentNode: graph?.currentNode
+    currentNode: graph?.currentNode,
   };
 };
 
-export const useGraph = graph => useMemo(() => mapGraph(graph), [graph]);
+export const useGraph = (graph) => useMemo(() => mapGraph(graph), [graph]);
 
-export const useTraversableGraph = graph =>
+export const useTraversableGraph = (graph) =>
   useMemo(() => {
     const nodeMap = {};
 
     if (graph.nodes) {
-      graph.nodes.forEach(n => {
-        nodeMap[n.value] = n.sources.items.map(i => i.target.value);
+      graph.nodes.forEach((n) => {
+        nodeMap[n.value] = [
+          ...n.sources.items.map((i) => i.target.value),
+          ...n.targets.items.map((i) => i.source.value),
+        ];
       });
     }
 
@@ -75,7 +78,7 @@ export const useTraversableGraph = graph =>
 
         console.log("distance from " + source + " to " + u + ": " + count);
         if (nodeMap[u]) {
-          nodeMap[u].forEach(v => {
+          nodeMap[u].forEach((v) => {
             if (!visited[v]) {
               visited[v] = true;
               queue.push({ vertex: v, count: count + 1 });
@@ -86,7 +89,7 @@ export const useTraversableGraph = graph =>
     }
 
     function shortestPath(source, target) {
-      if (!source || !target) return;
+      if (!source || !target) return [];
 
       if (source === target) {
         return [source];
@@ -130,7 +133,7 @@ export const useTraversableGraph = graph =>
     return { ...mapGraph(graph), bfs, shortestPath };
   }, [graph]);
 
-export const createStartingNode = nodeNetworkId => {
+export const createStartingNode = (nodeNetworkId) => {
   const value =
     STARTING_WORDS[Math.floor(Math.random() * STARTING_WORDS.length)];
   return {
@@ -138,20 +141,20 @@ export const createStartingNode = nodeNetworkId => {
     radius: 8,
     depth: 1,
     color: GRAPH_COLORS[GRAPH_COLORS.length - 1],
-    nodeNetworkId
+    nodeNetworkId,
   };
 };
 
 export const createMissingNodes = (tokens, nodes, currentNode) => {
   // Create new node for each token that does not already have one
-  const existingTokens = nodes.map(n => n.value);
+  const existingTokens = nodes.map((n) => n.value);
   return tokens
-    .filter(t => !existingTokens.includes(t))
-    .map(t => ({
+    .filter((t) => !existingTokens.includes(t))
+    .map((t) => ({
       value: t,
       radius: 8,
       depth: currentNode.depth + 1,
-      color: GRAPH_COLORS[(currentNode.depth - 1) % GRAPH_COLORS.length]
+      color: GRAPH_COLORS[(currentNode.depth - 1) % GRAPH_COLORS.length],
     }));
 };
 
@@ -159,27 +162,27 @@ export const createMissingLinks = (tokens, links, currentNode) => {
   // Create links from current node to each token's new or extant node
   // TODO: Update distance for extant links to represent stronger association?
   const existingLinks = links
-    .filter(l => l.source === currentNode.value)
-    .map(l => l.target);
+    .filter((l) => l.source === currentNode.value)
+    .map((l) => l.target);
 
   return tokens
-    .filter(t => !existingLinks.includes(t))
-    .map(t => ({
+    .filter((t) => !existingLinks.includes(t))
+    .map((t) => ({
       source: currentNode.value,
       target: t,
-      distance: 30
+      distance: 30,
     }));
 };
 
 export const findNodesToLink = (tokens, nodes) =>
-  nodes.filter(n => tokens.includes(n.value));
+  nodes.filter((n) => tokens.includes(n.value));
 
 /*
  * Reduces nodes with the same value by the same owner into a single node, whose
  * degree is the sum of the input node degrees and frequency is the count
  */
 // FIXME: does this make sense? aren't we double-counting any identical edges?
-export const condenseNodes = nodes => {
+export const condenseNodes = (nodes) => {
   const nodeMap = nodes.reduce((acc, { id, degree, owner }) => {
     if (acc[`${id}-${owner}`]) {
       const existingNode = acc[`${id}-${owner}`];
@@ -189,8 +192,8 @@ export const condenseNodes = nodes => {
           id,
           degree: existingNode.degree + degree,
           owner,
-          frequency: existingNode.frequency + 1
-        }
+          frequency: existingNode.frequency + 1,
+        },
       };
     }
 
@@ -204,7 +207,7 @@ export const condenseNodes = nodes => {
  * Reduces edges with the same source and target and by the same owner into
  * a single edge, whose frequency is the count of the input edges
  */
-export const condenseEdges = edges => {
+export const condenseEdges = (edges) => {
   const edgeMap = edges.reduce((acc, { source, target, owner }) => {
     if (acc[`${source}-${target}-${owner}`]) {
       const existingNode = acc[`${source}-${target}-${owner}`];
@@ -214,14 +217,14 @@ export const condenseEdges = edges => {
           source,
           target,
           owner,
-          frequency: existingNode.frequency + 1
-        }
+          frequency: existingNode.frequency + 1,
+        },
       };
     }
 
     return {
       ...acc,
-      [`${source}-${target}-${owner}`]: { source, target, owner, frequency: 1 }
+      [`${source}-${target}-${owner}`]: { source, target, owner, frequency: 1 },
     };
   }, {});
 
