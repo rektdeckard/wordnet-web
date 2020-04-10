@@ -1,51 +1,79 @@
-import React from "react";
-import {
-  InteractiveForceGraph,
-  ForceGraphNode,
-  ForceGraphLink,
-} from "react-vis-force";
+import React, { useRef, useMemo } from "react";
+import Graphin from "@antv/graphin";
+import "@antv/graphin/dist/index.css";
 
-const Graph = () => {
-  return (
-    <InteractiveForceGraph
-      simulationOptions={{ animate: true, height: 600, width: 1100 }}
-      labelAttr="label"
-      showLabels
-      highlightDependencies
-      onSelectNode={(node) => console.log(node)}
-    >
-      <ForceGraphNode node={{ id: 1, label: "smart" }} fill="blue" />
-      <ForceGraphNode node={{ id: 2, label: "knowledge" }} fill="red" />
-      <ForceGraphLink link={{ source: 1, target: 2 }} />
-      <ForceGraphNode node={{ id: 3, label: "capacity" }} fill="red" />
-      <ForceGraphLink link={{ source: 2, target: 3 }} />
-      <ForceGraphNode node={{ id: 4, label: "types" }} fill="red" />
-      <ForceGraphLink link={{ source: 4, target: 2 }} />
-      <ForceGraphNode node={{ id: 5, label: "information" }} fill="red" />
-      <ForceGraphLink link={{ source: 5, target: 2 }} />
-      <ForceGraphLink link={{ source: 5, target: 1 }} />
-      <ForceGraphLink link={{ source: 5, target: 12 }} />
-      <ForceGraphNode node={{ id: 6, label: "amount" }} fill="red" />
-      <ForceGraphLink link={{ source: 6, target: 5 }} />
-      <ForceGraphLink link={{ source: 6, target: 10 }} />
-      <ForceGraphNode node={{ id: 7, label: "hold" }} fill="red" />
-      <ForceGraphLink link={{ source: 7, target: 11 }} />
-      <ForceGraphLink link={{ source: 1, target: 8 }} />
-      <ForceGraphNode node={{ id: 8, label: "kinds" }} fill="red" />
-      <ForceGraphLink link={{ source: 8, target: 12 }} />
-      <ForceGraphNode node={{ id: 9, label: "ideas" }} fill="red" />
-      <ForceGraphLink link={{ source: 9, target: 5 }} />
-      <ForceGraphLink link={{ source: 9, target: 2 }} />
-      <ForceGraphNode node={{ id: 10, label: "quantity" }} fill="red" />
-      <ForceGraphLink link={{ source: 10, target: 6 }} />
-      <ForceGraphLink link={{ source: 10, target: 11 }} />
-      <ForceGraphNode node={{ id: 11, label: "have" }} fill="red" />
-      <ForceGraphLink link={{ source: 11, target: 3 }} />
-      <ForceGraphNode node={{ id: 12, label: "categories" }} fill="red" />
-      <ForceGraphLink link={{ source: 12, target: 2 }} />
-      <ForceGraphLink link={{ source: 12, target: 4 }} />
-    </InteractiveForceGraph>
+import { COLORS, GRAPH_COLORS } from '../data/constants'
+
+const Graph = ({ graph, hovered }) => {
+  const ref = useRef();
+  console.log(ref.current);
+
+  const nodes = useMemo(
+    () =>
+      graph.nodes?.map((n) => ({
+        id: n.id,
+        data: {
+          id: n.id,
+          label: n.id,
+        },
+        style: {
+          opacity: 0.1
+        },
+        layout: {
+          degree: n.degree,
+          force: {
+            mass: n.degree
+          }
+        },
+        degree: n.degree,
+        shape: "CircleNode",
+        style: {
+          nodeSize: n.degree * 2 + 4,
+          // primaryColor: GRAPH_COLORS[n.depth],
+          primaryColor: COLORS.ACTIVE,
+          fontSize: 18,
+        },
+      })) ?? [],
+    [graph]
   );
+
+  const edges = useMemo(
+    () =>
+      graph.links?.map((e) => ({
+        source: e.source,
+        target: e.target,
+        data: e,
+      })) ?? [],
+    [graph]
+  );
+
+  console.log(hovered);
+  console.log({ nodes, edges });
+  const apis = ref.current?.getApis?.() ?? {};
+  const { highlight, search } = apis;
+  highlight && hovered.source && highlight([hovered.source, ...(hovered.targets ?? [])]);
+
+  return (
+    <Graphin
+      ref={ref}
+      data={{ nodes, edges }}
+      layout={{
+        name: "force",
+        options: {
+          damping: 0.5,
+          stiffness: 1000,
+          minEnergyThreshold: 0.1,
+          MaxIterations: 500,
+          repulsion: 2000.0,
+          // animation: false,
+        },
+      }}
+      options={{ wheelSensitivity: 4 }}
+      // extend={{
+      //   nodeShape: () => [{ name: "RectNode", render: renderNode}]
+      // }}
+    />
+   );
 };
 
 export default Graph;
