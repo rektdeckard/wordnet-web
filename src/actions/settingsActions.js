@@ -1,48 +1,55 @@
 import { UPDATE_SETTING } from "../actions/types";
 
-const updateSettings = settings => dispatch => {
+const updateSettings = (settings) => (dispatch) => {
   dispatch({
     type: UPDATE_SETTING,
-    payload: settings
+    payload: settings,
   });
 };
 
 // TODO: Implement extra validation on each property, even though the UI layer should it too?
 
-export const setRepulsivity = repulsivity => dispatch => {
+export const setRepulsivity = (repulsivity) => (dispatch) => {
   dispatch(updateSettings({ repulsivity }));
 };
 
-export const setDistanceMin = distanceMin => dispatch => {
-  dispatch(updateSettings({ distanceMin }));
-};
-
-export const setDistanceMax = distanceMax => dispatch => {
-  dispatch(updateSettings({ distanceMax }));
-};
-
-export const setIterations = iterations => dispatch => {
+export const setIterations = (iterations) => (dispatch) => {
   dispatch(updateSettings({ iterations }));
 };
 
-export const setBorderWidth = borderWidth => dispatch => {
-  dispatch(updateSettings({ borderWidth }));
+export const setDefaultNodeSize = (defaultNodeSize) => (dispatch) => {
+  dispatch(updateSettings({ defaultNodeSize }));
 };
 
-export const setLinkThickness = linkThickness => dispatch => {
-  if (!linkThickness) linkThickness = 1;
-  if (linkThickness > 20) linkThickness = 20;
-  dispatch(updateSettings({ linkThickness }));
+export const setNodeScale = (nodeScale) => (dispatch) => {
+  dispatch(updateSettings({ nodeScale }));
 };
 
-export const setAnimate = animate => dispatch => {
-  dispatch(updateSettings({ animate }));
+export const setAutoScaleSpringLength = (autoScaleSpringLength) => (
+  dispatch
+) => {
+  dispatch(updateSettings({ autoScaleSpringLength }));
 };
 
-export const setMotionStiffness = motionStiffness => dispatch => {
+export const setDefaultSpringLength = (defaultSpringLength) => (dispatch) => {
+  dispatch(updateSettings({ defaultSpringLength }));
+};
+
+export const setMotionStiffness = (motionStiffness) => (dispatch) => {
   dispatch(updateSettings({ motionStiffness }));
 };
 
-export const setMotionDamping = motionDamping => dispatch => {
+export const setMotionDamping = (motionDamping) => (dispatch) => {
   dispatch(updateSettings({ motionDamping }));
+};
+
+export const setMotionThreshold = (motionThreshold) => (dispatch) => {
+  dispatch(updateSettings({ motionThreshold }));
+};
+
+export const setMaxSpeed = (maxSpeed) => (dispatch) => {
+  dispatch(updateSettings({ maxSpeed }));
+};
+export const setAnimate = (animate) => (dispatch) => {
+  dispatch(updateSettings({ animate }));
 };

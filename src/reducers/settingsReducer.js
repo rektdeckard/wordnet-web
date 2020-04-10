@@ -1,15 +1,17 @@
 import { UPDATE_SETTING } from "../actions/types";
 
 const INITIAL_STATE = {
-  repulsivity: 60,
-  distanceMin: 10,
-  distanceMax: 500,
-  iterations: 90,
-  borderWidth: 2,
-  linkThickness: 2,
+  repulsivity: 2000,
+  iterations: 500,
+  defaultNodeSize: 4,
+  nodeScale: 2,
+  autoScaleSpringLength: false,
+  defaultSpringLength: 100,
+  motionStiffness: 1000,
+  motionDamping: 0.5,
+  motionThreshold: 0.1,
+  maxSpeed: 1000,
   animate: true,
-  motionStiffness: 40,
-  motionDamping: 10
 };
 
 export default (state = INITIAL_STATE, action) => {

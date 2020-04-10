@@ -15,7 +15,7 @@ import {
 import { ClockCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 
-import GraphViewer from "../Graph";
+import NetworkGraphInteractive from "../NetworkGraphInteractive";
 import Download from "./Download";
 import { fetchSession } from "../../actions";
 import {
@@ -288,7 +288,7 @@ const Session = ({ graph, fetchSession }) => {
     <>
       <Layout style={{ background: COLORS.CARD_BACKGROUND }}>
         <Content>
-          <GraphViewer
+          <NetworkGraphInteractive
             graph={loading ? { nodes: [], links: [] } : { nodes, links }}
             // loading={loading}
             hovered={hovered}

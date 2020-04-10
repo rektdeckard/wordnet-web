@@ -14,7 +14,7 @@ import {
 
 import { submitResponse, selectRandomNode, submitSession } from "../../actions";
 import { useGraph } from "../../utils";
-import GraphViewer from "../GraphViewer";
+import NetworkGraph from "../NetworkGraph";
 import TimedProgress from "./TimedProgress";
 import { COLORS } from "../../data/constants";
 
@@ -95,7 +95,7 @@ const QuickPlay = ({
       <Content
         style={{ padding: "0px 0px", background: COLORS.CARD_BACKGROUND }}
       >
-        <GraphViewer
+        <NetworkGraph
           graph={{ nodes, links }}
           header={
             <Title level={3} style={{ textAlign: "center", paddingTop: 16 }}>

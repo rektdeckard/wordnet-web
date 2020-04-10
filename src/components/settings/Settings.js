@@ -8,41 +8,42 @@ import {
   DoubleRightOutlined,
 } from "@ant-design/icons";
 
-import data from "../../data/sample3.json";
 import {
   setRepulsivity,
-  setDistanceMin,
-  setDistanceMax,
   setIterations,
-  setBorderWidth,
-  setLinkThickness,
-  setAnimate,
+  setDefaultNodeSize,
+  setNodeScale,
+  setAutoScaleSpringLength,
+  setDefaultSpringLength,
   setMotionStiffness,
   setMotionDamping,
+  setMotionThreshold,
+  setMaxSpeed,
+  setAnimate,
 } from "../../actions";
-import GraphViewer from "../GraphViewer.js";
+import NetworkGraphInteractive from "../NetworkGraphInteractive";
+import { useGraph } from "../../utils";
+import data from "../../data/sample3.json";
 import { COLORS } from "../../data/constants";
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
 const Settings = (props) => {
+  const { nodes, links } = useGraph(data);
   const {
     repulsivity,
-    distanceMin,
-    distanceMax,
     iterations,
-    borderWidth,
-    linkThickness,
-    animate,
+    defaultNodeSize,
+    nodeScale,
+    autoScaleSpringLength,
+    defaultSpringLength,
     motionStiffness,
     motionDamping,
+    motionThreshold,
+    maxSpeed,
+    animate,
   } = props.settings;
-
-  const handleChangeDistance = (value) => {
-    setDistanceMin(value[0]);
-    setDistanceMax(value[1]);
-  };
 
   const renderSider = () => (
     <Sider
@@ -54,7 +55,7 @@ const Settings = (props) => {
       <Menu
         mode="inline"
         selectable={false}
-        defaultOpenKeys={["sim"]}
+        defaultOpenKeys={["sim", "nodes", "edges", "motion"]}
         style={{ height: "100%" }}
       >
         <SubMenu
@@ -72,39 +73,10 @@ const Settings = (props) => {
               <Col span={4}>
                 <InputNumber
                   size="small"
-                  min={1}
-                  max={100}
+                  min={0}
+                  step={1000}
                   value={repulsivity}
                   onChange={props.setRepulsivity}
-                />
-              </Col>
-            </Row>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Row>
-              <Col span={12}>Distance Min</Col>
-              <Col span={4}>
-                {" "}
-                <InputNumber
-                  size="small"
-                  min={1}
-                  max={9999}
-                  value={distanceMin}
-                  onChange={props.setDistanceMin}
-                />
-              </Col>
-            </Row>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Row>
-              <Col span={12}>Distance Max</Col>
-              <Col span={4}>
-                <InputNumber
-                  size="small"
-                  min={1}
-                  max={9999}
-                  value={distanceMax}
-                  onChange={props.setDistanceMax}
                 />
               </Col>
             </Row>
@@ -115,8 +87,9 @@ const Settings = (props) => {
               <Col span={4}>
                 <InputNumber
                   size="small"
-                  min={60}
-                  max={260}
+                  min={0}
+                  max={100000}
+                  step={100}
                   value={iterations}
                   onChange={props.setIterations}
                 />
@@ -133,40 +106,68 @@ const Settings = (props) => {
             </span>
           }
         >
-          <Menu.Item key="5">
+          <Menu.Item key="size">
             <Row>
-              <Col span={12}>Border Width</Col>
+              <Col span={12}>Default Size</Col>
+              <Col span={4}>
+                <InputNumber
+                  size="small"
+                  min={0}
+                  value={defaultNodeSize}
+                  onChange={props.setDefaultNodeSize}
+                />
+              </Col>
+            </Row>
+          </Menu.Item>
+          <Menu.Item key="degreescale">
+            <Row>
+              <Col span={12}>Degree Scaling</Col>
               <Col span={4}>
                 <InputNumber
                   size="small"
                   min={0}
                   max={20}
-                  value={borderWidth}
-                  onChange={props.setBorderWidth}
+                  precision={1}
+                  step={1}
+                  value={nodeScale}
+                  onChange={props.setNodeScale}
                 />
               </Col>
             </Row>
           </Menu.Item>
         </SubMenu>
         <SubMenu
-          key="links"
+          key="edges"
           title={
             <span>
               <ForkOutlined />
-              Links
+              Edges
             </span>
           }
         >
-          <Menu.Item key="6">
+          <Menu.Item key="autoscale">
             <Row>
-              <Col span={12}>Link Thickness</Col>
+              <Col span={12}>Auto-scaling</Col>
+              <Col span={4}>
+                <Switch
+                  size="small"
+                  checked={autoScaleSpringLength}
+                  onChange={props.setAutoScaleSpringLength}
+                />
+              </Col>
+            </Row>
+          </Menu.Item>
+          <Menu.Item key="length">
+            <Row>
+              <Col span={12}>Default Length</Col>
               <Col span={4}>
                 <InputNumber
                   size="small"
-                  min={1}
-                  max={20}
-                  value={linkThickness}
-                  onChange={props.setLinkThickness}
+                  min={0}
+                  step={10}
+                  value={defaultSpringLength}
+                  onChange={props.setDefaultSpringLength}
+                  disabled={autoScaleSpringLength}
                 />
               </Col>
             </Row>
@@ -181,7 +182,7 @@ const Settings = (props) => {
             </span>
           }
         >
-          <Menu.Item key="7">
+          <Menu.Item key="animate">
             <Row>
               <Col span={12}>Animate</Col>
               <Col span={4}>
@@ -193,30 +194,64 @@ const Settings = (props) => {
               </Col>
             </Row>
           </Menu.Item>
-          <Menu.Item key="8">
+          <Menu.Item key="stiffness">
             <Row>
               <Col span={12}>Motion Stiffness</Col>
               <Col span={4}>
                 <InputNumber
                   size="small"
                   min={0}
-                  max={300}
+                  max={10000}
+                  step={100}
                   value={motionStiffness}
                   onChange={props.setMotionStiffness}
                 />
               </Col>
             </Row>
           </Menu.Item>
-          <Menu.Item key="9">
+          <Menu.Item key="damping">
             <Row>
               <Col span={12}>Motion Damping</Col>
               <Col span={4}>
                 <InputNumber
                   size="small"
                   min={0}
-                  max={40}
+                  max={1}
+                  step={0.01}
+                  precision={2}
                   value={motionDamping}
                   onChange={props.setMotionDamping}
+                />
+              </Col>
+            </Row>
+          </Menu.Item>
+          <Menu.Item key="threshold">
+            <Row>
+              <Col span={12}>Motion Threshold</Col>
+              <Col span={4}>
+                <InputNumber
+                  size="small"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  precision={2}
+                  value={motionThreshold}
+                  onChange={props.setMotionThreshold}
+                />
+              </Col>
+            </Row>
+          </Menu.Item>
+          <Menu.Item key="speed">
+            <Row>
+              <Col span={12}>Max Speed</Col>
+              <Col span={4}>
+                <InputNumber
+                  size="small"
+                  min={0}
+                  max={1000}
+                  step={10}
+                  value={maxSpeed}
+                  onChange={props.setMaxSpeed}
                 />
               </Col>
             </Row>
@@ -226,14 +261,13 @@ const Settings = (props) => {
     </Sider>
   );
 
-  // TODO: Implement window-resize event hook to properly size the container div
   return (
     <Layout style={{ background: COLORS.CARD_BACKGROUND }}>
       {renderSider()}
       <Content>
-        <GraphViewer
-          graph={{ nodes: data.nodes, links: data.links }}
-          componentStyle={{ height: "80vh", width: window.innerWidth - 116 }}
+        <NetworkGraphInteractive
+          graph={{ nodes, links }}
+          style={{ height: "76vh" }}
         />
       </Content>
     </Layout>
@@ -246,12 +280,14 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   setRepulsivity,
-  setDistanceMin,
-  setDistanceMax,
   setIterations,
-  setBorderWidth,
-  setLinkThickness,
-  setAnimate,
+  setDefaultNodeSize,
+  setNodeScale,
+  setAutoScaleSpringLength,
+  setDefaultSpringLength,
   setMotionStiffness,
   setMotionDamping,
+  setMotionThreshold,
+  setMaxSpeed,
+  setAnimate,
 })(Settings);
