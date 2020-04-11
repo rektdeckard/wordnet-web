@@ -1,7 +1,7 @@
 import { UPDATE_SETTING } from "../actions/types";
 
 const INITIAL_STATE = {
-  repulsivity: 2000,
+  repulsivity: 5000,
   iterations: 500,
   defaultNodeSize: 4,
   nodeScale: 2,
