@@ -67,72 +67,66 @@ export const useTraversableGraph = (graph) =>
       });
     }
 
-    function bfs(source) {
-      let queue = [{ vertex: source, count: 0 }];
-      let visited = { [source]: true };
+    const bfs = (source) => {
+      const queue = [{ vertex: source, count: 0 }];
+      const visited = { [source]: true };
       let tail = 0;
       let maxDistance = 0;
 
-      while (tail < queue.length) {
-        let u = queue[tail].vertex;
-        let count = queue[tail++].count; // pop vertex off queue
-
-        // console.log("distance from " + source + " to " + u + ": " + count);
-        if (nodeMap[u]) {
-          nodeMap[u].forEach((v) => {
-            if (!visited[v]) {
-              visited[v] = true;
-              queue.push({ vertex: v, count: count + 1 });
-              maxDistance = Math.max(count + 1, maxDistance);
-            }
-          });
+      const visit = (neighbor, count) => {
+        if (!visited[neighbor]) {
+          visited[neighbor] = true;
+          queue.push({ vertex: neighbor, count: count + 1 });
+          maxDistance = Math.max(count + 1, maxDistance);
         }
+      };
+
+      while (tail < queue.length) {
+        const last = queue[tail].vertex;
+        const count = queue[tail++].count; // pop vertex off queue
+
+        if (nodeMap[last])
+          nodeMap[last].forEach((neighbor) => visit(neighbor, count));
       }
 
       return maxDistance;
-    }
+    };
 
-    function shortestPath(source, target) {
+    const shortestPath = (source, target) => {
       if (!source || !target) return [];
+      if (source === target) return [source];
 
-      if (source === target) {
-        return [source];
-      }
-
-      let queue = [source];
-      let visited = { [source]: true };
-      let predecessor = {};
+      const queue = [source];
+      const visited = { [source]: true };
+      const predecessor = {};
       let tail = 0;
 
       while (tail < queue.length) {
-        let u = queue[tail++]; // pop vertex off queue
-        let neighbors = nodeMap[u];
+        let last = queue[tail++]; // pop vertex off queue
+        let neighbors = nodeMap[last];
 
         if (neighbors) {
-          for (var i = 0; i < neighbors.length; ++i) {
-            var v = neighbors[i];
-            if (visited[v]) {
-              continue;
-            }
-            visited[v] = true;
-            if (v === target) {
+          for (let neighbor of neighbors) {
+            if (visited[neighbor]) continue;
+            
+            visited[neighbor] = true;
+            if (neighbor === target) {
               // Check if the path is complete.
-              var path = [v]; // If so, backtrack through the path.
-              while (u !== source) {
-                path.push(u);
-                u = predecessor[u];
+              const path = [neighbor]; // If so, backtrack through the path.
+              while (last !== source) {
+                path.push(last);
+                last = predecessor[last];
               }
-              path.push(u);
+              path.push(last);
               path.reverse();
               return path;
             }
-            predecessor[v] = u;
-            queue.push(v);
+            predecessor[neighbor] = last;
+            queue.push(neighbor);
           }
         }
       }
-      // console.log("there is no path from " + source + " to " + target);
-    }
+    };
 
     return { ...mapGraph(graph), bfs, shortestPath };
   }, [graph]);
