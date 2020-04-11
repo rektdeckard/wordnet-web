@@ -1,6 +1,7 @@
 import { UPDATE_SETTING } from "../actions/types";
 
 const INITIAL_STATE = {
+  type: "force",
   repulsivity: 5000,
   iterations: 500,
   defaultNodeSize: 4,

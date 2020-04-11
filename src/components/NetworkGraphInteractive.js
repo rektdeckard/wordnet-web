@@ -38,7 +38,7 @@ const NetworkGraphInteractive = ({
           fontSize: 18,
         },
       })) ?? [],
-    [graph]
+    [graph, settings]
   );
 
   const edges = useMemo(
@@ -72,7 +72,7 @@ const NetworkGraphInteractive = ({
         ref={ref}
         data={{ nodes, edges }}
         layout={{
-          name: "force",
+          name: settings.type,
           options: {
             damping: settings.motionDamping,
             stiffness: settings.motionStiffness,

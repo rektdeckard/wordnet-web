@@ -7,7 +7,9 @@ const updateSettings = (settings) => (dispatch) => {
   });
 };
 
-// TODO: Implement extra validation on each property, even though the UI layer should it too?
+export const setType = (type) => (dispatch) => {
+  dispatch(updateSettings({ type }));
+};
 
 export const setRepulsivity = (repulsivity) => (dispatch) => {
   dispatch(updateSettings({ repulsivity }));
