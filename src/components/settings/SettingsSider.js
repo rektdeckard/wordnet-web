@@ -73,8 +73,13 @@ const SettingsSider = (props) => {
           <Menu.Item key="type">
             <Row>
               <Col span={12}>Type</Col>
-              <Col span={4}>
-                <Select value={type} onChange={props.setType}>
+              <Col span={12}>
+                <Select
+                  value={type}
+                  size="small"
+                  style={{ width: "100%" }}
+                  onChange={props.setType}
+                >
                   <Option value="force">Force</Option>
                   <Option value="circle">Circle</Option>
                   <Option value="concentric">Concentric</Option>
@@ -88,13 +93,14 @@ const SettingsSider = (props) => {
           <Menu.Item key="repulsivity">
             <Row>
               <Col span={12}>Repulsivity</Col>
-              <Col span={4}>
+              <Col span={12}>
                 <InputNumber
                   size="small"
                   min={0}
                   step={1000}
                   value={repulsivity}
                   onChange={props.setRepulsivity}
+                  disabled={type !== "force"}
                 />
               </Col>
             </Row>
@@ -102,7 +108,7 @@ const SettingsSider = (props) => {
           <Menu.Item key="iterations">
             <Row>
               <Col span={12}>Iterations</Col>
-              <Col span={4}>
+              <Col span={12}>
                 <InputNumber
                   size="small"
                   min={0}
@@ -110,6 +116,7 @@ const SettingsSider = (props) => {
                   step={100}
                   value={iterations}
                   onChange={props.setIterations}
+                  disabled={type !== "force"}
                 />
               </Col>
             </Row>
@@ -127,7 +134,7 @@ const SettingsSider = (props) => {
           <Menu.Item key="size">
             <Row>
               <Col span={12}>Default Size</Col>
-              <Col span={4}>
+              <Col span={12}>
                 <InputNumber
                   size="small"
                   min={0}
@@ -140,7 +147,7 @@ const SettingsSider = (props) => {
           <Menu.Item key="degreescale">
             <Row>
               <Col span={12}>Degree Scaling</Col>
-              <Col span={4}>
+              <Col span={12}>
                 <InputNumber
                   size="small"
                   min={0}
@@ -166,11 +173,12 @@ const SettingsSider = (props) => {
           <Menu.Item key="autoscale">
             <Row>
               <Col span={12}>Auto-scaling</Col>
-              <Col span={4}>
+              <Col span={12}>
                 <Switch
                   size="small"
                   checked={autoScaleSpringLength}
                   onChange={props.setAutoScaleSpringLength}
+                  disabled={type !== "force"}
                 />
               </Col>
             </Row>
@@ -178,14 +186,14 @@ const SettingsSider = (props) => {
           <Menu.Item key="length">
             <Row>
               <Col span={12}>Default Length</Col>
-              <Col span={4}>
+              <Col span={12}>
                 <InputNumber
                   size="small"
                   min={0}
                   step={10}
                   value={defaultSpringLength}
                   onChange={props.setDefaultSpringLength}
-                  disabled={autoScaleSpringLength}
+                  disabled={type !== "force" || autoScaleSpringLength}
                 />
               </Col>
             </Row>
@@ -203,11 +211,12 @@ const SettingsSider = (props) => {
           <Menu.Item key="animate">
             <Row>
               <Col span={12}>Animate</Col>
-              <Col span={4}>
+              <Col span={12}>
                 <Switch
                   size="small"
                   checked={animate}
                   onChange={props.setAnimate}
+                  disabled={type !== "force"}
                 />
               </Col>
             </Row>
@@ -215,7 +224,7 @@ const SettingsSider = (props) => {
           <Menu.Item key="stiffness">
             <Row>
               <Col span={12}>Motion Stiffness</Col>
-              <Col span={4}>
+              <Col span={12}>
                 <InputNumber
                   size="small"
                   min={0}
@@ -223,6 +232,7 @@ const SettingsSider = (props) => {
                   step={100}
                   value={motionStiffness}
                   onChange={props.setMotionStiffness}
+                  disabled={type !== "force"}
                 />
               </Col>
             </Row>
@@ -230,7 +240,7 @@ const SettingsSider = (props) => {
           <Menu.Item key="damping">
             <Row>
               <Col span={12}>Motion Damping</Col>
-              <Col span={4}>
+              <Col span={12}>
                 <InputNumber
                   size="small"
                   min={0}
@@ -239,6 +249,7 @@ const SettingsSider = (props) => {
                   precision={2}
                   value={motionDamping}
                   onChange={props.setMotionDamping}
+                  disabled={type !== "force"}
                 />
               </Col>
             </Row>
@@ -246,7 +257,7 @@ const SettingsSider = (props) => {
           <Menu.Item key="threshold">
             <Row>
               <Col span={12}>Motion Threshold</Col>
-              <Col span={4}>
+              <Col span={12}>
                 <InputNumber
                   size="small"
                   min={0}
@@ -255,6 +266,7 @@ const SettingsSider = (props) => {
                   precision={2}
                   value={motionThreshold}
                   onChange={props.setMotionThreshold}
+                  disabled={type !== "force"}
                 />
               </Col>
             </Row>
@@ -262,7 +274,7 @@ const SettingsSider = (props) => {
           <Menu.Item key="speed">
             <Row>
               <Col span={12}>Max Speed</Col>
-              <Col span={4}>
+              <Col span={12}>
                 <InputNumber
                   size="small"
                   min={0}
@@ -270,6 +282,7 @@ const SettingsSider = (props) => {
                   step={10}
                   value={maxSpeed}
                   onChange={props.setMaxSpeed}
+                  disabled={type !== "force"}
                 />
               </Col>
             </Row>
