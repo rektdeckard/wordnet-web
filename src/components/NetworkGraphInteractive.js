@@ -20,7 +20,7 @@ const NetworkGraphInteractive = ({
   // console.log(scale("log")()(20));
 
   const maxDegree = useMemo(
-    () => graph.nodes?.reduce((acc, curr) => Math.max(acc, curr.degree), 0),
+    () => graph.nodes?.reduce((acc, curr) => Math.max(acc, curr.degree), 1),
     [graph]
   );
 
