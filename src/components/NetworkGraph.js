@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect } from "react";
+import React, { useRef, useMemo } from "react";
 import { connect } from "react-redux";
 import Graphin from "@antv/graphin";
 import "@antv/graphin/dist/index.css";

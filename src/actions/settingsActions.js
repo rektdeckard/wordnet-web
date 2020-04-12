@@ -19,6 +19,10 @@ export const setIterations = (iterations) => (dispatch) => {
   dispatch(updateSettings({ iterations }));
 };
 
+export const setColorScheme = (colorScheme) => (dispatch) => {
+  dispatch(updateSettings({ colorScheme }));
+};
+
 export const setDefaultNodeSize = (defaultNodeSize) => (dispatch) => {
   dispatch(updateSettings({ defaultNodeSize }));
 };

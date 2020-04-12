@@ -12,6 +12,7 @@ import {
   setType,
   setRepulsivity,
   setIterations,
+  setColorScheme,
   setDefaultNodeSize,
   setNodeScale,
   setAutoScaleSpringLength,
@@ -34,6 +35,7 @@ const SettingsSider = (props) => {
     type,
     repulsivity,
     iterations,
+    colorScheme,
     defaultNodeSize,
     nodeScale,
     autoScaleSpringLength,
@@ -131,6 +133,44 @@ const SettingsSider = (props) => {
             </span>
           }
         >
+         <Menu.Item key="colors">
+            <Row>
+              <Col span={12}>Color Scheme</Col>
+              <Col span={12}>
+                <Select
+                  value={colorScheme}
+                  size="small"
+                  style={{ width: "100%" }}
+                  onChange={props.setColorScheme}
+                >
+                  <Option value={null}>None</Option>
+                  <Option value="viridis">Viridis</Option>
+                  <Option value="inferno">Inferno</Option>
+                  <Option value="plasma">Plasma</Option>
+                  <Option value="lightgreyred">Lightgreyred</Option>
+                  <Option value="lightgreyteal">Lightgreyteal</Option>
+                  <Option value="lightmulti">Lightmulti</Option>
+                  <Option value="lightorange">Lightorange</Option>
+                  <Option value="lighttealblue">Lighttealblue</Option>
+                  <Option value="bluegreen">Bluegreen</Option>
+                  <Option value="bluepurple">Bluepurple</Option>
+                  <Option value="goldgreen">Goldgreen</Option>
+                  <Option value="goldred">Goldred</Option>
+                  <Option value="greenblue">Greenblue</Option>
+                  <Option value="purplebluegreen">Purplebluegreen</Option>
+                  <Option value="purpleblue">Purpleblue</Option>
+                  <Option value="purplered">Purplered</Option>
+                  <Option value="redpurple">Redpurple</Option>
+                  <Option value="yellowgreenblue">Yellowgreenblue</Option>
+                  <Option value="yellowgreen">Yellowgreen</Option>
+                  <Option value="yelloworangebrown">Yelloworangebrown</Option>
+                  <Option value="yelloworangered">Yelloworangered</Option>
+                  <Option value="redyellowgreen">Redyellowgreen</Option>
+                  <Option value="brownbluegreen">Brownbluegreen</Option>
+                </Select>
+              </Col>
+            </Row>
+          </Menu.Item>
           <Menu.Item key="size">
             <Row>
               <Col span={12}>Default Size</Col>
@@ -301,6 +341,7 @@ export default connect(mapStateToProps, {
   setType,
   setRepulsivity,
   setIterations,
+  setColorScheme,
   setDefaultNodeSize,
   setNodeScale,
   setAutoScaleSpringLength,

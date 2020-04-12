@@ -29,6 +29,7 @@
     "react-zoom-pan-pinch": "^1.5.5",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "vega-scale": "^6.0.0",
     "xlsx": "^0.15.6"
   },
   "scripts": {

@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import Graphin from "@antv/graphin";
 import "@antv/graphin/dist/index.css";
 
-import { COLORS, GRAPH_COLORS } from "../data/constants";
+import { scale, scheme } from "vega-scale";
+import { COLORS } from "../data/constants";
 
 const NetworkGraphInteractive = ({
   graph,
@@ -12,7 +13,16 @@ const NetworkGraphInteractive = ({
   settings,
   style,
 }) => {
+  const { colorScheme } = settings;
+  const interpolateColor = useMemo(() => scheme(colorScheme), [colorScheme]);
   const ref = useRef();
+
+  // console.log(scale("log")()(20));
+
+  const maxDegree = useMemo(
+    () => graph.nodes?.reduce((acc, curr) => Math.max(acc, curr.degree), 0),
+    [graph]
+  );
 
   const nodes = useMemo(
     () =>
@@ -34,7 +44,10 @@ const NetworkGraphInteractive = ({
           nodeSize:
             (n.degree ?? 0) * settings.nodeScale + settings.defaultNodeSize,
           // primaryColor: GRAPH_COLORS[n.depth % GRAPH_COLORS.length],
-          primaryColor: COLORS.ACTIVE,
+          // primaryColor: COLORS.ACTIVE,
+          primaryColor: colorScheme
+            ? interpolateColor(n.degree / maxDegree)
+            : COLORS.ACTIVE,
           fontSize: 18,
         },
       })) ?? [],
