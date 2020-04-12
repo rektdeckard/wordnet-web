@@ -320,6 +320,11 @@ const Session = ({ graph, fetchSession }) => {
               size="small"
               style={{ background: COLORS.PANEL_BACKGROUND, padding: 16 }}
             >
+               <Descriptions.Item
+                label="Starting Word"
+                span={3}
+                children={<Tag>{nodes.find((n) => n.depth === 1)?.id}</Tag>}
+              />
               <Descriptions.Item label="Session ID" span={3}>
                 {id}
               </Descriptions.Item>
@@ -327,11 +332,6 @@ const Session = ({ graph, fetchSession }) => {
                 label="Session Date"
                 span={3}
                 children={new Date(graph?.createdAt).toLocaleString()}
-              />
-              <Descriptions.Item
-                label="Starting Word"
-                span={3}
-                children={<Tag>{nodes.find((n) => n.depth === 1)?.id}</Tag>}
               />
               <Descriptions.Item label="Nodes" children={nodes.length} />
               <Descriptions.Item label="Edges" children={links.length} />
