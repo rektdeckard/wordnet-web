@@ -14,6 +14,7 @@ import {
 } from "antd";
 import { ClockCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
+import saveFile from "js-file-download";
 
 import NetworkGraphInteractive from "../NetworkGraphInteractive";
 import SettingsSider from "../settings/SettingsSider";
@@ -320,7 +321,7 @@ const Session = ({ graph, fetchSession }) => {
               size="small"
               style={{ background: COLORS.PANEL_BACKGROUND, padding: 16 }}
             >
-               <Descriptions.Item
+              <Descriptions.Item
                 label="Starting Word"
                 span={3}
                 children={<Tag>{nodes.find((n) => n.depth === 1)?.id}</Tag>}
@@ -356,6 +357,18 @@ const Session = ({ graph, fetchSession }) => {
                 />
                 <Button size="small" disabled>
                   .csv
+                </Button>
+                <Button
+                  size="small"
+                  onClick={() =>
+                    saveFile(
+                      JSON.stringify(graph),
+                      `wordnet-session-${id}.json`,
+                      "application/json"
+                    )
+                  }
+                >
+                  .json
                 </Button>
               </Descriptions.Item>
             </Descriptions>
