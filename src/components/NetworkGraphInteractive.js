@@ -47,7 +47,7 @@ const NetworkGraphInteractive = ({
           // primaryColor: COLORS.ACTIVE,
           primaryColor: colorScheme
             ? interpolateColor(n.degree / maxDegree)
-            : COLORS.ACTIVE,
+            : COLORS.POSITIVE,
           fontSize: 18,
         },
       })) ?? [],

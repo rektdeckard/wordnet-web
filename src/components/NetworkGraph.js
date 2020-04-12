@@ -26,7 +26,7 @@ const NetworkGraph = ({ graph, header, settings, style }) => {
         shape: "CircleNode",
         style: {
           nodeSize: 10,
-          primaryColor: COLORS.ACTIVE,
+          primaryColor: COLORS.POSITIVE,
           fontSize: 18,
         },
       })) ?? [],
