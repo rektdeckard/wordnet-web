@@ -27,7 +27,7 @@ import { COLORS } from "../../data/constants";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
-const { Option } = Select;
+const { Option, OptGroup } = Select;
 
 const SettingsSider = (props) => {
   const { defaultCollapsed } = props;
@@ -133,7 +133,7 @@ const SettingsSider = (props) => {
             </span>
           }
         >
-         <Menu.Item key="colors">
+          <Menu.Item key="colors">
             <Row>
               <Col span={12}>Color Scheme</Col>
               <Col span={12}>
@@ -143,30 +143,54 @@ const SettingsSider = (props) => {
                   style={{ width: "100%" }}
                   onChange={props.setColorScheme}
                 >
-                  <Option value={null}>None</Option>
-                  <Option value="viridis">Viridis</Option>
-                  <Option value="inferno">Inferno</Option>
-                  <Option value="plasma">Plasma</Option>
-                  <Option value="lightgreyred">Lightgreyred</Option>
-                  <Option value="lightgreyteal">Lightgreyteal</Option>
-                  <Option value="lightmulti">Lightmulti</Option>
-                  <Option value="lightorange">Lightorange</Option>
-                  <Option value="lighttealblue">Lighttealblue</Option>
-                  <Option value="bluegreen">Bluegreen</Option>
-                  <Option value="bluepurple">Bluepurple</Option>
-                  <Option value="goldgreen">Goldgreen</Option>
-                  <Option value="goldred">Goldred</Option>
-                  <Option value="greenblue">Greenblue</Option>
-                  <Option value="purplebluegreen">Purplebluegreen</Option>
-                  <Option value="purpleblue">Purpleblue</Option>
-                  <Option value="purplered">Purplered</Option>
-                  <Option value="redpurple">Redpurple</Option>
-                  <Option value="yellowgreenblue">Yellowgreenblue</Option>
-                  <Option value="yellowgreen">Yellowgreen</Option>
-                  <Option value="yelloworangebrown">Yelloworangebrown</Option>
-                  <Option value="yelloworangered">Yelloworangered</Option>
-                  <Option value="redyellowgreen">Redyellowgreen</Option>
-                  <Option value="brownbluegreen">Brownbluegreen</Option>
+                  <OptGroup label="Single">
+                    <Option value={null}>None</Option>
+                    <Option value="blues">Blues</Option>
+                    <Option value="tealblues">Tealblues</Option>
+                    <Option value="teals">Teals</Option>
+                    <Option value="greens">Greens</Option>
+                    <Option value="browns">Browns</Option>
+                    <Option value="oranges">Oranges</Option>
+                    <Option value="reds">Reds</Option>
+                    <Option value="purples">Purples</Option>
+                    <Option value="warmgreys">Warmgreys</Option>
+                    <Option value="greys">Greys</Option>
+                  </OptGroup>
+                  <OptGroup label="Sequential">
+                    <Option value="viridis">Viridis</Option>
+                    <Option value="inferno">Inferno</Option>
+                    <Option value="plasma">Plasma</Option>
+                    <Option value="lightgreyred">Lightgreyred</Option>
+                    <Option value="lightgreyteal">Lightgreyteal</Option>
+                    <Option value="lightmulti">Lightmulti</Option>
+                    <Option value="lightorange">Lightorange</Option>
+                    <Option value="lighttealblue">Lighttealblue</Option>
+                    <Option value="bluegreen">Bluegreen</Option>
+                    <Option value="bluepurple">Bluepurple</Option>
+                    <Option value="goldgreen">Goldgreen</Option>
+                    <Option value="goldred">Goldred</Option>
+                    <Option value="greenblue">Greenblue</Option>
+                    <Option value="purplebluegreen">Purplebluegreen</Option>
+                    <Option value="purpleblue">Purpleblue</Option>
+                    <Option value="purplered">Purplered</Option>
+                    <Option value="redpurple">Redpurple</Option>
+                    <Option value="yellowgreenblue">Yellowgreenblue</Option>
+                    <Option value="yellowgreen">Yellowgreen</Option>
+                    <Option value="yelloworangebrown">Yelloworangebrown</Option>
+                    <Option value="yelloworangered">Yelloworangered</Option>
+                  </OptGroup>
+                  <OptGroup label="Divergent">
+                    <Option value="blueorange">Blueorange</Option>
+                    <Option value="brownbluegreen">Brownbluegreen</Option>
+                    <Option value="purplegreen">Purplegreen</Option>
+                    <Option value="pinkyellowgreen">Pinkyellowgreen</Option>
+                    <Option value="purpleorange">Purpleorange</Option>
+                    <Option value="redblue">Redblue</Option>
+                    <Option value="redgrey">Redgrey</Option>
+                    <Option value="redyellowblue">Redyellowblue</Option>
+                    <Option value="redyellowgreen">Redyellowgreen</Option>
+                    <Option value="spectral">Spectral</Option>
+                  </OptGroup>
                 </Select>
               </Col>
             </Row>
