@@ -16,7 +16,7 @@ class ErrorBoundary extends React.Component {
         // Generate error report
         try {
           Analytics.record({
-            name: "graphError",
+            name: "graph_error",
             attributes: { error: error.message }
           });
         } catch(e) {

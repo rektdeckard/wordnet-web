@@ -7,7 +7,6 @@ import { COLORS, GRAPH_COLORS } from "../data/constants";
 
 const NetworkGraph = ({ graph, header, settings, style }) => {
   const ref = useRef();
-  console.log(graph);
 
   const nodes = useMemo(
     () =>
