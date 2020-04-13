@@ -8,6 +8,7 @@ import {
   Table,
   Input,
   Button,
+  Result,
   Spin,
   Select,
   Tag,
@@ -17,6 +18,7 @@ import Highlighter from "react-highlight-words";
 import saveFile from "js-file-download";
 
 import NetworkGraphInteractive from "../NetworkGraphInteractive";
+import ErrorBoundary from "../ErrorBoundary";
 import SettingsSider from "../settings/SettingsSider";
 import Download from "./Download";
 import { fetchSession } from "../../actions";
@@ -289,14 +291,24 @@ const Session = ({ graph, fetchSession }) => {
   return (
     <>
       <Layout style={{ background: COLORS.CARD_BACKGROUND }}>
-        <SettingsSider defaultCollapsed />
-        <Content>
-          <NetworkGraphInteractive
-            graph={loading ? { nodes: [], links: [] } : { nodes, links }}
-            // loading={loading}
-            hovered={hovered}
-          />
-        </Content>
+        <ErrorBoundary
+	  fallback={
+            <Result
+              status="warning"
+              title="Error building graph"
+              subTitle="Don't panic! This error has been reported."
+	    />
+	  }
+	>
+          <SettingsSider defaultCollapsed />
+          <Content>
+            <NetworkGraphInteractive
+              graph={loading ? { nodes: [], links: [] } : { nodes, links }}
+              loading={loading}
+              hovered={hovered}
+            />
+          </Content>
+	</ErrorBoundary>
       </Layout>
       <Tabs
         defaultActiveKey="overview"
@@ -324,8 +336,7 @@ const Session = ({ graph, fetchSession }) => {
               <Descriptions.Item
                 label="Starting Word"
                 span={3}
-                children={<Tag>{nodes.find((n) => n.depth === 1)?.id}</Tag>}
-              />
+                children={<Tag>{nodes.find((n) => n.depth === 1)?.id}</Tag>}              />
               <Descriptions.Item label="Session ID" span={3}>
                 {id}
               </Descriptions.Item>
