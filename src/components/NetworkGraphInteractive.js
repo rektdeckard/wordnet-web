@@ -52,7 +52,7 @@ const NetworkGraphInteractive = ({
         }
       })) ?? []
     );
-  }, [graph, settings]);
+  }, [graph, settings, maxDegree]);
 
   const edges = useMemo(
     () =>
