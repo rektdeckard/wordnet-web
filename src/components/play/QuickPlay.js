@@ -7,6 +7,7 @@ import {
   Col,
   Input,
   Button,
+  Result,
   Typography,
   Spin,
   message,
@@ -15,6 +16,7 @@ import {
 import { submitResponse, selectRandomNode, submitSession } from "../../actions";
 import { useGraph } from "../../utils";
 import NetworkGraph from "../NetworkGraph";
+import ErrorBoundary from "../ErrorBoundary";
 import TimedProgress from "./TimedProgress";
 import { COLORS } from "../../data/constants";
 
@@ -95,20 +97,30 @@ const QuickPlay = ({
       <Content
         style={{ padding: "0px 0px", background: COLORS.CARD_BACKGROUND }}
       >
-        <NetworkGraph
-          graph={{ nodes, links }}
-          header={
-            <Title level={3} style={{ textAlign: "center", paddingTop: 16 }}>
-              {currentNode?.value && !loading ? (
-                <>
-                  What does the word <Text code>{currentNode.value}</Text> mean?
-                </>
-              ) : (
-                <Spin />
-              )}
-            </Title>
+        <ErrorBoundary
+          fallback={
+            <Result
+              status="warning"
+              title="Error building graph"
+              subTitle="Don't panic! This error has been reported."
+            />
           }
-        />
+        >
+          <NetworkGraph
+            graph={{ nodes, links }}
+            header={
+              <Title level={3} style={{ textAlign: "center", paddingTop: 16 }}>
+                {currentNode?.value && !loading ? (
+                  <>
+                    What does the word <Text code>{currentNode.value}</Text> mean?
+                  </>
+                ) : (
+                  <Spin />
+                )}
+              </Title>
+            }
+          />
+        </ErrorBoundary>
         <Row style={{ padding: 16 }} gutter={8}>
           <Col flex="auto">
             <Input

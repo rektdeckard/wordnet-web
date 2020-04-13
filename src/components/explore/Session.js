@@ -8,14 +8,17 @@ import {
   Table,
   Input,
   Button,
+  Result,
   Spin,
   Select,
   Tag,
 } from "antd";
 import { ClockCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
+import saveFile from "js-file-download";
 
 import NetworkGraphInteractive from "../NetworkGraphInteractive";
+import ErrorBoundary from "../ErrorBoundary";
 import SettingsSider from "../settings/SettingsSider";
 import Download from "./Download";
 import { fetchSession } from "../../actions";
@@ -288,14 +291,24 @@ const Session = ({ graph, fetchSession }) => {
   return (
     <>
       <Layout style={{ background: COLORS.CARD_BACKGROUND }}>
-        <SettingsSider defaultCollapsed />
-        <Content>
-          <NetworkGraphInteractive
-            graph={loading ? { nodes: [], links: [] } : { nodes, links }}
-            // loading={loading}
-            hovered={hovered}
-          />
-        </Content>
+        <ErrorBoundary
+	  fallback={
+            <Result
+              status="warning"
+              title="Error building graph"
+              subTitle="Don't panic! This error has been reported."
+	    />
+	  }
+	>
+          <SettingsSider defaultCollapsed />
+          <Content>
+            <NetworkGraphInteractive
+              graph={loading ? { nodes: [], links: [] } : { nodes, links }}
+              loading={loading}
+              hovered={hovered}
+            />
+          </Content>
+	</ErrorBoundary>
       </Layout>
       <Tabs
         defaultActiveKey="overview"
@@ -320,6 +333,10 @@ const Session = ({ graph, fetchSession }) => {
               size="small"
               style={{ background: COLORS.PANEL_BACKGROUND, padding: 16 }}
             >
+              <Descriptions.Item
+                label="Starting Word"
+                span={3}
+                children={<Tag>{nodes.find((n) => n.depth === 1)?.id}</Tag>}              />
               <Descriptions.Item label="Session ID" span={3}>
                 {id}
               </Descriptions.Item>
@@ -327,11 +344,6 @@ const Session = ({ graph, fetchSession }) => {
                 label="Session Date"
                 span={3}
                 children={new Date(graph?.createdAt).toLocaleString()}
-              />
-              <Descriptions.Item
-                label="Starting Word"
-                span={3}
-                children={<Tag>{nodes.find((n) => n.depth === 1)?.id}</Tag>}
               />
               <Descriptions.Item label="Nodes" children={nodes.length} />
               <Descriptions.Item label="Edges" children={links.length} />
@@ -356,6 +368,18 @@ const Session = ({ graph, fetchSession }) => {
                 />
                 <Button size="small" disabled>
                   .csv
+                </Button>
+                <Button
+                  size="small"
+                  onClick={() =>
+                    saveFile(
+                      JSON.stringify(graph),
+                      `wordnet-session-${id}.json`,
+                      "application/json"
+                    )
+                  }
+                >
+                  .json
                 </Button>
               </Descriptions.Item>
             </Descriptions>

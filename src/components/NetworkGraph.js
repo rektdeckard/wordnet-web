@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect } from "react";
+import React, { useRef, useMemo } from "react";
 import { connect } from "react-redux";
 import Graphin from "@antv/graphin";
 import "@antv/graphin/dist/index.css";
@@ -7,7 +7,6 @@ import { COLORS, GRAPH_COLORS } from "../data/constants";
 
 const NetworkGraph = ({ graph, header, settings, style }) => {
   const ref = useRef();
-  console.log(graph);
 
   const nodes = useMemo(
     () =>
@@ -26,7 +25,7 @@ const NetworkGraph = ({ graph, header, settings, style }) => {
         shape: "CircleNode",
         style: {
           nodeSize: 10,
-          primaryColor: COLORS.ACTIVE,
+          primaryColor: COLORS.POSITIVE,
           fontSize: 18,
         },
       })) ?? [],

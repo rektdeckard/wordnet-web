@@ -3,50 +3,63 @@ import { connect } from "react-redux";
 import Graphin from "@antv/graphin";
 import "@antv/graphin/dist/index.css";
 
-import { COLORS, GRAPH_COLORS } from "../data/constants";
+import { scale, scheme } from "vega-scale";
+import { COLORS } from "../data/constants";
 
 const NetworkGraphInteractive = ({
   graph,
   header,
   hovered,
   settings,
-  style,
+  style
 }) => {
   const ref = useRef();
 
-  const nodes = useMemo(
-    () =>
-      graph.nodes?.map((n) => ({
+  // console.log(scale("log")()(20));
+
+  const maxDegree = useMemo(
+    () => graph.nodes?.reduce((acc, curr) => Math.max(acc, curr.degree), 1),
+    [graph]
+  );
+
+  const nodes = useMemo(() => {
+    const { defaultNodeSize, nodeScale, colorScheme } = settings;
+    const interpolateColor = scheme(colorScheme);
+
+    return (
+      graph.nodes?.map(n => ({
         id: n.id,
         data: {
           id: n.id,
-          label: n.id,
+          label: n.id
         },
         layout: {
           degree: n.degree ?? 0,
           force: {
-            mass: n.degree ?? null,
-          },
+            mass: n.degree ?? null
+          }
         },
         degree: n.degree ?? 0,
         shape: "CircleNode",
         style: {
-          nodeSize:
-            (n.degree ?? 0) * settings.nodeScale + settings.defaultNodeSize,
+          nodeSize: (n.degree ?? 0) * nodeScale + defaultNodeSize,
           // primaryColor: GRAPH_COLORS[n.depth % GRAPH_COLORS.length],
-          primaryColor: COLORS.ACTIVE,
-          fontSize: 18,
-        },
-      })) ?? [],
-    [graph, settings]
-  );
+          // primaryColor: COLORS.ACTIVE,
+          primaryColor: colorScheme
+            ? interpolateColor(n.degree / maxDegree)
+            : COLORS.POSITIVE,
+          fontSize: 18
+        }
+      })) ?? []
+    );
+  }, [graph, settings, maxDegree]);
 
   const edges = useMemo(
     () =>
-      graph.links?.map((e) => ({
+      graph.links?.map(e => ({
         source: e.source,
         target: e.target,
-        data: e,
+        data: e
         // style: {
         //   stroke: COLORS.POSITIVE
         // }
@@ -66,7 +79,7 @@ const NetworkGraphInteractive = ({
   }, [hovered]);
 
   return (
-    <div style={style}>
+    <div style={{ ...style, height: "50vh" }}>
       {header}
       <Graphin
         ref={ref}
@@ -83,8 +96,8 @@ const NetworkGraphInteractive = ({
             MaxIterations: settings.iterations,
             repulsion: settings.repulsivity,
             maxSpeed: settings.maxSpeed,
-            animation: settings.animate,
-          },
+            animation: settings.animate
+          }
         }}
         options={{ wheelSensitivity: 4 }}
         // extend={{
@@ -95,8 +108,11 @@ const NetworkGraphInteractive = ({
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return { settings: state.settings };
 };
 
-export default connect(mapStateToProps, {})(NetworkGraphInteractive);
+export default connect(
+  mapStateToProps,
+  {}
+)(NetworkGraphInteractive);
