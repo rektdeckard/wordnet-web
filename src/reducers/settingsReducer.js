@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   type: "force",
   repulsivity: 5000,
   iterations: 500,
-  colorScheme: null,
+  colorScheme: "blues",
   defaultNodeSize: 4,
   nodeScale: 2,
   autoScaleSpringLength: false,
