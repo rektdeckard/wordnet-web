@@ -4,7 +4,7 @@ import { Layout } from "antd";
 import NetworkGraphInteractive from "../NetworkGraphInteractive";
 import SettingsSider from "./SettingsSider";
 import { useGraph } from "../../utils";
-import { COLORS } from "../../data/constants";
+import { Colors } from "../../data/constants";
 import data from "../../data/sample3.json";
 
 const { Content } = Layout;
@@ -13,7 +13,7 @@ const Settings = () => {
   const { nodes, links } = useGraph(data);
 
   return (
-    <Layout style={{ background: COLORS.CARD_BACKGROUND }}>
+    <Layout style={{ background: Colors.CARD_BACKGROUND }}>
       <SettingsSider />
       <Content>
         <NetworkGraphInteractive

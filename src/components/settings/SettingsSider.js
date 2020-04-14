@@ -23,7 +23,7 @@ import {
   setMaxSpeed,
   setAnimate,
 } from "../../actions";
-import { COLORS } from "../../data/constants";
+import { Colors } from "../../data/constants";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -49,7 +49,7 @@ const SettingsSider = (props) => {
 
   return (
     <Sider
-      style={{ background: COLORS.CARD_BACKGROUND }}
+      style={{ background: Colors.CARD_BACKGROUND }}
       width={300}
       collapsible={Boolean(defaultCollapsed)}
       defaultCollapsed={Boolean(defaultCollapsed)}
@@ -190,6 +190,10 @@ const SettingsSider = (props) => {
                     <Option value="redyellowblue">Redyellowblue</Option>
                     <Option value="redyellowgreen">Redyellowgreen</Option>
                     <Option value="spectral">Spectral</Option>
+                  </OptGroup>
+                  <OptGroup label="Cyclical">
+                    <Option value="rainbow">Rainbow</Option>
+                    <Option value="sinebow">Sinebow</Option>
                   </OptGroup>
                 </Select>
               </Col>

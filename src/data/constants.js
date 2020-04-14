@@ -95,16 +95,6 @@ export const STARTING_WORDS = [
   "possible",
 ];
 
-// NIVO
-// export const GRAPH_COLORS = [
-//   "#e8c1a0",
-//   "#f47560",
-//   "#f1e15b",
-//   "#e8a838",
-//   "#61cdbb",
-//   "#97e3d5"
-// ];
-
 // MUTED
 export const GRAPH_COLORS = [
   "#DCC48E",
@@ -123,7 +113,7 @@ export const HEAT_MAP_COLORS = [
   "#D1A787",
 ];
 
-export const COLORS = {
+export const Colors = {
   POSITIVE: "#51bdab",
   NEGATIVE: "#f47560",
   ACTIVE: "#1890ff",

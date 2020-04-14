@@ -21,7 +21,7 @@ import { startOfYear } from "date-fns";
 
 import { fetchHistory, setInitialDate } from "../../actions";
 import { useWeekOverWeek } from "../../utils";
-import { COLORS, HEAT_MAP_COLORS } from "../../data/constants";
+import { Colors, HEAT_MAP_COLORS } from "../../data/constants";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -76,7 +76,7 @@ const Dashboard = ({
       }
       precision={1}
       valueStyle={{
-        color: weekOverWeek >= 0 ? COLORS.POSITIVE : COLORS.NEGATIVE,
+        color: weekOverWeek >= 0 ? Colors.POSITIVE : Colors.NEGATIVE,
       }}
       prefix={weekOverWeek >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
       suffix="%"
@@ -132,13 +132,13 @@ const Dashboard = ({
               data={sessionHistory.sessionsByDay}
               from={startOfYear(new Date())}
               to={new Date()}
-              emptyColor={COLORS.EMPTY}
+              emptyColor={Colors.EMPTY}
               colors={HEAT_MAP_COLORS}
               margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
               yearSpacing={40}
-              monthBorderColor={COLORS.BORDER}
+              monthBorderColor={Colors.BORDER}
               dayBorderWidth={2}
-              dayBorderColor={COLORS.BORDER}
+              dayBorderColor={Colors.BORDER}
               legends={[
                 {
                   anchor: "bottom-right",
