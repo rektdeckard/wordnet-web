@@ -1,4 +1,5 @@
 export const UPDATE_SETTING = "update_setting";
+export const RESTORE_DEFAULTS = "restore_defaults";
 
 export const INITIALIZE_GRAPH_SESSION = "create_graph_session";
 export const ADD_GRAPH_ELEMENTS = "add_graph_elements";

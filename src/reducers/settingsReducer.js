@@ -1,4 +1,8 @@
-import { UPDATE_SETTING } from "../actions/types";
+import { UPDATE_SETTING, RESTORE_DEFAULTS } from "../actions/types";
+
+const SAVED_STATE = JSON.parse(
+  localStorage.getItem("settings") ?? "{}"
+);
 
 const INITIAL_STATE = {
   type: "force",
@@ -16,10 +20,12 @@ const INITIAL_STATE = {
   animate: true,
 };
 
-export default (state = INITIAL_STATE, action) => {
+export default (state = { ...INITIAL_STATE, ...SAVED_STATE }, action) => {
   switch (action.type) {
     case UPDATE_SETTING:
       return { ...state, ...action.payload };
+    case RESTORE_DEFAULTS:
+      return { ...INITIAL_STATE };
     default:
       return state;
   }

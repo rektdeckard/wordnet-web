@@ -1,4 +1,4 @@
-import { UPDATE_SETTING } from "../actions/types";
+import { UPDATE_SETTING, RESTORE_DEFAULTS } from "../actions/types";
 
 const updateSettings = (settings) => (dispatch) => {
   dispatch({
@@ -56,6 +56,12 @@ export const setMotionThreshold = (motionThreshold) => (dispatch) => {
 export const setMaxSpeed = (maxSpeed) => (dispatch) => {
   dispatch(updateSettings({ maxSpeed }));
 };
+
 export const setAnimate = (animate) => (dispatch) => {
   dispatch(updateSettings({ animate }));
+};
+
+export const restoreDefaults = () => {
+  localStorage.setItem("settings", null);
+  return { type: RESTORE_DEFAULTS }
 };
