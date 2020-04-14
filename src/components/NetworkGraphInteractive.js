@@ -11,11 +11,9 @@ const NetworkGraphInteractive = ({
   header,
   hovered,
   settings,
-  style
+  style,
 }) => {
   const ref = useRef();
-
-  // console.log(scale("log")()(20));
 
   const maxDegree = useMemo(
     () => graph.nodes?.reduce((acc, curr) => Math.max(acc, curr.degree), 1),
@@ -23,58 +21,47 @@ const NetworkGraphInteractive = ({
   );
 
   const nodes = useMemo(() => {
-    const { defaultNodeSize, nodeScale, colorScheme } = settings;
+    const { defaultNodeSize, nodeScale, colorScheme, fontSize } = settings;
     const interpolateColor = scheme(colorScheme);
 
     return (
-      graph.nodes?.map(n => ({
-        id: n.id,
-        data: {
-          id: n.id,
-          label: n.id
-        },
+      graph.nodes?.map((node) => ({
+        id: node.id,
+        label: node.id,
+        data: { ...node },
         layout: {
-          degree: n.degree ?? 0,
+          degree: node.degree ?? 0,
           force: {
-            mass: n.degree ?? null
-          }
+            mass: node.degree ?? null,
+          },
         },
-        degree: n.degree ?? 0,
+        degree: node.degree ?? 0,
         shape: "CircleNode",
         style: {
-          nodeSize: (n.degree ?? 0) * nodeScale + defaultNodeSize,
-          // primaryColor: GRAPH_COLORS[n.depth % GRAPH_COLORS.length],
-          // primaryColor: COLORS.ACTIVE,
+          nodeSize: (node.degree ?? 0) * nodeScale + defaultNodeSize,
           primaryColor: colorScheme
-            ? interpolateColor(n.degree / maxDegree)
+            ? interpolateColor(node.degree / maxDegree)
             : Colors.POSITIVE,
-          fontSize: 18
-        }
+          fontSize: fontSize ?? 18,
+        },
       })) ?? []
     );
   }, [graph, settings, maxDegree]);
 
   const edges = useMemo(
     () =>
-      graph.links?.map(e => ({
-        source: e.source,
-        target: e.target,
-        data: e
-        // style: {
-        //   stroke: COLORS.POSITIVE
-        // }
+      graph.links?.map((edge) => ({
+        source: edge.source,
+        target: edge.target,
+        data: edge,
       })) ?? [],
     [graph]
   );
 
   useEffect(() => {
-    // console.log(hovered);
-    if (hovered && hovered.source) {
-      const apis = ref.current?.getApis?.() ?? {};
-      const { highlight, search } = apis;
-      highlight &&
-        hovered.source &&
-        highlight([hovered.source, ...(hovered.targets ?? [])]);
+    const GraphAPI = ref.current?.getApis?.();
+    if (hovered?.source) {
+      GraphAPI?.highlight([hovered.source, ...(hovered.targets ?? [])]); // eslint-disable-line no-unused-expressions
     }
   }, [hovered]);
 
@@ -96,23 +83,17 @@ const NetworkGraphInteractive = ({
             MaxIterations: settings.iterations,
             repulsion: settings.repulsivity,
             maxSpeed: settings.maxSpeed,
-            animation: settings.animate
-          }
+            animation: settings.animate,
+          },
         }}
-        options={{ wheelSensitivity: 4 }}
-        // extend={{
-        //   nodeShape: () => [{ name: "RectNode", render: renderNode}]
-        // }}
+        options={{ wheelSensitivity: 4, minZoom: 0.1 }}
       />
     </div>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { settings: state.settings };
 };
 
-export default connect(
-  mapStateToProps,
-  {}
-)(NetworkGraphInteractive);
+export default connect(mapStateToProps, {})(NetworkGraphInteractive);

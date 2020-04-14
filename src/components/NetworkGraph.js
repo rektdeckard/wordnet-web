@@ -4,12 +4,12 @@ import Graphin from "@antv/graphin";
 import "@antv/graphin/dist/index.css";
 
 import { scheme } from "vega-scale";
-import { Colors, GRAPH_COLORS } from "../data/constants";
+import { Colors } from "../data/constants";
 
 const NetworkGraph = ({ graph, header, settings, style }) => {
   const ref = useRef();
 
- const maxDepth = useMemo(
+  const maxDepth = useMemo(
     () => graph.nodes?.reduce((acc, curr) => Math.max(acc, curr.depth), 1),
     [graph]
   );
@@ -19,40 +19,36 @@ const NetworkGraph = ({ graph, header, settings, style }) => {
     const interpolateColor = scheme(colorScheme);
 
     return (
-      graph.nodes?.map(n => ({
-        id: n.id,
+      graph.nodes?.map((node) => ({
+        id: node.id,
         data: {
-          id: n.id,
+          id: node.id,
         },
         layout: {
-          degree: n.degree ?? 0,
+          degree: node.degree ?? 0,
           force: {
-            mass: n.degree ?? null
-          }
+            mass: node.degree ?? null,
+          },
         },
-        degree: n.degree ?? 0,
+        degree: node.degree ?? 0,
         shape: "CircleNode",
         style: {
           nodeSize: 2 * defaultNodeSize,
           primaryColor: colorScheme
-            ? interpolateColor(1 - (n.depth / maxDepth))
+            ? interpolateColor(1 - node.depth / maxDepth)
             : Colors.POSITIVE,
-          // primaryColor: interpolateColor(1 - (n.depth / maxDepth)),
-          fontSize: 0
-        }
+          fontSize: 0,
+        },
       })) ?? []
     );
   }, [graph, settings, maxDepth]);
 
   const edges = useMemo(
     () =>
-      graph.links?.map((e) => ({
-        source: e.source,
-        target: e.target,
-        data: e,
-        // style: {
-        //   stroke: COLORS.POSITIVE
-        // }
+      graph.links?.map((edge) => ({
+        source: edge.source,
+        target: edge.target,
+        data: edge,
       })) ?? [],
     [graph]
   );
@@ -78,10 +74,7 @@ const NetworkGraph = ({ graph, header, settings, style }) => {
             animation: settings.animate,
           },
         }}
-        options={{ wheelSensitivity: 4 }}
-        // extend={{
-        //   nodeShape: () => [{ name: "RectNode", render: renderNode}]
-        // }}
+        options={{  wheelSensitivity: 4, minZoom: 0.1 }}
       />
     </div>
   );
