@@ -79,7 +79,7 @@ const NetworkGraphInteractive = ({
   }, [hovered]);
 
   return (
-    <div style={{ ...style, height: "50vh" }}>
+    <div style={{ height: "50vh", ...style }}>
       {header}
       <Graphin
         ref={ref}
