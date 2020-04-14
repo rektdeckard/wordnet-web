@@ -46,7 +46,7 @@ const Download = ({ graph, render, all }) => {
             <ExcelColumn label="SUBMITTED AT" value="createdAt" />
             <ExcelColumn label="USER" value="owner" />
           </ExcelSheet>
-          <ExcelSheet data={condenseNodes(nodes ?? [])} name="Nodes">
+          <ExcelSheet data={condenseNodes(nodes)} name="Nodes">
             <ExcelColumn label="WORD" value="id" />
             <ExcelColumn label="DEGREE" value="degree" />
             <ExcelColumn label="FREQUENCY" value="frequency" />
@@ -59,7 +59,7 @@ const Download = ({ graph, render, all }) => {
             <ExcelColumn label="SUBMITTED AT" value="createdAt" />
             <ExcelColumn label="USER" value="owner" />
           </ExcelSheet>
-          <ExcelSheet data={condenseEdges(links ?? [])} name="Edges">
+          <ExcelSheet data={condenseEdges(links)} name="Edges">
             <ExcelColumn label="SOURCE WORD" value="source" />
             <ExcelColumn label="TARGET WORD" value="target" />
             <ExcelColumn label="FREQUENCY" value="frequency" />

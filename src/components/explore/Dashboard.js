@@ -32,7 +32,7 @@ const heatmapColors = [
   interpolate(0.4),
   interpolate(0.6),
   interpolate(0.8),
-  interpolate(1)
+  interpolate(1),
 ];
 
 const Dashboard = ({

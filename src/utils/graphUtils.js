@@ -195,7 +195,7 @@ export const findNodesToLink = (tokens, nodes) =>
  * degree is the sum of the input node degrees and frequency is the count
  */
 // FIXME: does this make sense? aren't we double-counting any identical edges?
-export const condenseNodes = (nodes) => {
+export const condenseNodes = (nodes = []) => {
   const nodeMap = nodes.reduce((acc, { id, degree, owner }) => {
     if (acc[`${id}-${owner}`]) {
       const existingNode = acc[`${id}-${owner}`];
@@ -220,7 +220,7 @@ export const condenseNodes = (nodes) => {
  * Reduces edges with the same source and target and by the same owner into
  * a single edge, whose frequency is the count of the input edges
  */
-export const condenseEdges = (edges) => {
+export const condenseEdges = (edges = []) => {
   const edgeMap = edges.reduce((acc, { source, target, owner }) => {
     if (acc[`${source}-${target}-${owner}`]) {
       const existingNode = acc[`${source}-${target}-${owner}`];
