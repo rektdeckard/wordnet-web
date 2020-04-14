@@ -15,6 +15,7 @@ import {
   setColorScheme,
   setDefaultNodeSize,
   setNodeScale,
+  setFontSize,
   setAutoScaleSpringLength,
   setDefaultSpringLength,
   setMotionStiffness,
@@ -38,6 +39,7 @@ const SettingsSider = (props) => {
     colorScheme,
     defaultNodeSize,
     nodeScale,
+    fontSize,
     autoScaleSpringLength,
     defaultSpringLength,
     motionStiffness,
@@ -72,9 +74,9 @@ const SettingsSider = (props) => {
             </span>
           }
         >
-          <Menu.Item key="type">
+          <Menu.Item key="type" title="Graph layout method">
             <Row>
-              <Col span={12}>Type</Col>
+              <Col span={12}>Layout</Col>
               <Col span={12}>
                 <Select
                   value={type}
@@ -92,7 +94,7 @@ const SettingsSider = (props) => {
               </Col>
             </Row>
           </Menu.Item>
-          <Menu.Item key="repulsivity">
+          <Menu.Item key="repulsivity" title="Node repulsive force">
             <Row>
               <Col span={12}>Repulsivity</Col>
               <Col span={12}>
@@ -107,7 +109,7 @@ const SettingsSider = (props) => {
               </Col>
             </Row>
           </Menu.Item>
-          <Menu.Item key="iterations">
+          <Menu.Item key="iterations" title="Relative runtime of the simulation">
             <Row>
               <Col span={12}>Iterations</Col>
               <Col span={12}>
@@ -133,7 +135,7 @@ const SettingsSider = (props) => {
             </span>
           }
         >
-          <Menu.Item key="colors">
+          <Menu.Item key="colors" title="Render node color based on chosen parameters">
             <Row>
               <Col span={12}>Color Scheme</Col>
               <Col span={12}>
@@ -199,7 +201,7 @@ const SettingsSider = (props) => {
               </Col>
             </Row>
           </Menu.Item>
-          <Menu.Item key="size">
+          <Menu.Item key="size" title="Base node size">
             <Row>
               <Col span={12}>Default Size</Col>
               <Col span={12}>
@@ -212,7 +214,7 @@ const SettingsSider = (props) => {
               </Col>
             </Row>
           </Menu.Item>
-          <Menu.Item key="degreescale">
+          <Menu.Item key="degreescale" title="Scale node size by this factor based on their degree">
             <Row>
               <Col span={12}>Degree Scaling</Col>
               <Col span={12}>
@@ -228,6 +230,20 @@ const SettingsSider = (props) => {
               </Col>
             </Row>
           </Menu.Item>
+          {/* <Menu.Item key="fontsize" title="Label text size">
+            <Row>
+              <Col span={12}>Font Size</Col>
+              <Col span={12}>
+                <InputNumber
+                  size="small"
+                  min={0}
+                  step={1}
+                  value={fontSize}
+                  onChange={props.setFontSize}
+                />
+              </Col>
+            </Row>
+          </Menu.Item> */}
         </SubMenu>
         <SubMenu
           key="edges"
@@ -238,7 +254,7 @@ const SettingsSider = (props) => {
             </span>
           }
         >
-          <Menu.Item key="autoscale">
+          <Menu.Item key="autoscale" title="Calculate spring length from graph size">
             <Row>
               <Col span={12}>Auto-scaling</Col>
               <Col span={12}>
@@ -251,7 +267,7 @@ const SettingsSider = (props) => {
               </Col>
             </Row>
           </Menu.Item>
-          <Menu.Item key="length">
+          <Menu.Item key="length" title="Starting spring length">
             <Row>
               <Col span={12}>Default Length</Col>
               <Col span={12}>
@@ -276,7 +292,7 @@ const SettingsSider = (props) => {
             </span>
           }
         >
-          <Menu.Item key="animate">
+          <Menu.Item key="animate" title="Animate graph while rendering on page load">
             <Row>
               <Col span={12}>Animate</Col>
               <Col span={12}>
@@ -289,7 +305,7 @@ const SettingsSider = (props) => {
               </Col>
             </Row>
           </Menu.Item>
-          <Menu.Item key="stiffness">
+          <Menu.Item key="stiffness" title="Spring coefficient">
             <Row>
               <Col span={12}>Motion Stiffness</Col>
               <Col span={12}>
@@ -305,7 +321,7 @@ const SettingsSider = (props) => {
               </Col>
             </Row>
           </Menu.Item>
-          <Menu.Item key="damping">
+          <Menu.Item key="damping" title="Damping ratio [0.0 - 1.0]">
             <Row>
               <Col span={12}>Motion Damping</Col>
               <Col span={12}>
@@ -322,7 +338,7 @@ const SettingsSider = (props) => {
               </Col>
             </Row>
           </Menu.Item>
-          <Menu.Item key="threshold">
+          <Menu.Item key="threshold" title="Minimum energy threshold to animate [0.0 - 1.0]">
             <Row>
               <Col span={12}>Motion Threshold</Col>
               <Col span={12}>
@@ -339,7 +355,7 @@ const SettingsSider = (props) => {
               </Col>
             </Row>
           </Menu.Item>
-          <Menu.Item key="speed">
+          <Menu.Item key="speed" title="Maximum transition speed [0 - 1000]">
             <Row>
               <Col span={12}>Max Speed</Col>
               <Col span={12}>
@@ -372,6 +388,7 @@ export default connect(mapStateToProps, {
   setColorScheme,
   setDefaultNodeSize,
   setNodeScale,
+  setFontSize,
   setAutoScaleSpringLength,
   setDefaultSpringLength,
   setMotionStiffness,

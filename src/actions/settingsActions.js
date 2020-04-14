@@ -31,6 +31,10 @@ export const setNodeScale = (nodeScale) => (dispatch) => {
   dispatch(updateSettings({ nodeScale }));
 };
 
+export const setFontSize = (fontSize) => (dispatch) => {
+  dispatch(updateSettings({ fontSize }));
+};
+
 export const setAutoScaleSpringLength = (autoScaleSpringLength) => (
   dispatch
 ) => {
@@ -63,5 +67,5 @@ export const setAnimate = (animate) => (dispatch) => {
 
 export const restoreDefaults = () => {
   localStorage.setItem("settings", null);
-  return { type: RESTORE_DEFAULTS }
+  return { type: RESTORE_DEFAULTS };
 };

@@ -11,6 +11,7 @@ const INITIAL_STATE = {
   colorScheme: "blues",
   defaultNodeSize: 4,
   nodeScale: 2,
+  fontSize: 18,
   autoScaleSpringLength: false,
   defaultSpringLength: 100,
   motionStiffness: 1000,
