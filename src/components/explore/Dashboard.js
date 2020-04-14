@@ -18,12 +18,22 @@ import {
 } from "@ant-design/icons";
 import { ResponsiveCalendar } from "@nivo/calendar";
 import { startOfYear } from "date-fns";
+import { scheme } from "vega-scale";
 
 import { fetchHistory, setInitialDate } from "../../actions";
 import { useWeekOverWeek } from "../../utils";
 import { Colors, HEAT_MAP_COLORS } from "../../data/constants";
 
 const { Title, Paragraph, Text } = Typography;
+const interpolate = scheme("greens");
+const heatmapColors = [
+  interpolate(0),
+  interpolate(0.2),
+  interpolate(0.4),
+  interpolate(0.6),
+  interpolate(0.8),
+  interpolate(1)
+];
 
 const Dashboard = ({
   history,
@@ -133,7 +143,7 @@ const Dashboard = ({
               from={startOfYear(new Date())}
               to={new Date()}
               emptyColor={Colors.EMPTY}
-              colors={HEAT_MAP_COLORS}
+              colors={heatmapColors}
               margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
               yearSpacing={40}
               monthBorderColor={Colors.BORDER}
