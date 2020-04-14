@@ -135,7 +135,7 @@ const Dashboard = ({
         Click on a calendar entry to view your activity for that day, or see
         your <Link to="/explore/sessions">complete history</Link>.
       </Paragraph>
-      <Card hoverable loading={loading}>
+      <Card hoverable loading={loading} style={{ cursor: "default" }}>
         <Link to="/explore/sessions">
           <div style={{ height: 200 }}>
             <ResponsiveCalendar
@@ -144,7 +144,7 @@ const Dashboard = ({
               to={new Date()}
               emptyColor={Colors.EMPTY}
               colors={heatmapColors}
-              margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
+              margin={{ bottom: 32 }}
               yearSpacing={40}
               monthBorderColor={Colors.BORDER}
               dayBorderWidth={2}
