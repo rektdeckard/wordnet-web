@@ -3,14 +3,23 @@ import { connect } from "react-redux";
 import Graphin from "@antv/graphin";
 import "@antv/graphin/dist/index.css";
 
-import { COLORS, GRAPH_COLORS } from "../data/constants";
+import { scheme } from "vega-scale";
+import { Colors, GRAPH_COLORS } from "../data/constants";
 
 const NetworkGraph = ({ graph, header, settings, style }) => {
   const ref = useRef();
 
-  const nodes = useMemo(
-    () =>
-      graph.nodes?.map((n) => ({
+ const maxDepth = useMemo(
+    () => graph.nodes?.reduce((acc, curr) => Math.max(acc, curr.depth), 1),
+    [graph]
+  );
+
+  const nodes = useMemo(() => {
+    const { defaultNodeSize, colorScheme } = settings;
+    const interpolateColor = scheme(colorScheme);
+
+    return (
+      graph.nodes?.map(n => ({
         id: n.id,
         data: {
           id: n.id,
@@ -18,19 +27,22 @@ const NetworkGraph = ({ graph, header, settings, style }) => {
         layout: {
           degree: n.degree ?? 0,
           force: {
-            mass: n.degree ?? null,
-          },
+            mass: n.degree ?? null
+          }
         },
         degree: n.degree ?? 0,
         shape: "CircleNode",
         style: {
-          nodeSize: 10,
-          primaryColor: COLORS.POSITIVE,
-          fontSize: 18,
-        },
-      })) ?? [],
-    [graph]
-  );
+          nodeSize: 2 * defaultNodeSize,
+          primaryColor: colorScheme
+            ? interpolateColor(1 - (n.depth / maxDepth))
+            : Colors.POSITIVE,
+          // primaryColor: interpolateColor(1 - (n.depth / maxDepth)),
+          fontSize: 0
+        }
+      })) ?? []
+    );
+  }, [graph, settings, maxDepth]);
 
   const edges = useMemo(
     () =>

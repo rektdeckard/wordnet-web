@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import Graphin from "@antv/graphin";
 import "@antv/graphin/dist/index.css";
 
-import { scale, scheme } from "vega-scale";
-import { COLORS } from "../data/constants";
+import { scheme } from "vega-scale";
+import { Colors } from "../data/constants";
 
 const NetworkGraphInteractive = ({
   graph,
@@ -47,7 +47,7 @@ const NetworkGraphInteractive = ({
           // primaryColor: COLORS.ACTIVE,
           primaryColor: colorScheme
             ? interpolateColor(n.degree / maxDegree)
-            : COLORS.POSITIVE,
+            : Colors.POSITIVE,
           fontSize: 18
         }
       })) ?? []
