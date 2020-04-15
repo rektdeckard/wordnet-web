@@ -292,14 +292,14 @@ const Session = ({ graph, fetchSession }) => {
     <>
       <Layout style={{ background: Colors.CARD_BACKGROUND }}>
         <ErrorBoundary
-	  fallback={
+          fallback={
             <Result
               status="warning"
               title="Error building graph"
               subTitle="Don't panic! This error has been reported."
-	    />
-	  }
-	>
+            />
+          }
+        >
           <SettingsSider defaultCollapsed />
           <Content>
             <NetworkGraphInteractive
@@ -308,7 +308,7 @@ const Session = ({ graph, fetchSession }) => {
               hovered={hovered}
             />
           </Content>
-	</ErrorBoundary>
+        </ErrorBoundary>
       </Layout>
       <Tabs
         defaultActiveKey="overview"
@@ -336,7 +336,8 @@ const Session = ({ graph, fetchSession }) => {
               <Descriptions.Item
                 label="Starting Word"
                 span={3}
-                children={<Tag>{nodes.find((n) => n.depth === 1)?.id}</Tag>}              />
+                children={<Tag>{nodes.find((n) => n.depth === 1)?.id}</Tag>}
+              />
               <Descriptions.Item label="Session ID" span={3}>
                 {id}
               </Descriptions.Item>
