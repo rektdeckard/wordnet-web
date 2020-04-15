@@ -23,6 +23,8 @@ import { Colors } from "../../data/constants";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
+const ONE_DAY = 86400;
+const ONE_YEAR = ONE_DAY * 365;
 
 const SessionLog = ({ initialDate, setInitialDate }) => {
   const history = useHistory();
@@ -31,10 +33,10 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
   const [startTimestamp, endTimestamp] = useMemo(() => {
     const start = startDate
       ? getUnixTime(parse(startDate, "yyyy-MM-dd", new Date()))
-      : 100000;
+      : 0;
     const end = endDate
-      ? getUnixTime(parse(endDate, "yyyy-MM-dd", new Date())) + 86400
-      : start + 86400000;
+      ? getUnixTime(parse(endDate, "yyyy-MM-dd", new Date())) + ONE_DAY
+      : start + ONE_YEAR * 3;
     return [start, end];
   }, [startDate, endDate]);
 
