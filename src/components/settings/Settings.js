@@ -9,13 +9,13 @@ import { restoreDefaults } from "../../actions";
 import { useGraph } from "../../utils";
 import { Colors } from "../../data/constants";
 
-import data from "../../data/sample3.json";
+import data from "../../data/sample.json";
 
 const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
 
 const Settings = ({ settings, restoreDefaults }) => {
-  const { nodes, links } = useGraph(data);
+  const { nodes, edges } = useGraph(data);
 
   const handleSaveSettings = () => {
     localStorage.setItem("settings", JSON.stringify(settings));
@@ -34,7 +34,7 @@ const Settings = ({ settings, restoreDefaults }) => {
         <SettingsSider />
         <Content>
           <NetworkGraphInteractive
-            graph={{ nodes, links }}
+            graph={{ nodes, edges }}
             style={{ height: 832 }}
           />
         </Content>

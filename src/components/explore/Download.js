@@ -2,7 +2,11 @@ import React, { useState, useMemo, useEffect } from "react";
 import Excel from "react-data-export";
 
 import { fetchAllSessions } from "../../actions";
-import { mapGraph, condenseModelNodes, condenseModelEdges } from "../../utils/graphUtils";
+import {
+  mapGraph,
+  condenseModelNodes,
+  condenseModelEdges,
+} from "../../utils/graphUtils";
 
 const { ExcelFile } = Excel;
 const { ExcelSheet, ExcelColumn } = ExcelFile;
@@ -28,7 +32,7 @@ const Download = ({ graph, render, all }) => {
     }
   };
 
-  const { nodes, links, responses, createdAt } = useMemo(() => {
+  const { nodes, edges, responses, createdAt } = useMemo(() => {
     return all ? mapGraph(allRecords) : graph;
   }, [all, graph, allRecords]);
 
@@ -59,13 +63,13 @@ const Download = ({ graph, render, all }) => {
             <ExcelColumn label="SUBMITTED AT" value="createdAt" />
             <ExcelColumn label="USER" value="owner" />
           </ExcelSheet>
-          <ExcelSheet data={condenseModelEdges(links)} name="Edges">
+          <ExcelSheet data={condenseModelEdges(edges)} name="Edges">
             <ExcelColumn label="SOURCE WORD" value="source" />
             <ExcelColumn label="TARGET WORD" value="target" />
             <ExcelColumn label="FREQUENCY" value="frequency" />
             <ExcelColumn label="USER" value="owner" />
           </ExcelSheet>
-          <ExcelSheet data={links} name="Edges by Session">
+          <ExcelSheet data={edges} name="Edges by Session">
             <ExcelColumn label="SOURCE WORD" value="source" />
             <ExcelColumn label="TARGET WORD" value="target" />
             <ExcelColumn label="SUBMITTED AT" value="createdAt" />

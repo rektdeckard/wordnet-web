@@ -1,50 +1,37 @@
 import { useMemo } from "react";
 import { STARTING_WORDS, GRAPH_COLORS } from "../data/constants";
 
-export const mapNodes = (graph) =>
-  graph?.nodes?.map((node) => ({
-    id: node.value,
+export const mapNodes = (nodes = []) =>
+  nodes.map((node) => ({
+    ...node,
     depth: node.depth,
-    radius: node.radius,
-    color: node.color,
+    id: node.value,
     degree:
       (node.sources?.items?.length ?? 0) + (node.targets?.items?.length ?? 0),
-    createdAt: node.createdAt,
-    owner: node.owner,
-  })) ?? [];
+  }));
 
-export const mapEdges = (graph) =>
-  graph?.edges?.map((edge) => ({
-    id: edge.id,
+export const mapEdges = (edges = []) =>
+  edges.map((edge) => ({
+    ...edge,
     source: edge.source.value,
     target: edge.target.value,
-    distance: edge.distance,
-    createdAt: edge.createdAt,
-    owner: edge.owner,
-  })) ??
-  graph?.links ??
-  [];
+  }));
 
-export const mapResponses = (graph) =>
-  graph?.responses?.map(
-    (response) =>
-      ({
-        source: response.source.value,
-        target: response.value,
-        responseTime: response.responseTime,
-        createdAt: response.createdAt,
-        owner: response.owner,
-      } ?? [])
-  ) ?? [];
+export const mapResponses = (responses = []) =>
+  responses.map((response) => ({
+    ...response,
+    source: response.source.value,
+    target: response.value,
+  }));
 
-export const mapGraph = (graph) => {
-  const nodes = mapNodes(graph);
-  const links = mapEdges(graph);
-  const responses = mapResponses(graph);
+export const mapGraph = (graph = {}) => {
+  const nodes = mapNodes(graph.nodes);
+  const edges = mapEdges(graph.edges);
+  const responses = mapResponses(graph.responses);
 
   return {
     nodes,
-    links,
+    edges,
     responses,
     createdAt: graph?.createdAt,
     session: graph?.session,
@@ -158,8 +145,14 @@ export const createStartingNode = (nodeNetworkId) => {
   };
 };
 
+/**
+ * Create new node for each token that does not already have one.
+ *
+ * @param {string[]} tokens
+ * @param {*[]} nodes
+ * @param {*} currentNode
+ */
 export const createMissingNodes = (tokens, nodes, currentNode) => {
-  // Create new node for each token that does not already have one
   const existingTokens = nodes.map((n) => n.value);
   return tokens
     .filter((t) => !existingTokens.includes(t))
@@ -171,24 +164,38 @@ export const createMissingNodes = (tokens, nodes, currentNode) => {
     }));
 };
 
-export const createMissingLinks = (tokens, links, currentNode) => {
-  // Create links from current node to each token's new or extant node
-  // TODO: Update distance for extant links to represent stronger association?
-  const existingLinks = links
-    .filter((l) => l.source === currentNode.value)
-    .map((l) => l.target);
+/**
+ * Create edges from current node to each token's new or extant node
+ *
+ * @param {string[]} tokens Strings representing the unique tokens of a response
+ * @param {*[]} edges All edges in the current session
+ * @param {*} currentNode Current game node
+ * @return New edges to add
+ */
+export const createMissingEdges = (tokens, edges, currentNode) => {
+  // TODO: Update distance for extant edges to represent stronger association?
+  const existingEdges = edges
+    .filter((edge) => edge.source === currentNode.value)
+    .map((edge) => edge.target);
 
   return tokens
-    .filter((t) => !existingLinks.includes(t))
-    .map((t) => ({
+    .filter((token) => !existingEdges.includes(token))
+    .map((token) => ({
       source: currentNode.value,
-      target: t,
+      target: token,
       distance: 30,
     }));
 };
 
+/**
+ * Filters an array of nodes to those whose value is included in an array of tokens.
+ *
+ * @param {string[]} tokens Strings representing the unique tokens of a response
+ * @param {*[]} nodes All nodes in the current session
+ * @return Nodes in the current session whose value is one of the tokens
+ */
 export const findNodesToLink = (tokens, nodes) =>
-  nodes.filter((n) => tokens.includes(n.value));
+  nodes.filter((node) => tokens.includes(node.value));
 
 /**
  * Reduces model `Nodes` with the same value by the same owner into a single node,

@@ -30,7 +30,7 @@ const QuickPlay = ({
   submitSession,
   history,
 }) => {
-  const { nodes, links, session, currentNode } = useGraph(graph);
+  const { nodes, edges, session, currentNode } = useGraph(graph);
   const [entry, setEntry] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -64,7 +64,7 @@ const QuickPlay = ({
   };
 
   const handleFinish = async () => {
-    const hasPlayed = Boolean(links.length);
+    const hasPlayed = Boolean(edges.length);
 
     setLoading(true);
     try {
@@ -107,7 +107,7 @@ const QuickPlay = ({
           }
         >
           <NetworkGraph
-            graph={{ nodes, links }}
+            graph={{ nodes, edges }}
             header={
               <Title level={3} style={{ textAlign: "center", paddingTop: 16 }}>
                 {currentNode?.value && !loading ? (

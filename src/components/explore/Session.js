@@ -45,7 +45,7 @@ const Session = ({ graph, fetchSession }) => {
 
   const {
     nodes,
-    links,
+    edges,
     responses,
     createdAt,
     bfs,
@@ -303,7 +303,7 @@ const Session = ({ graph, fetchSession }) => {
           <SettingsSider defaultCollapsed />
           <Content>
             <NetworkGraphInteractive
-              graph={{ nodes, links }}
+              graph={{ nodes, edges }}
               loading={loading}
               hovered={hovered}
             />
@@ -347,7 +347,7 @@ const Session = ({ graph, fetchSession }) => {
                 children={new Date(graph?.createdAt).toLocaleString()}
               />
               <Descriptions.Item label="Nodes" children={nodes.length} />
-              <Descriptions.Item label="Edges" children={links.length} />
+              <Descriptions.Item label="Edges" children={edges.length} />
               <Descriptions.Item
                 label="Responses"
                 children={responses.length}
@@ -360,7 +360,7 @@ const Session = ({ graph, fetchSession }) => {
               <Descriptions.Item label="Other" children={"Unknown"} />
               <Descriptions.Item label="Download Data" span={3}>
                 <Download
-                  graph={{ nodes, links, responses, createdAt }}
+                  graph={{ nodes, edges, responses, createdAt }}
                   render={({ loading, onClick }) => (
                     <Button size="small" loading={loading} onClick={onClick}>
                       .xlsx
@@ -457,8 +457,8 @@ const Session = ({ graph, fetchSession }) => {
         <TabPane tab="Edges" key="edges">
           <Table
             columns={edgeColumns}
-            dataSource={links}
-            rowKey={(link) => link.id}
+            dataSource={edges}
+            rowKey={(edge) => edge.id}
             size="small"
             scroll={{ y: "25vh" }}
             pagination={false}

@@ -3,15 +3,15 @@ import {
   REMOVE_GRAPH_ELEMENT,
   SET_CURRENT_NODE,
   INITIALIZE_GRAPH_SESSION,
-  SUBMIT_GRAPH_SESSION
+  SUBMIT_GRAPH_SESSION,
 } from "../actions/types";
 
 const INITIAL_STATE = {
   nodes: [],
-  links: [],
+  edges: [],
   session: null,
   currentNode: null,
-  previousNode: null
+  previousNode: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -19,7 +19,7 @@ export default (state = INITIAL_STATE, action) => {
     case INITIALIZE_GRAPH_SESSION:
       return {
         ...INITIAL_STATE,
-        ...action.payload
+        ...action.payload,
       };
     case SUBMIT_GRAPH_SESSION:
       return INITIAL_STATE;
@@ -27,24 +27,25 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         nodes: [...state.nodes, ...action.payload.nodes],
-        links: [...state.links, ...action.payload.links],
+        edges: [...state.edges, ...action.payload.edges],
       };
     case REMOVE_GRAPH_ELEMENT:
-      const filteredNodes = state.nodes.filter(n => n.id !== action.payload);
-      const filteredLinks = state.links.filter(
-        l => l.source !== action.payload && l.target !== action.payload
+      const filteredNodes = state.nodes.filter((n) => n.id !== action.payload);
+      const filteredEdges = state.edges.filter(
+        (edge) =>
+          edge.source !== action.payload && edge.target !== action.payload
       );
       return {
         ...state,
         nodes: filteredNodes,
-        links: filteredLinks,
+        edges: filteredEdges,
       };
     case SET_CURRENT_NODE:
       return {
         ...state,
         currentNode: action.payload,
-        previousNode: state.currentNode
-      }
+        previousNode: state.currentNode,
+      };
     default:
       return state;
   }

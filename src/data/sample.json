@@ -1,1649 +1,3288 @@
 {
   "nodes": [
     {
-      "id": "1",
+      "id": "54d089b0-377d-4aed-9e38-189e59b3d157",
+      "value": "somebody",
+      "depth": 3,
       "radius": 8,
-      "depth": 1,
-      "color": "rgb(97, 205, 187)",
-      "label": "smart"
+      "color": "#EAEFD3",
+      "sources": {
+        "items": [
+          {
+            "id": "e1a781eb-7b5d-42bb-a030-9101e2e06272",
+            "target": {
+              "value": "individual"
+            }
+          },
+          {
+            "id": "f7f8d70a-aa53-4451-9f3a-2cf0331e448c",
+            "target": {
+              "value": "a"
+            }
+          },
+          {
+            "id": "6a3f0223-849f-4916-9ee2-89fb991385e9",
+            "target": {
+              "value": "person"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "a7f59497-85ab-46bc-9b89-c61c96e492eb",
+            "source": {
+              "value": "recognized"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:44.413Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     },
     {
-      "id": "2",
+      "id": "652c0338-d979-408b-b44a-8dde6fc05c70",
+      "value": "knowledge",
+      "depth": 3,
       "radius": 8,
-      "depth": 1,
-      "color": "rgb(97, 205, 187)"
+      "color": "#EAEFD3",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "3e3347c6-6e90-4913-9cd9-07f03c234b7d",
+            "source": {
+              "value": "known"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:42:17.656Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     },
     {
-      "id": "3",
+      "id": "7a47e48c-9eee-4402-a5df-297335824f7a",
+      "value": "connected",
+      "depth": 5,
       "radius": 8,
-      "depth": 1,
-      "color": "rgb(97, 205, 187)"
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "9433a22c-9d92-4e99-a430-bafb2a78492b",
+            "source": {
+              "value": "linked"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:45:42.725Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     },
     {
-      "id": "4",
+      "id": "77b55eb5-0a52-42df-bfd6-496d11b80cac",
+      "value": "subject",
+      "depth": 5,
       "radius": 8,
-      "depth": 1,
-      "color": "rgb(97, 205, 187)"
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "38d481c5-acb4-49c8-80f5-72f06be615c8",
+            "source": {
+              "value": "about"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:57:26.348Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     },
     {
-      "id": "5",
+      "id": "89d1bcb9-c0ba-4fc3-9198-b783bd954c34",
+      "value": "characteristic",
+      "depth": 3,
       "radius": 8,
-      "depth": 1,
-      "color": "rgb(97, 205, 187)"
+      "color": "#EAEFD3",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "99909f1b-7d39-4219-99d6-ae056483be3d",
+            "source": {
+              "value": "nature"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:43:34.394Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     },
     {
-      "id": "6",
+      "id": "5ddc7fd0-dbec-44f1-b5a3-6ec544cf8a7a",
+      "value": "was",
+      "depth": 3,
       "radius": 8,
-      "depth": 1,
-      "color": "rgb(97, 205, 187)"
+      "color": "#EAEFD3",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "cd43b0d9-3890-45f4-970d-7817a2449b2b",
+            "source": {
+              "value": "recognized"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:44.405Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     },
     {
-      "id": "7",
+      "id": "c8715eeb-6011-48c9-aba6-621d6ccab8f9",
+      "value": "earth",
+      "depth": 4,
       "radius": 8,
-      "depth": 1,
-      "color": "rgb(97, 205, 187)"
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "de6c3a93-ce26-4be4-8047-a70e65aabdd7",
+            "source": {
+              "value": "natural"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:09.941Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     },
     {
-      "id": "8",
+      "id": "f6ed127a-c0f7-4b20-af1f-ecf21c1e3a19",
+      "value": "being",
+      "depth": 5,
       "radius": 8,
-      "depth": 1,
-      "color": "rgb(97, 205, 187)"
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "40700407-e752-43ea-8ae8-1db6e0bc724a",
+            "source": {
+              "value": "person"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:42:30.667Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     },
     {
-      "id": "9",
+      "id": "05f7d480-4314-47ff-a9d4-f1f40296d401",
+      "value": "individual",
+      "depth": 4,
       "radius": 8,
-      "depth": 1,
-      "color": "rgb(97, 205, 187)"
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "e1a781eb-7b5d-42bb-a030-9101e2e06272",
+            "source": {
+              "value": "somebody"
+            }
+          },
+          {
+            "id": "072e607e-7ac3-4896-8744-caa831baf82c",
+            "source": {
+              "value": "person"
+            }
+          },
+          {
+            "id": "eedb5720-70de-4329-a727-4960d06ffee8",
+            "source": {
+              "value": "person"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:41:58.917Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     },
     {
-      "id": "10",
+      "id": "28ea884e-e4e0-46be-8e11-5edb46db7e47",
+      "value": "phenomena",
+      "depth": 3,
       "radius": 8,
-      "depth": 1,
-      "color": "rgb(97, 205, 187)"
+      "color": "#EAEFD3",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "c4908c7d-ba1b-483c-bbe2-7cee1a9ea507",
+            "source": {
+              "value": "nature"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:43:34.424Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     },
     {
-      "id": "11",
+      "id": "5d6ec78f-3888-431a-878d-1f23f4a927cb",
+      "value": "not",
+      "depth": 4,
       "radius": 8,
-      "depth": 1,
-      "color": "rgb(97, 205, 187)"
+      "color": "#B3C0A4",
+      "sources": {
+        "items": [
+          {
+            "id": "cd149e38-2507-4115-b01f-a85a3249660a",
+            "target": {
+              "value": "of"
+            }
+          },
+          {
+            "id": "24da39b6-2840-4117-b58b-82550d4bb589",
+            "target": {
+              "value": "opposite"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "9d15e682-72e2-4e17-9c25-042d06080563",
+            "source": {
+              "value": "natural"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:09.910Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     },
     {
-      "id": "12",
+      "id": "ad58adfb-91fd-4eb1-a25f-606cf807bdd3",
+      "value": "natural",
+      "depth": 3,
       "radius": 8,
+      "color": "#EAEFD3",
+      "sources": {
+        "items": [
+          {
+            "id": "de6c3a93-ce26-4be4-8047-a70e65aabdd7",
+            "target": {
+              "value": "earth"
+            }
+          },
+          {
+            "id": "cdb5fd4b-4e1f-4236-a89d-37daa8aa58e8",
+            "target": {
+              "value": "organic"
+            }
+          },
+          {
+            "id": "1462f0fb-da1c-4cc7-b130-c766cc35eacf",
+            "target": {
+              "value": "the"
+            }
+          },
+          {
+            "id": "9d15e682-72e2-4e17-9c25-042d06080563",
+            "target": {
+              "value": "not"
+            }
+          },
+          {
+            "id": "036502af-4433-4769-9988-5eb9563630fa",
+            "target": {
+              "value": "of"
+            }
+          },
+          {
+            "id": "e76a7780-0f45-4bf5-994d-75f1c2746724",
+            "target": {
+              "value": "synthetic"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "6b7f8dde-0a44-4e48-b5e4-6d707363e582",
+            "source": {
+              "value": "organic"
+            }
+          },
+          {
+            "id": "0ee947c6-b473-4a77-a7d9-c4caec787b95",
+            "source": {
+              "value": "nature"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:43:34.425Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "f4d40e1e-d558-41dd-9947-c047b700bbca",
+      "value": "about",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": [
+          {
+            "id": "38d481c5-acb4-49c8-80f5-72f06be615c8",
+            "target": {
+              "value": "subject"
+            }
+          },
+          {
+            "id": "0ad42156-a3f1-4618-bdd3-1966ebb1af9c",
+            "target": {
+              "value": "on"
+            }
+          },
+          {
+            "id": "33996b40-74a9-453d-bac1-535db8906647",
+            "target": {
+              "value": "around"
+            }
+          },
+          {
+            "id": "ae0494d2-0ae1-4200-8cf9-82ba79a02ffe",
+            "target": {
+              "value": "of"
+            }
+          },
+          {
+            "id": "3bf1cece-7e0c-410e-a65c-c9c127d7b22c",
+            "target": {
+              "value": "the"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "57548e91-3a5f-4154-9225-3e892a153969",
+            "source": {
+              "value": "relating"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:20.941Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "47033631-7f4c-4639-9245-7d1311f83332",
+      "value": "between",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "6f1710a3-929e-456f-a607-30fefd6ed633",
+            "source": {
+              "value": "disjunction"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:45:34.100Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "8c656d1e-1e60-42ec-961e-e432d35c4f81",
+      "value": "human",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "6e8e84af-095a-4e32-87ab-594865a60249",
+            "source": {
+              "value": "person"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:42:30.649Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "d774d794-2ae3-4ec7-ae0d-87ed46deb119",
+      "value": "unknown",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "aa431b1c-1988-4ac8-901e-96e00db0ca56",
+            "source": {
+              "value": "who"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:41:42.499Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "b8fc9cfe-1136-4b31-8da5-43a652c0b9da",
+      "value": "either",
+      "depth": 3,
+      "radius": 8,
+      "color": "#EAEFD3",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "f05e6263-0065-40d4-82be-245ce7f8eed2",
+            "source": {
+              "value": "or"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:57.764Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "8d65f01c-5dbf-4326-a326-1c05d4881d71",
+      "value": "recognized",
+      "depth": 2,
+      "radius": 8,
+      "color": "#DCC48E",
+      "sources": {
+        "items": [
+          {
+            "id": "cd43b0d9-3890-45f4-970d-7817a2449b2b",
+            "target": {
+              "value": "was"
+            }
+          },
+          {
+            "id": "b2a9d1bd-c9da-414e-9fac-4bd4e28c4b32",
+            "target": {
+              "value": "who"
+            }
+          },
+          {
+            "id": "a7f59497-85ab-46bc-9b89-c61c96e492eb",
+            "target": {
+              "value": "somebody"
+            }
+          },
+          {
+            "id": "c91dae0d-fd36-4e86-9f2b-e06d149f633b",
+            "target": {
+              "value": "accepted"
+            }
+          },
+          {
+            "id": "d5e88a88-03af-4ea5-b5ab-859570c91b4c",
+            "target": {
+              "value": "knew"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "69c497ca-fa79-4cef-8d93-2383ff16cd7f",
+            "source": {
+              "value": "familiar"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:25.284Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "6140c9ea-5a80-4a99-a410-6562c2c71971",
+      "value": "to",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "c90427cc-0fcb-4e5f-a4d2-4b29df9ca07d",
+            "source": {
+              "value": "accepted"
+            }
+          },
+          {
+            "id": "e120becd-7c7d-4ce2-8306-3f0aa11a2ce0",
+            "source": {
+              "value": "relating"
+            }
+          },
+          {
+            "id": "a8a938cf-0478-4c31-8a47-d144b0a9422e",
+            "source": {
+              "value": "nature"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:42:55.954Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "a255b40c-f6dc-4cc2-9794-9171dd00b8a8",
+      "value": "latin",
+      "depth": 6,
+      "radius": 8,
+      "color": "#4A5477",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "35c1f732-f753-4ec7-b563-80b7b527e180",
+            "source": {
+              "value": "sapiens"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:56:40.295Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "725edd46-425e-400e-a302-9c89c33ecba0",
+      "value": "or",
+      "depth": 2,
+      "radius": 8,
+      "color": "#DCC48E",
+      "sources": {
+        "items": [
+          {
+            "id": "f05e6263-0065-40d4-82be-245ce7f8eed2",
+            "target": {
+              "value": "either"
+            }
+          },
+          {
+            "id": "edc78584-d049-4591-806d-86974b23070b",
+            "target": {
+              "value": "disjunction"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "79c4751e-65c2-48af-87e2-c193e60cbc94",
+            "source": {
+              "value": "familiar"
+            }
+          },
+          {
+            "id": "cb374d93-99f9-4031-8483-2020245b1137",
+            "source": {
+              "value": "person"
+            }
+          },
+          {
+            "id": "75128630-fa5a-4a98-860d-f5812506a6e8",
+            "source": {
+              "value": "accepted"
+            }
+          },
+          {
+            "id": "2978d223-afc0-445d-a7ab-430bb8721d3d",
+            "source": {
+              "value": "nature"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:25.279Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "e481027e-11ad-4cf8-b5f0-8593096c25d5",
+      "value": "the",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "d4eae742-32c4-400f-93b9-650a59749743",
+            "source": {
+              "value": "person"
+            }
+          },
+          {
+            "id": "1462f0fb-da1c-4cc7-b130-c766cc35eacf",
+            "source": {
+              "value": "natural"
+            }
+          },
+          {
+            "id": "3bf1cece-7e0c-410e-a65c-c9c127d7b22c",
+            "source": {
+              "value": "about"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:09.919Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "a44e15ab-f911-4a48-8396-182ac5a5e367",
+      "value": "of",
+      "depth": 3,
+      "radius": 8,
+      "color": "#EAEFD3",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "d8c2c549-6974-4cad-9fd8-186dfc6156fa",
+            "source": {
+              "value": "known"
+            }
+          },
+          {
+            "id": "dce00d69-6415-4847-98d0-0ef242582343",
+            "source": {
+              "value": "organic"
+            }
+          },
+          {
+            "id": "036502af-4433-4769-9988-5eb9563630fa",
+            "source": {
+              "value": "natural"
+            }
+          },
+          {
+            "id": "64dc536c-c7a7-49ad-94f4-266d9beeb7fd",
+            "source": {
+              "value": "person"
+            }
+          },
+          {
+            "id": "cd149e38-2507-4115-b01f-a85a3249660a",
+            "source": {
+              "value": "not"
+            }
+          },
+          {
+            "id": "ae0494d2-0ae1-4200-8cf9-82ba79a02ffe",
+            "source": {
+              "value": "about"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:42:17.655Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "57abf522-f600-4d98-bb4a-70c8516a0752",
+      "value": "essential",
+      "depth": 3,
+      "radius": 8,
+      "color": "#EAEFD3",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "291d0100-505a-4983-9091-939a1f9e9758",
+            "source": {
+              "value": "nature"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:43:34.420Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "7d298e64-17ad-4770-9870-e3fefdc483bd",
+      "value": "nature",
+      "depth": 2,
+      "radius": 8,
+      "color": "#DCC48E",
+      "sources": {
+        "items": [
+          {
+            "id": "c4908c7d-ba1b-483c-bbe2-7cee1a9ea507",
+            "target": {
+              "value": "phenomena"
+            }
+          },
+          {
+            "id": "0ee947c6-b473-4a77-a7d9-c4caec787b95",
+            "target": {
+              "value": "natural"
+            }
+          },
+          {
+            "id": "291d0100-505a-4983-9091-939a1f9e9758",
+            "target": {
+              "value": "essential"
+            }
+          },
+          {
+            "id": "fd4de9e9-565d-4956-9c4b-7c54aff13fed",
+            "target": {
+              "value": "quality"
+            }
+          },
+          {
+            "id": "2978d223-afc0-445d-a7ab-430bb8721d3d",
+            "target": {
+              "value": "or"
+            }
+          },
+          {
+            "id": "a8a938cf-0478-4c31-8a47-d144b0a9422e",
+            "target": {
+              "value": "to"
+            }
+          },
+          {
+            "id": "99909f1b-7d39-4219-99d6-ae056483be3d",
+            "target": {
+              "value": "characteristic"
+            }
+          },
+          {
+            "id": "c9c428f6-422b-40da-8f37-f040540e0509",
+            "target": {
+              "value": "relating"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "49525dc7-c5ad-4f03-8dc5-ffd10a511a23",
+            "source": {
+              "value": "familiar"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:25.315Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "33326f20-29d1-4b12-b443-2a9bea722bb9",
+      "value": "accepted",
+      "depth": 3,
+      "radius": 8,
+      "color": "#EAEFD3",
+      "sources": {
+        "items": [
+          {
+            "id": "cec00fea-b6a4-4209-a7ca-d240cae25e9e",
+            "target": {
+              "value": "agreed"
+            }
+          },
+          {
+            "id": "c90427cc-0fcb-4e5f-a4d2-4b29df9ca07d",
+            "target": {
+              "value": "to"
+            }
+          },
+          {
+            "id": "75128630-fa5a-4a98-860d-f5812506a6e8",
+            "target": {
+              "value": "or"
+            }
+          },
+          {
+            "id": "d0cd25e5-cc9b-4f1b-8702-59b06fce4787",
+            "target": {
+              "value": "acquiesced"
+            }
+          },
+          {
+            "id": "c69a9955-16a6-4393-8127-98cdad0a726e",
+            "target": {
+              "value": "welcomed"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "c91dae0d-fd36-4e86-9f2b-e06d149f633b",
+            "source": {
+              "value": "recognized"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:44.403Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "e3a38ac7-04b4-47a8-a38c-ed964aff38a6",
+      "value": "synthetic",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "e76a7780-0f45-4bf5-994d-75f1c2746724",
+            "source": {
+              "value": "natural"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:09.943Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "4083c653-464c-4373-abe6-56c92f685aaf",
+      "value": "living",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "a40c7483-fbbb-4ee7-ae87-ef870fa2a1db",
+            "source": {
+              "value": "organic"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:45:24.544Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "f0a142c5-6dd2-4804-801d-2a258930da5b",
+      "value": "had",
+      "depth": 3,
+      "radius": 8,
+      "color": "#EAEFD3",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "31b20883-ac90-4c9b-9d70-4f7fedde296f",
+            "source": {
+              "value": "known"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:42:17.654Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "cfcd0a15-6f78-477d-87ba-93822f76826e",
+      "value": "man",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "ad3117f6-0663-4af5-b3e4-adc2e91f3250",
+            "source": {
+              "value": "person"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:49.399Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "d2949e10-17ff-455f-95b8-f1c38a1f3d81",
+      "value": "a",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "7f2e4814-256d-4ee3-99cb-b80cef11c8f0",
+            "source": {
+              "value": "child"
+            }
+          },
+          {
+            "id": "f7f8d70a-aa53-4451-9f3a-2cf0331e448c",
+            "source": {
+              "value": "somebody"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:41:58.914Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "e0b2e8c2-b516-412c-ab6f-ec53304f2739",
+      "value": "around",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "f9d0e7fb-8ea0-49a4-a01b-6a8a0e85f0fb",
+            "source": {
+              "value": "relating"
+            }
+          },
+          {
+            "id": "33996b40-74a9-453d-bac1-535db8906647",
+            "source": {
+              "value": "about"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:20.943Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "9fa35634-98e3-44d7-b367-fce2e2bf6997",
+      "value": "child",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": [
+          {
+            "id": "7f2e4814-256d-4ee3-99cb-b80cef11c8f0",
+            "target": {
+              "value": "a"
+            }
+          },
+          {
+            "id": "70feaa89-b91f-4ffa-b241-195e3bf92eb4",
+            "target": {
+              "value": "youth"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "8096f707-b346-4f09-9f20-7a7ede6c6c46",
+            "source": {
+              "value": "person"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:49.383Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "6832e7d5-6bfa-40b9-a94d-eed9cb8098ce",
+      "value": "woman",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "09cee32f-a7a9-46c6-a899-b72a68957614",
+            "source": {
+              "value": "person"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:49.385Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "16a0bd87-ca16-4510-8230-c2e81d8123e7",
+      "value": "species",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "e6b3e563-4954-46b4-9411-72a92db972b4",
+            "source": {
+              "value": "person"
+            }
+          },
+          {
+            "id": "c8989d38-c34d-45ec-9294-6ab8bfa91241",
+            "source": {
+              "value": "sapiens"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:49.392Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "796d5fbd-70ce-46d6-b84d-866041a8db9f",
+      "value": "choice",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "9a3c1ebb-b4b9-4d64-80d8-4f37c8d056ca",
+            "source": {
+              "value": "disjunction"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:45:34.054Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "6cd7bb81-e95c-44ee-85a7-9ae248f790f1",
+      "value": "relating",
+      "depth": 3,
+      "radius": 8,
+      "color": "#EAEFD3",
+      "sources": {
+        "items": [
+          {
+            "id": "57548e91-3a5f-4154-9225-3e892a153969",
+            "target": {
+              "value": "about"
+            }
+          },
+          {
+            "id": "f9d0e7fb-8ea0-49a4-a01b-6a8a0e85f0fb",
+            "target": {
+              "value": "around"
+            }
+          },
+          {
+            "id": "e120becd-7c7d-4ce2-8306-3f0aa11a2ce0",
+            "target": {
+              "value": "to"
+            }
+          },
+          {
+            "id": "5778a02f-4aa6-4d79-b558-058d9c4f8f46",
+            "target": {
+              "value": "linked"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "c9c428f6-422b-40da-8f37-f040540e0509",
+            "source": {
+              "value": "nature"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:43:34.419Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "6aea497e-7201-43ec-82cc-83f34bde94e8",
+      "value": "pronoun",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "05535af6-421d-49cd-ad0d-c89dab47c42d",
+            "source": {
+              "value": "who"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:41:42.503Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "4c6fa171-a516-4347-9a1e-79710d540a78",
+      "value": "other",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "a670d259-6c42-4259-bcbd-ccae468d15eb",
+            "source": {
+              "value": "person"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:49.380Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "baa6df99-6261-40a3-8ce5-0a2b888c969e",
+      "value": "agreed",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "cec00fea-b6a4-4209-a7ca-d240cae25e9e",
+            "source": {
+              "value": "accepted"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:42:55.948Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "e3819c85-c46d-4025-aa66-da071aafdbb4",
+      "value": "organic",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": [
+          {
+            "id": "635e4c50-92e8-4694-b879-ad0bc37075f7",
+            "target": {
+              "value": "carbon"
+            }
+          },
+          {
+            "id": "6b7f8dde-0a44-4e48-b5e4-6d707363e582",
+            "target": {
+              "value": "natural"
+            }
+          },
+          {
+            "id": "e9f7f846-b8e3-4274-ab5f-9d8e693b278e",
+            "target": {
+              "value": "origin"
+            }
+          },
+          {
+            "id": "dce00d69-6415-4847-98d0-0ef242582343",
+            "target": {
+              "value": "of"
+            }
+          },
+          {
+            "id": "bf39afff-d45f-4dea-bdcd-b39bc495ae37",
+            "target": {
+              "value": "based"
+            }
+          },
+          {
+            "id": "a40c7483-fbbb-4ee7-ae87-ef870fa2a1db",
+            "target": {
+              "value": "living"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "cdb5fd4b-4e1f-4236-a89d-37daa8aa58e8",
+            "source": {
+              "value": "natural"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:09.929Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "5c1cfa0a-80a2-4852-8da5-dd8bb6678b58",
+      "value": "interrogative",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "bff31931-bb2f-40bc-a83f-3a5bfc0bcdb3",
+            "source": {
+              "value": "who"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:41:42.498Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "42d8c95a-be6f-4b9a-b7b8-e6cb253cd960",
+      "value": "who",
+      "depth": 3,
+      "radius": 8,
+      "color": "#EAEFD3",
+      "sources": {
+        "items": [
+          {
+            "id": "9c487b66-6a35-413f-8130-97755565058d",
+            "target": {
+              "value": "for"
+            }
+          },
+          {
+            "id": "aa431b1c-1988-4ac8-901e-96e00db0ca56",
+            "target": {
+              "value": "unknown"
+            }
+          },
+          {
+            "id": "05535af6-421d-49cd-ad0d-c89dab47c42d",
+            "target": {
+              "value": "pronoun"
+            }
+          },
+          {
+            "id": "bf64df91-d624-4497-a878-1e71fa289613",
+            "target": {
+              "value": "an"
+            }
+          },
+          {
+            "id": "bff31931-bb2f-40bc-a83f-3a5bfc0bcdb3",
+            "target": {
+              "value": "interrogative"
+            }
+          },
+          {
+            "id": "41375d31-1b29-4e96-bd05-023816a12792",
+            "target": {
+              "value": "person"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "b2a9d1bd-c9da-414e-9fac-4bd4e28c4b32",
+            "source": {
+              "value": "recognized"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:44.385Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "51dfa48b-d147-49a0-b7b0-893055b87389",
+      "value": "related",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "44d1a8f7-c44b-4b1c-adfc-cb0ad76ed7e5",
+            "source": {
+              "value": "linked"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:45:42.737Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "4d4eb922-3337-4177-9c91-e8c29e466ec1",
+      "value": "in",
+      "depth": 2,
+      "radius": 8,
+      "color": "#DCC48E",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "f9c1620f-3fa6-46df-9313-0fcc37213b03",
+            "source": {
+              "value": "familiar"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:25.294Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "eb6867cf-37b0-4af9-9be3-da50888069de",
+      "value": "person",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": [
+          {
+            "id": "cb374d93-99f9-4031-8483-2020245b1137",
+            "target": {
+              "value": "or"
+            }
+          },
+          {
+            "id": "ad3117f6-0663-4af5-b3e4-adc2e91f3250",
+            "target": {
+              "value": "man"
+            }
+          },
+          {
+            "id": "6d7f9eb4-1c3b-4433-bac6-b670302f05b4",
+            "target": {
+              "value": "sapiens"
+            }
+          },
+          {
+            "id": "2a3a2e88-74b1-4ab0-abd1-e77f07da778e",
+            "target": {
+              "value": "homo"
+            }
+          },
+          {
+            "id": "d4eae742-32c4-400f-93b9-650a59749743",
+            "target": {
+              "value": "the"
+            }
+          },
+          {
+            "id": "8096f707-b346-4f09-9f20-7a7ede6c6c46",
+            "target": {
+              "value": "child"
+            }
+          },
+          {
+            "id": "072e607e-7ac3-4896-8744-caa831baf82c",
+            "target": {
+              "value": "individual"
+            }
+          },
+          {
+            "id": "eedb5720-70de-4329-a727-4960d06ffee8",
+            "target": {
+              "value": "individual"
+            }
+          },
+          {
+            "id": "64dc536c-c7a7-49ad-94f4-266d9beeb7fd",
+            "target": {
+              "value": "of"
+            }
+          },
+          {
+            "id": "a670d259-6c42-4259-bcbd-ccae468d15eb",
+            "target": {
+              "value": "other"
+            }
+          },
+          {
+            "id": "09cee32f-a7a9-46c6-a899-b72a68957614",
+            "target": {
+              "value": "woman"
+            }
+          },
+          {
+            "id": "6e8e84af-095a-4e32-87ab-594865a60249",
+            "target": {
+              "value": "human"
+            }
+          },
+          {
+            "id": "e6b3e563-4954-46b4-9411-72a92db972b4",
+            "target": {
+              "value": "species"
+            }
+          },
+          {
+            "id": "40700407-e752-43ea-8ae8-1db6e0bc724a",
+            "target": {
+              "value": "being"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "6a3f0223-849f-4916-9ee2-89fb991385e9",
+            "source": {
+              "value": "somebody"
+            }
+          },
+          {
+            "id": "41375d31-1b29-4e96-bd05-023816a12792",
+            "source": {
+              "value": "who"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:41:42.516Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "bfad2be2-bbee-4aa9-8cbe-c2fd19714572",
+      "value": "friendly",
+      "depth": 2,
+      "radius": 8,
+      "color": "#DCC48E",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "ca146a0d-7bc6-4fe4-b0a2-551a8e0e8d95",
+            "source": {
+              "value": "familiar"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:25.311Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "f21f3730-17e1-4bb7-9e2b-a76badc093c8",
+      "value": "known",
+      "depth": 2,
+      "radius": 8,
+      "color": "#DCC48E",
+      "sources": {
+        "items": [
+          {
+            "id": "d8c2c549-6974-4cad-9fd8-186dfc6156fa",
+            "target": {
+              "value": "of"
+            }
+          },
+          {
+            "id": "3e3347c6-6e90-4913-9cd9-07f03c234b7d",
+            "target": {
+              "value": "knowledge"
+            }
+          },
+          {
+            "id": "31b20883-ac90-4c9b-9d70-4f7fedde296f",
+            "target": {
+              "value": "had"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "19620462-8e89-4c88-8a8d-ea3dad8c106c",
+            "source": {
+              "value": "familiar"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:25.278Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "b60aea29-563d-4a7b-8796-7f83b6637919",
+      "value": "disjunction",
+      "depth": 3,
+      "radius": 8,
+      "color": "#EAEFD3",
+      "sources": {
+        "items": [
+          {
+            "id": "6f1710a3-929e-456f-a607-30fefd6ed633",
+            "target": {
+              "value": "between"
+            }
+          },
+          {
+            "id": "9a3c1ebb-b4b9-4d64-80d8-4f37c8d056ca",
+            "target": {
+              "value": "choice"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "edc78584-d049-4591-806d-86974b23070b",
+            "source": {
+              "value": "or"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:57.754Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "88477524-0bbb-485e-b264-533b571c0dfd",
+      "value": "name",
+      "depth": 6,
+      "radius": 8,
+      "color": "#4A5477",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "ecad7871-3bea-47bc-aa3c-8212e1ee43f3",
+            "source": {
+              "value": "sapiens"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:56:40.284Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "58c57784-61fc-4019-91a9-589ca7c5968b",
+      "value": "based",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "bf39afff-d45f-4dea-bdcd-b39bc495ae37",
+            "source": {
+              "value": "organic"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:45:24.546Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "3bef2b9e-5489-4b4c-8243-ad2944cbb6ef",
+      "value": "origin",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "e9f7f846-b8e3-4274-ab5f-9d8e693b278e",
+            "source": {
+              "value": "organic"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:45:24.531Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "03d0a631-2b05-49a2-9178-8fdfc117bc9d",
+      "value": "carbon",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "635e4c50-92e8-4694-b879-ad0bc37075f7",
+            "source": {
+              "value": "organic"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:45:24.555Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "958bdb4a-baed-4ea6-9dfa-105f18345596",
+      "value": "quality",
+      "depth": 3,
+      "radius": 8,
+      "color": "#EAEFD3",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "fd4de9e9-565d-4956-9c4b-7c54aff13fed",
+            "source": {
+              "value": "nature"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:43:34.416Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "25fbfe7b-6267-4801-8c92-5ddc6fbcc7cb",
+      "value": "homo",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "2a3a2e88-74b1-4ab0-abd1-e77f07da778e",
+            "source": {
+              "value": "person"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:49.397Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "09154e46-3aa9-45da-a6f7-12eff677e426",
+      "value": "for",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "9c487b66-6a35-413f-8130-97755565058d",
+            "source": {
+              "value": "who"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:41:42.513Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "03c7481c-633c-4657-acdf-4b544be583b8",
+      "value": "welcomed",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "c69a9955-16a6-4393-8127-98cdad0a726e",
+            "source": {
+              "value": "accepted"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:42:55.944Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "c121b83f-0b3c-46b4-a7de-37e44862ace9",
+      "value": "youth",
+      "depth": 6,
+      "radius": 8,
+      "color": "#4A5477",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "70feaa89-b91f-4ffa-b241-195e3bf92eb4",
+            "source": {
+              "value": "child"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:57:08.182Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "d9ad62ba-0389-43dc-adf6-4fd8d91a84b0",
+      "value": "knew",
+      "depth": 3,
+      "radius": 8,
+      "color": "#EAEFD3",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "d5e88a88-03af-4ea5-b5ab-859570c91b4c",
+            "source": {
+              "value": "recognized"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:40:44.391Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "9d4bec6f-b646-4262-816c-2e0e31b30d58",
+      "value": "an",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "bf64df91-d624-4497-a878-1e71fa289613",
+            "source": {
+              "value": "who"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:41:42.499Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "7d3f9edd-9293-4e9e-b67b-fa5bdd276a9d",
+      "value": "opposite",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "24da39b6-2840-4117-b58b-82550d4bb589",
+            "source": {
+              "value": "not"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:56:18.174Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "77e98a0b-9365-4435-84d2-f2897711d94c",
+      "value": "on",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "0ad42156-a3f1-4618-bdd3-1966ebb1af9c",
+            "source": {
+              "value": "about"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:57:26.355Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "1d46fae3-487b-4d64-9b51-e25056ed13f6",
+      "value": "acquiesced",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": []
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "d0cd25e5-cc9b-4f1b-8702-59b06fce4787",
+            "source": {
+              "value": "accepted"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:42:55.938Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "c1264346-7315-433e-bbfc-ef4663e7ff4c",
+      "value": "sapiens",
+      "depth": 5,
+      "radius": 8,
+      "color": "#77789B",
+      "sources": {
+        "items": [
+          {
+            "id": "35c1f732-f753-4ec7-b563-80b7b527e180",
+            "target": {
+              "value": "latin"
+            }
+          },
+          {
+            "id": "ecad7871-3bea-47bc-aa3c-8212e1ee43f3",
+            "target": {
+              "value": "name"
+            }
+          },
+          {
+            "id": "c8989d38-c34d-45ec-9294-6ab8bfa91241",
+            "target": {
+              "value": "species"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "6d7f9eb4-1c3b-4433-bac6-b670302f05b4",
+            "source": {
+              "value": "person"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:49.413Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "06e62267-2ead-4e97-978d-ee76f0f95496",
+      "value": "linked",
+      "depth": 4,
+      "radius": 8,
+      "color": "#B3C0A4",
+      "sources": {
+        "items": [
+          {
+            "id": "44d1a8f7-c44b-4b1c-adfc-cb0ad76ed7e5",
+            "target": {
+              "value": "related"
+            }
+          },
+          {
+            "id": "9433a22c-9d92-4e99-a430-bafb2a78492b",
+            "target": {
+              "value": "connected"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": [
+          {
+            "id": "5778a02f-4aa6-4d79-b558-058d9c4f8f46",
+            "source": {
+              "value": "relating"
+            }
+          }
+        ]
+      },
+      "createdAt": "2020-03-23T05:44:20.947Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "06982854-82e1-4e6a-b10a-79925c660a63",
+      "value": "familiar",
       "depth": 1,
-      "color": "rgb(97, 205, 187)"
-    },
-    {
-      "id": "0",
-      "radius": 12,
-      "depth": 0,
-      "color": "rgb(244, 117, 96)"
-    },
-    {
-      "id": "1.0",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "1.1",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "1.2",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "1.3",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "1.4",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "1.5",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "1.6",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "1.7",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "1.8",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "1.9",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "1.10",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.0",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.1",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.2",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.3",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.4",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.5",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.6",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.7",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.8",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.9",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.10",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.11",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.12",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.13",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.14",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "2.15",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "3.0",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "3.1",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "3.2",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "3.3",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "3.4",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "3.5",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "3.6",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "3.7",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "4.0",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "4.1",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "4.2",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "4.3",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "4.4",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "4.5",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "4.6",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "4.7",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "4.8",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "4.9",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "4.10",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "4.11",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.0",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.1",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.2",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.3",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.4",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.5",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.6",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.7",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.8",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.9",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.10",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.11",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.12",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.13",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.14",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "5.15",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "6.0",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "6.1",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "6.2",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "6.3",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "6.4",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "6.5",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "6.6",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "6.7",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "6.8",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "6.9",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "6.10",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.0",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.1",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.2",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.3",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.4",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.5",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.6",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.7",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.8",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.9",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.10",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.11",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.12",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.13",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "7.14",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "8.0",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "8.1",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "8.2",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "8.3",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "8.4",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "8.5",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "8.6",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "9.0",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "9.1",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "9.2",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "9.3",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "9.4",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "9.5",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "9.6",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "9.7",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "10.0",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "10.1",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "10.2",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "10.3",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "10.4",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "10.5",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "10.6",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "10.7",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "10.8",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "10.9",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "11.0",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "11.1",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "11.2",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "11.3",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "11.4",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "11.5",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "11.6",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.0",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.1",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.2",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.3",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.4",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.5",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.6",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.7",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.8",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.9",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.10",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.11",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
-    },
-    {
-      "id": "12.12",
-      "radius": 4,
-      "depth": 2,
-      "color": "rgb(232, 193, 160)"
+      "radius": 8,
+      "color": "#DBA88E",
+      "sources": {
+        "items": [
+          {
+            "id": "79c4751e-65c2-48af-87e2-c193e60cbc94",
+            "target": {
+              "value": "or"
+            }
+          },
+          {
+            "id": "69c497ca-fa79-4cef-8d93-2383ff16cd7f",
+            "target": {
+              "value": "recognized"
+            }
+          },
+          {
+            "id": "19620462-8e89-4c88-8a8d-ea3dad8c106c",
+            "target": {
+              "value": "known"
+            }
+          },
+          {
+            "id": "f9c1620f-3fa6-46df-9313-0fcc37213b03",
+            "target": {
+              "value": "in"
+            }
+          },
+          {
+            "id": "49525dc7-c5ad-4f03-8dc5-ffd10a511a23",
+            "target": {
+              "value": "nature"
+            }
+          },
+          {
+            "id": "ca146a0d-7bc6-4fe4-b0a2-551a8e0e8d95",
+            "target": {
+              "value": "friendly"
+            }
+          }
+        ]
+      },
+      "targets": {
+        "items": []
+      },
+      "createdAt": "2020-03-23T05:39:25.276Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     }
   ],
-  "links": [
-    {
-      "source": "0",
-      "target": "1",
-      "distance": 50
-    },
-    {
-      "source": "1",
-      "target": "8",
-      "distance": 70
-    },
-    {
-      "source": "1",
-      "target": "1.0",
-      "distance": 30
-    },
-    {
-      "source": "1",
-      "target": "1.1",
-      "distance": 30
-    },
-    {
-      "source": "1",
-      "target": "1.2",
-      "distance": 30
-    },
-    {
-      "source": "1",
-      "target": "1.3",
-      "distance": 30
-    },
-    {
-      "source": "1",
-      "target": "1.4",
-      "distance": 30
-    },
-    {
-      "source": "1",
-      "target": "1.5",
-      "distance": 30
-    },
-    {
-      "source": "1",
-      "target": "1.6",
-      "distance": 30
-    },
-    {
-      "source": "1",
-      "target": "1.7",
-      "distance": 30
-    },
-    {
-      "source": "1",
-      "target": "1.8",
-      "distance": 30
-    },
-    {
-      "source": "1",
-      "target": "1.9",
-      "distance": 30
-    },
-    {
-      "source": "1",
-      "target": "1.10",
-      "distance": 30
-    },
-    {
-      "source": "0",
-      "target": "2",
-      "distance": 50
-    },
-    {
-      "source": "2",
-      "target": "2.0",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.1",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.2",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.3",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.4",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.5",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.6",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.7",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.8",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.9",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.10",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.11",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.12",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.13",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.14",
-      "distance": 30
-    },
-    {
-      "source": "2",
-      "target": "2.15",
-      "distance": 30
-    },
-    {
-      "source": "0",
-      "target": "3",
-      "distance": 50
-    },
-    {
-      "source": "3",
-      "target": "3.0",
-      "distance": 30
-    },
-    {
-      "source": "3",
-      "target": "3.1",
-      "distance": 30
-    },
-    {
-      "source": "3",
-      "target": "3.2",
-      "distance": 30
-    },
-    {
-      "source": "3",
-      "target": "3.3",
-      "distance": 30
-    },
-    {
-      "source": "3",
-      "target": "3.4",
-      "distance": 30
-    },
-    {
-      "source": "3",
-      "target": "3.5",
-      "distance": 30
-    },
-    {
-      "source": "3",
-      "target": "3.6",
-      "distance": 30
-    },
-    {
-      "source": "3",
-      "target": "3.7",
-      "distance": 30
-    },
-    {
-      "source": "0",
-      "target": "4",
-      "distance": 50
-    },
-    {
-      "source": "4",
-      "target": "4",
-      "distance": 70
-    },
-    {
-      "source": "4",
-      "target": "4.0",
-      "distance": 30
-    },
-    {
-      "source": "4",
-      "target": "4.1",
-      "distance": 30
-    },
-    {
-      "source": "4",
-      "target": "4.2",
-      "distance": 30
-    },
-    {
-      "source": "4",
-      "target": "4.3",
-      "distance": 30
-    },
-    {
-      "source": "4",
-      "target": "4.4",
-      "distance": 30
-    },
-    {
-      "source": "4",
-      "target": "4.5",
-      "distance": 30
-    },
-    {
-      "source": "4",
-      "target": "4.6",
-      "distance": 30
-    },
-    {
-      "source": "4",
-      "target": "4.7",
-      "distance": 30
-    },
-    {
-      "source": "4",
-      "target": "4.8",
-      "distance": 30
-    },
-    {
-      "source": "4",
-      "target": "4.9",
-      "distance": 30
-    },
-    {
-      "source": "4",
-      "target": "4.10",
-      "distance": 30
-    },
-    {
-      "source": "4",
-      "target": "4.11",
-      "distance": 30
-    },
-    {
-      "source": "0",
-      "target": "5",
-      "distance": 50
-    },
-    {
-      "source": "5",
-      "target": "5.0",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.1",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.2",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.3",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.4",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.5",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.6",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.7",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.8",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.9",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.10",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.11",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.12",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.13",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.14",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "5.15",
-      "distance": 30
-    },
-    {
-      "source": "0",
-      "target": "6",
-      "distance": 50
-    },
-    {
-      "source": "6",
-      "target": "6.0",
-      "distance": 30
-    },
-    {
-      "source": "6",
-      "target": "6.1",
-      "distance": 30
-    },
-    {
-      "source": "6",
-      "target": "6.2",
-      "distance": 30
-    },
-    {
-      "source": "6",
-      "target": "6.3",
-      "distance": 30
-    },
-    {
-      "source": "6",
-      "target": "6.4",
-      "distance": 30
-    },
-    {
-      "source": "6",
-      "target": "6.5",
-      "distance": 30
-    },
-    {
-      "source": "6",
-      "target": "6.6",
-      "distance": 30
-    },
-    {
-      "source": "6",
-      "target": "6.7",
-      "distance": 30
-    },
-    {
-      "source": "6",
-      "target": "6.8",
-      "distance": 30
-    },
-    {
-      "source": "6",
-      "target": "6.9",
-      "distance": 30
-    },
-    {
-      "source": "6",
-      "target": "6.10",
-      "distance": 30
-    },
-    {
-      "source": "0",
-      "target": "7",
-      "distance": 50
-    },
-    {
-      "source": "7",
-      "target": "7.0",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.1",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.2",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.3",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.4",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.5",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.6",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.7",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.8",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.9",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.10",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.11",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.12",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.13",
-      "distance": 30
-    },
-    {
-      "source": "7",
-      "target": "7.14",
-      "distance": 30
-    },
-    {
-      "source": "0",
-      "target": "8",
-      "distance": 50
-    },
-    {
-      "source": "8",
-      "target": "1",
-      "distance": 70
-    },
-    {
-      "source": "8",
-      "target": "8.0",
-      "distance": 30
-    },
-    {
-      "source": "8",
-      "target": "8.1",
-      "distance": 30
-    },
-    {
-      "source": "8",
-      "target": "8.2",
-      "distance": 30
-    },
-    {
-      "source": "8",
-      "target": "8.3",
-      "distance": 30
-    },
-    {
-      "source": "8",
-      "target": "8.4",
-      "distance": 30
-    },
-    {
-      "source": "8",
-      "target": "8.5",
-      "distance": 30
-    },
-    {
-      "source": "8",
-      "target": "8.6",
-      "distance": 30
-    },
-    {
-      "source": "0",
-      "target": "9",
-      "distance": 50
-    },
-    {
-      "source": "9",
-      "target": "9.0",
-      "distance": 30
-    },
-    {
-      "source": "9",
-      "target": "9.1",
-      "distance": 30
-    },
-    {
-      "source": "9",
-      "target": "9.2",
-      "distance": 30
-    },
-    {
-      "source": "9",
-      "target": "9.3",
-      "distance": 30
-    },
-    {
-      "source": "9",
-      "target": "9.4",
-      "distance": 30
-    },
-    {
-      "source": "9",
-      "target": "9.5",
-      "distance": 30
-    },
-    {
-      "source": "9",
-      "target": "9.6",
-      "distance": 30
-    },
-    {
-      "source": "9",
-      "target": "9.7",
-      "distance": 30
-    },
-    {
-      "source": "0",
-      "target": "10",
-      "distance": 50
-    },
-    {
-      "source": "10",
-      "target": "10.0",
-      "distance": 30
-    },
-    {
-      "source": "10",
-      "target": "10.1",
-      "distance": 30
-    },
-    {
-      "source": "10",
-      "target": "10.2",
-      "distance": 30
-    },
-    {
-      "source": "10",
-      "target": "10.3",
-      "distance": 30
-    },
-    {
-      "source": "10",
-      "target": "10.4",
-      "distance": 30
-    },
-    {
-      "source": "10",
-      "target": "10.5",
-      "distance": 30
-    },
-    {
-      "source": "10",
-      "target": "10.6",
-      "distance": 30
-    },
-    {
-      "source": "10",
-      "target": "10.7",
-      "distance": 30
-    },
-    {
-      "source": "10",
-      "target": "10.8",
-      "distance": 30
-    },
-    {
-      "source": "10",
-      "target": "10.9",
-      "distance": 30
-    },
-    {
-      "source": "0",
-      "target": "11",
-      "distance": 50
-    },
-    {
-      "source": "11",
-      "target": "11.0",
-      "distance": 30
-    },
-    {
-      "source": "11",
-      "target": "11.1",
-      "distance": 30
-    },
-    {
-      "source": "11",
-      "target": "11.2",
-      "distance": 30
-    },
-    {
-      "source": "11",
-      "target": "11.3",
-      "distance": 30
-    },
-    {
-      "source": "11",
-      "target": "11.4",
-      "distance": 30
-    },
-    {
-      "source": "11",
-      "target": "11.5",
-      "distance": 30
-    },
-    {
-      "source": "11",
-      "target": "11.6",
-      "distance": 30
-    },
-    {
-      "source": "0",
-      "target": "12",
-      "distance": 50
-    },
-    {
-      "source": "12",
-      "target": "12.0",
-      "distance": 30
-    },
-    {
-      "source": "12",
-      "target": "12.1",
-      "distance": 30
-    },
-    {
-      "source": "12",
-      "target": "12.2",
-      "distance": 30
-    },
-    {
-      "source": "12",
-      "target": "12.3",
-      "distance": 30
-    },
-    {
-      "source": "12",
-      "target": "12.4",
-      "distance": 30
-    },
-    {
-      "source": "12",
-      "target": "12.5",
-      "distance": 30
-    },
-    {
-      "source": "12",
-      "target": "12.6",
-      "distance": 30
-    },
-    {
-      "source": "12",
-      "target": "12.7",
-      "distance": 30
-    },
-    {
-      "source": "12",
-      "target": "12.8",
-      "distance": 30
-    },
-    {
-      "source": "12",
-      "target": "12.9",
-      "distance": 30
-    },
-    {
-      "source": "12",
-      "target": "12.10",
-      "distance": 30
-    },
-    {
-      "source": "12",
-      "target": "12.11",
-      "distance": 30
-    },
-    {
-      "source": "12",
-      "target": "12.12",
-      "distance": 30
-    },
-    {
-      "source": "11",
-      "target": "12.1",
-      "distance": 30
-    },
-    {
-      "source": "4",
-      "target": "3.2",
-      "distance": 30
-    },
-    {
-      "source": "5",
-      "target": "12.12",
-      "distance": 30
+  "edges": [
+    {
+      "id": "57548e91-3a5f-4154-9225-3e892a153969",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:21.293Z",
+      "source": {
+        "value": "relating"
+      },
+      "target": {
+        "value": "about"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "635e4c50-92e8-4694-b879-ad0bc37075f7",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:45:24.886Z",
+      "source": {
+        "value": "organic"
+      },
+      "target": {
+        "value": "carbon"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "44d1a8f7-c44b-4b1c-adfc-cb0ad76ed7e5",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:45:43.162Z",
+      "source": {
+        "value": "linked"
+      },
+      "target": {
+        "value": "related"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "6b7f8dde-0a44-4e48-b5e4-6d707363e582",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:45:24.894Z",
+      "source": {
+        "value": "organic"
+      },
+      "target": {
+        "value": "natural"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "d8c2c549-6974-4cad-9fd8-186dfc6156fa",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:42:18.111Z",
+      "source": {
+        "value": "known"
+      },
+      "target": {
+        "value": "of"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "9433a22c-9d92-4e99-a430-bafb2a78492b",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:45:43.119Z",
+      "source": {
+        "value": "linked"
+      },
+      "target": {
+        "value": "connected"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "79c4751e-65c2-48af-87e2-c193e60cbc94",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:25.735Z",
+      "source": {
+        "value": "familiar"
+      },
+      "target": {
+        "value": "or"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "c4908c7d-ba1b-483c-bbe2-7cee1a9ea507",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:43:34.973Z",
+      "source": {
+        "value": "nature"
+      },
+      "target": {
+        "value": "phenomena"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "e1a781eb-7b5d-42bb-a030-9101e2e06272",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:41:59.391Z",
+      "source": {
+        "value": "somebody"
+      },
+      "target": {
+        "value": "individual"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "cb374d93-99f9-4031-8483-2020245b1137",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:49.807Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "or"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "cec00fea-b6a4-4209-a7ca-d240cae25e9e",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:42:56.341Z",
+      "source": {
+        "value": "accepted"
+      },
+      "target": {
+        "value": "agreed"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "cd43b0d9-3890-45f4-970d-7817a2449b2b",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:44.732Z",
+      "source": {
+        "value": "recognized"
+      },
+      "target": {
+        "value": "was"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "ad3117f6-0663-4af5-b3e4-adc2e91f3250",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:49.783Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "man"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "6f1710a3-929e-456f-a607-30fefd6ed633",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:45:34.620Z",
+      "source": {
+        "value": "disjunction"
+      },
+      "target": {
+        "value": "between"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "6d7f9eb4-1c3b-4433-bac6-b670302f05b4",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:49.756Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "sapiens"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "f9d0e7fb-8ea0-49a4-a01b-6a8a0e85f0fb",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:21.292Z",
+      "source": {
+        "value": "relating"
+      },
+      "target": {
+        "value": "around"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "35c1f732-f753-4ec7-b563-80b7b527e180",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:56:40.780Z",
+      "source": {
+        "value": "sapiens"
+      },
+      "target": {
+        "value": "latin"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "ecad7871-3bea-47bc-aa3c-8212e1ee43f3",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:56:40.791Z",
+      "source": {
+        "value": "sapiens"
+      },
+      "target": {
+        "value": "name"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "e9f7f846-b8e3-4274-ab5f-9d8e693b278e",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:45:24.895Z",
+      "source": {
+        "value": "organic"
+      },
+      "target": {
+        "value": "origin"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "2a3a2e88-74b1-4ab0-abd1-e77f07da778e",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:49.789Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "homo"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "9a3c1ebb-b4b9-4d64-80d8-4f37c8d056ca",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:45:34.608Z",
+      "source": {
+        "value": "disjunction"
+      },
+      "target": {
+        "value": "choice"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "de6c3a93-ce26-4be4-8047-a70e65aabdd7",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:10.326Z",
+      "source": {
+        "value": "natural"
+      },
+      "target": {
+        "value": "earth"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "b2a9d1bd-c9da-414e-9fac-4bd4e28c4b32",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:44.736Z",
+      "source": {
+        "value": "recognized"
+      },
+      "target": {
+        "value": "who"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "cdb5fd4b-4e1f-4236-a89d-37daa8aa58e8",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:10.326Z",
+      "source": {
+        "value": "natural"
+      },
+      "target": {
+        "value": "organic"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "7f2e4814-256d-4ee3-99cb-b80cef11c8f0",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:57:08.636Z",
+      "source": {
+        "value": "child"
+      },
+      "target": {
+        "value": "a"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "38d481c5-acb4-49c8-80f5-72f06be615c8",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:57:26.757Z",
+      "source": {
+        "value": "about"
+      },
+      "target": {
+        "value": "subject"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "d4eae742-32c4-400f-93b9-650a59749743",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:49.783Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "the"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "8096f707-b346-4f09-9f20-7a7ede6c6c46",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:49.793Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "child"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "1462f0fb-da1c-4cc7-b130-c766cc35eacf",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:10.329Z",
+      "source": {
+        "value": "natural"
+      },
+      "target": {
+        "value": "the"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "c90427cc-0fcb-4e5f-a4d2-4b29df9ca07d",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:42:56.339Z",
+      "source": {
+        "value": "accepted"
+      },
+      "target": {
+        "value": "to"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "9d15e682-72e2-4e17-9c25-042d06080563",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:10.317Z",
+      "source": {
+        "value": "natural"
+      },
+      "target": {
+        "value": "not"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "75128630-fa5a-4a98-860d-f5812506a6e8",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:42:56.370Z",
+      "source": {
+        "value": "accepted"
+      },
+      "target": {
+        "value": "or"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "69c497ca-fa79-4cef-8d93-2383ff16cd7f",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:25.733Z",
+      "source": {
+        "value": "familiar"
+      },
+      "target": {
+        "value": "recognized"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "072e607e-7ac3-4896-8744-caa831baf82c",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:42:31.157Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "individual"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "dce00d69-6415-4847-98d0-0ef242582343",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:45:24.894Z",
+      "source": {
+        "value": "organic"
+      },
+      "target": {
+        "value": "of"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "0ee947c6-b473-4a77-a7d9-c4caec787b95",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:43:34.981Z",
+      "source": {
+        "value": "nature"
+      },
+      "target": {
+        "value": "natural"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "d0cd25e5-cc9b-4f1b-8702-59b06fce4787",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:42:56.349Z",
+      "source": {
+        "value": "accepted"
+      },
+      "target": {
+        "value": "acquiesced"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "036502af-4433-4769-9988-5eb9563630fa",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:10.321Z",
+      "source": {
+        "value": "natural"
+      },
+      "target": {
+        "value": "of"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "0ad42156-a3f1-4618-bdd3-1966ebb1af9c",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:57:26.750Z",
+      "source": {
+        "value": "about"
+      },
+      "target": {
+        "value": "on"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "eedb5720-70de-4329-a727-4960d06ffee8",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:49.805Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "individual"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "70feaa89-b91f-4ffa-b241-195e3bf92eb4",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:57:08.622Z",
+      "source": {
+        "value": "child"
+      },
+      "target": {
+        "value": "youth"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "3e3347c6-6e90-4913-9cd9-07f03c234b7d",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:42:18.122Z",
+      "source": {
+        "value": "known"
+      },
+      "target": {
+        "value": "knowledge"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "64dc536c-c7a7-49ad-94f4-266d9beeb7fd",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:49.808Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "of"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "291d0100-505a-4983-9091-939a1f9e9758",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:43:34.977Z",
+      "source": {
+        "value": "nature"
+      },
+      "target": {
+        "value": "essential"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "fd4de9e9-565d-4956-9c4b-7c54aff13fed",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:43:34.974Z",
+      "source": {
+        "value": "nature"
+      },
+      "target": {
+        "value": "quality"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "a7f59497-85ab-46bc-9b89-c61c96e492eb",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:44.733Z",
+      "source": {
+        "value": "recognized"
+      },
+      "target": {
+        "value": "somebody"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "a670d259-6c42-4259-bcbd-ccae468d15eb",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:49.804Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "other"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "19620462-8e89-4c88-8a8d-ea3dad8c106c",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:25.723Z",
+      "source": {
+        "value": "familiar"
+      },
+      "target": {
+        "value": "known"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "f9c1620f-3fa6-46df-9313-0fcc37213b03",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:25.732Z",
+      "source": {
+        "value": "familiar"
+      },
+      "target": {
+        "value": "in"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "c91dae0d-fd36-4e86-9f2b-e06d149f633b",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:44.694Z",
+      "source": {
+        "value": "recognized"
+      },
+      "target": {
+        "value": "accepted"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "33996b40-74a9-453d-bac1-535db8906647",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:57:26.775Z",
+      "source": {
+        "value": "about"
+      },
+      "target": {
+        "value": "around"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "c69a9955-16a6-4393-8127-98cdad0a726e",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:42:56.364Z",
+      "source": {
+        "value": "accepted"
+      },
+      "target": {
+        "value": "welcomed"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "9c487b66-6a35-413f-8130-97755565058d",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:41:42.856Z",
+      "source": {
+        "value": "who"
+      },
+      "target": {
+        "value": "for"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "e120becd-7c7d-4ce2-8306-3f0aa11a2ce0",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:21.289Z",
+      "source": {
+        "value": "relating"
+      },
+      "target": {
+        "value": "to"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "aa431b1c-1988-4ac8-901e-96e00db0ca56",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:41:42.856Z",
+      "source": {
+        "value": "who"
+      },
+      "target": {
+        "value": "unknown"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "f05e6263-0065-40d4-82be-245ce7f8eed2",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:58.108Z",
+      "source": {
+        "value": "or"
+      },
+      "target": {
+        "value": "either"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "09cee32f-a7a9-46c6-a899-b72a68957614",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:49.773Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "woman"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "2978d223-afc0-445d-a7ab-430bb8721d3d",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:43:34.992Z",
+      "source": {
+        "value": "nature"
+      },
+      "target": {
+        "value": "or"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "e76a7780-0f45-4bf5-994d-75f1c2746724",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:10.330Z",
+      "source": {
+        "value": "natural"
+      },
+      "target": {
+        "value": "synthetic"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "5778a02f-4aa6-4d79-b558-058d9c4f8f46",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:21.295Z",
+      "source": {
+        "value": "relating"
+      },
+      "target": {
+        "value": "linked"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "05535af6-421d-49cd-ad0d-c89dab47c42d",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:41:42.848Z",
+      "source": {
+        "value": "who"
+      },
+      "target": {
+        "value": "pronoun"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "f7f8d70a-aa53-4451-9f3a-2cf0331e448c",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:41:59.375Z",
+      "source": {
+        "value": "somebody"
+      },
+      "target": {
+        "value": "a"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "6e8e84af-095a-4e32-87ab-594865a60249",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:42:31.135Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "human"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "edc78584-d049-4591-806d-86974b23070b",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:58.104Z",
+      "source": {
+        "value": "or"
+      },
+      "target": {
+        "value": "disjunction"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "cd149e38-2507-4115-b01f-a85a3249660a",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:56:18.613Z",
+      "source": {
+        "value": "not"
+      },
+      "target": {
+        "value": "of"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "e6b3e563-4954-46b4-9411-72a92db972b4",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:44:49.801Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "species"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "ae0494d2-0ae1-4200-8cf9-82ba79a02ffe",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:57:26.766Z",
+      "source": {
+        "value": "about"
+      },
+      "target": {
+        "value": "of"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "bf64df91-d624-4497-a878-1e71fa289613",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:41:42.842Z",
+      "source": {
+        "value": "who"
+      },
+      "target": {
+        "value": "an"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "3bf1cece-7e0c-410e-a65c-c9c127d7b22c",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:57:26.781Z",
+      "source": {
+        "value": "about"
+      },
+      "target": {
+        "value": "the"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "24da39b6-2840-4117-b58b-82550d4bb589",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:56:18.608Z",
+      "source": {
+        "value": "not"
+      },
+      "target": {
+        "value": "opposite"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "bf39afff-d45f-4dea-bdcd-b39bc495ae37",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:45:24.905Z",
+      "source": {
+        "value": "organic"
+      },
+      "target": {
+        "value": "based"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "a8a938cf-0478-4c31-8a47-d144b0a9422e",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:43:34.978Z",
+      "source": {
+        "value": "nature"
+      },
+      "target": {
+        "value": "to"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "40700407-e752-43ea-8ae8-1db6e0bc724a",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:42:31.143Z",
+      "source": {
+        "value": "person"
+      },
+      "target": {
+        "value": "being"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "c8989d38-c34d-45ec-9294-6ab8bfa91241",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:56:40.808Z",
+      "source": {
+        "value": "sapiens"
+      },
+      "target": {
+        "value": "species"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "99909f1b-7d39-4219-99d6-ae056483be3d",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:43:34.975Z",
+      "source": {
+        "value": "nature"
+      },
+      "target": {
+        "value": "characteristic"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "a40c7483-fbbb-4ee7-ae87-ef870fa2a1db",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:45:24.890Z",
+      "source": {
+        "value": "organic"
+      },
+      "target": {
+        "value": "living"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "49525dc7-c5ad-4f03-8dc5-ffd10a511a23",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:25.723Z",
+      "source": {
+        "value": "familiar"
+      },
+      "target": {
+        "value": "nature"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "d5e88a88-03af-4ea5-b5ab-859570c91b4c",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:44.739Z",
+      "source": {
+        "value": "recognized"
+      },
+      "target": {
+        "value": "knew"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "31b20883-ac90-4c9b-9d70-4f7fedde296f",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:42:18.117Z",
+      "source": {
+        "value": "known"
+      },
+      "target": {
+        "value": "had"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "c9c428f6-422b-40da-8f37-f040540e0509",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:43:34.976Z",
+      "source": {
+        "value": "nature"
+      },
+      "target": {
+        "value": "relating"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "bff31931-bb2f-40bc-a83f-3a5bfc0bcdb3",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:41:42.839Z",
+      "source": {
+        "value": "who"
+      },
+      "target": {
+        "value": "interrogative"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "6a3f0223-849f-4916-9ee2-89fb991385e9",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:41:59.401Z",
+      "source": {
+        "value": "somebody"
+      },
+      "target": {
+        "value": "person"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "41375d31-1b29-4e96-bd05-023816a12792",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:41:42.849Z",
+      "source": {
+        "value": "who"
+      },
+      "target": {
+        "value": "person"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "ca146a0d-7bc6-4fe4-b0a2-551a8e0e8d95",
+      "distance": 30,
+      "createdAt": "2020-03-23T05:40:25.733Z",
+      "source": {
+        "value": "familiar"
+      },
+      "target": {
+        "value": "friendly"
+      },
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
     }
-  ]
+  ],
+  "responses": [
+    {
+      "id": "38d660b1-c0ea-4463-bce7-207b8b983939",
+      "source": {
+        "value": "relating"
+      },
+      "value": "about, around, linked to",
+      "responseTime": 8946,
+      "createdAt": "2020-03-23T05:44:20.643Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "51db9e8c-bbf4-4251-8840-5834e723468f",
+      "source": {
+        "value": "child"
+      },
+      "value": "a youth",
+      "responseTime": 16813,
+      "createdAt": "2020-03-23T05:57:07.858Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "0f58ac9b-2700-438c-9c47-6d2f3109ace1",
+      "source": {
+        "value": "or"
+      },
+      "value": "disjunction; either",
+      "responseTime": 12034,
+      "createdAt": "2020-03-23T05:40:57.392Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "ee8c661d-3511-4750-80d6-8d7760b1f11c",
+      "source": {
+        "value": "sapiens"
+      },
+      "value": "latin species name",
+      "responseTime": 20913,
+      "createdAt": "2020-03-23T05:56:39.929Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "08a784c5-4732-4652-aef4-25d06699e5ea",
+      "source": {
+        "value": "accepted"
+      },
+      "value": "acquiesced or agreed to; welcomed",
+      "responseTime": 20539,
+      "createdAt": "2020-03-23T05:42:55.422Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "38f3f628-72fd-463a-b1f0-529cf0489e4a",
+      "source": {
+        "value": "recognized"
+      },
+      "value": "knew who somebody was; accepted",
+      "responseTime": 17995,
+      "createdAt": "2020-03-23T05:40:44.100Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "6a7440ff-27ed-4411-ba92-a145a8f9f1f6",
+      "source": {
+        "value": "linked"
+      },
+      "value": "connected, related",
+      "responseTime": 7270,
+      "createdAt": "2020-03-23T05:45:42.332Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "9c3fbe1d-a7b1-41fe-8b1b-219f6135b2c4",
+      "source": {
+        "value": "organic"
+      },
+      "value": "of natural origin; living; carbon-based",
+      "responseTime": 26326,
+      "createdAt": "2020-03-23T05:45:24.233Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "5517df51-ebd0-4b4d-90d3-12dae2231e91",
+      "source": {
+        "value": "somebody"
+      },
+      "value": "a person, individual",
+      "responseTime": 11597,
+      "createdAt": "2020-03-23T05:41:58.530Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "4236659d-fe31-4751-b6a9-ef5052a9149c",
+      "source": {
+        "value": "about"
+      },
+      "value": "around, on the subject of",
+      "responseTime": 16742,
+      "createdAt": "2020-03-23T05:57:25.993Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "d4154107-ef18-493c-ad00-2e43464a4170",
+      "source": {
+        "value": "natural"
+      },
+      "value": "of the earth; organic; not synthetic",
+      "responseTime": 34136,
+      "createdAt": "2020-03-23T05:44:09.511Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "d886bf73-3b62-48c1-8138-8baecc0003a5",
+      "source": {
+        "value": "who"
+      },
+      "value": "an pronoun interrogative for an unknown person",
+      "responseTime": 43537,
+      "createdAt": "2020-03-23T05:41:42.045Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "932822d4-7650-4ab7-afb9-82c8e096debc",
+      "source": {
+        "value": "nature"
+      },
+      "value": "characteristic or essential quality; relating to natural phenomena",
+      "responseTime": 37172,
+      "createdAt": "2020-03-23T05:43:33.941Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "dca14362-856f-4eef-8499-7cb26e094362",
+      "source": {
+        "value": "person"
+      },
+      "value": "man woman child or other individual of the species homo sapiens",
+      "responseTime": 27271,
+      "createdAt": "2020-03-23T05:44:49.045Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "c6c632e9-da60-46b5-ac62-41f78156544a",
+      "source": {
+        "value": "familiar"
+      },
+      "value": "known or recognized; friendly in nature",
+      "responseTime": 59065,
+      "createdAt": "2020-03-23T05:40:24.667Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "44bb15f7-ea04-4f8e-bde8-7b162903b1bb",
+      "source": {
+        "value": "person"
+      },
+      "value": "human being; individual",
+      "responseTime": 11692,
+      "createdAt": "2020-03-23T05:42:30.331Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "f08689dd-fa05-41d5-8f0e-4cd86c35bbf1",
+      "source": {
+        "value": "disjunction"
+      },
+      "value": "choice between",
+      "responseTime": 8051,
+      "createdAt": "2020-03-23T05:45:33.433Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "99c66d31-55fe-4312-a9cc-4bab4dfd5a09",
+      "source": {
+        "value": "not"
+      },
+      "value": "opposite of",
+      "responseTime": 9502,
+      "createdAt": "2020-03-23T05:56:17.720Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    },
+    {
+      "id": "6ae35d21-47a7-43d4-a807-8481c01d3543",
+      "source": {
+        "value": "known"
+      },
+      "value": "had knowledge of",
+      "responseTime": 17627,
+      "createdAt": "2020-03-23T05:42:17.390Z",
+      "owner": "1c461c71-4223-4215-b048-7c30a2778ec1"
+    }
+  ],
+  "createdAt": "2020-03-23T05:39:24.790Z"
 }

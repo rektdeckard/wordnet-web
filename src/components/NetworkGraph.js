@@ -14,21 +14,17 @@ const NetworkGraph = ({ graph, header, settings, style }) => {
     [graph]
   );
 
-  const nodes = useMemo(() => {
+  const displayNodes = useMemo(() => {
     const { defaultNodeSize, colorScheme } = settings;
     const interpolateColor = scheme(colorScheme);
 
     return (
       graph.nodes?.map((node) => ({
         id: node.id,
-        data: {
-          id: node.id,
-        },
+        data: { id: node.id },
         layout: {
           degree: node.degree ?? 0,
-          force: {
-            mass: node.degree ?? null,
-          },
+          force: { mass: node.degree ?? null },
         },
         degree: node.degree ?? 0,
         shape: "CircleNode",
@@ -43,9 +39,9 @@ const NetworkGraph = ({ graph, header, settings, style }) => {
     );
   }, [graph, settings, maxDepth]);
 
-  const edges = useMemo(
+  const displayEdges = useMemo(
     () =>
-      graph.links?.map((edge) => ({
+      graph.edges?.map((edge) => ({
         source: edge.source,
         target: edge.target,
         data: edge,
@@ -58,14 +54,14 @@ const NetworkGraph = ({ graph, header, settings, style }) => {
       {header}
       <Graphin
         ref={ref}
-        data={{ nodes, edges }}
+        data={{ nodes: displayNodes, edges: displayEdges }}
         layout={{
           name: "force",
           options: {
             damping: settings.motionDamping,
             stiffness: settings.motionStiffness,
             defSpringLen: settings.autoScaleSpringLength
-              ? nodes.length + edges.length / 2
+              ? displayNodes.length + displayEdges.length / 2
               : settings.defaultSpringLength,
             minEnergyThreshold: settings.motionThreshold,
             MaxIterations: settings.iterations,
@@ -74,7 +70,7 @@ const NetworkGraph = ({ graph, header, settings, style }) => {
             animation: settings.animate,
           },
         }}
-        options={{  wheelSensitivity: 4, minZoom: 0.1 }}
+        options={{ wheelSensitivity: 4, minZoom: 0.1 }}
       />
     </div>
   );

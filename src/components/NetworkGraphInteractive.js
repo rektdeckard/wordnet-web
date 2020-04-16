@@ -22,7 +22,7 @@ const NetworkGraphInteractive = ({
     [graph]
   );
 
-  const nodes = useMemo(() => {
+  const displayNodes = useMemo(() => {
     const { defaultNodeSize, nodeScale, colorScheme, fontSize } = settings;
     const interpolateColor = scheme(colorScheme);
 
@@ -50,9 +50,9 @@ const NetworkGraphInteractive = ({
     );
   }, [graph, settings, maxDegree]);
 
-  const edges = useMemo(
+  const displayEdges = useMemo(
     () =>
-      graph.links?.map((edge) => ({
+      graph.edges?.map((edge) => ({
         source: edge.source,
         target: edge.target,
         data: edge,
@@ -76,26 +76,26 @@ const NetworkGraphInteractive = ({
           background: Colors.PANEL_BACKGROUND,
           display: "flex",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <Spin />
       </div>
     );
 
-   return (
+  return (
     <div style={{ height: "50vh", ...style }}>
       {header}
       <Graphin
         ref={ref}
-        data={{ nodes, edges }}
+        data={{ nodes: displayNodes, edges: displayEdges }}
         layout={{
           name: settings.type,
           options: {
             damping: settings.motionDamping,
             stiffness: settings.motionStiffness,
             defSpringLen: settings.autoScaleSpringLength
-              ? nodes.length + edges.length / 2
+              ? displayNodes.length + displayEdges.length / 2
               : settings.defaultSpringLength,
             minEnergyThreshold: settings.motionThreshold,
             MaxIterations: settings.iterations,

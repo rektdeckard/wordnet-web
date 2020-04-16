@@ -72,26 +72,17 @@ export const submitResponse = (response) => async (dispatch, getState) => {
       )
     );
 
-    const newLinks = resultEdges.map(
-      ({
-        data: {
-          createEdge: { id, source, target, distance, createdAt },
-        },
-      }) => ({
-        id: id,
-        source: source.value,
-        target: target.value,
-        distance,
-        createdAt,
-      })
-    );
-
     dispatch({
       type: ADD_GRAPH_ELEMENTS,
       payload: {
         nodes: resultNodes.map((res) => res.data.createNode),
-        links: newLinks,
+        edges: resultEdges.map((res) => res.data.createEdge),
       },
+    });
+
+    console.log({
+      nodes: resultNodes.map((res) => res.data.createNode),
+      edges: resultEdges.map((res) => res.data.createEdge),
     });
 
     dispatch(selectRandomNode());
@@ -213,7 +204,7 @@ export const resumeLastSession = () => async (dispatch) => {
       type: INITIALIZE_GRAPH_SESSION,
       payload: {
         nodes: items[0].nodes.items,
-        links: mapEdges({ edges: items[0].edges.items }),
+        edges: items[0].edges.items,
         session: items[0].id,
         currentNode: {
           ...items[0].nodes.items[

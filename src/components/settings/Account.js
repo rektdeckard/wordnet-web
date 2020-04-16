@@ -36,7 +36,7 @@ const Account = (props) => {
         setImage(imageUrl);
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
     setLoading(false);
   };
@@ -47,7 +47,7 @@ const Account = (props) => {
         contentType: "image/*",
         level: "protected",
       });
-      console.log(response);
+      console.info(response);
       fetchImage();
     }
   };
