@@ -190,46 +190,56 @@ export const createMissingLinks = (tokens, links, currentNode) => {
 export const findNodesToLink = (tokens, nodes) =>
   nodes.filter((n) => tokens.includes(n.value));
 
-/*
- * Reduces nodes with the same value by the same owner into a single node, whose
- * degree is the sum of the input node degrees and frequency is the count
+/**
+ * Reduces model `Nodes` with the same value by the same owner into a single node,
+ * whose degree is the sum of the input node degrees and frequency is the count of
+ * similar nodes.
+ *
+ * @param nodes Array of model `Nodes`
+ * @return Array of unique domain `Nodes` with degree and frequency
  */
-// FIXME: does this make sense? aren't we double-counting any identical edges?
-export const condenseNodes = (nodes = []) => {
+export const condenseModelNodes = (nodes = []) => {
   const nodeMap = nodes.reduce((acc, { id, degree, owner }) => {
-    if (acc[`${id}-${owner}`]) {
-      const existingNode = acc[`${id}-${owner}`];
+    const key = `${id}-${owner}`;
+    const existingNode = acc[key];
+
+    if (existingNode) {
       return {
         ...acc,
-        [`${id}-${owner}`]: {
+        [key]: {
           id,
-          degree: existingNode.degree + degree,
           owner,
+          // FIXME: aren't we double-counting any identical edges?
+          degree: existingNode.degree + degree,
           frequency: existingNode.frequency + 1,
         },
       };
     }
 
-    return { ...acc, [`${id}-${owner}`]: { id, degree, owner, frequency: 1 } };
+    return { ...acc, [key]: { id, degree, owner, frequency: 1 } };
   }, {});
 
   return Object.values(nodeMap);
 };
 
-/*
- * Reduces edges with the same source and target and by the same owner into
- * a single edge, whose frequency is the count of the input edges
+/**
+ * Reduces domain `Nodes` with the same value into a single node, whose
+ * frequency is the count of similar nodes.
+ *
+ * @param nodes Array of domain `Nodes`
+ * @return Array of unique domain `Nodes` with degree and frequency
  */
-export const condenseEdges = (edges = []) => {
-  const edgeMap = edges.reduce((acc, { source, target, owner }) => {
-    if (acc[`${source}-${target}-${owner}`]) {
-      const existingNode = acc[`${source}-${target}-${owner}`];
+export const condenseDomainNodes = (nodes = []) => {
+  const nodeMap = nodes.reduce((acc, { value, sources, targets }) => {
+    const existingNode = acc[value];
+
+    if (existingNode) {
       return {
         ...acc,
-        [`${source}-${target}-${owner}`]: {
-          source,
-          target,
-          owner,
+        [value]: {
+          value,
+          sources: { items: [...existingNode.sources.items, ...sources.items] },
+          targets: { items: [...existingNode.targets.items, ...targets.items] },
           frequency: existingNode.frequency + 1,
         },
       };
@@ -237,7 +247,68 @@ export const condenseEdges = (edges = []) => {
 
     return {
       ...acc,
-      [`${source}-${target}-${owner}`]: { source, target, owner, frequency: 1 },
+      [value]: {
+        value,
+        sources,
+        targets,
+        frequency: 1,
+      },
+    };
+  }, {});
+
+  return Object.values(nodeMap);
+};
+
+/**
+ * Reduces model `Edges` with the same source, target, and owner into a single edge,
+ * whose frequency is the count of similar edges.
+ *
+ * @param edges Array of model `Edges`
+ * @return Array of unique model `Edges` with frequency
+ */
+export const condenseModelEdges = (edges = []) => {
+  const edgeMap = edges.reduce((acc, { source, target, owner }) => {
+    const key = `${source}-${target}-${owner}`;
+    const existingEdge = acc[key];
+
+    if (existingEdge)
+      return {
+        ...acc,
+        [key]: {
+          source,
+          target,
+          owner,
+          frequency: existingEdge.frequency + 1,
+        },
+      };
+
+    return {
+      ...acc,
+      [key]: { source, target, owner, frequency: 1 },
+    };
+  }, {});
+
+  return Object.values(edgeMap);
+};
+
+/**
+ * Reduces domain `Edges` with the same source, target, and owner into a single edge,
+ * whose frequency is the count of similar edges.
+ *
+ * @param edges Array of domain `Edges`
+ * @return Array of unique domain `Edges` with frequency
+ */
+export const condenseDomainEdges = (edges = []) => {
+  const edgeMap = edges.reduce((acc, curr) => {
+    const key = `${curr.source.value}-${curr.target.value}`;
+    const existingEdge = acc[key];
+
+    return {
+      ...acc,
+      [key]: {
+        ...curr,
+        frequency: (existingEdge?.frequency ?? 0) + 1,
+      },
     };
   }, {});
 

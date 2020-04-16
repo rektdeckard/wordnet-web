@@ -2,6 +2,7 @@ import { API, graphqlOperation } from "aws-amplify";
 
 import { FETCH_HISTORY, FETCH_SESSION, SET_INITIAL_DATE } from "./types";
 import { countNodes, countResponses, listWordNets } from "../graphql/queries";
+import { condenseDomainNodes, condenseDomainEdges } from "../utils";
 
 /**
  * Fetches all `WordNet` sessions, or all those after provided `fromDate`.
@@ -182,99 +183,101 @@ export const fetchSession = (id) => async (dispatch) => {
  */
 export const fetchAllSessions = () => async (dispatch) => {
   try {
-    // TODO: use nextToken to exhaustively fetch beyone 1000 entries
-    const response = await API.graphql(
-      graphqlOperation(
-        /* GraphQL */ `
-          query fetchAllHistory($limit: Int!, $nextToken: String) {
-            listWordNets(limit: 10, nextToken: $nextToken) {
-              nextToken
-              items {
-                createdAt
-                nodes(limit: $limit) {
-                  items {
-                    id
-                    value
-                    depth
-                    radius
-                    color
-                    sources(limit: $limit) {
-                      items {
-                        id
-                        target {
-                          value
+    let responses = [];
+    let nextToken = null;
+
+    do {
+      const response = await API.graphql(
+        graphqlOperation(
+          /* GraphQL */ `
+            query fetchAllHistory($limit: Int!, $nextToken: String) {
+              listWordNets(limit: 10, nextToken: $nextToken) {
+                nextToken
+                items {
+                  createdAt
+                  nodes(limit: $limit) {
+                    items {
+                      id
+                      value
+                      depth
+                      radius
+                      color
+                      sources(limit: $limit) {
+                        items {
+                          id
+                          target {
+                            value
+                          }
                         }
                       }
-                    }
-                    targets(limit: $limit) {
-                      items {
-                        id
-                        source {
-                          value
+                      targets(limit: $limit) {
+                        items {
+                          id
+                          source {
+                            value
+                          }
                         }
                       }
+                      createdAt
+                      owner
                     }
-                    createdAt
-                    owner
                   }
-                }
-                edges(limit: $limit) {
-                  items {
-                    id
-                    distance
-                    createdAt
-                    source {
-                      value
+                  edges(limit: $limit) {
+                    items {
+                      id
+                      distance
+                      createdAt
+                      source {
+                        value
+                      }
+                      target {
+                        value
+                      }
+                      distance
+                      owner
                     }
-                    target {
-                      value
-                    }
-                    distance
-                    owner
                   }
-                }
-                responses(limit: $limit) {
-                  items {
-                    id
-                    source {
+                  responses(limit: $limit) {
+                    items {
+                      id
+                      source {
+                        value
+                      }
                       value
+                      responseTime
+                      createdAt
+                      owner
                     }
-                    value
-                    responseTime
-                    createdAt
-                    owner
                   }
                 }
               }
             }
-          }
-        `,
-        { limit: 1000, nextToken: null }
-      )
-    );
+          `,
+          { limit: 1000, nextToken }
+        )
+      );
 
-    console.log(response);
+      responses.push(...response.data.listWordNets.items);
+      nextToken = response.data.listWordNets.nextToken;
+    } while (nextToken);
 
-    const reducer = ({ nodes, edges, responses }, curr) => ({
+    // Condense similar nodes and edges
+    const allResults = responses.reduce(({ nodes, edges, responses }, curr) => ({
       nodes: [...nodes, ...curr.nodes.items],
       edges: [...edges, ...curr.edges.items],
       responses: [...responses, ...curr.responses.items],
-    });
-
-    const allResponses = response.data.listWordNets.items.reduce(reducer, {
+    }), {
       nodes: [],
       edges: [],
       responses: [],
     });
 
-    // TODO: condense nodes and edges
-    console.log(allResponses);
-
-    // return allResponses;
     dispatch({
       type: FETCH_SESSION,
       payload: {
-        ...allResponses,
+        nodes: condenseDomainNodes(allResults.nodes),
+        edges: condenseDomainEdges(allResults.edges),
+        responses: allResults.responses,
         createdAt: new Date().toISOString,
       },
     });
