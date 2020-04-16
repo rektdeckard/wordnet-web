@@ -9,7 +9,7 @@ import {
   Input,
   Button,
   Result,
-  Spin,
+  Empty,
   Select,
   Tag,
 } from "antd";
@@ -303,7 +303,7 @@ const Session = ({ graph, fetchSession }) => {
           <SettingsSider defaultCollapsed />
           <Content>
             <NetworkGraphInteractive
-              graph={loading ? { nodes: [], links: [] } : { nodes, links }}
+              graph={{ nodes, links }}
               loading={loading}
               hovered={hovered}
             />
@@ -325,7 +325,7 @@ const Session = ({ graph, fetchSession }) => {
                 textAlign: "center",
               }}
             >
-              <Spin />
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             </div>
           ) : (
             <Descriptions

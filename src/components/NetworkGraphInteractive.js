@@ -1,5 +1,6 @@
 import React, { useRef, useMemo, useEffect } from "react";
 import { connect } from "react-redux";
+import { Spin } from "antd";
 import Graphin from "@antv/graphin";
 import "@antv/graphin/dist/index.css";
 
@@ -10,6 +11,7 @@ const NetworkGraphInteractive = ({
   graph,
   header,
   hovered,
+  loading,
   settings,
   style,
 }) => {
@@ -65,7 +67,23 @@ const NetworkGraphInteractive = ({
     }
   }, [hovered]);
 
-  return (
+  if (loading)
+    return (
+      <div
+        ref={ref}
+        style={{
+          height: "50vh",
+          background: Colors.PANEL_BACKGROUND,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        <Spin />
+      </div>
+    );
+
+   return (
     <div style={{ height: "50vh", ...style }}>
       {header}
       <Graphin
@@ -86,7 +104,12 @@ const NetworkGraphInteractive = ({
             animation: settings.animate,
           },
         }}
-        options={{ wheelSensitivity: 4, minZoom: 0.1 }}
+        options={{
+          wheelSensitivity: 4,
+          minZoom: 0.01,
+          restartForceOnDrag: settings.animate,
+          autoFollowWithForce: true,
+        }}
       />
     </div>
   );
