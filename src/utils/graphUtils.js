@@ -108,7 +108,7 @@ export const useTraversableGraph = (graph) =>
         if (neighbors) {
           for (let neighbor of neighbors) {
             if (visited[neighbor]) continue;
-            
+
             visited[neighbor] = true;
             if (neighbor === target) {
               // Check if the path is complete.
@@ -135,7 +135,7 @@ export const useDensity = (graph) =>
   useMemo(() => {
     const e = graph?.edges?.length;
     const v = graph?.nodes?.length;
-    const density = e && v ? e / (v * (v - 1)) : null;
+    const density = e && v ? (2 * e) / (v * (v - 1)) : null;
 
     return density;
   }, [graph]);
