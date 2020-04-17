@@ -13,7 +13,6 @@ import {
   createMissingNodes,
   createStartingNode,
   findNodesToLink,
-  mapEdges,
 } from "../utils";
 
 /**

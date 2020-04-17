@@ -1,6 +1,13 @@
 import { useMemo } from "react";
 import { isBefore, isAfter, startOfWeek, subWeeks } from "date-fns";
 
+/**
+ * Returns the ratio of sessions in the current calendar week
+ * to the preivous week.
+ *
+ * @param {WordNet[]} sessions Domain `WordNets`
+ * @return {number} Session ratio
+ */
 export const useWeekOverWeek = (sessions) =>
   useMemo(() => {
     const weekStart = startOfWeek(new Date());

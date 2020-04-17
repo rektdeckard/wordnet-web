@@ -1,7 +1,13 @@
 import { useMemo } from "react";
 import { STARTING_WORDS, GRAPH_COLORS } from "../data/constants";
 
-export const mapNodes = (nodes = []) =>
+/**
+ * Maps domain `Nodes` to model nodes.
+ *
+ * @param {DomainNode[]} nodes Domain nodes
+ * @return {ModelNode[]} Model nodes
+ */
+const mapNodes = (nodes = []) =>
   nodes.map((node) => ({
     ...node,
     depth: node.depth,
@@ -10,20 +16,38 @@ export const mapNodes = (nodes = []) =>
       (node.sources?.items?.length ?? 0) + (node.targets?.items?.length ?? 0),
   }));
 
-export const mapEdges = (edges = []) =>
+/**
+ * Maps domain `Edges` to model edges.
+ *
+ * @param {DomainEdge[]} edges Domain edges
+ * @return {ModelEdge[]} Model edges
+ */
+const mapEdges = (edges = []) =>
   edges.map((edge) => ({
     ...edge,
     source: edge.source.value,
     target: edge.target.value,
   }));
 
-export const mapResponses = (responses = []) =>
+/**
+ * Maps domain `Responses` to model responses.
+ *
+ * @param {DomainResponse[]} responses Domain responses
+ * @return {ModelResponse[]} Model responses
+ */
+const mapResponses = (responses = []) =>
   responses.map((response) => ({
     ...response,
     source: response.source.value,
     target: response.value,
   }));
 
+/**
+ * Maps domain `Graph` as it exists in the Redux store to a model graph.
+ *
+ * @param {{ nodes: DomainNode[], edges: DomainEdge[], responses: DomainResponse[], createdAt: string, session: string, currentNode: DomainNode}} graph Domain graph
+ * @return {graph} Model graph
+ */
 export const mapGraph = (graph = {}) => {
   const nodes = mapNodes(graph.nodes);
   const edges = mapEdges(graph.edges);
@@ -39,6 +63,13 @@ export const mapGraph = (graph = {}) => {
   };
 };
 
+/**
+ * A functional hook for `mapGraph()`.
+ * Maps domain `Graph` as it exists in the Redux store to a model graph.
+ *
+ * @param {{ nodes: DomainNode[], edges: DomainEdge[], responses: DomainResponse[], createdAt: string, session: string, currentNode: DomainNode}} graph Domain graph
+ * @return {{ graph: graph, bfs: (source: string) => number, shortestPath: (source: string, target: string) => string[] }} Model graph
+ */
 export const useGraph = (graph) => useMemo(() => mapGraph(graph), [graph]);
 
 export const useTraversableGraph = (graph) =>
@@ -118,6 +149,13 @@ export const useTraversableGraph = (graph) =>
     return { ...mapGraph(graph), bfs, shortestPath };
   }, [graph]);
 
+/**
+ * Takes a `Graph` object and returns its density, calculated as:
+ * `(2 * edges.length) / (nodes.length * (nodes.length - 1))`
+ *
+ * @param {{ nodes: ModelNode[], edges: ModelEdge[]}} graph Model graph
+ * @return {number} Graph density
+ */
 export const useDensity = (graph) =>
   useMemo(() => {
     const e = graph?.edges?.length;
@@ -127,12 +165,27 @@ export const useDensity = (graph) =>
     return density;
   }, [graph]);
 
+/**
+ * Takes a traversable `Graph` object and returns its diameter, calculated
+ * as the largest geodesic in the graph.
+ *
+ * @param {{ nodes: ModelNode[]}} graph Traversable graph
+ * @param {(source: string) => number} bfs Breadth-first search function
+ * @return {number} Graph diameter
+ */
 export const useDiameter = (graph = {}, bfs) =>
   useMemo(() => {
     const distances = graph?.nodes?.map((n) => bfs(n.value)) ?? [0];
     return Math.max(...distances);
   }, [graph, bfs]);
 
+/**
+ * Creates an initial domain `Node` whose value is randomly selected
+ * from the list of starting words.
+ *
+ * @param {string} nodeNetworkId ID of the newly-created `WordNet`
+ * @return {DomainNode} Starting domain node
+ */
 export const createStartingNode = (nodeNetworkId) => {
   const value =
     STARTING_WORDS[Math.floor(Math.random() * STARTING_WORDS.length)];
@@ -165,12 +218,12 @@ export const createMissingNodes = (tokens, nodes, currentNode) => {
 };
 
 /**
- * Create edges from current node to each token's new or extant node
+ * Create edges from current node to each token's new or extant node.
  *
  * @param {string[]} tokens Strings representing the unique tokens of a response
- * @param {*[]} edges All edges in the current session
- * @param {*} currentNode Current game node
- * @return New edges to add
+ * @param {ModelEdge[]} edges All edges in the current session
+ * @param {ModelNode} currentNode Current game node
+ * @return {ModelEdge[]} New edges to add
  */
 export const createMissingEdges = (tokens, edges, currentNode) => {
   // TODO: Update distance for extant edges to represent stronger association?
@@ -191,8 +244,8 @@ export const createMissingEdges = (tokens, edges, currentNode) => {
  * Filters an array of nodes to those whose value is included in an array of tokens.
  *
  * @param {string[]} tokens Strings representing the unique tokens of a response
- * @param {*[]} nodes All nodes in the current session
- * @return Nodes in the current session whose value is one of the tokens
+ * @param {ModelNode[]} nodes All nodes in the current session
+ * @return {ModelNode[]} Nodes in the current session whose value is one of the tokens
  */
 export const findNodesToLink = (tokens, nodes) =>
   nodes.filter((node) => tokens.includes(node.value));
@@ -202,8 +255,8 @@ export const findNodesToLink = (tokens, nodes) =>
  * whose degree is the sum of the input node degrees and frequency is the count of
  * similar nodes.
  *
- * @param nodes Array of model `Nodes`
- * @return Array of unique domain `Nodes` with degree and frequency
+ * @param {ModelNode[]} nodes Array of model `Nodes`
+ * @return {ModelNode[]} Array of unique model `Nodes` with degree and frequency
  */
 export const condenseModelNodes = (nodes = []) => {
   const nodeMap = nodes.reduce((acc, { id, degree, owner }) => {
@@ -233,8 +286,8 @@ export const condenseModelNodes = (nodes = []) => {
  * Reduces domain `Nodes` with the same value into a single node, whose
  * frequency is the count of similar nodes.
  *
- * @param nodes Array of domain `Nodes`
- * @return Array of unique domain `Nodes` with degree and frequency
+ * @param {DomainNode[]} nodes Array of domain `Nodes`
+ * @return {DomainNode[]} Array of unique domain `Nodes` with degree and frequency
  */
 export const condenseDomainNodes = (nodes = []) => {
   const nodeMap = nodes.reduce((acc, { value, sources, targets }) => {
@@ -270,8 +323,8 @@ export const condenseDomainNodes = (nodes = []) => {
  * Reduces model `Edges` with the same source, target, and owner into a single edge,
  * whose frequency is the count of similar edges.
  *
- * @param edges Array of model `Edges`
- * @return Array of unique model `Edges` with frequency
+ * @param {ModelEdge[]} edges Array of model `Edges`
+ * @return {ModelEdge[]} Array of unique model `Edges` with frequency
  */
 export const condenseModelEdges = (edges = []) => {
   const edgeMap = edges.reduce((acc, { source, target, owner }) => {
@@ -302,8 +355,8 @@ export const condenseModelEdges = (edges = []) => {
  * Reduces domain `Edges` with the same source, target, and owner into a single edge,
  * whose frequency is the count of similar edges.
  *
- * @param edges Array of domain `Edges`
- * @return Array of unique domain `Edges` with frequency
+ * @param {DomainEdge[]} edges Array of domain `Edges`
+ * @return {DomainEdge[]} Array of unique domain `Edges` with frequency
  */
 export const condenseDomainEdges = (edges = []) => {
   const edgeMap = edges.reduce((acc, curr) => {
