@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   type: "force",
   repulsivity: 5000,
   iterations: 500,
-  colorScheme: "blues",
+  colorScheme: "teals",
   defaultNodeSize: 4,
   nodeScale: 2,
   fontSize: 18,

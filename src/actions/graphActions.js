@@ -80,11 +80,6 @@ export const submitResponse = (response) => async (dispatch, getState) => {
       },
     });
 
-    console.log({
-      nodes: resultNodes.map((res) => res.data.createNode),
-      edges: resultEdges.map((res) => res.data.createEdge),
-    });
-
     dispatch(selectRandomNode());
     return true;
   } catch (e) {
