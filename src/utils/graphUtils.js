@@ -156,10 +156,10 @@ export const useTraversableGraph = (graph) =>
  * @param {{ nodes: ModelNode[], edges: ModelEdge[]}} graph Model graph
  * @return {number} Graph density
  */
-export const useDensity = (graph) =>
+export const useDensity = (graph = {}) =>
   useMemo(() => {
-    const e = graph?.edges?.length;
-    const v = graph?.nodes?.length;
+    const e = graph.edges?.length;
+    const v = graph.nodes?.length;
     const density = e && v ? (2 * e) / (v * (v - 1)) : null;
 
     return density;
@@ -175,7 +175,7 @@ export const useDensity = (graph) =>
  */
 export const useDiameter = (graph = {}, bfs) =>
   useMemo(() => {
-    const distances = graph?.nodes?.map((n) => bfs(n.value)) ?? [0];
+    const distances = graph.nodes?.map((n) => bfs(n.value)) ?? [0];
     return Math.max(...distances);
   }, [graph, bfs]);
 
