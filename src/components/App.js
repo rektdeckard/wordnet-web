@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { Layout } from "antd";
-import "antd/dist/antd.css";
+import { GithubOutlined } from "@ant-design/icons"
 import { Analytics } from "aws-amplify";
+import "antd/dist/antd.css";
 
 import Crumb from "./Crumb";
 import Explore from "./explore/Explore";
@@ -48,7 +49,8 @@ const App = () => {
         </Switch>
       </Content>
       <Footer style={{ textAlign: "center" }}>
-        iWordNet ©2020 Created by Mark Chang & Tobias Fried
+        <a href="https://github.com/rektdeckard/wordnet-web"><GithubOutlined style={{ color: "black"}} /></a>
+        <div>Copyright © 2020 iWordNet, created by Mark Chang & Tobias Fried</div>
       </Footer>
     </Layout>
   );
