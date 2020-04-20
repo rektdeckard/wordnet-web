@@ -40,5 +40,12 @@
 				}
 			}
 		}
+	},
+	"function": {
+		"helloWorld": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true
+		}
 	}
 }

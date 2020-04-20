@@ -51,3 +51,8 @@ type Response
   responseTime: Int
   createdAt: AWSDateTime
 }
+
+type Query {
+  countNodes(limit: Int, nextToken: String): Int
+  countResponses(limit: Int, nextToken: String): Int
+}

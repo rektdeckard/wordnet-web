@@ -22,7 +22,7 @@ import { scheme } from "vega-scale";
 
 import { fetchHistory, setInitialDate } from "../../actions";
 import { useWeekOverWeek } from "../../utils";
-import { Colors, HEAT_MAP_COLORS } from "../../data/constants";
+import { Colors } from "../../data/constants";
 
 const { Title, Paragraph, Text } = Typography;
 const interpolate = scheme("greens");

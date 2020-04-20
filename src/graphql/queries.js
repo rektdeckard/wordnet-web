@@ -160,11 +160,10 @@ export const listNodes = `query ListNodes(
 }
 `;
 export const countNodes = `query CountNodes(
-  $filter: ModelNodeFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  countNodes(filter: $filter, limit: $limit, nextToken: $nextToken)
+  countNodes(limit: $limit, nextToken: $nextToken)
 }
 `;
 export const getEdge = `query GetEdge($id: ID!) {
@@ -368,11 +367,10 @@ export const listResponses = `query ListResponses(
 }
 `;
 export const countResponses = `query CountResponses(
-  $filter: ModelResponseFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  countResponses(filter: $filter, limit: $limit, nextToken: $nextToken)
+  countResponses(limit: $limit, nextToken: $nextToken)
 }
 `;
 export const searchWordNets = `query SearchWordNets(
