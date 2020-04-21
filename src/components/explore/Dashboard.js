@@ -53,7 +53,8 @@ const Dashboard = ({
     };
 
     load();
-  }, [fetchHistory, sessionCount]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchHistory]);
 
   const handleDayClicked = (entry) => {
     setInitialDate(entry.day);
