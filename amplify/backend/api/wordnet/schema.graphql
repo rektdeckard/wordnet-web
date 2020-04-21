@@ -52,7 +52,31 @@ type Response
   createdAt: AWSDateTime
 }
 
+input CreateNodeInput {
+	id: ID
+	value: String!
+	depth: Int
+	radius: Int
+	color: String
+	createdAt: AWSDateTime
+	nodeNetworkId: ID!
+}
+
+input CreateEdgeInput {
+	id: ID
+	distance: Int!
+	createdAt: AWSDateTime
+	edgeSourceId: ID!
+	edgeTargetId: ID!
+	edgeNetworkId: ID!
+}
+
 type Query {
   countNodes(limit: Int, nextToken: String): Int
   countResponses(limit: Int, nextToken: String): Int
+}
+
+type Mutation {
+  batchCreateNodes(input: [CreateNodeInput!]!): [Node]
+  batchCreateEdges(input: [CreateEdgeInput!]!): [Edge]
 }

@@ -41,41 +41,67 @@ export const submitResponse = (response) => async (dispatch, getState) => {
 
     const tokens = uniqueTokensFromEntry(response);
     const newNodes = createMissingNodes(tokens, nodes, currentNode);
-    // TODO: Create new mutation to add multiple nodes simultaneously
-    const resultNodes = await Promise.all(
-      newNodes.map((node) =>
-        API.graphql(
-          graphqlOperation(mutations.createNode, {
-            input: { ...node, nodeNetworkId: session },
-          })
-        )
+    const resultNodes = await API.graphql(
+      graphqlOperation(
+        /* GraphQL */ `
+          mutation BatchPutNodes($input: [CreateNodeInput!]!) {
+            batchCreateNodes(input: $input) {
+              id
+              value
+              depth
+              radius
+              color
+              createdAt
+              owner
+            }
+          }
+        `,
+        {
+          input: newNodes.map((node) => ({ ...node, nodeNetworkId: session })),
+        }
       )
     );
 
-    const newResultNodesToLink = resultNodes.map((n) => n.data.createNode);
+    const newResultNodesToLink = resultNodes.data.batchCreateNodes ?? [];
     const existingNodesToLink = findNodesToLink(tokens, nodes);
 
-    // TODO: Create new mutation to add multiple edges simultaneously
-    const resultEdges = await Promise.all(
-      [...newResultNodesToLink, ...existingNodesToLink].map(({ id }) =>
-        API.graphql(
-          graphqlOperation(mutations.createEdge, {
-            input: {
+    const resultEdges = await API.graphql(
+      graphqlOperation(
+        /* GraphQL */ `
+          mutation BatchPutEdges($input: [CreateEdgeInput!]!) {
+            batchCreateEdges(input: $input) {
+              id
+              source {
+                value
+              }
+              target {
+                value
+              }
+              createdAt
+              owner
+            }
+          }
+        `,
+        {
+          input: [...newResultNodesToLink, ...existingNodesToLink].map(
+            ({ id }) => ({
               distance: 30,
               edgeSourceId: currentNode.id,
               edgeTargetId: id,
               edgeNetworkId: session,
-            },
-          })
-        )
+            })
+          ),
+        }
       )
     );
+
+    console.log(resultEdges);
 
     dispatch({
       type: ADD_GRAPH_ELEMENTS,
       payload: {
-        nodes: resultNodes.map((res) => res.data.createNode),
-        edges: resultEdges.map((res) => res.data.createEdge),
+        nodes: newResultNodesToLink,
+        edges: resultEdges.data.batchCreateEdges ?? [],
       },
     });
 
