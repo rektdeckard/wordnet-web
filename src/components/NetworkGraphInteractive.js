@@ -84,7 +84,7 @@ const NetworkGraphInteractive = ({
     );
 
   return (
-    <div style={{ height: "50vh", ...style }}>
+    <div style={{ height: "50vh", overflow: "hidden", ...style }}>
       {header}
       <Graphin
         ref={ref}
