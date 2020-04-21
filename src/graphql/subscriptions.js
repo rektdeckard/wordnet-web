@@ -1,7 +1,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateWordNet = `subscription OnCreateWordNet($owner: String!) {
+export const onCreateWordNet = `subscription OnCreateWordNet($owner: String) {
   onCreateWordNet(owner: $owner) {
     id
     nodes {
@@ -42,7 +42,7 @@ export const onCreateWordNet = `subscription OnCreateWordNet($owner: String!) {
   }
 }
 `;
-export const onUpdateWordNet = `subscription OnUpdateWordNet($owner: String!) {
+export const onUpdateWordNet = `subscription OnUpdateWordNet($owner: String) {
   onUpdateWordNet(owner: $owner) {
     id
     nodes {
@@ -83,7 +83,7 @@ export const onUpdateWordNet = `subscription OnUpdateWordNet($owner: String!) {
   }
 }
 `;
-export const onDeleteWordNet = `subscription OnDeleteWordNet($owner: String!) {
+export const onDeleteWordNet = `subscription OnDeleteWordNet($owner: String) {
   onDeleteWordNet(owner: $owner) {
     id
     nodes {
@@ -124,7 +124,7 @@ export const onDeleteWordNet = `subscription OnDeleteWordNet($owner: String!) {
   }
 }
 `;
-export const onCreateNode = `subscription OnCreateNode($owner: String!) {
+export const onCreateNode = `subscription OnCreateNode($owner: String) {
   onCreateNode(owner: $owner) {
     id
     value
@@ -180,7 +180,7 @@ export const onCreateNode = `subscription OnCreateNode($owner: String!) {
   }
 }
 `;
-export const onUpdateNode = `subscription OnUpdateNode($owner: String!) {
+export const onUpdateNode = `subscription OnUpdateNode($owner: String) {
   onUpdateNode(owner: $owner) {
     id
     value
@@ -236,7 +236,7 @@ export const onUpdateNode = `subscription OnUpdateNode($owner: String!) {
   }
 }
 `;
-export const onDeleteNode = `subscription OnDeleteNode($owner: String!) {
+export const onDeleteNode = `subscription OnDeleteNode($owner: String) {
   onDeleteNode(owner: $owner) {
     id
     value
@@ -292,7 +292,7 @@ export const onDeleteNode = `subscription OnDeleteNode($owner: String!) {
   }
 }
 `;
-export const onCreateEdge = `subscription OnCreateEdge($owner: String!) {
+export const onCreateEdge = `subscription OnCreateEdge($owner: String) {
   onCreateEdge(owner: $owner) {
     id
     source {
@@ -367,7 +367,7 @@ export const onCreateEdge = `subscription OnCreateEdge($owner: String!) {
   }
 }
 `;
-export const onUpdateEdge = `subscription OnUpdateEdge($owner: String!) {
+export const onUpdateEdge = `subscription OnUpdateEdge($owner: String) {
   onUpdateEdge(owner: $owner) {
     id
     source {
@@ -442,7 +442,7 @@ export const onUpdateEdge = `subscription OnUpdateEdge($owner: String!) {
   }
 }
 `;
-export const onDeleteEdge = `subscription OnDeleteEdge($owner: String!) {
+export const onDeleteEdge = `subscription OnDeleteEdge($owner: String) {
   onDeleteEdge(owner: $owner) {
     id
     source {
@@ -517,7 +517,7 @@ export const onDeleteEdge = `subscription OnDeleteEdge($owner: String!) {
   }
 }
 `;
-export const onCreateResponse = `subscription OnCreateResponse($owner: String!) {
+export const onCreateResponse = `subscription OnCreateResponse($owner: String) {
   onCreateResponse(owner: $owner) {
     id
     source {
@@ -568,7 +568,7 @@ export const onCreateResponse = `subscription OnCreateResponse($owner: String!) 
   }
 }
 `;
-export const onUpdateResponse = `subscription OnUpdateResponse($owner: String!) {
+export const onUpdateResponse = `subscription OnUpdateResponse($owner: String) {
   onUpdateResponse(owner: $owner) {
     id
     source {
@@ -619,7 +619,7 @@ export const onUpdateResponse = `subscription OnUpdateResponse($owner: String!) 
   }
 }
 `;
-export const onDeleteResponse = `subscription OnDeleteResponse($owner: String!) {
+export const onDeleteResponse = `subscription OnDeleteResponse($owner: String) {
   onDeleteResponse(owner: $owner) {
     id
     source {

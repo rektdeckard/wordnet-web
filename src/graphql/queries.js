@@ -1,6 +1,14 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const countNodes = `query CountNodes($limit: Int, $nextToken: String) {
+  countNodes(limit: $limit, nextToken: $nextToken)
+}
+`;
+export const countResponses = `query CountResponses($limit: Int, $nextToken: String) {
+  countResponses(limit: $limit, nextToken: $nextToken)
+}
+`;
 export const getWordNet = `query GetWordNet($id: ID!) {
   getWordNet(id: $id) {
     id
@@ -157,13 +165,6 @@ export const listNodes = `query ListNodes(
     }
     nextToken
   }
-}
-`;
-export const countNodes = `query CountNodes(
-  $limit: Int
-  $nextToken: String
-) {
-  countNodes(limit: $limit, nextToken: $nextToken)
 }
 `;
 export const getEdge = `query GetEdge($id: ID!) {
@@ -364,13 +365,6 @@ export const listResponses = `query ListResponses(
     }
     nextToken
   }
-}
-`;
-export const countResponses = `query CountResponses(
-  $limit: Int
-  $nextToken: String
-) {
-  countResponses(limit: $limit, nextToken: $nextToken)
 }
 `;
 export const searchWordNets = `query SearchWordNets(

@@ -35,7 +35,6 @@ export const fetchHistory = (fromDate) => async (dispatch) => {
 
         return {
           id: entry.id,
-          // day: entry.createdAt.split   ("T")[0]
           day: `${year}-${month}-${day}`,
         };
       })

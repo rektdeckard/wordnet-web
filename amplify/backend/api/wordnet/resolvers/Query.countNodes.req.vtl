@@ -6,9 +6,9 @@
 #if( $context.args.nextToken )
   #set( $ListRequest.nextToken = "$context.args.nextToken" )
 #end
-#if( $context.args.filter )
-  #set( $ListRequest.filter = $util.parseJson("$util.transform.toDynamoDBFilterExpression($ctx.args.filter)") )
-#end
+## #if( $context.args.filter )
+##   #set( $ListRequest.filter = $util.parseJson("$util.transform.toDynamoDBFilterExpression($ctx.args.filter)") )
+## #end
 #if( !$util.isNull($modelQueryExpression)
                         && !$util.isNullOrEmpty($modelQueryExpression.expression) )
   $util.qr($ListRequest.put("operation", "Query"))

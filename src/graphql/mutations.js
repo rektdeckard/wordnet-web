@@ -1,6 +1,137 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const batchCreateNodes = `mutation BatchCreateNodes($input: [CreateNodeInput!]!) {
+  batchCreateNodes(input: $input) {
+    id
+    value
+    depth
+    radius
+    color
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      timestamp
+      owner
+    }
+    sources {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    targets {
+      items {
+        id
+        distance
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    responses {
+      items {
+        id
+        value
+        responseTime
+        createdAt
+        owner
+      }
+      nextToken
+    }
+    createdAt
+    owner
+  }
+}
+`;
+export const batchCreateEdges = `mutation BatchCreateEdges($input: [CreateEdgeInput!]!) {
+  batchCreateEdges(input: $input) {
+    id
+    source {
+      id
+      value
+      depth
+      radius
+      color
+      network {
+        id
+        createdAt
+        modifiedAt
+        timestamp
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      owner
+    }
+    target {
+      id
+      value
+      depth
+      radius
+      color
+      network {
+        id
+        createdAt
+        modifiedAt
+        timestamp
+        owner
+      }
+      sources {
+        nextToken
+      }
+      targets {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      owner
+    }
+    distance
+    network {
+      id
+      nodes {
+        nextToken
+      }
+      edges {
+        nextToken
+      }
+      responses {
+        nextToken
+      }
+      createdAt
+      modifiedAt
+      timestamp
+      owner
+    }
+    createdAt
+    owner
+  }
+}
+`;
 export const createWordNet = `mutation CreateWordNet(
   $input: CreateWordNetInput!
   $condition: ModelWordNetConditionInput
