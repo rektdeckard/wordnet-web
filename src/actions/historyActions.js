@@ -53,24 +53,72 @@ export const fetchHistory = (fromDate) => async (dispatch) => {
       value: entries[day],
     }));
 
-    // FIXME: Response Mapping Template only allows 1000 items in a list??
-    // FIXME: count and words are only calculated for the fetched items.
-    const nodeCount = await API.graphql(graphqlOperation(countNodes));
-    const responseCount = await API.graphql(graphqlOperation(countResponses));
+    const nodeCount = async () => {
+      let count = 0;
+      let nextToken = null;
+      do {
+        const response = await API.graphql(graphqlOperation(countNodes), { nextToken });
+        count += response.data.countNodes;
+      } while (nextToken);
+      return count;
+    }
+
+    const responseCount = async () => {
+      let count = 0;
+      let nextToken = null;
+      do {
+        const response = await API.graphql(graphqlOperation(countResponses), { nextToken });
+        count += response.data.countResponses;
+      } while (nextToken);
+      return count;
+    }
 
     dispatch({
       type: FETCH_HISTORY,
       payload: {
         sessions: sessionData.data.listWordNets.items,
         sessionsByDay,
-        rounds: responseCount.data.countResponses,
-        words: nodeCount.data.countNodes,
+        rounds: await responseCount(),
+        words: await nodeCount(),
       },
     });
+
+    // dispatch(nodeCount());
+    // dispatch(responseCount());
+    return true;
   } catch (e) {
     console.error(e);
+    return false;
   }
 };
+
+// export const nodeCount = () => async dispatch => {
+//   let count = 0;
+//   let nextToken = null;
+//   do {
+//     const response = await API.graphql(graphqlOperation(countNodes), { nextToken });
+//     count += response.data.countNodes;
+//   } while (nextToken);
+
+//   dispatch({
+//     type: FETCH_HISTORY,
+//     payload: { words: count }
+//   })
+// }
+
+// export const responseCount = () => async dispatch => {
+//   let count = 0;
+//   let nextToken = null;
+//   do {
+//     const response = await API.graphql(graphqlOperation(countResponses), { nextToken });
+//     count += response.data.countResponses;
+//   } while (nextToken);
+  
+//   dispatch({
+//     type: FETCH_HISTORY,
+//     payload: { rounds: count }
+//   })
+// }
 
 /**
  * Sets the start date for the session query window.
