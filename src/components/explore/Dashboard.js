@@ -41,19 +41,19 @@ const Dashboard = ({
   fetchHistory,
   setInitialDate,
 }) => {
-  const { sessions } = sessionHistory;
+  const { sessions, sessions: { length: sessionCount } } = sessionHistory;
   const [loading, setLoading] = useState(false);
   const weekOverWeek = useWeekOverWeek(sessions);
 
   useEffect(() => {
     const load = async () => {
-      setLoading(true);
+      if (!sessionCount) setLoading(true);
       await fetchHistory();
       setLoading(false);
     };
 
     load();
-  }, [fetchHistory]);
+  }, [fetchHistory, sessionCount]);
 
   const handleDayClicked = (entry) => {
     setInitialDate(entry.day);
