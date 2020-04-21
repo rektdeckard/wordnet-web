@@ -50,7 +50,7 @@ const NetworkGraph = ({ graph, header, settings, style }) => {
   );
 
   return (
-    <div style={style}>
+    <div style={{ overflow: "hidden", ...style}}>
       {header}
       <Graphin
         ref={ref}
