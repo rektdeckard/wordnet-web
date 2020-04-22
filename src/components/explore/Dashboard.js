@@ -9,6 +9,7 @@ import {
   Statistic,
   Card,
   List,
+  message
 } from "antd";
 import {
   ArrowUpOutlined,
@@ -48,7 +49,13 @@ const Dashboard = ({
   useEffect(() => {
     const load = async () => {
       if (!sessionCount) setLoading(true);
-      await fetchHistory();
+      try {
+        await fetchHistory();
+      } catch (e) {
+        if (e.message) message.error(e.message);
+        else if (e.errors) message.error(e.errors?.[0]?.message.split("(")[0]);
+        else message.error("Problem resolving statistics");
+      }
       setLoading(false);
     };
 

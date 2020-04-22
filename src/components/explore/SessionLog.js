@@ -183,6 +183,7 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         );
         setSessions(data);
       } catch (e) {
+        console.error(e);
         message.error("Error fetching records");
       }
       setLoading(false);

@@ -114,7 +114,7 @@ export const setMotionDamping = (motionDamping) => (dispatch) => {
 /**
  * Sets the minimum energy of the simulation, below which motion will stop.
  *
- * @param {*} motionThreshold Minimum energy [0, 1]
+ * @param {number} motionThreshold Minimum energy [0, 1]
  */
 export const setMotionThreshold = (motionThreshold) => (dispatch) => {
   dispatch(updateSettings({ motionThreshold }));

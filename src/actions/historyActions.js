@@ -9,86 +9,82 @@ import { condenseDomainNodes, condenseDomainEdges } from "../utils";
  * Calculates the total `Node` and `Response` counts.
  *
  * @param {Date} fromDate Optional starting date
+ * @throws GraphQLException or DynamoDBException
  */
 export const fetchHistory = (fromDate) => async (dispatch) => {
-  try {
-    const sessionData = await API.graphql(
-      // TODO: figure out a better limit and way to filter, possibly via ElasticSearch
-      graphqlOperation(listWordNets, {
-        limit: 1000,
-        filter: {
-          createdAt: {
-            ge:
-              fromDate?.toISOString() ??
-              `${new Date().getFullYear()}-01-01T00:00:00.000Z`,
-          },
+  const sessionData = await API.graphql(
+    // TODO: figure out a better limit and way to filter, possibly via ElasticSearch
+    graphqlOperation(listWordNets, {
+      limit: 1000,
+      filter: {
+        createdAt: {
+          ge:
+            fromDate?.toISOString() ??
+            `${new Date().getFullYear()}-01-01T00:00:00.000Z`,
         },
-      })
-    );
-
-    const entries = sessionData.data.listWordNets.items
-      .map((entry) => {
-        const createdAt = new Date(entry.createdAt);
-        const year = createdAt.getFullYear();
-        const month = ("0" + (createdAt.getMonth() + 1)).slice(-2);
-        const day = ("0" + createdAt.getDate()).slice(-2);
-
-        return {
-          id: entry.id,
-          day: `${year}-${month}-${day}`,
-        };
-      })
-      .reduce((acc, curr) => {
-        if (acc[curr.day]) {
-          acc[curr.day] += 1;
-        } else {
-          acc[curr.day] = 1;
-        }
-        return acc;
-      }, {});
-
-    const sessionsByDay = Object.keys(entries).map((day) => ({
-      day,
-      value: entries[day],
-    }));
-
-    const nodeCount = async () => {
-      let count = 0;
-      let nextToken = null;
-      do {
-        const response = await API.graphql(graphqlOperation(countNodes), { nextToken });
-        count += response.data.countNodes;
-      } while (nextToken);
-      return count;
-    }
-
-    const responseCount = async () => {
-      let count = 0;
-      let nextToken = null;
-      do {
-        const response = await API.graphql(graphqlOperation(countResponses), { nextToken });
-        count += response.data.countResponses;
-      } while (nextToken);
-      return count;
-    }
-
-    dispatch({
-      type: FETCH_HISTORY,
-      payload: {
-        sessions: sessionData.data.listWordNets.items,
-        sessionsByDay,
-        rounds: await responseCount(),
-        words: await nodeCount(),
       },
-    });
+    })
+  );
 
-    // dispatch(nodeCount());
-    // dispatch(responseCount());
-    return true;
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
+  const entries = sessionData.data.listWordNets.items
+    .map((entry) => {
+      const createdAt = new Date(entry.createdAt);
+      const year = createdAt.getFullYear();
+      const month = ("0" + (createdAt.getMonth() + 1)).slice(-2);
+      const day = ("0" + createdAt.getDate()).slice(-2);
+
+      return {
+        id: entry.id,
+        day: `${year}-${month}-${day}`,
+      };
+    })
+    .reduce((acc, curr) => {
+      if (acc[curr.day]) {
+        acc[curr.day] += 1;
+      } else {
+        acc[curr.day] = 1;
+      }
+      return acc;
+    }, {});
+
+  const sessionsByDay = Object.keys(entries).map((day) => ({
+    day,
+    value: entries[day],
+  }));
+
+  const nodeCount = async () => {
+    let count = 0;
+    let nextToken = null;
+    do {
+      const response = await API.graphql(graphqlOperation(countNodes), {
+        nextToken,
+      });
+      count += response.data.countNodes;
+    } while (nextToken);
+    return count;
+  };
+
+  const responseCount = async () => {
+    let count = 0;
+    let nextToken = null;
+    do {
+      const response = await API.graphql(graphqlOperation(countResponses), {
+        nextToken,
+      });
+      count += response.data.countResponses;
+    } while (nextToken);
+    return count;
+  };
+
+  dispatch({
+    type: FETCH_HISTORY,
+    payload: {
+      sessions: sessionData.data.listWordNets.items,
+      sessionsByDay,
+      rounds: await responseCount(),
+      words: await nodeCount(),
+    },
+  });
 };
 
 // export const nodeCount = () => async dispatch => {
@@ -112,7 +108,7 @@ export const fetchHistory = (fromDate) => async (dispatch) => {
 //     const response = await API.graphql(graphqlOperation(countResponses), { nextToken });
 //     count += response.data.countResponses;
 //   } while (nextToken);
-  
+
 //   dispatch({
 //     type: FETCH_HISTORY,
 //     payload: { rounds: count }
@@ -135,202 +131,195 @@ export const setInitialDate = (day) => {
  * Fetches complete session data for a specific `WordNet`.
  *
  * @param {string} id Unique ID for an existing `WordNet`
- * @return {boolean} Success status of query
+ * @throws GraphQLException or DynamoDBException
  */
 export const fetchSession = (id) => async (dispatch) => {
-  try {
-    const res = await API.graphql(
-      graphqlOperation(
-        /* GraphQL */ `
-          query getSession($id: ID!, $limit: Int) {
-            getWordNet(id: $id) {
-              createdAt
-              nodes(limit: $limit) {
-                items {
-                  id
-                  value
-                  depth
-                  radius
-                  color
-                  sources(limit: $limit) {
-                    items {
-                      id
-                      target {
-                        value
-                      }
+  const res = await API.graphql(
+    graphqlOperation(
+      /* GraphQL */ `
+        query getSession($id: ID!, $limit: Int) {
+          getWordNet(id: $id) {
+            createdAt
+            nodes(limit: $limit) {
+              items {
+                id
+                value
+                depth
+                radius
+                color
+                sources(limit: $limit) {
+                  items {
+                    id
+                    target {
+                      value
                     }
                   }
-                  targets(limit: $limit) {
-                    items {
-                      id
-                      source {
-                        value
-                      }
+                }
+                targets(limit: $limit) {
+                  items {
+                    id
+                    source {
+                      value
                     }
                   }
-                  createdAt
-                  owner
                 }
+                createdAt
+                owner
               }
-              edges(limit: $limit) {
-                items {
-                  id
-                  distance
-                  createdAt
-                  source {
-                    value
-                  }
-                  target {
-                    value
-                  }
-                  distance
-                  owner
-                }
-              }
-              responses(limit: $limit) {
-                items {
-                  id
-                  source {
-                    value
-                  }
+            }
+            edges(limit: $limit) {
+              items {
+                id
+                distance
+                createdAt
+                source {
                   value
-                  responseTime
-                  createdAt
-                  owner
                 }
+                target {
+                  value
+                }
+                distance
+                owner
+              }
+            }
+            responses(limit: $limit) {
+              items {
+                id
+                source {
+                  value
+                }
+                value
+                responseTime
+                createdAt
+                owner
               }
             }
           }
-        `,
-        { id, limit: 1000 }
-      )
-    );
+        }
+      `,
+      { id, limit: 1000 }
+    )
+  );
 
-    dispatch({
-      type: FETCH_SESSION,
-      payload: {
-        nodes: res.data.getWordNet?.nodes?.items,
-        edges: res.data.getWordNet?.edges?.items,
-        responses: res.data.getWordNet?.responses?.items,
-        createdAt: res.data.getWordNet?.createdAt,
-      },
-    });
-    return true;
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
+  if (!res.data.getWordNet) throw new Error("Session not found");
+
+  dispatch({
+    type: FETCH_SESSION,
+    payload: {
+      nodes: res.data.getWordNet?.nodes?.items,
+      edges: res.data.getWordNet?.edges?.items,
+      responses: res.data.getWordNet?.responses?.items,
+      createdAt: res.data.getWordNet?.createdAt,
+    },
+  });
 };
 
 /**
  * Fetches complete session data for all `WordNet` entries,
  * and reduces them to a single network.
  *
- * @return {boolean} Success status of query
+ * @throws GraphQLException or DynamoDBException
  */
 export const fetchAllSessions = () => async (dispatch) => {
-  try {
-    let responses = [];
-    let nextToken = null;
+  let responses = [];
+  let nextToken = null;
 
-    do {
-      const response = await API.graphql(
-        graphqlOperation(
-          /* GraphQL */ `
-            query fetchAllHistory($limit: Int!, $nextToken: String) {
-              listWordNets(limit: 10, nextToken: $nextToken) {
-                nextToken
-                items {
-                  createdAt
-                  nodes(limit: $limit) {
-                    items {
-                      id
-                      value
-                      depth
-                      radius
-                      color
-                      sources(limit: $limit) {
-                        items {
-                          id
-                          target {
-                            value
-                          }
+  do {
+    const response = await API.graphql(
+      graphqlOperation(
+        /* GraphQL */ `
+          query fetchAllHistory($limit: Int!, $nextToken: String) {
+            listWordNets(limit: 10, nextToken: $nextToken) {
+              nextToken
+              items {
+                createdAt
+                nodes(limit: $limit) {
+                  items {
+                    id
+                    value
+                    depth
+                    radius
+                    color
+                    sources(limit: $limit) {
+                      items {
+                        id
+                        target {
+                          value
                         }
                       }
-                      targets(limit: $limit) {
-                        items {
-                          id
-                          source {
-                            value
-                          }
+                    }
+                    targets(limit: $limit) {
+                      items {
+                        id
+                        source {
+                          value
                         }
                       }
-                      createdAt
-                      owner
                     }
+                    createdAt
+                    owner
                   }
-                  edges(limit: $limit) {
-                    items {
-                      id
-                      distance
-                      createdAt
-                      source {
-                        value
-                      }
-                      target {
-                        value
-                      }
-                      distance
-                      owner
-                    }
-                  }
-                  responses(limit: $limit) {
-                    items {
-                      id
-                      source {
-                        value
-                      }
+                }
+                edges(limit: $limit) {
+                  items {
+                    id
+                    distance
+                    createdAt
+                    source {
                       value
-                      responseTime
-                      createdAt
-                      owner
                     }
+                    target {
+                      value
+                    }
+                    distance
+                    owner
+                  }
+                }
+                responses(limit: $limit) {
+                  items {
+                    id
+                    source {
+                      value
+                    }
+                    value
+                    responseTime
+                    createdAt
+                    owner
                   }
                 }
               }
             }
-          `,
-          { limit: 1000, nextToken }
-        )
-      );
+          }
+        `,
+        { limit: 1000, nextToken }
+      )
+    );
 
-      responses.push(...response.data.listWordNets.items);
-      nextToken = response.data.listWordNets.nextToken;
-    } while (nextToken);
+    responses.push(...response.data.listWordNets.items);
+    nextToken = response.data.listWordNets.nextToken;
+  } while (nextToken);
 
-    // Condense similar nodes and edges
-    const allResults = responses.reduce(({ nodes, edges, responses }, curr) => ({
+  // Condense similar nodes and edges
+  const allResults = responses.reduce(
+    ({ nodes, edges, responses }, curr) => ({
       nodes: [...nodes, ...curr.nodes.items],
       edges: [...edges, ...curr.edges.items],
       responses: [...responses, ...curr.responses.items],
-    }), {
+    }),
+    {
       nodes: [],
       edges: [],
       responses: [],
-    });
+    }
+  );
 
-    dispatch({
-      type: FETCH_SESSION,
-      payload: {
-        nodes: condenseDomainNodes(allResults.nodes),
-        edges: condenseDomainEdges(allResults.edges),
-        responses: allResults.responses,
-        createdAt: new Date().toISOString,
-      },
-    });
-    return true;
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
+  dispatch({
+    type: FETCH_SESSION,
+    payload: {
+      nodes: condenseDomainNodes(allResults.nodes),
+      edges: condenseDomainEdges(allResults.edges),
+      responses: allResults.responses,
+      createdAt: new Date().toISOString,
+    },
+  });
 };

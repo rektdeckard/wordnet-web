@@ -12,6 +12,7 @@ import {
   Empty,
   Select,
   Tag,
+  message
 } from "antd";
 import { ClockCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
@@ -63,7 +64,14 @@ const Session = ({ graph, fetchSession }) => {
   useEffect(() => {
     const load = async () => {
       setLoading(true);
-      await fetchSession(id);
+      try {
+        await fetchSession(id);
+      } catch (e) {
+        console.error(e);
+        if (e.message) message.error(e.message);
+        else if (e.errors) message.error(e.errors?.[0]?.message.split("(")[0]);
+        else message.error("Error resolving session");
+      }
       setLoading(false);
     };
     if (id) load();
@@ -317,7 +325,7 @@ const Session = ({ graph, fetchSession }) => {
         style={{ marginTop: 8 }}
       >
         <TabPane tab="Overview" key="overview">
-          {loading ? (
+          {loading || !nodes.length ? (
             <div
               style={{
                 background: Colors.PANEL_BACKGROUND,
