@@ -44,7 +44,6 @@ const QuickPlay = ({
 
   const handleSubmit = async () => {
     if (!entry || loading) return;
-
     if (entry.trim().toLowerCase() === currentNode.value.toLowerCase()) {
       message.warn("Can't define a word with itself!");
       return;
@@ -57,7 +56,10 @@ const QuickPlay = ({
     try {
       await submitResponse(response);
     } catch (e) {
-      message.error(e.errors?.[0]?.message.split("(")[0]);
+      console.error(e);
+      if (e.message) message.error(e.message);
+      else if (e.errors) message.error(e.errors?.[0]?.message.split("(")[0]);
+      else message.error("Problem submitting reponse");
     } finally {
       setLoading(false);
     }
@@ -65,17 +67,18 @@ const QuickPlay = ({
 
   const handleFinish = async () => {
     const hasPlayed = Boolean(edges.length);
-
     setLoading(true);
+
     try {
-      const success = await submitSession();
-      if (success) {
-        message.success("Session saved");
-        history.push(hasPlayed ? `/explore/sessions/${session}` : "/play");
-      } else message.error("Session could not be saved");
+      await submitSession();
+      message.success("Session saved");
+      history.push(hasPlayed ? `/explore/sessions/${session}` : "/play");
     } catch (e) {
       setLoading(false);
-      message.error("Problem submitting session");
+      console.error(e);
+      if (e.message) message.error(e.message);
+      else if (e.errors) message.error(e.errors?.[0]?.message.split("(")[0]);
+      else message.error("Problem submitting session");
     }
   };
 
@@ -112,7 +115,8 @@ const QuickPlay = ({
               <Title level={3} style={{ textAlign: "center", paddingTop: 16 }}>
                 {currentNode?.value && !loading ? (
                   <>
-                    What does the word <Text code>{currentNode.value}</Text> mean?
+                    What does the word <Text code>{currentNode.value}</Text>{" "}
+                    mean?
                   </>
                 ) : (
                   <Spin />

@@ -30,13 +30,12 @@ const Play = ({ session, initializeSession, resumeLastSession, history }) => {
     const handleInitialize = async (gameType) => {
       setLoading(gameType);
       try {
-        const success = await initializeSession();
-        if (success) {
-          message.success("Session started");
-          history.push(`/play/${gameType}`);
-        } else message.error("Problem starting session");
+        await initializeSession();
+        message.success("Session started");
+        history.push(`/play/${gameType}`);
       } catch (e) {
-        message.error(e.message);
+        console.error(e);
+        message.error("Problem starting session");
       } finally {
         setLoading(false);
       }
@@ -49,9 +48,10 @@ const Play = ({ session, initializeSession, resumeLastSession, history }) => {
         if (success) {
           message.success("Session loaded");
           history.push(`/play/${gameType}`);
-        } else message.error("No previous session found");
+        } else message.info("No previous session found");
       } catch (e) {
-        message.error("Problem fetching data");
+        console.error(e);
+        message.error("Problem resuming session");
       } finally {
         setResuming(false);
       }

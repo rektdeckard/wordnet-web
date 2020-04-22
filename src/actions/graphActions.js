@@ -19,29 +19,37 @@ import {
  * Submits a new `Response`, tokenizes and submits new `Nodes` and `Edges`.
  *
  * @param {string} response Raw response string
- * @return {boolean} Success status of all mutations
+ * @throws ReferenceError if no session or current node, GraphQLException or DynamoDBException
  */
 export const submitResponse = (response) => async (dispatch, getState) => {
   const { nodes, session, currentNode } = getState().graph;
+  if (!session || !currentNode)
+    throw new ReferenceError("No current session ID!");
 
-  try {
-    if (!session || !currentNode)
-      throw new ReferenceError("No current session ID!");
+  const resultResponse = await API.graphql(
+    graphqlOperation(mutations.createResponse, {
+      input: {
+        value: response.trim(),
+        responseTime: new Date() - new Date(currentNode.lastVisited),
+        responseNetworkId: session,
+        responseSourceId: currentNode.id,
+      },
+    })
+  );
 
-    const resultResponse = await API.graphql(
-      graphqlOperation(mutations.createResponse, {
-        input: {
-          value: response.trim(),
-          responseTime: new Date() - new Date(currentNode.lastVisited),
-          responseNetworkId: session,
-          responseSourceId: currentNode.id,
-        },
-      })
-    );
+  const tokens = uniqueTokensFromEntry(response);
+  const newNodes = createMissingNodes(
+    tokens,
+    nodes,
+    currentNode
+  ).map((node) => ({ ...node, nodeNetworkId: session }));
 
-    const tokens = uniqueTokensFromEntry(response);
-    const newNodes = createMissingNodes(tokens, nodes, currentNode);
-    const resultNodes = await API.graphql(
+  let resultNodes = [];
+  do {
+    const batch = newNodes.splice(0, 24);
+    const {
+      data: { batchCreateNodes },
+    } = await API.graphql(
       graphqlOperation(
         /* GraphQL */ `
           mutation BatchPutNodes($input: [CreateNodeInput!]!) {
@@ -57,15 +65,27 @@ export const submitResponse = (response) => async (dispatch, getState) => {
           }
         `,
         {
-          input: newNodes.map((node) => ({ ...node, nodeNetworkId: session })),
+          input: batch,
         }
       )
     );
+    batchCreateNodes && resultNodes.push(...batchCreateNodes);
+  } while (newNodes.length);
 
-    const newResultNodesToLink = resultNodes.data.batchCreateNodes ?? [];
-    const existingNodesToLink = findNodesToLink(tokens, nodes);
+  const existingNodesToLink = findNodesToLink(tokens, nodes);
+  const newEdges = [...resultNodes, ...existingNodesToLink].map(({ id }) => ({
+    distance: 30,
+    edgeSourceId: currentNode.id,
+    edgeTargetId: id,
+    edgeNetworkId: session,
+  }));
 
-    const resultEdges = await API.graphql(
+  let resultEdges = [];
+  do {
+    const batch = newEdges.splice(0, 24);
+    const {
+      data: { batchCreateEdges },
+    } = await API.graphql(
       graphqlOperation(
         /* GraphQL */ `
           mutation BatchPutEdges($input: [CreateEdgeInput!]!) {
@@ -83,34 +103,24 @@ export const submitResponse = (response) => async (dispatch, getState) => {
           }
         `,
         {
-          input: [...newResultNodesToLink, ...existingNodesToLink].map(
-            ({ id }) => ({
-              distance: 30,
-              edgeSourceId: currentNode.id,
-              edgeTargetId: id,
-              edgeNetworkId: session,
-            })
-          ),
+          input: batch,
         }
       )
     );
+    batchCreateEdges && resultEdges.push(...batchCreateEdges);
+  } while (newEdges.length);
 
-    console.log(resultEdges);
+  console.log(resultEdges);
 
-    dispatch({
-      type: ADD_GRAPH_ELEMENTS,
-      payload: {
-        nodes: newResultNodesToLink,
-        edges: resultEdges.data.batchCreateEdges ?? [],
-      },
-    });
+  dispatch({
+    type: ADD_GRAPH_ELEMENTS,
+    payload: {
+      nodes: resultNodes,
+      edges: resultEdges,
+    },
+  });
 
-    dispatch(selectRandomNode());
-    return true;
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
+  dispatch(selectRandomNode());
 };
 
 /**
@@ -128,172 +138,151 @@ export const selectRandomNode = () => (dispatch, getState) => {
 /**
  * Creates a new `WordNet` with a random starting node.
  *
- * @return {boolean} Success status of all mutations
+ * @throws GraphQLException or DynamoDBException
  */
 export const initializeSession = () => async (dispatch) => {
-  try {
-    const {
-      data: { createWordNet },
-    } = await API.graphql(
-      graphqlOperation(mutations.createWordNet, {
-        input: { timestamp: getUnixTime(new Date()) },
-      })
-    );
+  const {
+    data: { createWordNet },
+  } = await API.graphql(
+    graphqlOperation(mutations.createWordNet, {
+      input: { timestamp: getUnixTime(new Date()) },
+    })
+  );
 
-    const nodeNetworkId = createWordNet.id;
-    const input = createStartingNode(nodeNetworkId);
+  const nodeNetworkId = createWordNet.id;
+  const input = createStartingNode(nodeNetworkId);
 
-    const {
-      data: { createNode },
-    } = await API.graphql(graphqlOperation(mutations.createNode, { input }));
+  const {
+    data: { createNode },
+  } = await API.graphql(graphqlOperation(mutations.createNode, { input }));
 
-    const currentNode = { ...createNode, lastVisited: new Date() };
-    dispatch({
-      type: INITIALIZE_GRAPH_SESSION,
-      payload: {
-        session: nodeNetworkId,
-        nodes: [currentNode],
-        currentNode,
-      },
-    });
-    return true;
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
+  const currentNode = { ...createNode, lastVisited: new Date() };
+  dispatch({
+    type: INITIALIZE_GRAPH_SESSION,
+    payload: {
+      session: nodeNetworkId,
+      nodes: [currentNode],
+      currentNode,
+    },
+  });
 };
 
 /**
  * Sets the current session to the last `WordNet` of the authenticated user.
  *
- * @return {boolean} Success status of all mutations
+ * @return {boolean} Success status of resume // TODO: obviate this by making a proper search
+ * @throws GraphQLException or DynamoDBException
  */
 export const resumeLastSession = () => async (dispatch) => {
-  try {
-    // BUG: 'limit' does not work when the last row in table was by another user!!
-    const response = await API.graphql(
-      graphqlOperation(
-        /* GraphQL */ `
-          {
-            searchWordNets(limit: 1, sort: { field: timestamp }) {
-              items {
-                id
-                nodes(limit: 1000) {
-                  items {
-                    id
-                    value
-                    depth
-                    radius
-                    color
-                    createdAt
-                    owner
-                  }
+  // BUG: 'limit' does not work when the last row in table was by another user!!
+  const response = await API.graphql(
+    graphqlOperation(
+      /* GraphQL */ `
+        {
+          searchWordNets(limit: 1, sort: { field: timestamp }) {
+            items {
+              id
+              nodes(limit: 1000) {
+                items {
+                  id
+                  value
+                  depth
+                  radius
+                  color
+                  createdAt
+                  owner
                 }
-                edges(limit: 1000) {
-                  items {
-                    id
-                    distance
-                    source {
-                      value
-                    }
-                    target {
-                      value
-                    }
-                    createdAt
-                    owner
-                  }
-                }
-                createdAt
               }
+              edges(limit: 1000) {
+                items {
+                  id
+                  distance
+                  source {
+                    value
+                  }
+                  target {
+                    value
+                  }
+                  createdAt
+                  owner
+                }
+              }
+              createdAt
             }
           }
-        `,
-        {}
-      )
-    );
+        }
+      `,
+      {}
+    )
+  );
 
-    const {
-      data: {
-        searchWordNets: { items },
+  const {
+    data: {
+      searchWordNets: { items },
+    },
+  } = response;
+
+  if (!items.length) return false;
+
+  dispatch({
+    type: INITIALIZE_GRAPH_SESSION,
+    payload: {
+      nodes: items[0].nodes.items,
+      edges: items[0].edges.items,
+      session: items[0].id,
+      currentNode: {
+        ...items[0].nodes.items[
+          Math.floor(Math.random() * items[0].nodes.items.length)
+        ],
+        lastVisited: new Date(),
       },
-    } = response;
+    },
+  });
 
-    if (!items.length) return false;
-
-    dispatch({
-      type: INITIALIZE_GRAPH_SESSION,
-      payload: {
-        nodes: items[0].nodes.items,
-        edges: items[0].edges.items,
-        session: items[0].id,
-        currentNode: {
-          ...items[0].nodes.items[
-            Math.floor(Math.random() * items[0].nodes.items.length)
-          ],
-          lastVisited: new Date(),
-        },
-      },
-    });
-    return true;
-  } catch (e) {
-    console.error(e);
-    return false;
-  }
+  return true;
 };
 
 /**
  * Finishes the current session and clears the working state.
  * If no responses were added, the empty `WordNet` and starting `Node` are deleted.
  *
- * @return {boolean} Success status of all mutations
+ * @throws GraphQLException or DynamoDBException
  */
 export const submitSession = () => (dispatch, getState) => {
   const { nodes, session, currentNode } = getState().graph;
 
   // Do not save sessions that don't have any words added!
-  try {
-    if (nodes.length <= 1) {
-      if (currentNode?.id) dispatch(deleteNode(currentNode.id));
-      dispatch(deleteWordNet(session));
-    }
 
-    dispatch({ type: SUBMIT_GRAPH_SESSION });
-    return true;
-  } catch (e) {
-    console.error(e);
-    return false;
+  if (nodes.length <= 1) {
+    if (currentNode?.id) dispatch(deleteNode(currentNode.id));
+    dispatch(deleteWordNet(session));
   }
+
+  dispatch({ type: SUBMIT_GRAPH_SESSION });
 };
 
 /**
  * Deletes a `WordNet`.
  *
  * @param {string} id Unique ID of an existing `WordNet`
+ * @throws GraphQLException or DynamoDBException
  */
 const deleteWordNet = (id) => async () => {
-  try {
-    const response = await API.graphql(
-      graphqlOperation(
-        /* GraphQL */ `
-          mutation DeleteWordNet($input: DeleteWordNetInput!) {
-            deleteWordNet(input: $input) {
-              id
-            }
+  const response = await API.graphql(
+    graphqlOperation(
+      /* GraphQL */ `
+        mutation DeleteWordNet($input: DeleteWordNetInput!) {
+          deleteWordNet(input: $input) {
+            id
           }
-        `,
-        { input: { id } }
-      )
-    );
+        }
+      `,
+      { input: { id } }
+    )
+  );
 
-    if (response.data.deleteWordNet) {
-      // TODO: delete it's child data too!
-
-      return true;
-    }
-    return false;
-  } catch (e) {
-    console.error(e);
-    return false;
+  if (response.data.deleteWordNet) {
+    // TODO: delete it's child data too!
   }
 };
 
@@ -301,34 +290,27 @@ const deleteWordNet = (id) => async () => {
  * Deletes a `Node`.
  *
  * @param {string} id Unique ID of an existing `Node`
+ * @throws GraphQLException or DynamoDBException
  */
 const deleteNode = (id) => async (dispatch) => {
-  try {
-    const response = await API.graphql(
-      graphqlOperation(
-        /* GraphQL */ `
-          mutation DeleteNode($input: DeleteNodeInput!) {
-            deleteNode(input: $input) {
-              id
-            }
+  const response = await API.graphql(
+    graphqlOperation(
+      /* GraphQL */ `
+        mutation DeleteNode($input: DeleteNodeInput!) {
+          deleteNode(input: $input) {
+            id
           }
-        `,
-        { input: { id } }
-      )
-    );
-    if (response.data.deleteNode) {
-      // TODO: delete nodes that link to/from and responses from!!
+        }
+      `,
+      { input: { id } }
+    )
+  );
+  if (response.data.deleteNode) {
+    // TODO: delete nodes that link to/from and responses from!!
 
-      dispatch({
-        type: REMOVE_GRAPH_ELEMENT,
-        payload: id,
-      });
-
-      return true;
-    }
-    return false;
-  } catch (e) {
-    console.error(e);
-    return false;
+    dispatch({
+      type: REMOVE_GRAPH_ELEMENT,
+      payload: id,
+    });
   }
 };
