@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
-import { Layout } from "antd";
+import { Switch, Route, Link } from "react-router-dom";
+import { Layout, Typography } from "antd";
 import { GithubOutlined } from "@ant-design/icons"
 import { Analytics } from "aws-amplify";
 import "antd/dist/antd.css";
+// import "./App.css"
 
 import Crumb from "./Crumb";
 import Explore from "./explore/Explore";
@@ -16,6 +17,7 @@ import Home from "./Home";
 import Navigation from "./Navigation";
 
 const { Header, Content, Footer } = Layout;
+// const { Title } = Typography;
 
 const App = () => {
   // Add analytics tracker
@@ -29,7 +31,7 @@ const App = () => {
         className="header"
         style={{ position: "fixed", zIndex: 1, width: "100%" }}
       >
-        <div className="logo" />
+        {/* <Link className="logo" to="/"><Title level={3} style={{ color: "rgba(255, 255, 255, 0.65)" }}>iWordNet</Title></Link> */}
         <Navigation />
       </Header>
       <Content style={{ padding: "64px 50px", minHeight: "100vh" }}>

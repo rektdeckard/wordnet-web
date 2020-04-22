@@ -110,8 +110,6 @@ export const submitResponse = (response) => async (dispatch, getState) => {
     batchCreateEdges && resultEdges.push(...batchCreateEdges);
   } while (newEdges.length);
 
-  console.log(resultEdges);
-
   dispatch({
     type: ADD_GRAPH_ELEMENTS,
     payload: {
