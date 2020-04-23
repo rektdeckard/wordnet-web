@@ -9,8 +9,9 @@ import {
   Statistic,
   Card,
   List,
-  message
+  message,
 } from "antd";
+import { Chart, SmoothArea, Axis, SmoothLine } from "viser-react";
 import {
   ArrowUpOutlined,
   ArrowDownOutlined,
@@ -22,7 +23,7 @@ import { startOfYear } from "date-fns";
 import { scheme } from "vega-scale";
 
 import { fetchHistory, setInitialDate } from "../../actions";
-import { useWeekOverWeek } from "../../utils";
+import { useWeekOverWeek, useWeekSessions } from "../../utils";
 import { Colors } from "../../data/constants";
 
 const { Title, Paragraph, Text } = Typography;
@@ -42,13 +43,14 @@ const Dashboard = ({
   fetchHistory,
   setInitialDate,
 }) => {
-  const { sessions, sessions: { length: sessionCount } } = sessionHistory;
+  const { sessions, sessionsByDay, words, rounds } = sessionHistory;
   const [loading, setLoading] = useState(false);
   const weekOverWeek = useWeekOverWeek(sessions);
+  const weekSessions = useWeekSessions(sessionsByDay);
 
   useEffect(() => {
     const load = async () => {
-      if (!sessionCount) setLoading(true);
+      if (!sessions.length) setLoading(true);
       try {
         await fetchHistory();
       } catch (e) {
@@ -71,8 +73,7 @@ const Dashboard = ({
   const statisticCards = [
     <Statistic
       title="Goal progress"
-      value={(sessionHistory.rounds ?? 0) / 10}
-      // value={12}
+      value={(rounds ?? 0) / 10}
       precision={1}
       formatter={(value) => (
         <Progress
@@ -85,29 +86,42 @@ const Dashboard = ({
       )}
       suffix="toward 1000 rounds!"
     />,
-    <Statistic
-      title="Activity this week"
-      value={
-        !isFinite(weekOverWeek) || isNaN(weekOverWeek)
-          ? "No Data"
-          : weekOverWeek
-      }
-      precision={1}
-      valueStyle={{
-        color: weekOverWeek >= 0 ? Colors.POSITIVE : Colors.NEGATIVE,
-      }}
-      prefix={weekOverWeek >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
-      suffix="%"
-    />,
+    <>
+      <Statistic
+        title="Activity this week"
+        value={
+          !isFinite(weekOverWeek) || isNaN(weekOverWeek)
+            ? "No Data"
+            : weekOverWeek
+        }
+        precision={1}
+        valueStyle={{
+          color: weekOverWeek >= 0 ? Colors.POSITIVE : Colors.NEGATIVE,
+        }}
+        prefix={weekOverWeek >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+        suffix="%"
+      />
+      <Chart
+        forceFit
+        height={128}
+        padding={0}
+        data={weekSessions}
+        scale={[{ dataKey: "value" }, { dataKey: "day" }]}
+      >
+        <SmoothLine position="day*value" size={2} />
+        <SmoothArea position="day*value" />
+        <Axis dataKey="value" />
+      </Chart>
+    </>,
     <Statistic
       title="Words logged"
-      value={sessionHistory.words ?? 0}
+      value={words ?? 0}
       precision={0}
       prefix={<MessageOutlined />}
     />,
     <Statistic
       title="Rounds played"
-      value={sessionHistory.rounds ?? 0}
+      value={rounds ?? 0}
       precision={0}
       prefix={<RightSquareOutlined />}
     />,
@@ -147,7 +161,7 @@ const Dashboard = ({
         <Link to="/explore/sessions">
           <div style={{ height: 200 }}>
             <ResponsiveCalendar
-              data={sessionHistory.sessionsByDay}
+              data={sessionsByDay}
               from={startOfYear(new Date())}
               to={new Date()}
               emptyColor={Colors.EMPTY}
