@@ -104,11 +104,15 @@ const NetworkGraphInteractive = ({
             animation: settings.animate,
           },
         }}
+        // register={{
+        //   behavior: (g) => [{  mode: 'tooltip', options: {}, name: 'tooltip', register: (g) => { console.log(g); g.registerBehavior('tooltip', console.log) } }]
+        // }}
         options={{
           wheelSensitivity: 4,
           minZoom: 0.01,
           restartForceOnDrag: settings.animate,
           autoFollowWithForce: true,
+          // modes: { default: ["edge-tooltip", "tooltip", "drag-canvas"] } 
         }}
       />
     </div>
