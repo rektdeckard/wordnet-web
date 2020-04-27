@@ -40,7 +40,7 @@ const NetworkGraphInteractive = ({
         degree: node.degree ?? 0,
         shape: "CircleNode",
         style: {
-          nodeSize: (node.degree ?? 0) * nodeScale + defaultNodeSize,
+          nodeSize: Math.sqrt(node.degree ?? 0) * nodeScale + defaultNodeSize,
           primaryColor: colorScheme
             ? interpolateColor(node.degree / maxDegree)
             : Colors.POSITIVE,
