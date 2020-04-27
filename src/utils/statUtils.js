@@ -19,6 +19,7 @@ export const useWeekOverWeek = (sessions) =>
     const weekStart = startOfWeek(new Date());
     const previousWeekStart = subWeeks(weekStart, 1);
 
+    // TODO: use timestamp property instead of creating new Date objects
     const currentWeekSessions =
       sessions?.filter((s) => {
         const date = new Date(s.createdAt);

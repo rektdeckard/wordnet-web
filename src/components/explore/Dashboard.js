@@ -5,13 +5,20 @@ import {
   Layout,
   Typography,
   Divider,
-  Progress,
   Statistic,
   Card,
   List,
   message,
 } from "antd";
-import { Chart, SmoothArea, Axis, SmoothLine } from "viser-react";
+import {
+  Chart,
+  SmoothArea,
+  Axis,
+  SmoothLine,
+  Bar,
+  Coord,
+  Tooltip,
+} from "viser-react";
 import {
   ArrowUpOutlined,
   ArrowDownOutlined,
@@ -27,7 +34,7 @@ import { useWeekOverWeek, useWeekSessions } from "../../utils";
 import { Colors } from "../../data/constants";
 
 const { Title, Paragraph, Text } = Typography;
-const interpolate = scheme("greens");
+const interpolate = scheme("teals");
 const heatmapColors = [
   interpolate(0),
   interpolate(0.2),
@@ -73,57 +80,89 @@ const Dashboard = ({
   const statisticCards = [
     <Statistic
       title="Goal progress"
-      value={(rounds ?? 0) / 10}
-      precision={1}
+      value={rounds ?? 0}
       formatter={(value) => (
-        <Progress
-          style={{ margin: 16 }}
-          type="circle"
-          width={100}
-          percent={value.toFixed(1)}
-          format={(percent) => `${percent}%`}
-        />
+        <Chart
+          forceFit
+          height={80}
+          padding={0}
+          data={[
+            { name: "Rounds", value, goal: 100 },
+            { name: "Vocabulary", value: words, goal: 1000 },
+          ]}
+          scale={[{ dataKey: "value", max: 1000 }]}
+        >
+          <Coord type="rect" direction="LB" />
+          <Tooltip />
+          <Axis dataKey="name" />
+          <Bar
+            position="name*value"
+            color={Colors.NEUTRAL}
+            // label={["value", () => ({ formatter: (text) => `${text}%`})]}
+            label={[
+              "name",
+              () => ({
+                position: "middle",
+                offset: 0,
+                textStyle: {
+                  fill: "#FFFFFF",
+                  fontSize: 12,
+                },
+              }),
+            ]}
+          />
+        </Chart>
       )}
-      suffix="toward 1000 rounds!"
     />,
     <>
       <Statistic
         title="Activity this week"
         value={
-          !isFinite(weekOverWeek) || isNaN(weekOverWeek)
-            ? "No Data"
-            : weekOverWeek
+          isFinite(weekOverWeek) && !isNaN(weekOverWeek)
+            ? weekOverWeek
+            : "No Data"
         }
         precision={1}
         valueStyle={{
           color: weekOverWeek >= 0 ? Colors.POSITIVE : Colors.NEGATIVE,
         }}
-        prefix={weekOverWeek >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
-        suffix="%"
+        prefix={
+          isFinite(weekOverWeek) &&
+          !isNaN(weekOverWeek) &&
+          (weekOverWeek >= 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />)
+        }
+        suffix={isFinite(weekOverWeek) && !isNaN(weekOverWeek) && "%"}
       />
-      <Chart
-        forceFit
-        height={128}
-        padding={0}
-        data={weekSessions}
-        scale={[{ dataKey: "value" }, { dataKey: "day" }]}
-      >
-        <SmoothLine position="day*value" size={2} />
-        <SmoothArea position="day*value" />
-        <Axis dataKey="value" />
+      <Chart forceFit height={60} padding={0} data={weekSessions}>
+        <SmoothLine
+          position="day*value"
+          size={2}
+          color={weekOverWeek >= 0 ? Colors.POSITIVE : Colors.NEGATIVE}
+        />
+        <SmoothArea
+          position="day*value"
+          color={weekOverWeek >= 0 ? Colors.POSITIVE : Colors.NEGATIVE}
+        />
+        <Axis />
+        <Tooltip crosshairs />
       </Chart>
     </>,
     <Statistic
       title="Words logged"
+      size="large"
       value={words ?? 0}
       precision={0}
-      prefix={<MessageOutlined />}
+      // prefix={<MessageOutlined />}
+      // suffix="TOTAL"
+      valueStyle={{ fontSize: 48 }}
     />,
     <Statistic
       title="Rounds played"
       value={rounds ?? 0}
       precision={0}
-      prefix={<RightSquareOutlined />}
+      // prefix={<RightSquareOutlined />}
+      // suffix="TOTAL"
+      valueStyle={{ fontSize: 48 }}
     />,
   ];
 
@@ -145,7 +184,7 @@ const Dashboard = ({
         dataSource={statisticCards}
         renderItem={(item) => (
           <List.Item>
-            <Card hoverable loading={loading}>
+            <Card hoverable loading={loading} style={{ minHeight: 176 }}>
               {item}
             </Card>
           </List.Item>
