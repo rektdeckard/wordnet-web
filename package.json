@@ -31,9 +31,11 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "vega-scale": "^6.0.0",
+    "viser-react": "^2.4.8",
     "xlsx": "^0.15.6"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -40,7 +40,7 @@ const NetworkGraphInteractive = ({
         degree: node.degree ?? 0,
         shape: "CircleNode",
         style: {
-          nodeSize: (node.degree ?? 0) * nodeScale + defaultNodeSize,
+          nodeSize: Math.sqrt(node.degree ?? 0) * nodeScale + defaultNodeSize,
           primaryColor: colorScheme
             ? interpolateColor(node.degree / maxDegree)
             : Colors.POSITIVE,
@@ -104,11 +104,15 @@ const NetworkGraphInteractive = ({
             animation: settings.animate,
           },
         }}
+        // register={{
+        //   behavior: (g) => [{  mode: 'tooltip', options: {}, name: 'tooltip', register: (g) => { console.log(g); g.registerBehavior('tooltip', console.log) } }]
+        // }}
         options={{
           wheelSensitivity: 4,
           minZoom: 0.01,
           restartForceOnDrag: settings.animate,
           autoFollowWithForce: true,
+          // modes: { default: ["edge-tooltip", "tooltip", "drag-canvas"] } 
         }}
       />
     </div>

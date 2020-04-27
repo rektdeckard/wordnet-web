@@ -114,13 +114,14 @@ export const HEAT_MAP_COLORS = [
 ];
 
 export const Colors = {
-  POSITIVE: "#51bdab",
-  NEGATIVE: "#f47560",
-  ACTIVE: "#1890ff",
-  EMPTY: "#eeeeee",
-  HIGHLIGHT: "#fcfe15",
+  POSITIVE: "#61B0AF",
+  NEGATIVE: "#F28076",
+  NEUTRAL: "#0A4A90",
+  ACTIVE: "#1890FF",
+  EMPTY: "#F0F2F5",
+  HIGHLIGHT: "#FCFE15",
   HOVERED: "#000000",
-  BORDER: "#ffffff",
-  CARD_BACKGROUND: "#ffffff",
-  PANEL_BACKGROUND: "#fafafa",
+  BORDER: "#FFFFFF",
+  CARD_BACKGROUND: "#FFFFFF",
+  PANEL_BACKGROUND: "#FAFAFA",
 };

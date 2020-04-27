@@ -17,7 +17,7 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 const { Paragraph } = Typography;
 
 const Account = (props) => {
-  const user = props.authData.attributes;
+  const [user, setUser] = useState(props.authData.attributes);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -59,12 +59,14 @@ const Account = (props) => {
       const response = await Auth.updateUserAttributes(Auth.user, {
         [attribute]: value,
       });
-      if (response === "SUCCESS") message.success(`Updated ${attribute}`);
-      else message.warn(`Could not update ${attribute}`);
+      if (response === "SUCCESS") {
+        const { attributes } = await Auth.currentUserInfo();
+        setUser(attributes);
+        message.success(`Updated ${attribute}`);
+      } else message.warn(`Could not update ${attribute}`);
     } catch (e) {
       message.error(e.message);
     }
-    props.onStateChange();
   };
 
   const uploadButton = (
