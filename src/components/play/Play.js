@@ -22,7 +22,7 @@ import { Colors } from "../../data/constants";
 const { Meta } = Card;
 const { Title } = Typography;
 
-const Play = ({ session, initializeSession, resumeLastSession, history }) => {
+const Play = ({ initializeSession, resumeLastSession, history }) => {
   const [loading, setLoading] = useState(false);
   const [resuming, setResuming] = useState(false);
 
