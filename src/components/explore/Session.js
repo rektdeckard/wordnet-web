@@ -12,7 +12,7 @@ import {
   Empty,
   Select,
   Tag,
-  message
+  message,
 } from "antd";
 import { ClockCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
@@ -344,7 +344,7 @@ const Session = ({ graph, fetchSession }) => {
               <Descriptions.Item
                 label="Starting Word"
                 span={3}
-                children={<Tag>{nodes.find((n) => n.depth === 1)?.id}</Tag>}
+                children={<Tag>{nodes.find((node) => node.depth === 1)?.id}</Tag>}
               />
               <Descriptions.Item label="Session ID" span={3}>
                 {id}
@@ -352,7 +352,7 @@ const Session = ({ graph, fetchSession }) => {
               <Descriptions.Item
                 label="Session Date"
                 span={3}
-                children={new Date(graph?.createdAt).toLocaleString()}
+                children={new Date(createdAt).toLocaleString()}
               />
               <Descriptions.Item label="Nodes" children={nodes.length} />
               <Descriptions.Item label="Edges" children={edges.length} />
@@ -368,7 +368,6 @@ const Session = ({ graph, fetchSession }) => {
               <Descriptions.Item label="Other" children={"Unknown"} />
               <Descriptions.Item label="Download Data" span={3}>
                 <Download
-                  graph={{ nodes, edges, responses, createdAt }}
                   render={({ loading, onClick }) => (
                     <Button size="small" loading={loading} onClick={onClick}>
                       .xlsx

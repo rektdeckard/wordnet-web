@@ -316,10 +316,10 @@ export const fetchAllSessions = () => async (dispatch) => {
   dispatch({
     type: FETCH_SESSION,
     payload: {
-      nodes: condenseDomainNodes(allResults.nodes),
-      edges: condenseDomainEdges(allResults.edges),
+      nodes: allResults.nodes,
+      edges: allResults.edges,
       responses: allResults.responses,
-      createdAt: new Date().toISOString,
+      createdAt: new Date().toISOString(),
     },
   });
 };
