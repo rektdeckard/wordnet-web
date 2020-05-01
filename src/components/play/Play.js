@@ -48,7 +48,7 @@ const Play = ({ initializeSession, resumeLastSession, history }) => {
         if (success) {
           message.success("Session loaded");
           history.push(`/play/${gameType}`);
-        } else message.info("No previous session found");
+        } else message.warn("No previous session found");
       } catch (e) {
         console.error(e);
         message.error("Problem resuming session");
