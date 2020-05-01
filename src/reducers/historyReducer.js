@@ -1,7 +1,7 @@
 import {
   FETCH_HISTORY,
   FETCH_SESSION,
-  SET_INITIAL_DATE
+  SET_INITIAL_DATE,
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   sessionsByDay: [],
   initialDate: null,
   rounds: 0,
-  words: 0
+  words: 0,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -18,17 +18,17 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_HISTORY:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     case FETCH_SESSION:
       return {
         ...state,
-        currentSession: action.payload
+        currentSession: action.payload,
       };
     case SET_INITIAL_DATE:
       return {
         ...state,
-        initialDate: action.payload
+        initialDate: action.payload,
       };
     default:
       return state;

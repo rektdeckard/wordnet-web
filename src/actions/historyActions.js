@@ -214,6 +214,8 @@ export const fetchSession = (id) => async (dispatch) => {
   });
 };
 
+export const clearSession = () => ({ type: FETCH_SESSION, payload: {} });
+
 /**
  * Fetches complete session data for all `WordNet` entries,
  * and reduces them to a single network.
