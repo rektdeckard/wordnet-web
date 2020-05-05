@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Layout, Typography, Divider, Button, message } from "antd";
+import { Layout, Typography, Divider, Button, Result, message } from "antd";
 
 import NetworkGraphInteractive from "../NetworkGraphInteractive";
+import ErrorBoundary from "../ErrorBoundary";
 import SettingsSider from "./SettingsSider";
 import Download from "../explore/Download";
 import { restoreDefaults } from "../../actions";
@@ -31,13 +32,23 @@ const Settings = ({ settings, restoreDefaults }) => {
     <>
       <Title level={2}>Graph Visualization</Title>
       <Layout style={{ background: Colors.CARD_BACKGROUND }}>
-        <SettingsSider />
-        <Content>
-          <NetworkGraphInteractive
-            graph={{ nodes, edges }}
-            style={{ height: 832 }}
-          />
-        </Content>
+        <ErrorBoundary
+          fallback={
+            <Result
+              status="warning"
+              title="Error building graph"
+              subTitle="Don't panic! This error has been reported."
+            />
+          }
+        >
+          <SettingsSider />
+          <Content>
+            <NetworkGraphInteractive
+              graph={{ nodes, edges }}
+              style={{ height: 832 }}
+            />
+          </Content>
+        </ErrorBoundary>
       </Layout>
       <Divider />
       <Title level={2}>Download Data</Title>

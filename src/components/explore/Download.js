@@ -1,9 +1,10 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import Excel from "react-data-export";
 
 import { fetchAllSessions } from "../../actions";
 import {
-  mapGraph,
+  useGraph,
   condenseModelNodes,
   condenseModelEdges,
 } from "../../utils/graphUtils";
@@ -11,30 +12,21 @@ import {
 const { ExcelFile } = Excel;
 const { ExcelSheet, ExcelColumn } = ExcelFile;
 
-const Download = ({ graph, render, all }) => {
+const Download = ({ render, all, sessionData, fetchAllSessions }) => {
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [allRecords, setAllRecords] = useState();
-
-  useEffect(() => {
-    setAllRecords(graph);
-  }, [graph]);
+  const { nodes, edges, responses, createdAt } = useGraph(sessionData);
 
   const handleLoad = async () => {
     if (all) {
       setLoading(true);
-      const response = await fetchAllSessions();
-      setAllRecords(response);
+      await fetchAllSessions();
       setLoading(false);
       setLoaded(true);
-    } else if (allRecords) {
+    } else if (sessionData) {
       setLoaded(true);
     }
   };
-
-  const { nodes, edges, responses, createdAt } = useMemo(() => {
-    return all ? mapGraph(allRecords) : graph;
-  }, [all, graph, allRecords]);
 
   const renderExcel = () => {
     if (!loading && loaded)
@@ -87,4 +79,8 @@ const Download = ({ graph, render, all }) => {
   );
 };
 
-export default Download;
+const mapStateToProps = (state) => {
+  return { sessionData: state.history.currentSession };
+};
+
+export default connect(mapStateToProps, { fetchAllSessions })(Download);

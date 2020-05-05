@@ -1,19 +1,17 @@
 import { UPDATE_SETTING, RESTORE_DEFAULTS } from "../actions/types";
 
-const SAVED_STATE = JSON.parse(
-  localStorage.getItem("settings") ?? "{}"
-);
+const SAVED_STATE = JSON.parse(localStorage.getItem("settings")) ?? {};
 
 const INITIAL_STATE = {
   type: "force",
-  repulsivity: 5000,
+  repulsivity: 10000,
   iterations: 500,
   colorScheme: "teals",
-  defaultNodeSize: 2,
-  nodeScale: 10,
+  defaultNodeSize: 4,
+  nodeScale: 12,
   fontSize: 18,
   autoScaleSpringLength: false,
-  defaultSpringLength: 100,
+  defaultSpringLength: 200,
   motionStiffness: 1000,
   motionDamping: 0.5,
   motionThreshold: 0.1,

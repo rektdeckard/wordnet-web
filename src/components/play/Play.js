@@ -22,7 +22,7 @@ import { Colors } from "../../data/constants";
 const { Meta } = Card;
 const { Title } = Typography;
 
-const Play = ({ session, initializeSession, resumeLastSession, history }) => {
+const Play = ({ initializeSession, resumeLastSession, history }) => {
   const [loading, setLoading] = useState(false);
   const [resuming, setResuming] = useState(false);
 
@@ -48,7 +48,7 @@ const Play = ({ session, initializeSession, resumeLastSession, history }) => {
         if (success) {
           message.success("Session loaded");
           history.push(`/play/${gameType}`);
-        } else message.info("No previous session found");
+        } else message.warn("No previous session found");
       } catch (e) {
         console.error(e);
         message.error("Problem resuming session");

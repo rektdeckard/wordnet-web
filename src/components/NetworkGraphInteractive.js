@@ -1,6 +1,6 @@
 import React, { useRef, useMemo, useEffect } from "react";
 import { connect } from "react-redux";
-import { Spin } from "antd";
+import { Spin, Result } from "antd";
 import Graphin from "@antv/graphin";
 import "@antv/graphin/dist/index.css";
 
@@ -83,6 +83,15 @@ const NetworkGraphInteractive = ({
       </div>
     );
 
+  if (!loading && !displayNodes.length)
+    return (
+      <Result
+        status="warning"
+        title="No graph data"
+        subTitle="Double-check your Session ID"
+      />
+    );
+
   return (
     <div style={{ height: "50vh", overflow: "hidden", ...style }}>
       {header}
@@ -112,7 +121,7 @@ const NetworkGraphInteractive = ({
           minZoom: 0.01,
           restartForceOnDrag: settings.animate,
           autoFollowWithForce: true,
-          // modes: { default: ["edge-tooltip", "tooltip", "drag-canvas"] } 
+          // modes: { default: ["edge-tooltip", "tooltip", "drag-canvas"] }
         }}
       />
     </div>

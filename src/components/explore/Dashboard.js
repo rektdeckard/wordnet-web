@@ -19,12 +19,7 @@ import {
   Coord,
   Tooltip,
 } from "viser-react";
-import {
-  ArrowUpOutlined,
-  ArrowDownOutlined,
-  MessageOutlined,
-  RightSquareOutlined,
-} from "@ant-design/icons";
+import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
 import { ResponsiveCalendar } from "@nivo/calendar";
 import { startOfYear } from "date-fns";
 import { scheme } from "vega-scale";
