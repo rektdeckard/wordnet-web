@@ -74,16 +74,13 @@ export const useGraph = (graph) => useMemo(() => mapGraph(graph), [graph]);
 
 export const useTraversableGraph = (graph) =>
   useMemo(() => {
-    const nodeMap = {};
-
-    if (graph.nodes) {
-      graph.nodes.forEach((n) => {
-        nodeMap[n.value] = [
-          ...n.sources.items.map((i) => i.target.value),
-          ...n.targets.items.map((i) => i.source.value),
-        ];
-      });
-    }
+    const nodeMap = graph.nodes?.reduce((map, node) => ({
+      ...map,
+      [node.value]: [
+        ...node.sources.items.map((item) => item.target.value),
+        ...node.targets.items.map((item) => item.source.value),
+      ]
+    }), {}) ?? {};
 
     const bfs = (source) => {
       const queue = [{ vertex: source, count: 0 }];
