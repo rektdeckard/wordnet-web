@@ -44,7 +44,8 @@ type ObjectDiscriminationShape {
 type WordNet
   @model
   @searchable
-  @key(fields: ["id", "createdAt"], name: "wordNetsByCreatedAt")
+  # TODO: wipe tables and reinitialize with GSI
+  # @key(fields: ["id", "createdAt"], name: "wordNetsByCreatedAt")
   @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }]) {
   id: ID!
   nodes: [Node!]! @connection(name: "NetworkNodes")
