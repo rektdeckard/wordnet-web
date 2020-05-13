@@ -35,7 +35,7 @@ const Session = ({ graph, fetchSession, clearSession }) => {
       setLoading(false);
     };
     if (id) load();
-  }, [id, fetchSession]);
+  }, [id, fetchSession, clearSession]);
 
   return (
     <>
