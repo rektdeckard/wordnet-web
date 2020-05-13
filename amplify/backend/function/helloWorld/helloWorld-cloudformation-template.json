@@ -63,7 +63,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-wordnet-web-dev-deva-174559-deployment",
-					"S3Key": "amplify-builds/helloWorld-3236692f365330387873-build.zip"
+					"S3Key": "amplify-builds/helloWorld-714f316a6e6579683665-build.zip"
 				}
 			}
 		},

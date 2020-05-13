@@ -1,7 +1,50 @@
+type Profile
+  @model
+  @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }]) {
+  id: ID!
+  sub: String!
+  pictographGridAssessment: [Pictograph]
+  pictographTimelineAssessment: [Pictograph]
+  pictographDescriptionAssessment: [PictographDescription]
+  pictographSelfIdentifyAssessment: PictographSelfIdentifyAssessment
+  objectDiscriminationAssessment: ObjectDiscriminationAssessment
+}
+
+type Pictograph {
+  id: ID!
+  name: String!
+  src: AWSURL!
+}
+type PictographDescription {
+  pictograph: Pictograph!
+  description: String
+}
+
+type PictographSelfIdentifyAssessment {
+  self: [Pictograph!]!
+  selfAndOthers: [Pictograph!]!
+  selfAndDesired: [Pictograph!]!
+  others: [Pictograph!]!
+  othersAndDesired: [Pictograph!]!
+  desired: [Pictograph!]!
+}
+
+type ObjectDiscriminationAssessment {
+  group1: [ObjectDiscriminationShape!]!
+  group2: [ObjectDiscriminationShape!]!
+  group3: [ObjectDiscriminationShape!]!
+}
+
+type ObjectDiscriminationShape {
+  shape: String!
+  size: Int!
+  color: String!
+}
+
 type WordNet
   @model
   @searchable
-  # @key(fields: ["id", "createdAt"], name: "wordNetsByCreatedAt")
+  @key(fields: ["id", "createdAt"], name: "wordNetsByCreatedAt")
   @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }]) {
   id: ID!
   nodes: [Node!]! @connection(name: "NetworkNodes")
@@ -53,22 +96,22 @@ type Response
 }
 
 input CreateNodeInput {
-	id: ID
-	value: String!
-	depth: Int
-	radius: Int
-	color: String
-	createdAt: AWSDateTime
-	nodeNetworkId: ID!
+  id: ID
+  value: String!
+  depth: Int
+  radius: Int
+  color: String
+  createdAt: AWSDateTime
+  nodeNetworkId: ID!
 }
 
 input CreateEdgeInput {
-	id: ID
-	distance: Int!
-	createdAt: AWSDateTime
-	edgeSourceId: ID!
-	edgeTargetId: ID!
-	edgeNetworkId: ID!
+  id: ID
+  distance: Int!
+  createdAt: AWSDateTime
+  edgeSourceId: ID!
+  edgeTargetId: ID!
+  edgeNetworkId: ID!
 }
 
 type Query {
