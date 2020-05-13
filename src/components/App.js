@@ -7,6 +7,7 @@ import "antd/dist/antd.css";
 // import "./App.css"
 
 import Crumb from "./Crumb";
+import Assessments from "./assessment/Assesssments";
 import Explore from "./explore/Explore";
 import Play from "./play/Play";
 import Learn from "./learn/Learn";
@@ -40,6 +41,7 @@ const App = () => {
           <Route render={Crumb} />
         </Switch>
         <Switch>
+          <Route path="/assessment" component={Assessments} />
           <Route path="/play" component={Play} />
           <Route path="/explore" component={Explore} />
           <Route path="/learn" component={Learn} />
