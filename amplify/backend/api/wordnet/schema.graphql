@@ -3,6 +3,7 @@ type Profile
   @auth(rules: [{ allow: owner }, { allow: groups, groups: ["admin"] }]) {
   id: ID!
   sub: String!
+  createdAt: AWSDateTime
   pictographGridAssessment: [Pictograph]
   pictographTimelineAssessment: [Pictograph]
   pictographDescriptionAssessment: [PictographDescription]

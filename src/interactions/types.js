@@ -1,3 +1,4 @@
 export const ItemTypes = {
-  PICTOGRAM: "pictogram",
+  PICTOGRAPH: "pictograph",
+  SHAPE: "shape"
 };
