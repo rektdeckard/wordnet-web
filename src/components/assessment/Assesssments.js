@@ -1,31 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { Layout, Steps, Button, message } from "antd";
+import React, { useState } from "react";
+import { Steps, Button, Typography, message } from "antd";
 import { DndProvider } from "react-dnd";
 import Backend from "react-dnd-html5-backend";
 
 import PictographGridAssessment from "./PictographGridAssessment";
 
+const { Paragraph } = Typography;
 const { Step } = Steps;
 
 const assessments = [
   {
-    title: "Grid",
+    title: "Scene",
+    description:
+      "Place items from the panel on the left into the grid on the right to create a scene.",
     content: <PictographGridAssessment />,
   },
   {
     title: "Object Discrimination",
+    description: "Something",
     content: "Second-content",
   },
   {
     title: "Timeline",
+    description: "Something",
     content: "Third-content",
   },
   {
     title: "Self-Identify",
+    description: "Something",
     content: "Fourth-content",
   },
   {
     title: "Description",
+    description: "Something",
     content: "Last-content",
   },
 ];
@@ -41,20 +48,17 @@ const Assessments = () => {
   };
 
   return (
-    <Layout>
-      <Steps current={step}>
+    <>
+      <Steps current={step} style={{ marginBottom: 14 }}>
         {assessments.map((assessment) => (
           <Step key={assessment.title} title={assessment.title} />
         ))}
       </Steps>
-      <DndProvider backend={Backend}>
-        <div style={{ height: "76vh", backgroundColor: "gray", display: "flex", flexWrap: "wrap" }}>
-          {assessments[step].content}
-        </div>
-      </DndProvider>
+      <Paragraph>{assessments[step].description}</Paragraph>
+      <DndProvider backend={Backend}>{assessments[step].content}</DndProvider>
       <Button onClick={previousStep}>Previous</Button>
       <Button onClick={nextStep}>Next</Button>
-    </Layout>
+    </>
   );
 };
 
