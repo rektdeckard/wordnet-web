@@ -125,3 +125,9 @@ export const Color = {
   CARD_BACKGROUND: "#FFFFFF",
   PANEL_BACKGROUND: "#FAFAFA",
 };
+
+export const Shape = {
+  CIRCLE: "circle",
+  SQUARE: "square",
+  TRIANGLE: "triangle",
+};
