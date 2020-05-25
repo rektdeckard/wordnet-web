@@ -1,51 +1,87 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Steps, Button, Typography, message } from "antd";
 import { DndProvider } from "react-dnd";
 import Backend from "react-dnd-html5-backend";
 
 import PictographGridAssessment from "./PictographGridAssessment";
+import ShapeDiscriminationAssessment from "./ShapeDiscriminationAssessment";
+import TimelineAssessment from "./TimelineAssessment";
+import SelfIdentifyAssessment from "./SelfIdentifyAssessment";
+import DescriptionAssessment from "./DescriptionAssessment";
 
 const { Paragraph } = Typography;
 const { Step } = Steps;
 
-const assessments = [
-  {
-    title: "Scene",
-    description:
-      "Place items from the panel on the left into the grid on the right to create a scene.",
-    content: <PictographGridAssessment />,
-  },
-  {
-    title: "Object Discrimination",
-    description: "Something",
-    content: "Second-content",
-  },
-  {
-    title: "Timeline",
-    description: "Something",
-    content: "Third-content",
-  },
-  {
-    title: "Self-Identify",
-    description: "Something",
-    content: "Fourth-content",
-  },
-  {
-    title: "Description",
-    description: "Something",
-    content: "Last-content",
-  },
-];
-
 const Assessments = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
 
-  const nextStep = () => {
+  const handleNextClicked = () => {
     if (step < assessments.length - 1) setStep((step) => step + 1);
   };
-  const previousStep = () => {
+  const handlePreviousClicked = () => {
     if (step > 0) setStep((step) => step - 1);
   };
+
+  const assessments = useMemo(
+    () => [
+      {
+        title: "Scene",
+        description:
+          "Place pictograms from the panel on the left into the grid on the right to create a scene.",
+        content: (
+          <PictographGridAssessment
+            nextStep={handleNextClicked}
+            previousStep={handlePreviousClicked}
+          />
+        ),
+      },
+      {
+        title: "Shape Discrimination",
+        description:
+          "Place shapes from the panel on top into any of the three boxes below, grouping them as you see fit. You must use all shapes.",
+        content: (
+          <ShapeDiscriminationAssessment
+            nextStep={handleNextClicked}
+            previousStep={handlePreviousClicked}
+          />
+        ),
+      },
+      {
+        title: "Timeline",
+        description:
+          "Arrange the pictograms in the timeline to tell a story or inform about yourself.",
+        content: (
+          <TimelineAssessment
+            nextStep={handleNextClicked}
+            previousStep={handlePreviousClicked}
+          />
+        ),
+      },
+      {
+        title: "Self-Identify",
+        description:
+          "Place the pictograms into the region of the diagram that best fits its description of you.",
+        content: (
+          <SelfIdentifyAssessment
+            nextStep={handleNextClicked}
+            previousStep={handlePreviousClicked}
+          />
+        ),
+      },
+      {
+        title: "Description",
+        description:
+          "Use a single word to define each of the pictograms below.",
+        content: (
+          <DescriptionAssessment
+            nextStep={handleNextClicked}
+            previousStep={handlePreviousClicked}
+          />
+        ),
+      },
+    ],
+    [handleNextClicked, handlePreviousClicked]
+  );
 
   return (
     <>
@@ -56,8 +92,6 @@ const Assessments = () => {
       </Steps>
       <Paragraph>{assessments[step].description}</Paragraph>
       <DndProvider backend={Backend}>{assessments[step].content}</DndProvider>
-      <Button onClick={previousStep}>Previous</Button>
-      <Button onClick={nextStep}>Next</Button>
     </>
   );
 };
