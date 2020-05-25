@@ -10,7 +10,7 @@ import SessionDetails from "./SessionDetails";
 
 import { fetchSession, clearSession } from "../../actions";
 import { useTraversableGraph } from "../../utils";
-import { Colors } from "../../data/constants";
+import { Color } from "../../data/constants";
 
 const { Content } = Layout;
 
@@ -39,7 +39,7 @@ const Session = ({ graph, fetchSession, clearSession }) => {
 
   return (
     <>
-      <Layout style={{ background: Colors.CARD_BACKGROUND }}>
+      <Layout style={{ background: Color.CARD_BACKGROUND }}>
         <ErrorBoundary
           fallback={
             <Result

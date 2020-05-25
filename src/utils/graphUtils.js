@@ -74,13 +74,17 @@ export const useGraph = (graph) => useMemo(() => mapGraph(graph), [graph]);
 
 export const useTraversableGraph = (graph) =>
   useMemo(() => {
-    const nodeMap = graph.nodes?.reduce((map, node) => ({
-      ...map,
-      [node.value]: [
-        ...node.sources.items.map((item) => item.target.value),
-        ...node.targets.items.map((item) => item.source.value),
-      ]
-    }), {}) ?? {};
+    const nodeMap =
+      graph.nodes?.reduce(
+        (map, node) => ({
+          ...map,
+          [node.value]: [
+            ...node.sources.items.map((item) => item.target.value),
+            ...node.targets.items.map((item) => item.source.value),
+          ],
+        }),
+        {}
+      ) ?? {};
 
     const bfs = (source) => {
       const queue = [{ vertex: source, count: 0 }];
@@ -256,27 +260,21 @@ export const findNodesToLink = (tokens, nodes) =>
  * @return {ModelNode[]} Array of unique model `Nodes` with degree and frequency
  */
 export const condenseModelNodes = (nodes = []) => {
-  const nodeMap = nodes.reduce((acc, { id, degree, owner }) => {
+  const nodeMap = nodes.reduce((map, node) => {
+    const { id, degree, owner } = node;
     const key = `${id}-${owner}`;
-    const existingNode = acc[key];
 
-    if (existingNode) {
-      return {
-        ...acc,
-        [key]: {
-          id,
-          owner,
-          // FIXME: aren't we double-counting any identical edges?
-          degree: existingNode.degree + degree,
-          frequency: existingNode.frequency + 1,
-        },
-      };
-    }
+    const { degree: existingDegree = 0, frequency: existingFrequency = 0 } =
+      map.get(key) ?? {};
 
-    return { ...acc, [key]: { id, degree, owner, frequency: 1 } };
-  }, {});
+    return map.set(key, {
+      ...node,
+      degree: degree + existingDegree,
+      frequency: existingFrequency + 1,
+    });
+  }, new Map());
 
-  return Object.values(nodeMap);
+  return Array.from(nodeMap.values());
 };
 
 /**
@@ -287,33 +285,28 @@ export const condenseModelNodes = (nodes = []) => {
  * @return {DomainNode[]} Array of unique domain `Nodes` with degree and frequency
  */
 export const condenseDomainNodes = (nodes = []) => {
-  const nodeMap = nodes.reduce((acc, { value, sources, targets }) => {
-    const existingNode = acc[value];
+  const nodeMap = nodes.reduce((map, node) => {
+    const { value, sources, targets } = node;
+    const {
+      sources: existingSources,
+      targets: existingTargets,
+      frequency: existingFrequency = 0,
+    } = map.get(value) ?? {};
 
-    if (existingNode) {
-      return {
-        ...acc,
-        [value]: {
-          value,
-          sources: { items: [...existingNode.sources.items, ...sources.items] },
-          targets: { items: [...existingNode.targets.items, ...targets.items] },
-          frequency: existingNode.frequency + 1,
-        },
-      };
-    }
+    return map.set(value, {
+      value,
+      sources: existingSources
+        ? { items: [...existingSources.items, ...sources.items] }
+        : sources,
+      targets: existingTargets
+        ? { items: [...existingTargets.items, ...targets.items] }
+        : targets,
+      frequency: existingFrequency + 1,
+    });
 
-    return {
-      ...acc,
-      [value]: {
-        value,
-        sources,
-        targets,
-        frequency: 1,
-      },
-    };
-  }, {});
+  }, new Map());
 
-  return Object.values(nodeMap);
+  return Array.from(nodeMap.values());
 };
 
 /**
@@ -324,28 +317,16 @@ export const condenseDomainNodes = (nodes = []) => {
  * @return {ModelEdge[]} Array of unique model `Edges` with frequency
  */
 export const condenseModelEdges = (edges = []) => {
-  const edgeMap = edges.reduce((acc, { source, target, owner }) => {
-    const key = `${source}-${target}-${owner}`;
-    const existingEdge = acc[key];
+  const edgeMap = edges.reduce((map, edge) => {
+    const key = `${edge.source}:${edge.target}-${edge.owner}`;
 
-    if (existingEdge)
-      return {
-        ...acc,
-        [key]: {
-          source,
-          target,
-          owner,
-          frequency: existingEdge.frequency + 1,
-        },
-      };
+    return map.set(key, {
+      ...edge,
+      frequency: (map.get(key)?.frequency ?? 0) + 1,
+    });
+  }, new Map());
 
-    return {
-      ...acc,
-      [key]: { source, target, owner, frequency: 1 },
-    };
-  }, {});
-
-  return Object.values(edgeMap);
+  return Array.from(edgeMap.values());
 };
 
 /**
@@ -356,18 +337,13 @@ export const condenseModelEdges = (edges = []) => {
  * @return {DomainEdge[]} Array of unique domain `Edges` with frequency
  */
 export const condenseDomainEdges = (edges = []) => {
-  const edgeMap = edges.reduce((acc, curr) => {
-    const key = `${curr.source.value}-${curr.target.value}`;
-    const existingEdge = acc[key];
+  const edgeMap = edges.reduce((map, edge) => {
+    const { source, target } = edge;
+    const key = `${source.value}:${target.value}`;
+    const { frequency = 0 } = map.get(key) ?? {};
 
-    return {
-      ...acc,
-      [key]: {
-        ...curr,
-        frequency: (existingEdge?.frequency ?? 0) + 1,
-      },
-    };
-  }, {});
+    return map.set(key, { ...edge, frequency: frequency + 1 });
+  });
 
-  return Object.values(edgeMap);
+  return Array.from(edgeMap.values());
 };

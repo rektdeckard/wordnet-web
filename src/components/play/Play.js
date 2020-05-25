@@ -17,7 +17,7 @@ import { FieldTimeOutlined, DeploymentUnitOutlined } from "@ant-design/icons";
 import QuickPlay from "./QuickPlay";
 import Missing from "../Missing";
 import { initializeSession, resumeLastSession } from "../../actions";
-import { Colors } from "../../data/constants";
+import { Color } from "../../data/constants";
 
 const { Meta } = Card;
 const { Title } = Typography;
@@ -63,7 +63,7 @@ const Play = ({ initializeSession, resumeLastSession, history }) => {
         description: "A session to 5 minutes or 50 rounds",
         cover: (
           <FieldTimeOutlined
-            style={{ color: Colors.ACTIVE, fontSize: 128, paddingTop: 24 }}
+            style={{ color: Color.ACTIVE, fontSize: 128, paddingTop: 24 }}
           />
         ),
         gameType: "quickplay",
@@ -85,7 +85,7 @@ const Play = ({ initializeSession, resumeLastSession, history }) => {
         description: "See how long you can play",
         cover: (
           <DeploymentUnitOutlined
-            style={{ color: Colors.ACTIVE, fontSize: 128, paddingTop: 24 }}
+            style={{ color: Color.ACTIVE, fontSize: 128, paddingTop: 24 }}
           />
         ),
         gameType: "endurance",

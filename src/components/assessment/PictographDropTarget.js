@@ -3,7 +3,7 @@ import { useDrop } from "react-dnd";
 import { Button } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
-import { Colors } from "../../data/constants";
+import { Color } from "../../data/constants";
 import { ItemTypes } from "../../interactions";
 import PictographDragTarget from "./PictographDragTarget";
 
@@ -11,9 +11,15 @@ const PictographDropTarget = ({ item, onDrop }) => {
   const { src } = item ?? {};
   const [isHovered, setHovered] = useState(false);
 
+  const handleMove = (item) => {
+    item.onMove?.(null); // eslint-disable-line no-unused-expressions
+    item.onMove = onDrop;
+    onDrop(item);
+  }
+
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: ItemTypes.PICTOGRAPH,
-    drop: onDrop,
+    drop: handleMove,
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
@@ -25,9 +31,9 @@ const PictographDropTarget = ({ item, onDrop }) => {
     <div
       ref={drop}
       style={{
-        height: 160,
+        minHeight: 160,
         position: "relative",
-        backgroundColor: isActive ? Colors.POSITIVE : Colors.CARD_BACKGROUND,
+        backgroundColor: isActive ? Color.POSITIVE : Color.CARD_BACKGROUND,
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -39,10 +45,10 @@ const PictographDropTarget = ({ item, onDrop }) => {
               size="small"
               style={{ position: "absolute", top: 4, right: 4 }}
               icon={<CloseOutlined />}
-              onClick={() => onDrop({})}
+              onClick={() => onDrop(null)}
             />
           )}
-          <PictographDragTarget item={item} />
+          <PictographDragTarget item={item} onMove={onDrop} />
         </>
       )}
     </div>

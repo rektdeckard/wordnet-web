@@ -24,7 +24,7 @@ import {
   setMaxSpeed,
   setAnimate,
 } from "../../actions";
-import { Colors } from "../../data/constants";
+import { Color } from "../../data/constants";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -51,7 +51,7 @@ const SettingsSider = (props) => {
 
   return (
     <Sider
-      style={{ background: Colors.CARD_BACKGROUND }}
+      style={{ background: Color.CARD_BACKGROUND }}
       width={300}
       collapsible={Boolean(defaultCollapsed)}
       defaultCollapsed={Boolean(defaultCollapsed)}

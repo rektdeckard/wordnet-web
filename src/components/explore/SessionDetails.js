@@ -15,7 +15,7 @@ import Highlighter from "react-highlight-words";
 
 import Download from "./Download";
 import { uniqueTokensFromEntry, useDensity, useDiameter } from "../../utils";
-import { Colors } from "../../data/constants";
+import { Color } from "../../data/constants";
 
 const { TabPane } = Tabs;
 
@@ -117,7 +117,7 @@ const SessionDetails = ({ graph, loading, hovered, onHoverChanged }) => {
         ),
         filterIcon: (filtered) => (
           <SearchOutlined
-            style={{ color: filtered ? Colors.ACTIVE : undefined }}
+            style={{ color: filtered ? Color.ACTIVE : undefined }}
           />
         ),
         onFilter: (value, record) =>
@@ -133,7 +133,7 @@ const SessionDetails = ({ graph, loading, hovered, onHoverChanged }) => {
         render: (text) =>
           searchColumn === dataIndex ? (
             <Highlighter
-              highlightStyle={{ backgroundColor: Colors.HIGHLIGHT, padding: 0 }}
+              highlightStyle={{ backgroundColor: Color.HIGHLIGHT, padding: 0 }}
               searchWords={[searchTerm]}
               autoEscape
               textToHighlight={text.toString()}
@@ -266,7 +266,7 @@ const SessionDetails = ({ graph, loading, hovered, onHoverChanged }) => {
         {loading || !nodes.length ? (
           <div
             style={{
-              background: Colors.PANEL_BACKGROUND,
+              background: Color.PANEL_BACKGROUND,
               padding: 64,
               textAlign: "center",
             }}
@@ -277,7 +277,7 @@ const SessionDetails = ({ graph, loading, hovered, onHoverChanged }) => {
           <Descriptions
             title="Session Info"
             size="small"
-            style={{ background: Colors.PANEL_BACKGROUND, padding: 16 }}
+            style={{ background: Color.PANEL_BACKGROUND, padding: 16 }}
           >
             <Descriptions.Item
               label="Starting Word"
@@ -433,7 +433,7 @@ const SessionDetails = ({ graph, loading, hovered, onHoverChanged }) => {
         />
       </TabPane>
       <TabPane tab="Relationships" key="relationships">
-        <div style={{ background: Colors.PANEL_BACKGROUND, padding: 16 }}>
+        <div style={{ background: Color.PANEL_BACKGROUND, padding: 16 }}>
           <Descriptions title="Geodesic Distance">
             <Descriptions.Item
               label="Source Node"

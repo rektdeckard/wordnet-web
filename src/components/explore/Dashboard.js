@@ -26,7 +26,7 @@ import { scheme } from "vega-scale";
 
 import { fetchHistory, setInitialDate } from "../../actions";
 import { useWeekOverWeek, useWeekSessions } from "../../utils";
-import { Colors } from "../../data/constants";
+import { Color } from "../../data/constants";
 
 const { Title, Paragraph, Text } = Typography;
 const interpolate = scheme("teals");
@@ -92,7 +92,7 @@ const Dashboard = ({
           <Axis dataKey="name" />
           <Bar
             position="name*value"
-            color={Colors.NEUTRAL}
+            color={Color.NEUTRAL}
             // label={["value", () => ({ formatter: (text) => `${text}%`})]}
             label={[
               "name",
@@ -119,7 +119,7 @@ const Dashboard = ({
         }
         precision={1}
         valueStyle={{
-          color: weekOverWeek >= 0 ? Colors.POSITIVE : Colors.NEGATIVE,
+          color: weekOverWeek >= 0 ? Color.POSITIVE : Color.NEGATIVE,
         }}
         prefix={
           isFinite(weekOverWeek) &&
@@ -132,11 +132,11 @@ const Dashboard = ({
         <SmoothLine
           position="day*value"
           size={2}
-          color={weekOverWeek >= 0 ? Colors.POSITIVE : Colors.NEGATIVE}
+          color={weekOverWeek >= 0 ? Color.POSITIVE : Color.NEGATIVE}
         />
         <SmoothArea
           position="day*value"
-          color={weekOverWeek >= 0 ? Colors.POSITIVE : Colors.NEGATIVE}
+          color={weekOverWeek >= 0 ? Color.POSITIVE : Color.NEGATIVE}
         />
         <Axis />
         <Tooltip crosshairs />
@@ -198,13 +198,13 @@ const Dashboard = ({
               data={sessionsByDay}
               from={startOfYear(new Date())}
               to={new Date()}
-              emptyColor={Colors.EMPTY}
+              emptyColor={Color.EMPTY}
               colors={heatmapColors}
               margin={{ top: 32, bottom: 32 }}
               yearSpacing={40}
-              monthBorderColor={Colors.BORDER}
+              monthBorderColor={Color.BORDER}
               dayBorderWidth={2}
-              dayBorderColor={Colors.BORDER}
+              dayBorderColor={Color.BORDER}
               legends={[
                 {
                   anchor: "bottom-right",

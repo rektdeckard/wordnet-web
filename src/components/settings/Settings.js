@@ -8,7 +8,7 @@ import SettingsSider from "./SettingsSider";
 import Download from "../explore/Download";
 import { restoreDefaults } from "../../actions";
 import { useGraph } from "../../utils";
-import { Colors } from "../../data/constants";
+import { Color } from "../../data/constants";
 
 import data from "../../data/sample.json";
 
@@ -31,7 +31,7 @@ const Settings = ({ settings, restoreDefaults }) => {
   return (
     <>
       <Title level={2}>Graph Visualization</Title>
-      <Layout style={{ background: Colors.CARD_BACKGROUND }}>
+      <Layout style={{ background: Color.CARD_BACKGROUND }}>
         <ErrorBoundary
           fallback={
             <Result

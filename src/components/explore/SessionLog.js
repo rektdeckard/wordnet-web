@@ -19,7 +19,7 @@ import { CalendarOutlined } from "@ant-design/icons";
 import { setInitialDate } from "../../actions";
 import Download from "./Download";
 import "./SessionLog.css";
-import { Colors } from "../../data/constants";
+import { Color } from "../../data/constants";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
@@ -82,7 +82,7 @@ const SessionLog = ({ initialDate, setInitialDate }) => {
         ),
         filterIcon: () => (
           <CalendarOutlined
-            style={startDate || endDate ? { color: Colors.ACTIVE } : null}
+            style={startDate || endDate ? { color: Color.ACTIVE } : null}
           />
         ),
       },
