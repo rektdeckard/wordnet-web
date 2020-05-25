@@ -4,7 +4,7 @@ import Graphin from "@antv/graphin";
 import "@antv/graphin/dist/index.css";
 
 import { scheme } from "vega-scale";
-import { Colors } from "../data/constants";
+import { Color } from "../data/constants";
 
 const NetworkGraph = ({ graph, header, settings, style }) => {
   const ref = useRef();
@@ -32,7 +32,7 @@ const NetworkGraph = ({ graph, header, settings, style }) => {
           nodeSize: 2 * defaultNodeSize,
           primaryColor: colorScheme
             ? interpolateColor(1 - node.depth / maxDepth)
-            : Colors.POSITIVE,
+            : Color.POSITIVE,
           fontSize: 0,
         },
       })) ?? []

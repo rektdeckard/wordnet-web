@@ -18,7 +18,7 @@ import { useGraph } from "../../utils";
 import NetworkGraph from "../NetworkGraph";
 import ErrorBoundary from "../ErrorBoundary";
 import TimedProgress from "./TimedProgress";
-import { Colors } from "../../data/constants";
+import { Color } from "../../data/constants";
 
 const { Content } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -98,7 +98,7 @@ const QuickPlay = ({
       <TimedProgress time={{ minutes: 5 }} onExpire={handleExpire} />
       {/* <Progress percent={nodes.length * 2} /> */}
       <Content
-        style={{ padding: "0px 0px", background: Colors.CARD_BACKGROUND }}
+        style={{ padding: "0px 0px", background: Color.CARD_BACKGROUND }}
       >
         <ErrorBoundary
           fallback={

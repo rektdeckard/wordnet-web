@@ -7,7 +7,7 @@ import {
   ExperimentOutlined,
   DollarOutlined,
 } from "@ant-design/icons";
-import { Colors } from "../../data/constants";
+import { Color } from "../../data/constants";
 
 const { Content } = Layout;
 
@@ -95,7 +95,7 @@ const Learn = () => {
 
   return (
     <Layout
-      style={{ padding: "24px 24px", background: Colors.CARD_BACKGROUND }}
+      style={{ padding: "24px 24px", background: Color.CARD_BACKGROUND }}
     >
       <Content>
         <List

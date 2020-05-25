@@ -5,7 +5,7 @@ import Graphin from "@antv/graphin";
 import "@antv/graphin/dist/index.css";
 
 import { scheme } from "vega-scale";
-import { Colors } from "../data/constants";
+import { Color } from "../data/constants";
 
 const NetworkGraphInteractive = ({
   graph,
@@ -43,7 +43,7 @@ const NetworkGraphInteractive = ({
           nodeSize: Math.sqrt(node.degree ?? 0) * nodeScale + defaultNodeSize,
           primaryColor: colorScheme
             ? interpolateColor(node.degree / maxDegree)
-            : Colors.POSITIVE,
+            : Color.POSITIVE,
           fontSize: fontSize ?? 18,
         },
       })) ?? []
@@ -73,7 +73,7 @@ const NetworkGraphInteractive = ({
         ref={ref}
         style={{
           height: "50vh",
-          background: Colors.PANEL_BACKGROUND,
+          background: Color.PANEL_BACKGROUND,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
