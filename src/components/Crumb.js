@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Breadcrumb } from "antd";
 import { withRouter, Link } from "react-router-dom";
 
-const Crumb = ({ location, match, children }) => {
+const Crumb = ({ location, match }) => {
   const crumbs = useMemo(() => {
     const segments = location.pathname.split("/").slice(1);
     return segments.map((s, i) => {
@@ -23,10 +23,7 @@ const Crumb = ({ location, match, children }) => {
   }, [location]);
 
   return (
-    <>
-      <Breadcrumb style={{ margin: "16px 0" }}>{crumbs}</Breadcrumb>
-      {children}
-    </>
+    <Breadcrumb style={{ margin: "16px 0" }}>{crumbs}</Breadcrumb>
   );
 };
 
