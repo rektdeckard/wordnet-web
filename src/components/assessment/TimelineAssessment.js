@@ -1,45 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { Storage } from "aws-amplify";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
 import { Layout, List, Row, Col, Button } from "antd";
-import { CaretRightOutlined } from "@ant-design/icons"
+import { CaretRightOutlined } from "@ant-design/icons";
 
+import { initializeTimeline, updateTimeline } from "../../actions";
 import { Color } from "../../data/constants";
 import TimelineDragTarget from "./TimelineDragTarget";
 
 const { Content } = Layout;
 
-const TimelineAssessment = ({ nextStep, previousStep }) => {
-  const [pictographs, setPictographs] = useState([]);
-
+const TimelineAssessment = ({
+  timeline,
+  initializeTimeline,
+  updateTimeline,
+  nextStep,
+  previousStep,
+}) => {
   useEffect(() => {
-    const load = async () => {
-      const images = await Storage.list("pictograms", {
-        level: "public",
-      });
-      const pictographs = await Promise.all(
-        images
-          .filter((it) => it.key.endsWith(".svg"))
-          .map(async (image) => {
-            const imageURL = await Storage.get(image.key);
-            return {
-              name: image.key.split(/\W/)[2]?.replace(/_/g, " "),
-              src: imageURL,
-              id: image.eTag,
-            };
-          })
-      );
-      setPictographs(pictographs.slice(0, 24));
-    };
-
-    load();
+    const load = async () => initializeTimeline();
+    if (!timeline.length) load();
   }, []);
 
   const moveItem = (dragIndex, hoverIndex) => {
-    setPictographs((pictographs) => {
-      const [dragItem] = pictographs.splice(dragIndex, 1);
-      pictographs.splice(hoverIndex, 0, dragItem);
-      return [...pictographs];
-    });
+    const newTimeline = [...timeline];
+    const [dragItem] = newTimeline.splice(dragIndex, 1);
+    newTimeline.splice(hoverIndex, 0, dragItem);
+    updateTimeline(newTimeline);
   };
 
   return (
@@ -53,15 +39,20 @@ const TimelineAssessment = ({ nextStep, previousStep }) => {
         <Content style={{ background: Color.PANEL_BACKGROUND, padding: 16 }}>
           <List
             grid={{ column: 6 }}
-            dataSource={pictographs}
+            dataSource={timeline}
             renderItem={(item, index) => (
-              <List.Item key={item.id} style={{ display: "flex", alignItems: "center" }}>
+              <List.Item
+                key={item.id}
+                style={{ display: "flex", alignItems: "center" }}
+              >
                 <TimelineDragTarget
                   index={index}
                   item={item}
                   moveItem={moveItem}
                 />
-                {(index !== pictographs.length - 1) && <CaretRightOutlined style={{ fontSize: 32 }}/>}
+                {index !== timeline.length - 1 && (
+                  <CaretRightOutlined style={{ fontSize: 32 }} />
+                )}
               </List.Item>
             )}
           />
@@ -83,4 +74,10 @@ const TimelineAssessment = ({ nextStep, previousStep }) => {
   );
 };
 
-export default TimelineAssessment;
+const mapStateToProps = (state) => {
+  return { timeline: state.assessments.timelineAssessment };
+};
+
+export default connect(mapStateToProps, { initializeTimeline, updateTimeline })(
+  TimelineAssessment
+);

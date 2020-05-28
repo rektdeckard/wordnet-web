@@ -1,11 +1,13 @@
 import { combineReducers, createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 
-import settingsReducer from "./settingsReducer";
+import assessmentReducer from "./assessmentReducer";
 import graphReducer from "./graphReducer";
 import histroryReducer from "./historyReducer";
+import settingsReducer from "./settingsReducer";
 
 const rootReducer = combineReducers({
+  assessments: assessmentReducer,
   settings: settingsReducer,
   graph: graphReducer,
   history: histroryReducer

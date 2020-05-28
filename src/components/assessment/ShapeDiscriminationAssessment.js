@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import { Layout, Row, Col, Button, Typography, message } from "antd";
 
+import { updateRemainingShapes } from "../../actions";
 import { Color } from "../../data/constants";
 import ShapeDragTarget from "./ShapeDragTarget";
 import ShapeDropTarget from "./ShapeDropTarget";
@@ -8,33 +10,14 @@ import ShapeDropTarget from "./ShapeDropTarget";
 const { Content } = Layout;
 const { Title } = Typography;
 
-const INITIAL_SHAPES = [
-  { id: 1, poly: "circle", size: 150, color: Color.ACTIVE },
-  { id: 2, poly: "circle", size: 100, color: Color.ACTIVE },
-  { id: 3, poly: "circle", size: 100, color: Color.POSITIVE },
-  { id: 4, poly: "circle", size: 100, color: Color.POSITIVE },
-  { id: 5, poly: "circle", size: 50, color: Color.NEGATIVE },
-  { id: 6, poly: "square", size: 150, color: Color.NEGATIVE },
-  { id: 7, poly: "square", size: 100, color: Color.NEGATIVE },
-  { id: 8, poly: "square", size: 50, color: Color.ACTIVE },
-  { id: 9, poly: "triangle", size: 150, color: Color.ACTIVE },
-  { id: 10, poly: "triangle", size: 100, color: Color.NEGATIVE },
-  { id: 11, poly: "triangle", size: 100, color: Color.NEGATIVE },
-  { id: 12, poly: "triangle", size: 50, color: Color.POSITIVE },
-];
-
-for (let i = INITIAL_SHAPES.length - 1; i > 0; i--) {
-  const j = Math.floor(Math.random() * i);
-  const temp = INITIAL_SHAPES[i];
-  INITIAL_SHAPES[i] = INITIAL_SHAPES[j];
-  INITIAL_SHAPES[j] = temp;
-}
-
-const ShapeDiscriminationAssessment = ({ nextStep, previousStep }) => {
-  const [remainingShapes, setRemainingShapes] = useState(INITIAL_SHAPES);
-
+const ShapeDiscriminationAssessment = ({
+  remainingShapes,
+  updateRemainingShapes,
+  nextStep,
+  previousStep,
+}) => {
   const handleRemove = ({ id }) => () => {
-    setRemainingShapes((shapes) => shapes.filter((it) => it.id !== id));
+    updateRemainingShapes(remainingShapes.filter((it) => it.id !== id));
   };
 
   const handleNextClicked = () => {
@@ -107,4 +90,10 @@ const ShapeDiscriminationAssessment = ({ nextStep, previousStep }) => {
   );
 };
 
-export default ShapeDiscriminationAssessment;
+const mapStateToProps = (state) => {
+  return { remainingShapes: state.assessments.shapeDiscrimination };
+};
+
+export default connect(mapStateToProps, { updateRemainingShapes })(
+  ShapeDiscriminationAssessment
+);

@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { Storage } from "aws-amplify";
 import { Layout, List, Row, Col, Button, message } from "antd";
 
+import { updateGrid } from "../../actions";
 import { Color } from "../../data/constants";
 import PictographDragTarget from "./PictographDragTarget";
 import PictographDropTarget from "./PictographDropTarget";
 
 const { Content, Sider } = Layout;
 
-const GRID_ROWS = 4;
-const GRID_COLUMNS = 4;
-
-const initializedGrid = new Array(GRID_ROWS)
-  .fill(null)
-  .map(() => new Array(GRID_COLUMNS).fill(null));
-
-const PictographGridAssessment = ({ nextStep, previousStep }) => {
+const PictographGridAssessment = ({
+  grid,
+  updateGrid,
+  nextStep,
+  previousStep,
+}) => {
   const [allPictographs, setAllPictographs] = useState([]);
-  const [grid, setGrid] = useState(initializedGrid);
 
   useEffect(() => {
     const load = async () => {
@@ -43,10 +42,9 @@ const PictographGridAssessment = ({ nextStep, previousStep }) => {
   }, []);
 
   const setGridItem = (row, col) => (pictograph) => {
-    setGrid((grid) => {
-      grid[row][col] = pictograph;
-      return [...grid];
-    });
+    const newGrid = Array.from(grid);
+    newGrid[row][col] = pictograph;
+    updateGrid(newGrid);
   };
 
   const handleNextClicked = () => {
@@ -116,4 +114,10 @@ const PictographGridAssessment = ({ nextStep, previousStep }) => {
   );
 };
 
-export default PictographGridAssessment;
+const mapStateToProps = (state) => {
+  return { grid: state.assessments.gridAssessment };
+};
+
+export default connect(mapStateToProps, { updateGrid })(
+  PictographGridAssessment
+);
