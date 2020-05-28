@@ -2,7 +2,6 @@ import { API, graphqlOperation } from "aws-amplify";
 
 import { FETCH_HISTORY, FETCH_SESSION, SET_INITIAL_DATE } from "./types";
 import { countNodes, countResponses, listWordNets } from "../graphql/queries";
-import { condenseDomainNodes, condenseDomainEdges } from "../utils";
 
 /**
  * Fetches all `WordNet` sessions, or all those after provided `fromDate`.
