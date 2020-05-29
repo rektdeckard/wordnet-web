@@ -96,7 +96,6 @@ const PictographGridAssessment = ({
               }}
               theme="light"
             >
-              (
               <List
                 grid={{ column: 2 }}
                 dataSource={allPictographs}
