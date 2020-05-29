@@ -14,10 +14,10 @@ export const updateGrid = (grid) => {
   };
 };
 
-export const updateRemainingShapes = (remainingShapes) => {
+export const updateShapes = (fromGroup, toGroup, item) => {
   return {
     type: UPDATE_SHAPES,
-    payload: remainingShapes,
+    payload: { fromGroup, toGroup, item },
   };
 };
 
@@ -37,6 +37,7 @@ export const initializeTimeline = () => async (dispatch) => {
         };
       })
   );
+
   dispatch(updateTimeline(pictographs.slice(0, 24)));
 };
 

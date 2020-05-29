@@ -37,7 +37,12 @@ for (let i = INITIAL_SHAPES.length - 1; i > 0; i--) {
 
 const INITIAL_STATE = {
   gridAssessment: INITIAL_GRID,
-  shapeDiscrimination: INITIAL_SHAPES,
+  shapeDiscrimination: {
+    remainingShapes: INITIAL_SHAPES,
+    groupAShapes: [],
+    groupBShapes: [],
+    groupCShapes: [],
+  },
   timelineAssessment: [],
   session: null,
   currentNode: null,
@@ -52,9 +57,17 @@ export default (state = INITIAL_STATE, action) => {
         gridAssessment: action.payload,
       };
     case UPDATE_SHAPES:
+      const { shapeDiscrimination } = state;
+      const { fromGroup, toGroup, item } = action.payload;
       return {
         ...state,
-        shapeDiscrimination: action.payload,
+        shapeDiscrimination: {
+          ...shapeDiscrimination,
+          [fromGroup]: shapeDiscrimination[fromGroup].filter(
+            (it) => it.id !== item.id
+          ),
+          [toGroup]: [...shapeDiscrimination[toGroup], item],
+        },
       };
     case UPDATE_TIMELINE:
       return {

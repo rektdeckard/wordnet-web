@@ -15,7 +15,7 @@ const PictographDropTarget = ({ item, onDrop }) => {
     item.onMove?.(null); // eslint-disable-line no-unused-expressions
     item.onMove = onDrop;
     onDrop(item);
-  }
+  };
 
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: ItemTypes.PICTOGRAPH,
