@@ -6,7 +6,7 @@ import { ItemTypes } from "../../interactions";
 
 const TimelineDragTarget = ({ item, index, moveItem }) => {
   const ref = useRef(null);
-  const [_, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: ItemTypes.PICTOGRAPH,
     hover: (item, monitor) => {
       if (!ref.current) return;

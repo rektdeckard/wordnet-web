@@ -19,7 +19,7 @@ const TimelineAssessment = ({
   useEffect(() => {
     const load = async () => initializeTimeline();
     if (!timeline.length) load();
-  }, []);
+  }, [timeline, initializeTimeline]);
 
   const moveItem = (dragIndex, hoverIndex) => {
     const newTimeline = [...timeline];
