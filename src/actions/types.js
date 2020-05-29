@@ -14,5 +14,6 @@ export const SET_INITIAL_DATE = "set_initial_date";
 export const UPDATE_GRID = "update_grid";
 export const UPDATE_SHAPES = "update_shapes";
 export const UPDATE_TIMELINE = "update_timeline";
+export const INITIALIZE_SELF_IDENTIFY = "initialize_self_identify";
 export const UPDATE_SELF_IDENTIFY = "update_self_identify";
 export const UPDATE_DESCRIPTION = "update_description";

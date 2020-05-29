@@ -2,6 +2,7 @@ import {
   UPDATE_GRID,
   UPDATE_SHAPES,
   UPDATE_TIMELINE,
+  INITIALIZE_SELF_IDENTIFY,
   UPDATE_SELF_IDENTIFY,
   UPDATE_DESCRIPTION,
 } from "../actions/types";
@@ -44,9 +45,16 @@ const INITIAL_STATE = {
     groupCShapes: [],
   },
   timelineAssessment: [],
-  session: null,
-  currentNode: null,
-  previousNode: null,
+  selfIdentify: {
+    remainingPictographs: [],
+    self_: [],
+    selfAndOthers: [],
+    selfAndDesired: [],
+    others: [],
+    othersAndDesired: [],
+    desired: [],
+  },
+  descriptionAssessment: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -77,11 +85,16 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         timelineAssessment: action.payload,
       };
-    case UPDATE_SELF_IDENTIFY:
+    case INITIALIZE_SELF_IDENTIFY:
       return {
         ...state,
-        selfIdentifyAssessment: action.payload,
+        selfIdentify: {
+          ...state.selfIdentify,
+          remainingPictographs: action.payload,
+        },
       };
+    case UPDATE_SELF_IDENTIFY:
+      return moveItem("selfIdentify", action.payload);
     case UPDATE_DESCRIPTION:
       return {
         ...state,
