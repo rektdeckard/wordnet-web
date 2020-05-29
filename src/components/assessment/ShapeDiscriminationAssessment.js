@@ -2,22 +2,22 @@ import React from "react";
 import { connect } from "react-redux";
 import { Layout, Row, Col, Button, Typography, message } from "antd";
 
-import { updateRemainingShapes } from "../../actions";
-import { Color } from "../../data/constants";
-import ShapeDragTarget from "./ShapeDragTarget";
+import { updateShapes } from "../../actions";
 import ShapeDropTarget from "./ShapeDropTarget";
 
 const { Content } = Layout;
 const { Title } = Typography;
 
 const ShapeDiscriminationAssessment = ({
-  remainingShapes,
-  updateRemainingShapes,
+  shapes,
+  updateShapes,
   nextStep,
   previousStep,
 }) => {
-  const handleRemove = ({ id }) => () => {
-    updateRemainingShapes(remainingShapes.filter((it) => it.id !== id));
+  const { remainingShapes, groupAShapes, groupBShapes, groupCShapes } = shapes;
+
+  const handleMove = (toGroup) => (fromGroup, item) => {
+    updateShapes(fromGroup, toGroup, item);
   };
 
   const handleNextClicked = () => {
@@ -27,45 +27,48 @@ const ShapeDiscriminationAssessment = ({
 
   return (
     <>
-      {/* FIXME: height overflows when too mant items in a box */}
+      {/* FIXME: height overflows when too many items in a box */}
       <Layout style={{ height: "72vh", marginBottom: 14 }}>
         <Content>
-          <div
-            style={{
-              backgroundColor: Color.CARD_BACKGROUND,
-              height: "50%",
-              padding: 16,
-              marginBottom: 8,
-            }}
+          <ShapeDropTarget
+            style={{ height: "50%", marginBottom: 8 }}
+            items={remainingShapes}
+            groupName="remainingShapes"
+            onDrop={handleMove("remainingShapes")}
           >
             <Title level={4} type="secondary">
-              Shapes
+              Remaining Shapes
             </Title>
-            {remainingShapes.map((item, index) => (
-              <ShapeDragTarget
-                key={index}
-                item={item}
-                handleRemove={handleRemove(item)}
-              />
-            ))}
-          </div>
+          </ShapeDropTarget>
           <Row gutter={[8, 8]} style={{ height: "50%" }}>
             <Col span={8}>
-              <ShapeDropTarget>
+              <ShapeDropTarget
+                items={groupAShapes}
+                groupName="groupAShapes"
+                onDrop={handleMove("groupAShapes")}
+              >
                 <Title level={4} type="secondary">
                   Group A
                 </Title>
               </ShapeDropTarget>
             </Col>
             <Col span={8}>
-              <ShapeDropTarget>
+              <ShapeDropTarget
+                items={groupBShapes}
+                groupName="groupBShapes"
+                onDrop={handleMove("groupBShapes")}
+              >
                 <Title level={4} type="secondary">
                   Group B
                 </Title>
               </ShapeDropTarget>
             </Col>
             <Col span={8}>
-              <ShapeDropTarget>
+              <ShapeDropTarget
+                items={groupCShapes}
+                groupName="groupCShapes"
+                onDrop={handleMove("groupCShapes")}
+              >
                 <Title level={4} type="secondary">
                   Group C
                 </Title>
@@ -91,9 +94,9 @@ const ShapeDiscriminationAssessment = ({
 };
 
 const mapStateToProps = (state) => {
-  return { remainingShapes: state.assessments.shapeDiscrimination };
+  return { shapes: state.assessments.shapeDiscrimination };
 };
 
-export default connect(mapStateToProps, { updateRemainingShapes })(
+export default connect(mapStateToProps, { updateShapes })(
   ShapeDiscriminationAssessment
 );

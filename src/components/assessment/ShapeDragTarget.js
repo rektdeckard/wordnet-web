@@ -4,9 +4,9 @@ import { useDrag } from "react-dnd";
 import { ItemTypes } from "../../interactions";
 import Shape from "./Shape";
 
-const ShapeDragTarget = ({ item, handleRemove }) => {
+const ShapeDragTarget = ({ item }) => {
   const [{ isDragging }, drag] = useDrag({
-    item: { type: ItemTypes.SHAPE, handleRemove, ...item },
+    item: { type: ItemTypes.SHAPE, ...item },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -15,9 +15,13 @@ const ShapeDragTarget = ({ item, handleRemove }) => {
   return (
     <div
       ref={drag}
-      style={{ display: "inline-block", opacity: isDragging ? 0.5 : 1, cursor: "grab" }}
+      style={{
+        display: "inline-block",
+        opacity: isDragging ? 0.5 : 1,
+        cursor: "grab",
+      }}
     >
-      <Shape {...item} isDragging={isDragging} />
+      <Shape {...item} />
     </div>
   );
 };
