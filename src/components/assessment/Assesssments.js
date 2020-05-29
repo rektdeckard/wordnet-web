@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { Steps, Button, Typography, message } from "antd";
+import { Steps, Typography } from "antd";
 import { DndProvider } from "react-dnd";
 import Backend from "react-dnd-html5-backend";
 
@@ -14,16 +14,15 @@ const { Step } = Steps;
 
 const Assessments = () => {
   const [step, setStep] = useState(2);
+  const assessments = useMemo(() => {
+    const handleNextClicked = () => {
+      if (step < assessments.length - 1) setStep((step) => step + 1);
+    };
+    const handlePreviousClicked = () => {
+      if (step > 0) setStep((step) => step - 1);
+    };
 
-  const handleNextClicked = () => {
-    if (step < assessments.length - 1) setStep((step) => step + 1);
-  };
-  const handlePreviousClicked = () => {
-    if (step > 0) setStep((step) => step - 1);
-  };
-
-  const assessments = useMemo(
-    () => [
+    return [
       {
         title: "Scene",
         description:
@@ -79,9 +78,8 @@ const Assessments = () => {
           />
         ),
       },
-    ],
-    [handleNextClicked, handlePreviousClicked]
-  );
+    ];
+  }, [step, setStep]);
 
   return (
     <>
