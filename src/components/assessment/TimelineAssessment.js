@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Layout, List, Row, Col, Button } from "antd";
+import { Layout, List, Row, Col, Button, Spin, message } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 
 import { initializeTimeline, updateTimeline } from "../../actions";
@@ -16,8 +16,20 @@ const TimelineAssessment = ({
   nextStep,
   previousStep,
 }) => {
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    const load = async () => initializeTimeline();
+    const load = async () => {
+      setLoading(true);
+      try {
+        await initializeTimeline();
+      } catch (e) {
+        console.error(e);
+        message.error("Prolem loading resources");
+      } finally {
+        setLoading(false);
+      }
+    };
     if (!timeline.length) load();
   }, [timeline, initializeTimeline]);
 
@@ -37,25 +49,39 @@ const TimelineAssessment = ({
         }}
       >
         <Content style={{ background: Color.PANEL_BACKGROUND, padding: 16 }}>
-          <List
-            grid={{ column: 6 }}
-            dataSource={timeline}
-            renderItem={(item, index) => (
-              <List.Item
-                key={item.id}
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <TimelineDragTarget
-                  index={index}
-                  item={item}
-                  moveItem={moveItem}
-                />
-                {index !== timeline.length - 1 && (
-                  <CaretRightOutlined style={{ fontSize: 32 }} />
-                )}
-              </List.Item>
-            )}
-          />
+          {loading ? (
+            <div
+              style={{
+                height: "100%",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Spin />
+            </div>
+          ) : (
+            <List
+              grid={{ column: 6 }}
+              dataSource={timeline}
+              renderItem={(item, index) => (
+                <List.Item
+                  key={item.id}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <TimelineDragTarget
+                    index={index}
+                    item={item}
+                    moveItem={moveItem}
+                  />
+                  {index !== timeline.length - 1 && (
+                    <CaretRightOutlined style={{ fontSize: 32 }} />
+                  )}
+                </List.Item>
+              )}
+            />
+          )}
         </Content>
       </Layout>
       <Row gutter={8} justify="end">
