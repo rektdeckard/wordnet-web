@@ -50,6 +50,20 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
+  const moveItem = (stateKey, payload) => {
+    const { fromGroup = "fromGroup", toGroup = "toGroup", item = {} } = payload;
+    const subState = state[stateKey];
+    return {
+      ...state,
+      [stateKey]: {
+        ...subState,
+        [fromGroup]:
+          subState[fromGroup]?.filter((it) => it.id !== item.id) ?? [],
+        [toGroup]: [...(subState[toGroup] ?? []), item],
+      },
+    };
+  };
+
   switch (action.type) {
     case UPDATE_GRID:
       return {
@@ -57,18 +71,7 @@ export default (state = INITIAL_STATE, action) => {
         gridAssessment: action.payload,
       };
     case UPDATE_SHAPES:
-      const { shapeDiscrimination } = state;
-      const { fromGroup, toGroup, item } = action.payload;
-      return {
-        ...state,
-        shapeDiscrimination: {
-          ...shapeDiscrimination,
-          [fromGroup]: shapeDiscrimination[fromGroup].filter(
-            (it) => it.id !== item.id
-          ),
-          [toGroup]: [...shapeDiscrimination[toGroup], item],
-        },
-      };
+      return moveItem("shapeDiscrimination", action.payload);
     case UPDATE_TIMELINE:
       return {
         ...state,
