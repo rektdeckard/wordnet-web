@@ -15,6 +15,8 @@ export const updateGrid = (grid) => {
 };
 
 export const updateShapes = (fromGroup, toGroup, item) => {
+  if (fromGroup === toGroup) return { type: null };
+
   return {
     type: UPDATE_SHAPES,
     payload: { fromGroup, toGroup, item },
