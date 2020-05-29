@@ -35,7 +35,7 @@ const ShapeDropTarget = ({
       style={{
         height: "100%",
         padding: 16,
-        backgroundColor: isActive ? Color.POSITIVE : Color.CARD_BACKGROUND,
+        backgroundColor: isActive ? Color.POSITIVE_LIGHT : Color.CARD_BACKGROUND,
         ...style,
       }}
     >

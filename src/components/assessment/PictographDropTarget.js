@@ -33,7 +33,7 @@ const PictographDropTarget = ({ item, onDrop }) => {
       style={{
         minHeight: 160,
         position: "relative",
-        backgroundColor: isActive ? Color.POSITIVE : Color.CARD_BACKGROUND,
+        backgroundColor: isActive ? Color.POSITIVE_LIGHT : Color.CARD_BACKGROUND,
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}

@@ -13,7 +13,7 @@ const { Paragraph } = Typography;
 const { Step } = Steps;
 
 const Assessments = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(0);
   const assessments = useMemo(() => {
     const handleNextClicked = () => {
       if (step < assessments.length - 1) setStep((step) => step + 1);

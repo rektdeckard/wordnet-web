@@ -115,6 +115,7 @@ export const HEAT_MAP_COLORS = [
 
 export const Color = {
   POSITIVE: "#61B0AF",
+  POSITIVE_LIGHT: "#C8E0EF",
   NEGATIVE: "#F28076",
   NEUTRAL: "#0A4A90",
   ACTIVE: "#1890FF",
